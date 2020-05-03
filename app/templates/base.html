@@ -1,0 +1,91 @@
+{# https://github.com/mbr/flask-bootstrap/blob/master/sample_app/templates/base.html #}
+
+
+{% extends 'bootstrap/base.html' %}
+
+
+
+{# Then, inside the head block, we apply these. To not replace the header, ``super()`` is used: #}
+{% block head %}
+    {{super()}}
+
+{% endblock %}
+
+
+
+{# Adding our own CSS files is also done here. Check the documentation at
+http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks
+for an overview. #}
+
+{% block styles %}
+
+    {{super()}}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='common.css')}}">
+
+{% endblock %}
+
+
+
+{% block title %}
+    {% if title %}
+        {{ title }} | Client management
+    {% else %}
+        Welcome to Client management
+    {% endif %}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('index') }}">HongXing Accounting</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    {% if current_user.is_anonymous %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('profile', username=current_user.username) }}">Profile</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        {% block app_content %}
+        {% endblock %}
+    </div>
+
+    <div class="container-fluid">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{message}}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {% block footer %}
+        <footer>
+            <p>Hong Xing Accounting Inc. &copy Copyright 2020.01</p>
+        </footer>
+    {% endblock %}
+
+{% endblock %}
+

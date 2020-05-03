@@ -1,0 +1,42 @@
+Add local folder to GitHub
+(1) Right click desktop > "Git Bash Here" > open terminal window
+(2) (here is more linux command) $ cd /C/Users/Ritchie/Documents/financial-computing-app
+(3) $ ls --> display files
+(4) $ git config --global user.name "ritchie"
+(5) $ git config --global user.email "ritchie.liu2007@gmail.com"
+(6) $ ssh-keygen -t rsa -b 4096 -C "ritchie.liu2007@gmail.com"
+      Generating public/private rsa key pair.
+      Enter file in which to save the key (/c/Users/Ritchie/.ssh/id_rsa):
+      Created directory '/c/Users/Ritchie/.ssh'.
+      Enter passphrase (empty for no passphrase):
+      Enter same passphrase again:
+      Your identification has been saved in /c/Users/Ritchie/.ssh/id_rsa
+      Your public key has been saved in /c/Users/Ritchie/.ssh/id_rsa.pub
+      The key fingerprint is:
+      SHA256:uIviDrIbVY3HN77xgs+4sk++GcAd6iDThthk/+X1dpo ritchie.liu2007@gmail.com
+(7) $ cat /c/Users/Ritchie/.ssh/id_rsa.pub
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDlWXHjQef6a0VtgfdCrPdaW5C839D1wpQ/UaeWRR9alPxdCbRee199X3+JYZhsApOqf3FS/VwaSnIljJQ6QLwLd
+      J748p+sJzLfnXnwPmSILK7ui+zQPjS4nxD7lWredVzZudL0/FH1gcAnXrjGtegI3XEM4eKrHrbOa7aRKJDqLE/HteRiQyh0TFRgIIc4S41AifAfhjH24RH8cPGIaD
+      bz6+KRlzOXc3nGRynoecnmVhGd2Z7Gb2b67O2tXb6m39QELugE4/s22pfnn8ip3aOVdTsg2ZeLfB3d9LVq086/gkc582wmxOI0k3hrxpwH7rSuZ5EBbgo78lNtW0/
+      WLi7rFTy3pcU4gSAxhIOl4zcBivXSgpIVhX90dEAfHHS82CoFUumCIqOwefuqcA3q3XLmgp0tJLdNvJgakvJJLAJuhX4MjcTh9BgtQyDIlABy4lNdy8dCaMKXlPAQ
+      AEgEZDCVvplYLqcKRc9ee0+nKw6cKmtS1u/atewPYIkwzgj5CxtwIcSP/wFl35IMF+yrjbo63PBt7FG8XX2GkGLzj9rJSR2xfoQGC5aFim/vSfZ80LmUPsk9GMOtU
+      A6G4z0koxumzlz6ntA0w4yX9Q+2mX3MZBx5KnlCBdwfX0zRrytWHqgon0ha7B+HW/MaAWJUgop40e06eeG/LofpcNqPASSnvQ== ritchie.liu2007@gmail.com
+(8) GitHub website > right top corner picture icon > settings > SSH > new SSH key, copy "pub key (not include 'ritchie.liu2007@gmail
+      .com'"
+(9) $ Git init
+(10) $ git add .
+(11) $ git commit -m "orginal"
+(12) $ ssh git@github.com:ritchie2007/financial-computing-app.git
+(13) $ git remote add origin git@github.com:ritchie2007/financial-computing-app.git
+(14) $ git push -u origin master
+
+Visual Studio Code - Python - Virtual environment - Flask  (PS PowerShell)
+(1) PS C:\Users\Ritchie\Documents\financial-computing-app> virtualenv.exe ./venv
+  created virtual environment CPython3.8.1.final.0-64 in 2688ms
+  creator CPython3Windows(dest=C:\Users\Ritchie\Documents\financial-computing-app\venv, clear=False, global=False)
+  seeder FromAppData(download=False, pip=latest, setuptools=latest, wheel=latest, via=copy, app_data_dir=C:\Users
+  \Ritchie\AppData\Local\pypa\virtualenv\seed-app-data\v1.0.1)
+  activators BashActivator,BatchActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator
+(2) PS C:\Users\Ritchie\Documents\financial-computing-app> .\venv\Scripts\activate
+(3) (venv) PS C:\Users\Ritchie\Documents\financial-computing-app> pip install -r .\requirements.txt
+(4) (venv) PS C:\Users\Ritchie\Documents\financial-computing-app> flask run

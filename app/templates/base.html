@@ -1,31 +1,22 @@
 {# https://github.com/mbr/flask-bootstrap/blob/master/sample_app/templates/base.html #}
 
-
 {% extends 'bootstrap/base.html' %}
-
-
 
 {# Then, inside the head block, we apply these. To not replace the header, ``super()`` is used: #}
 {% block head %}
     {{super()}}
-
 {% endblock %}
-
-
 
 {# Adding our own CSS files is also done here. Check the documentation at
 http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks
 for an overview. #}
 
 {% block styles %}
-
-    {{super()}}
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='common.css')}}">
+    {{super()}} 
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
 
 {% endblock %}
-
-
 
 {% block title %}
     {% if title %}
@@ -33,11 +24,28 @@ for an overview. #}
     {% else %}
         Welcome to Client management
     {% endif %}
-{% endblock %}
+{% endblock title %}
 
 {% block navbar %}
-    <nav class="navbar navbar-default">
-        <div class="container">
+    <header>
+        <span class="logo">
+            <a href="{{ url_for('index') }}">HongXing Accounting</a>
+        </span>
+        <span class="search">
+            Search <input type="search-phone-number" id="search-phone-number" placeholder="Please phone number"/>
+            <button type="button" onclick="goUrl()">Submit</button>
+        </span>
+        <span class="welcome">
+            {% if current_user.is_anonymous %}
+                <label for="Welcome">Welcome Guest!</label>
+            {% else %}
+                <label for="Welcome">Welcome {{ current_user.username }}!</label>
+            {% endif %}
+        </span>
+    </header>
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container"></div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
@@ -45,16 +53,34 @@ for an overview. #}
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('index') }}">HongXing Accounting</a>
             </div>
+
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-left">
+ 
+                    <li id="home" class="nav-item"><a href="{{ url_for('login') }}">Home</a></li>
+                    <li id="Corporate" class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Corporate<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">New</a></li>                 
+                            <li><a href="#">Edit</a></li>
+                            <li><a href="#">Export</a></li>
+                        </ul>
+                    </li>
+                    <li id="Individual" class="nav-item"><a href="#">Individual</a></li>
+                    <li id="Task" class="nav-item"><a href="#">Task</a></li>
+                    <li id="Group" class="nav-item"><a href="#">Group</a></li>
+                    <li id="Staff" class="nav-item"><a href="#">Staff</a></li>
+                    <li id="CustomerReport" class="nav-item"><a href="#">CustomerReport</a></li>
+                    <li id="Administration" class="nav-item"><a href="#">Administration</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('profile', username=current_user.username) }}">Profile</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    <li id="Login" class="nav-item"><a href="{{ url_for('login') }}">Login</a></li>
+                    <li id="Register" class="nav-item"><a href="{{ url_for('register') }}">Register</a></li>
+                     {% else %}
+                    <li id="Profile"><a href="{{ url_for('profile', username=current_user.username) }}">Profile</a></li>
+                    <li id="Logout"><a href="{{ url_for('logout') }}">Logout</a></li>
                     {% endif %}
                 </ul>
             </div>

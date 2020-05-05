@@ -3,22 +3,24 @@ html {
     margin: 0px;
 }
 body {
-    background-color: #2f3035;
     background-image: url("/static/images/background_image.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
+header {
+    height:140px;
+    background-color: rgba(128, 218, 26, 0.432);
+}
+.logo {
+    font-size: 45px;
+    color: #d2f50b;
+    vertical-align: middle;
+}
 container {
     margin-left: auto;
     margin-right: auto;
     width: 1024px;
-}
-header {
-    height:80px;
-    background-color: rgba(128, 218, 26, 0.432);
-    text-align: left;
-    padding-top: 20px;
 }
 .navbar-header {
     overflow: auto;

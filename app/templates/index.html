@@ -3,36 +3,7 @@
 
 {% block app_content %}
     <!-- <h1>Hi, {{ current_user.username }}!</h1> -->
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h1>Let's help you with your finance.</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <p>We're always together with you, help you analyze, design, invest your finance and property.</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <a href="#" target="_blank">TO KNOW US IN DETAIL</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <iframe width="400" src="https://www.youtube.com/embed/YjkRSlTxsZM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            {{ wtf.quick_form(form) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <iframe id="ifweb" style="width: 500px; height: 150px;" src="https://www.51.ca/" frameborder="0"></iframe>
-        </div>
-    </div>
+    
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -46,10 +17,10 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img class="img-responsive" src="{{url_for('static', filename='accountant.jpg')}}" alt="First slide">
+                        <img class="img-responsive" src="{{url_for('static', filename='images/accountant.jpg')}}" alt="First slide">
                     </div>
                     <div class="item">
-                        <img class="img-responsive" src="{{url_for('static', filename='Accounting2.jpg')}}" alt="Second slide">
+                        <img class="img-responsive" src="{{url_for('static', filename='images/Accounting2.jpg')}}" alt="Second slide">
                     </div>
                 </div>
 

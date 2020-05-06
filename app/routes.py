@@ -35,7 +35,6 @@ def index():
         title='Home',
         form=form
     )
-
 @app.route(
     '/login',
     methods=['GET', 'POST']
@@ -139,3 +138,8 @@ def edit_profile():
         title='Edit profile',
         form=form
     )
+@app.route(
+    '/corporate'
+)
+def corporate():
+    return redirect(url_for('corporate')) 

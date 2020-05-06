@@ -61,7 +61,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                     <li id="Corporate" class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Corporate<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">List</a></li>
+                            <li><a href="{{ url_for('corporate') }}">List</a></li>
                             <li><a href="#">New</a></li>                 
                             <li><a href="#">Edit</a></li>
                             <li><a href="#">Export</a></li>
@@ -133,6 +133,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
     </nav>
 {% endblock navbar %}
 {% block content %}
+    {% block centerfield %}    
         <div id="caption1" class="row">
             <div class="col-md-10 col-md-offset-1">Let's help you with your finance.</div>
         </div>
@@ -142,24 +143,338 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
             <a href="#" target="_blank">TO KNOW US IN DETAIL</a>
         </div>
         <br/><br/>
-            <div id="videofield">
-                <iframe width="400" src="https://www.youtube.com/embed/YjkRSlTxsZM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
+        <div id="videofield">
+            <iframe width="400" src="https://www.youtube.com/embed/YjkRSlTxsZM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <br/><br/>
+        <div id="webfield">
+            <strong>Websites: </strong> <input type="text" id="txtURL" placeholder="Please input website"/>
+            <button type="button" onclick="goUrl()">Submit</button>
+            <input type="checkbox"/>Remember Websites
             <br/><br/>
-            <div id="webfield">
-                <strong>Websites: </strong> <input type="text" id="txtURL" placeholder="Please input website"/>
-                <button type="button" onclick="goUrl()">Submit</button>
-                <input type="checkbox"/>Remember Websites
-                <br/><br/>
-                <iframe id="ifweb" style="width: 500px; height: 150px;" src="https://www.51.ca/" frameborder="0"></iframe>
+            <iframe id="ifweb" style="width: 500px; height: 150px;" src="https://www.51.ca/" frameborder="0"></iframe>
+        </div>
+        <div id="flowfield">
+            <marquee behavior="" direction="up" onmouseover="javascript:this.stop()" onmouseout="javascript:this.start()">
+                <img type="scroll_img" src="images/accountant.jpg" alt="">
+                <p>This is scrolling text.</p>
+                <img type="scroll_img" src="images/Accounting2.jpg" alt="">
+            </marquee>
+        </div>
+    {% endblock centerfield %}
+    {% block corp %}
+        <div class="tbl-field"> 
+            <div class="tbl-list">
+                 <input class="form-control mb-4" id="tableSearch" type="text"
+                    placeholder="Type something to search list items"> 
+                <br/>
+                <table id="dtBasicExample" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th class="th-sm">Corporation Name</th>
+                        <th class="th-sm">Business No</th>
+                        <th class="th-sm">Registration Name</th>
+                        <th class="th-sm">Contact Name</th>
+                        <th class="th-sm">Contact Number</th>
+                        <th class="th-sm">Modified Date</th>
+                        <th class="th-sm">Task Need to do</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Tiger Nixon</td>
+                        <td>123546789</td>
+                        <td>Edinburgh</td>
+                        <td>Saskatoon</td>
+                        <td>416-897-5874</td>
+                        <td>2015-02-12</td>
+                        <td>9</td>
+                      </tr>
+                      <tr>
+                        <td>Garrett Winters</td>
+                        <td>654789123</td>
+                        <td>Fitzpatrick</td>
+                        <td>Michael Silva</td>
+                        <td>416-725-5824</td>
+                        <td>2011/07/25</td>
+                        <td>5</td>
+                      </tr>
+                      <tr>
+                        <td>Ahed</td>
+                        <td>196945786</td>
+                        <td>Consumer goods</td>
+                        <td>Toronto</td>
+                        <td>416-257-8545</td>
+                        <td>2014-05-14</td>
+                        <td>3</td>
+                        
+                      </tr>
+                      <tr>
+                        <td>Air Canada</td>
+                        <td>194512537</td>
+                        <td>Consumer services</td>
+                        <td>Montreal</td>
+                        <td>416-569-8745</td>
+                        <td>2019-06-14</td>
+                        <td>5</td>                        
+                      </tr>
+                      <tr>
+                        <td>Aldo Group</td>
+                        <td>156234972</td>
+                        <td>Consumer services</td>
+                        <td>Montreal</td>
+                        <td>647-897-8569</td>
+                        <td>2019-01-28</td>
+                        <td>1</td>                        
+                      </tr>
+                      <tr>
+                        <td>AldrichPears Associates</td>
+                        <td>195623479</td>
+                        <td>Industrials</td>
+                        <td>Vancouver</td>
+                        <td>416-892-7845</td>
+                        <td>2020-01-02</td>
+                        <td>0</td>                        
+                      </tr>
+                      <tr>
+                        <td>Algonquin Power & Utilities</td>
+                        <td>198954697</td>
+                        <td>Utilities</td>
+                        <td>Oakville</td>
+                        <td>416-247-8754</td>
+                        <td>2020-03-21</td>
+                        <td>0</td>                        
+                      </tr>
+                      <tr>
+                        <td>Allied Shipbuilders</td>
+                        <td>191235648</td>
+                        <td>Industrials</td>
+                        <td>North Vancouver</td>
+                        <td>416-012-6523</td>
+                        <td>2020-02-24</td>
+                        <td>0</td>                        
+                      </tr>
+                      <tr>
+                        <td>Alta Newspaper Group</td>
+                        <td>195632199</td>
+                        <td>Consumer services</td>
+                        <td>Vancouver</td>
+                        <td>416-564-0124</td>
+                        <td>2020-03-24</td>
+                        <td>0</td>                        
+                      </tr>
+                      <tr>
+                        <td>Alterra Power</td>
+                        <td>208954211</td>
+                        <td>Utilities</td>
+                        <td>Vancouver</td>
+                        <td>416-354-4158</td>
+                        <td>2013-09-12</td>
+                        <td>3</td>                        
+                      </tr>
+                      <td>Tiger Nixon</td>
+                      <td>123546789</td>
+                      <td>Edinburgh</td>
+                      <td>Saskatoon</td>
+                      <td>416-897-5874</td>
+                      <td>2015-02-12</td>
+                      <td>9</td>
+                    </tr>
+                    <tr>
+                      <td>Garrett Winters</td>
+                      <td>654789123</td>
+                      <td>Fitzpatrick</td>
+                      <td>Michael Silva</td>
+                      <td>416-725-5824</td>
+                      <td>2011/07/25</td>
+                      <td>5</td>
+                    </tr>
+                    <tr>
+                      <td>Ahed</td>
+                      <td>196945786</td>
+                      <td>Consumer goods</td>
+                      <td>Toronto</td>
+                      <td>416-257-8545</td>
+                      <td>2014-05-14</td>
+                      <td>3</td>                      
+                    </tr>
+                    <tr>
+                      <td>Air Canada</td>
+                      <td>194512537</td>
+                      <td>Consumer services</td>
+                      <td>Montreal</td>
+                      <td>416-569-8745</td>
+                      <td>2019-06-14</td>
+                      <td>5</td>                        
+                    </tr>
+                    <tr>
+                      <td>Aldo Group</td>
+                      <td>156234972</td>
+                      <td>Consumer services</td>
+                      <td>Montreal</td>
+                      <td>647-897-8569</td>
+                      <td>2019-01-28</td>
+                      <td>1</td>                      
+                    </tr>
+                    <tr>
+                      <td>AldrichPears Associates</td>
+                      <td>195623479</td>
+                      <td>Industrials</td>
+                      <td>Vancouver</td>
+                      <td>416-892-7845</td>
+                      <td>2020-01-02</td>
+                      <td>0</td>                      
+                    </tr>
+                    <tr>
+                      <td>Algonquin Power & Utilities</td>
+                      <td>198954697</td>
+                      <td>Utilities</td>
+                      <td>Oakville</td>
+                      <td>416-247-8754</td>
+                      <td>2020-03-21</td>
+                      <td>0</td>                      
+                    </tr>
+                    <tr>
+                      <td>Allied Shipbuilders</td>
+                      <td>191235648</td>
+                      <td>Industrials</td>
+                      <td>North Vancouver</td>
+                      <td>416-012-6523</td>
+                      <td>2020-02-24</td>
+                      <td>0</td>                        
+                    </tr>
+                    <tr>
+                      <td>Alta Newspaper Group</td>
+                      <td>195632199</td>
+                      <td>Consumer services</td>
+                      <td>Vancouver</td>
+                      <td>416-564-0124</td>
+                      <td>2020-03-24</td>
+                      <td>0</td>                        
+                    </tr>
+                    <tr>
+                      <td>Alterra Power</td>
+                      <td>208954211</td>
+                      <td>Utilities</td>
+                      <td>Vancouver</td>
+                      <td>416-354-4158</td>
+                      <td>2013-09-12</td>
+                      <td>3</td>                        
+                    </tr>
+                    <tr>
+                        <td>Tiger Nixon</td>
+                        <td>123546789</td>
+                        <td>Edinburgh</td>
+                        <td>Saskatoon</td>
+                        <td>416-897-5874</td>
+                        <td>2015-02-12</td>
+                        <td>9</td>
+                      </tr>
+                      <tr>
+                        <td>Garrett Winters</td>
+                        <td>654789123</td>
+                        <td>Fitzpatrick</td>
+                        <td>Michael Silva</td>
+                        <td>416-725-5824</td>
+                        <td>2011/07/25</td>
+                        <td>5</td>
+                      </tr>
+                      <tr>
+                        <td>Ahed</td>
+                        <td>196945786</td>
+                        <td>Consumer goods</td>
+                        <td>Toronto</td>
+                        <td>416-257-8545</td>
+                        <td>2014-05-14</td>
+                        <td>3</td>
+                        
+                      </tr>
+                      <tr>
+                        <td>Air Canada</td>
+                        <td>194512537</td>
+                        <td>Consumer services</td>
+                        <td>Montreal</td>
+                        <td>416-569-8745</td>
+                        <td>2019-06-14</td>
+                        <td>5</td>                        
+                      </tr>
+                      <tr>
+                        <td>Aldo Group</td>
+                        <td>156234972</td>
+                        <td>Consumer services</td>
+                        <td>Montreal</td>
+                        <td>647-897-8569</td>
+                        <td>2019-01-28</td>
+                        <td>1</td>                        
+                      </tr>
+                      <tr>
+                        <td>AldrichPears Associates</td>
+                        <td>195623479</td>
+                        <td>Industrials</td>
+                        <td>Vancouver</td>
+                        <td>416-892-7845</td>
+                        <td>2020-01-02</td>
+                        <td>0</td>                        
+                      </tr>
+                      <tr>
+                        <td>Algonquin Power & Utilities</td>
+                        <td>198954697</td>
+                        <td>Utilities</td>
+                        <td>Oakville</td>
+                        <td>416-247-8754</td>
+                        <td>2020-03-21</td>
+                        <td>0</td>                        
+                      </tr>
+                      <tr>
+                        <td>Allied Shipbuilders</td>
+                        <td>191235648</td>
+                        <td>Industrials</td>
+                        <td>North Vancouver</td>
+                        <td>416-012-6523</td>
+                        <td>2020-02-24</td>
+                        <td>0</td>                        
+                      </tr>
+                      <tr>
+                        <td>Alta Newspaper Group</td>
+                        <td>195632199</td>
+                        <td>Consumer services</td>
+                        <td>Vancouver</td>
+                        <td>416-564-0124</td>
+                        <td>2020-03-24</td>
+                        <td>0</td>                        
+                      </tr>
+                      <tr>
+                        <td>Alterra Power</td>
+                        <td>208954211</td>
+                        <td>Utilities</td>
+                        <td>Vancouver</td>
+                        <td>416-354-4158</td>
+                        <td>2013-09-12</td>
+                        <td>3</td>                        
+                      </tr>
+                      <td>Tiger Nixon</td>
+                      <td>123546789</td>
+                      <td>Edinburgh</td>
+                      <td>Saskatoon</td>
+                      <td>416-897-5874</td>
+                      <td>2015-02-12</td>
+                      <td>9</td>
+                    </tr>
+                    <tr>
+                      <td>Garrett Winters</td>
+                      <td>654789123</td>
+                      <td>Fitzpatrick</td>
+                      <td>Michael Silva</td>
+                      <td>416-725-5824</td>
+                      <td>2011/07/25</td>
+                      <td>5</td>
+                    </tr>
+
+                    </tbody>
+                  </table>
             </div>
-            <div id="flowfield">
-                <marquee behavior="" direction="up" onmouseover="javascript:this.stop()" onmouseout="javascript:this.start()">
-                    <img type="scroll_img" src="images/accountant.jpg" alt="">
-                    <p>This is scrolling text.</p>
-                    <img type="scroll_img" src="images/Accounting2.jpg" alt="">
-                </marquee>
-            </div>
+        </div>
+    {% endblock corp%}
     <div class="container-fluid">
         {% block app_content %}
         {% endblock %}
@@ -183,4 +498,10 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
         </footer>
     {% endblock %}
 
-{% endblock %}
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+{%- endblock scripts %}

@@ -67,13 +67,33 @@ marquee img[type="scroll_img"] {
     width: 100px;
     height: 50px;
 }
+
+.tbl-field {
+    position: absolute;
+    top: 120px;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(234, 236, 233);
+    z-index: 50;
+}
+.tbl-list{
+    margin: 10px 10px 10px 10px;
+}
+.form-control.mb-4 {
+    display: block;
+    width: 40%;
+    height: 44px;
+    padding: 5px 5px 5px 5px;
+    font-size: 14px;
+}
+
+
 .navbar {
     min-height: 45px;
     background-color: rgb(214, 231, 192);
     margin: 0;
     border: 0;
     padding: 0;
-    z-index: 500;
 }
 .navbar-nav li a {
     font-size: 14px;
@@ -85,6 +105,7 @@ marquee img[type="scroll_img"] {
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
     color: red;
     background-color: rgb(204, 164, 209) !important;
+    z-index: 100;
 }
 @media (min-width: 768px) and (max-width: 1200px) {
     .navbar-collapse.collapse {

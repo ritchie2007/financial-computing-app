@@ -50,7 +50,23 @@ iframe {
 #videofield {
     text-align: center;
 }
-
+#webfield {
+    text-align: center;
+}
+marquee {
+    position: absolute;
+    top: 400px;
+    left: 20px;
+    border: 1px solid #73AD21;
+    width: 150px;
+    height: 400px;
+    text-align: left;
+    color: blanchedalmond;
+}
+marquee img[type="scroll_img"] {
+    width: 100px;
+    height: 50px;
+}
 .navbar {
     min-height: 45px;
     background-color: rgb(214, 231, 192);
@@ -87,17 +103,4 @@ footer p {
 }
 
 
-}
-marquee {
-    position: absolute;
-    top: 300px;
-    left: 20px;
-    border: 1px solid #73AD21;
-    width: 150px;
-    height: 300px;
-    text-align: left;
-}
-marquee img[type="scroll_img"] {
-    width: 100px;
-    height: 50px;
 }

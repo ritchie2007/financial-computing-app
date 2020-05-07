@@ -9,36 +9,90 @@
 
 {% block content %}
 <div class="tbl-field"> 
-    <div class="tbl-list">
-        <input class="form-control mb-4" id="tableSearch" type="text"
-            placeholder="Type something to search list items">
+  <h3>&nbsp Corporation Name: Garrett Winters -- add Name parameter here</h3>
+  <nav id="sidebar">
+    <ul class="list-unstyled components">
+      <li class="active"><a id="generate" class="links" href="#" data-showdiv="generate">Generation Information</a></li>
+      <li><a id="cra" class="links" href="#" data-showdiv="cra">CRA Account</a></li>
+      <li><a id="wsib" class="links" href="#" data-showdiv="wsib">WSIB Account</a></li>
+      <li><a id="eht" class="links" href="#" data-showdiv="eht">EHT Account</a></li>
+      <li><a id="other" class="links" href="#" data-showdiv="other">Other Account</a></li>
+      <li><a id="structure" class="links" href="#" data-showdiv="structure">Corporate Structure</a></li>
+      <li><a id="operation" class="links" href="#" data-showdiv="operation">Corporate Operation</a></li>
+      <li><a id="bank" class="links" href="#" data-showdiv="bank">Bank Information</a></li>
+      <li><a id="software" class="links" href="#" data-showdiv="software">Accounting Software</a></li>
+      <li><a id="engage" class="links" href="#" data-showdiv="engage">Engagement</a></li>
+      <li><a id="director" class="links" href="#" data-showdiv="director">Director Information</a></li>
+      <li><a id="share" class="links" href="#" data-showdiv="share">Share Holder</a></li>
+      <li><a id="task" class="links" href="#" data-showdiv="task">Task Information</a></li>
+      <li><a id="update" class="links" href="#" data-showdiv="update">Recent Updates</a></li>
+    </ul>
+</nav>
+<!--   <a id="Link1" class="links" href="#" data-showdiv="Div1">Link 1</a>
+  <a id="Link2" class="links" href="#" data-showdiv="Div2">Link 2</a>
+  <a id="Link3" class="links" href="#" data-showdiv="Div3">Link 3</a>
 
-        <table class="table table-bordered table-striped table-hover" style="width:100%">
-            <thead>
-              <tr>
-                <th class="th-sm">Corporation Name</th>
-                <th class="th-sm">Business No</th>
-                <th class="th-sm">Registration Name</th>
-                <th class="th-sm">Contact Name</th>
-                <th class="th-sm">Contact Number</th>
-                <th class="th-sm">Modified Date</th>
-                <th class="th-sm">Task Need to do</th>
-              </tr>
-            </thead>
-            <tbody id="myTable">
-              <tr class="table-row" data-href="{{url_for('corp_spec')}}">
-                <td>Tiger Nixon</td>
-                <td data-field="snum" data-formatter="LinkFormatter">123546789</td>
-                <td>Edinburgh</td>
-                <td>Saskatoon</td>
-                <td>416-897-5874</td>
-                <td>2015-02-12</td>
-                <td>9</td>
-              </tr>
-            </tbody>
-        </table>
+ 下面段落是窗口显示3种不同div内容，注意" style="display:none" 是默认不显示
+ 
+  <div id="Div1" class="divs" style="display:none">
+    <h1>This is div 1111</h1>
+  </div>
+  <div id="Div2" class="divs" style="display:none">
+    <h1>This is div 2222 </h1>
+  </div>
+  <div id="Div3" class="divs" style="display:none">
+    <h1>This is div 3333 </h1>
+  </div>
+-->
+  <div id="edit_field" class="edit_field">
+  <form>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">Email</label>
+        <input type="email" class="form-control" id="inputEmail4">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPassword4">Password</label>
+        <input type="password" class="form-control" id="inputPassword4">
+      </div>
     </div>
-</div>
+    <div class="form-group">
+      <label for="inputAddress">Address</label>
+      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+    </div>
+    <div class="form-group">
+      <label for="inputAddress2">Address 2</label>
+      <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="inputCity">City</label>
+        <input type="text" class="form-control" id="inputCity">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputState">State</label>
+        <select id="inputState" class="form-control">
+          <option selected>Choose...</option>
+          <option>...</option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="inputZip">Zip</label>
+        <input type="text" class="form-control" id="inputZip">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="gridCheck">
+        <label class="form-check-label" for="gridCheck">
+          Check me out
+        </label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </form>
+  </div>
+
 {% endblock content%}
 {% block scripts %}
     <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>

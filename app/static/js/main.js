@@ -21,3 +21,10 @@ $(document).ready(function($) {
         window.document.location = $(this).data("href");
     });
 });
+
+$(document).ready(function() {
+  $(".links").click(function(){
+  $(".divs:visible").hide();
+  $("#"+$(this).attr("data-showdiv")).show();
+  });
+});

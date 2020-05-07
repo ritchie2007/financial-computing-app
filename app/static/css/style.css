@@ -69,9 +69,10 @@ marquee img[type="scroll_img"] {
 }
 
 .tbl-field {
-    position: absolute;
-    top: 120px;
-    height: 100%;
+    /* position: absolute; */
+    /* top: 130px; */
+    float: left;
+    height: fit-content;
     width: 100%;
     background-color: rgb(234, 236, 233);
     z-index: 50;
@@ -89,6 +90,29 @@ marquee img[type="scroll_img"] {
 .table-row{
     cursor:pointer;
 }
+nav#sidebar {
+    float: left;
+    margin: 30px 50px 10px 20px;
+    width: 220px;
+    /* height: fit-content; */
+    border: solid thin darkgrey;
+}
+#sidebar .list-unstyled.components a {
+    display: block;
+    text-decoration: none;
+    padding: 10px 5px 10px 10px;
+}
+#sidebar .list-unstyled.components a:focus, #sidebar .list-unstyled.components a:hover{
+    color: red;
+    background-color: rgb(210, 231, 199);
+}
+#edit_field {
+    float: left;
+    width: fit-content;
+}
+
+
+
 
 .navbar {
     min-height: 45px;

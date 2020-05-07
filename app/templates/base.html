@@ -14,7 +14,6 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
     {{super()}} 
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
-
 {% endblock %}
 
 
@@ -156,19 +155,19 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
         </div>
         <div id="flowfield">
             <marquee behavior="" direction="up" onmouseover="javascript:this.stop()" onmouseout="javascript:this.start()">
-                <img type="scroll_img" src="images/accountant.jpg" alt="">
+                <img type="scroll_img" src="{{url_for('static', filename='images/accountant.jpg')}}" alt="">
                 <p>This is scrolling text.</p>
-                <img type="scroll_img" src="images/Accounting2.jpg" alt="">
+                <img type="scroll_img" src="{{url_for('static', filename='images/Accounting2.jpg')}}" alt="">
             </marquee>
         </div>
     {% endblock centerfield %}
     {% block corp %}
         <div class="tbl-field"> 
             <div class="tbl-list">
-                 <input class="form-control mb-4" id="tableSearch" type="text"
-                    placeholder="Type something to search list items"> 
-                <br/>
-                <table id="dtBasicExample" class="table table-striped table-bordered" style="width:100%">
+                <input class="form-control mb-4" id="tableSearch" type="text"
+                    placeholder="Type something to search list items">
+
+                <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
                       <tr>
                         <th class="th-sm">Corporation Name</th>
@@ -180,7 +179,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                         <th class="th-sm">Task Need to do</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="myTable">
                       <tr>
                         <td>Tiger Nixon</td>
                         <td>123546789</td>
@@ -386,8 +385,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                         <td>Toronto</td>
                         <td>416-257-8545</td>
                         <td>2014-05-14</td>
-                        <td>3</td>
-                        
+                        <td>3</td>                        
                       </tr>
                       <tr>
                         <td>Air Canada</td>
@@ -469,9 +467,8 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                       <td>2011/07/25</td>
                       <td>5</td>
                     </tr>
-
                     </tbody>
-                  </table>
+                </table>
             </div>
         </div>
     {% endblock corp%}

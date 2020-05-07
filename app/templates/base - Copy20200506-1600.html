@@ -1,0 +1,228 @@
+{# https://github.com/mbr/flask-bootstrap/blob/master/sample_app/templates/base.html #}
+
+{% extends 'bootstrap/base.html' %}
+
+{# Then, inside the head block, we apply these. To not replace the header, ``super()`` is used: #}
+{% block head %}
+    {{super()}}
+{% endblock %}
+
+{# Adding our own CSS files is also done here. Check the documentation at
+http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an overview. #}
+
+{% block styles %}
+    {{super()}} 
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+
+{% endblock %}
+
+
+{% block title %}
+    {% if title %}
+        {{ title }} | Client management
+    {% else %}
+        Welcome to Client management
+    {% endif %}
+{% endblock title %}
+
+{% block navbar %}
+    <header>
+        <span class="logo">
+            <a href="{{ url_for('index') }}">HongXing Accounting</a>
+        </span>
+        <span class="search">
+            Search <input type="search-phone-number" id="search-phone-number" placeholder="Please phone number"/>
+            <button type="button" onclick="goUrl()">Submit</button>
+        </span>
+        <span class="welcome">
+            {% if current_user.is_anonymous %}
+                <label for="Welcome">Welcome Guest!</label>
+            {% else %}
+                <label for="Welcome">Welcome {{ current_user.username }}!</label>
+            {% endif %}
+        </span>
+    </header>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container"></div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-left">
+ 
+                    <li id="home" class="nav-item"><a href="{{ url_for('login') }}">Home</a></li>
+                    <li id="Corporate" class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Corporate<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('corporate') }}">List</a></li>
+                            <li><a href="#">New</a></li>                 
+                            <li><a href="#">Edit</a></li>
+                            <li><a href="#">Export</a></li>
+                        </ul>
+                    </li>
+                    <li id="Individual" class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Individual<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">List</a></li>
+                            <li><a href="#">New</a></li>                 
+                            <li><a href="#">Edit</a></li>
+                            <li><a href="#">Export</a></li>
+                        </ul>
+                    </li>
+                    <li id="Task" class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Task<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">List</a></li>
+                            <li><a href="#">New</a></li>                 
+                            <li><a href="#">Edit</a></li>
+                            <li><a href="#">Export</a></li>
+                        </ul>
+                    </li>
+                    <li id="Group" class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Group<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">List</a></li>
+                            <li><a href="#">New</a></li>                 
+                            <li><a href="#">Edit</a></li>
+                            <li><a href="#">Export</a></li>
+                        </ul>
+                    </li>
+                    <li id="Staff" class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Staff<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">List</a></li>
+                            <li><a href="#">Export</a></li>
+                        </ul>
+                    </li>
+                    <li id="Task" class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Task<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">List</a></li>
+                            <li><a href="#">New</a></li>                 
+                            <li><a href="#">Edit</a></li>
+                            <li><a href="#">Export</a></li>
+                        </ul>
+                    </li>
+                    <li id="CustomerReport" class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">CustomerReport<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">List</a></li>
+                             <li><a href="#">Export</a></li>
+                        </ul>
+                    </li>
+                    <li id="Administration" class="nav-item"><a href="#">Administration</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.is_anonymous %}
+                    <li id="Login" class="nav-item"><a href="{{ url_for('login') }}">Login</a></li>
+                    <li id="Register" class="nav-item"><a href="{{ url_for('register') }}">Register</a></li>
+                     {% else %}
+                    <li id="Profile"><a href="{{ url_for('profile', username=current_user.username) }}">Profile</a></li>
+                    <li id="Logout"><a href="{{ url_for('logout') }}">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock navbar %}
+{% block content %}
+    {% block centerfield %}    
+        <div id="caption1" class="row">
+            <div class="col-md-10 col-md-offset-1">Let's help you with your finance.</div>
+        </div>
+        <br/><br/><br/>
+        <div id="discription" >We're always together with you, help you analyze, design, invest your finance and property.
+        <br/><br/>
+            <a href="#" target="_blank">TO KNOW US IN DETAIL</a>
+        </div>
+        <br/><br/>
+        <div id="videofield">
+            <iframe width="400" src="https://www.youtube.com/embed/YjkRSlTxsZM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <br/><br/>
+        <div id="webfield">
+            <strong>Websites: </strong> <input type="text" id="txtURL" placeholder="Please input website"/>
+            <button type="button" onclick="goUrl()">Submit</button>
+            <input type="checkbox"/>Remember Websites
+            <br/><br/>
+            <iframe id="ifweb" style="width: 500px; height: 150px;" src="https://www.51.ca/" frameborder="0"></iframe>
+        </div>
+        <div id="flowfield">
+            <marquee behavior="" direction="up" onmouseover="javascript:this.stop()" onmouseout="javascript:this.start()">
+                <img type="scroll_img" src="images/accountant.jpg" alt="">
+                <p>This is scrolling text.</p>
+                <img type="scroll_img" src="images/Accounting2.jpg" alt="">
+            </marquee>
+        </div>
+    {% endblock centerfield %}
+    {% block corp %}
+        <div class="tbl-field"> 
+            <div class="tbl-list"></div>
+                <input class="form-control mb-4" id="tableSearch" type="text"
+                    placeholder="Type something to search list items"> 
+                <!-- Search form -->
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Email</th>
+                    </tr>
+                    </thead>
+                    <tbody id="myTable">
+                    <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                    </tr>
+                    <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@mail.com</td>
+                    </tr>
+                    <tr>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@greatstuff.com</td>
+                    </tr>
+                    <tr>
+                        <td>Anja</td>
+                        <td>Ravendale</td>
+                        <td>a_r@test.com</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endblock corp%}
+    <div class="container-fluid">
+        {% block app_content %}
+        {% endblock %}
+    </div>
+
+    <div class="container-fluid">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{message}}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {% block footer %}
+        <footer>
+            <p>Hong Xing Accounting Inc. &copy Copyright 2020.01</p>
+        </footer>
+    {% endblock %}
+
+{% endblock %}

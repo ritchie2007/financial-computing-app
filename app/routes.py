@@ -138,8 +138,12 @@ def edit_profile():
         title='Edit profile',
         form=form
     )
+
 @app.route(
     '/corporate'
 )
 def corporate():
-    return redirect(url_for('corporate')) 
+    return render_template(
+        'corporate.html',
+        title='Corporate'
+    )

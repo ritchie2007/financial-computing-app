@@ -86,7 +86,9 @@ marquee img[type="scroll_img"] {
     padding: 5px 5px 5px 5px;
     font-size: 14px;
 }
-
+.table-row{
+    cursor:pointer;
+}
 
 .navbar {
     min-height: 45px;
@@ -104,7 +106,7 @@ marquee img[type="scroll_img"] {
 }
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
     color: red;
-    background-color: rgb(204, 164, 209) !important;
+    background-color: rgb(241, 214, 245) !important;
     z-index: 100;
 }
 @media (min-width: 768px) and (max-width: 1200px) {

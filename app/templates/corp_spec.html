@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{super()}} 
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+{% endblock %}
+
+
+{% block content %}
+<div class="tbl-field"> 
+    <div class="tbl-list">
+        <input class="form-control mb-4" id="tableSearch" type="text"
+            placeholder="Type something to search list items">
+
+        <table class="table table-bordered table-striped table-hover" style="width:100%">
+            <thead>
+              <tr>
+                <th class="th-sm">Corporation Name</th>
+                <th class="th-sm">Business No</th>
+                <th class="th-sm">Registration Name</th>
+                <th class="th-sm">Contact Name</th>
+                <th class="th-sm">Contact Number</th>
+                <th class="th-sm">Modified Date</th>
+                <th class="th-sm">Task Need to do</th>
+              </tr>
+            </thead>
+            <tbody id="myTable">
+              <tr class="table-row" data-href="{{url_for('corp_spec')}}">
+                <td>Tiger Nixon</td>
+                <td data-field="snum" data-formatter="LinkFormatter">123546789</td>
+                <td>Edinburgh</td>
+                <td>Saskatoon</td>
+                <td>416-897-5874</td>
+                <td>2015-02-12</td>
+                <td>9</td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content%}
+{% block scripts %}
+    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+{%- endblock scripts %}

@@ -147,3 +147,12 @@ def corporate():
         'corporate.html',
         title='Corporate'
     )
+
+@app.route(
+    '/Corp_Spec'
+)
+def corp_spec():
+    return render_template(
+        'corp_spec.html',
+        title='Corp_Spec'
+    )

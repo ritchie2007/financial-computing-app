@@ -69,10 +69,11 @@ marquee img[type="scroll_img"] {
 }
 
 .tbl-field {
-    /* position: absolute; */
-    /* top: 130px; */
-    float: left;
-    height: fit-content;
+    position: absolute;
+    top: 130px;
+    bottom: 0px; /*fill remaining height space*/
+    /* float: left; */
+    height: ;
     width: 100%;
     background-color: rgb(234, 236, 233);
     z-index: 50;
@@ -92,9 +93,9 @@ marquee img[type="scroll_img"] {
 }
 nav#sidebar {
     float: left;
-    margin: 30px 50px 10px 20px;
+    margin: 30px 40px 10px 20px;
     width: 220px;
-    /* height: fit-content; */
+    min-height: 500px;
     border: solid thin darkgrey;
 }
 #sidebar .list-unstyled.components a {
@@ -108,7 +109,7 @@ nav#sidebar {
 }
 #edit_field {
     float: left;
-    width: fit-content;
+    width: webkit-fill-available;
 }
 
 

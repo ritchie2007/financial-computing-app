@@ -8,11 +8,11 @@
 
 
 {% block content %}
-<div class="tbl-field"> 
+<div class="container-fluid tbl-field"> 
   <h3>&nbsp Corporation Name: Garrett Winters -- add Name parameter here</h3>
   <nav id="sidebar">
     <ul class="list-unstyled components">
-      <li class="active"><a id="generate" class="links" href="#" data-showdiv="generate">Generation Information</a></li>
+      <li class="active"><a id="general" class="links" href="#" data-showdiv="Div1">General Information</a></li>
       <li><a id="cra" class="links" href="#" data-showdiv="cra">CRA Account</a></li>
       <li><a id="wsib" class="links" href="#" data-showdiv="wsib">WSIB Account</a></li>
       <li><a id="eht" class="links" href="#" data-showdiv="eht">EHT Account</a></li>
@@ -28,11 +28,11 @@
       <li><a id="update" class="links" href="#" data-showdiv="update">Recent Updates</a></li>
     </ul>
 </nav>
-<!--   <a id="Link1" class="links" href="#" data-showdiv="Div1">Link 1</a>
+  <!-- <a id="Link1" class="links" href="#" data-showdiv="General">Link 1</a>
   <a id="Link2" class="links" href="#" data-showdiv="Div2">Link 2</a>
-  <a id="Link3" class="links" href="#" data-showdiv="Div3">Link 3</a>
+  <a id="Link3" class="links" href="#" data-showdiv="Div3">Link 3</a> -->
 
- 下面段落是窗口显示3种不同div内容，注意" style="display:none" 是默认不显示
+ <!-- 下面段落是窗口显示3种不同div内容，注意" style="display:none" 是默认不显示, id="Div1" must Upcase "D"
  
   <div id="Div1" class="divs" style="display:none">
     <h1>This is div 1111</h1>
@@ -42,46 +42,109 @@
   </div>
   <div id="Div3" class="divs" style="display:none">
     <h1>This is div 3333 </h1>
-  </div>
--->
-  <div id="edit_field" class="edit_field">
+  </div> -->
+
+  <div id="edit_field" class="edit_field col-md-9">
+  
+  <div id="Div1" class="divs" style="display: block;">
   <form>
+    <br/>
     <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputEmail4">Email</label>
-        <input type="email" class="form-control" id="inputEmail4">
-      </div>
-      <div class="form-group col-md-6">
-        <label for="inputPassword4">Password</label>
-        <input type="password" class="form-control" id="inputPassword4">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="inputAddress">Address</label>
-      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-    </div>
-    <div class="form-group">
-      <label for="inputAddress2">Address 2</label>
-      <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="inputCity">City</label>
-        <input type="text" class="form-control" id="inputCity">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputState">State</label>
-        <select id="inputState" class="form-control">
-          <option selected>Choose...</option>
-          <option>...</option>
-        </select>
+      <div class="form-group col-md-10">
+        <label for="corpname">Corporation Name</label>
+        <input type="text" class="form-control" id="corpname">
       </div>
       <div class="form-group col-md-2">
-        <label for="inputZip">Zip</label>
-        <input type="text" class="form-control" id="inputZip">
+        <label for="busino">Bussiness No.</label>
+        <input type="text" class="form-control" id="busino">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="regname">Registration Name</label>
+        <input type="text" class="form-control" id="regname">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="mastername">Master Business Name</label>
+        <input type="text" class="form-control" id="mastername">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="licencestart">Licence Start </label>
+        <input type="text" class="form-control" id="licencestart">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="licenceend">Licence End </label>
+        <input type="text" class="form-control" id="licencesend">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="incorpdate">Incorporation Date</label>
+        <input type="text" class="form-control" id="incorpdate">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="incorptype">Incorporation Date</label>
+        <input type="text" class="form-control" id="incorptype">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="anniversarydate">Anniversary Date</label>
+        <input type="text" class="form-control" id="anniversarydate">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="corpkey">Corporation Key</label>
+        <input type="text" class="form-control" id="corpkey">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="corpnum">Corporation Number</label>
+        <input type="text" class="form-control" id="corpnum">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="ontariocorpnum">ON Corp No.</label>
+        <input type="text" class="form-control" id="ontariocorpnum">
+      </div>
+      <div class="form-group col-md-10">
+        <label for="busiaddr">Business Address</label>
+        <input type="text" class="form-control" id="busiaddr">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="othernum1">Other Prov No. 1</label>
+        <input type="text" class="form-control" id="othernum1">
+      </div>
+      <div class="form-group col-md-10">
+        <label for="mailaddr">Mailing Address</label>
+        <input type="text" class="form-control" id="mailaddr">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="othernum2">Other Prov No. 2</label>
+        <input type="text" class="form-control" id="othernum2">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="firstname">CRA Contact Person : First name </label>
+        <input type="text" class="form-control" id="firstname">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="lastname">Lastname</label>
+        <input type="text" class="form-control" id="lastname">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="craphone">CRA Contact Phone</label>
+        <input type="text" class="form-control" id="craphone">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="fax">Office Fax</label>
+        <input type="text" class="form-control" id="fax">
+      </div>
+      <div class="form-group col-md-5">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email">
+      </div>
+      <div class="form-group col-md-7">
+        <label for="website">Website</label>
+        <input type="text" class="form-control" id="website">
+      </div>
+      <div class="form-group col-md-10">
+        <label for="wechat">Wechat/Twitter/LinkedIn/Facebook</label>
+        <input type="text" class="form-control" id="wechat">
       </div>
     </div>
-    <div class="form-group">
+    <br/><br/>
+    <!-- <div class="form-group">
       <div class="form-check">
         <input class="form-check-input" type="checkbox" id="gridCheck">
         <label class="form-check-label" for="gridCheck">
@@ -89,8 +152,17 @@
         </label>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Sign in</button>
+    <button type="submit" class="btn btn-primary">Sign in</button> -->
+
+    <div class="form-group">
+      <label class="col-md-8 control-label" for="button1id">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+      <div class="col-md-8">
+        <button id="buttonsave" name="buttonsave" class="btn btn-success">Save</button>
+        <button id="buttoncancel" name="buttoncancel" class="btn btn-danger">Cancel</button>
+      </div>
+    </div>
   </form>
+  </div>
   </div>
 
 {% endblock content%}
@@ -99,3 +171,5 @@
     <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
 {%- endblock scripts %}
+
+<legend>Form Name</legend>

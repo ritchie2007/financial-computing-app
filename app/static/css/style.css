@@ -93,8 +93,8 @@ marquee img[type="scroll_img"] {
 }
 nav#sidebar {
     float: left;
-    margin: 30px 40px 10px 20px;
-    width: 220px;
+    margin: 30px 10px 10px 20px;
+    width: 180px;
     min-height: 500px;
     border: solid thin darkgrey;
 }
@@ -109,7 +109,25 @@ nav#sidebar {
 }
 #edit_field {
     float: left;
-    width: webkit-fill-available;
+}
+#edit_field .divs .form-row .form-group label {
+    font-size: 12px; /*default */
+    font-weight: 500 !important; /*default  700*/
+    margin-bottom: 0px; /*default  5px*/
+}
+#edit_field .divs .form-row .form-group .form-control {
+}
+#edit_field .divs .form-row .form-group {
+    margin-bottom: 5px;/*default  15px*/
+}
+#edit_field .divs .form-row .form-group button#buttonsave {
+    width: 150px ;
+    float: right ;
+    margin-left: 25px;
+}
+#edit_field .divs .form-row .form-group button#buttoncancel {
+    width: 150px ;
+    float: right ;
 }
 
 

@@ -156,3 +156,12 @@ def corp_spec():
         'corp_spec.html',
         title='Corp_Spec'
     )
+
+@app.route(
+    '/temp'
+)
+def temp():
+    return render_template(
+        'temp.html',
+        title='temp'
+    )

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid tbl-field"> 
+<div class="tbl-field"> 
   <h3>&nbsp Corporation Name: Garrett Winters -- add Name parameter here</h3>
   <div class="col-sm-2">
     <div id="menu" style="position: fixed;">
@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="col-sm-10">
-    <div id="editfield" class="scroll overflow-auto" style="height: 600px; overflow-y: auto;">
+    <div id="editfield" class="scroll overflow-auto" style="height: 700px; overflow-y: auto;">
       <div class="item" id="item1">
         <div class="container">
           <form>
@@ -213,3 +213,9 @@
 </div>
 
 {% endblock %}
+{% block scripts %}
+    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+{%- endblock scripts %}

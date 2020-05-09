@@ -6,7 +6,10 @@ body {
     background-image: url("/static/images/background_image.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    /* min-height: fit-content; */
+    /* background-position: center; */
+    /* position: fixed;   */
+    background-attachment: fixed;/*图片固定，否则窗口缩小出现滚动条时，屏幕下方出现空白，背景图片不能充满*/
 }
 header {
     position: absolute fixed;
@@ -72,9 +75,9 @@ marquee img[type="scroll_img"] {
 
 .tbl-field {
     position: absolute;
+    /* min-height: fit-content;  */
     top: 130px;
-    bottom: 0px; /*fill remaining height space*/
-    /* float: left; */
+    /*bottom: 0px; /*fill remaining height space */
     width: 100%;
     background-color: rgb(234, 236, 233);
     z-index: 50;
@@ -92,7 +95,11 @@ marquee img[type="scroll_img"] {
 .table-row{
     cursor:pointer;
 }
-/* ----- right view page by page -------------
+#editfield {
+    height: 700px; 
+    overflow-y: auto;
+} 
+/* ----- right view page by page 点击左边导航栏右边窗口内容切换-------------
 nav#sidebar {
     float: left;
     margin: 30px 10px 10px 20px;

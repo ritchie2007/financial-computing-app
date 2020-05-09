@@ -13,7 +13,7 @@
         <input class="form-control mb-4" id="tableSearch" type="text"
             placeholder="Type something to search list items">
         <br/>
-        <table class="table table-bordered table-striped table-hover" style="width:100%">
+        <table class="table table-bordered table-striped table-hover">
             <thead>
               <tr>
                 <th class="th-sm">Corporation Name</th>
@@ -322,4 +322,5 @@
     <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
     <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
 {%- endblock scripts %}

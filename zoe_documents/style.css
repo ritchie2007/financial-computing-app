@@ -3,11 +3,11 @@ html {
     margin: 0px;
 }
 body {
-    background-color: #2f3035;
     background-image: url(background_image.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    background-attachment: fixed;/*图片固定，否则窗口缩小出现滚动条时，屏幕下方出现空白，背景图片不能充满*/
+     
 }
 container {
     margin-left: auto;

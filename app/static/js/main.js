@@ -67,3 +67,27 @@ $(document).ready(function () {
       });
   });
 });
+//根据窗口大小设置动态CSS，注意var height_val得到的结果总是固定的(CSS文件中设定的值)，
+//如果这个函数里使用location.reload(); 则是死循环，屏幕一直抖动
+//height: '100%' 目的是 去掉窗口太大时，下面漏出的背景
+//height: 'fit-content' 目的是 窗口缩小出现滚动条时，而此时滚动窗口尺寸大于屏幕尺寸，下面出现背景
+$(document).ready(function () {
+    $(function () {  
+        var height_window=$(window).height();
+        var height_val = $('.tbl-field').css("height");
+           //此处不严谨，可以通过$(window).height()获取整个屏幕高度后，结合屏幕的内容高度$（‘’）.height()，相减得出判断条件。
+        if(height_window>880){
+                $('.tbl-field').css({height: '100%'});
+        } else {
+            $('.tbl-field').css({height: 'fit-content'});
+        };
+        console.log(height_window);
+        console.log(height_val);
+    });
+})
+//改变窗口大小后，自动刷新，如想清楚cache则需要location.reload(true);，这是配合上面的动态CSS使用的
+$(document).ready(function () {
+    $(window).bind('resize', function() {
+        location.reload();
+    });
+});

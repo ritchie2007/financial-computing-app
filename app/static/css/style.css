@@ -9,9 +9,11 @@ body {
     background-position: center;
 }
 header {
+    position: absolute fixed;
+    top: 0;
     height:80px;
+    width: 100%;
     background-color: rgba(128, 218, 26, 0.432);
-    margin: 0;
     padding-left: 2%;
     border: 0px;
 }
@@ -73,7 +75,6 @@ marquee img[type="scroll_img"] {
     top: 130px;
     bottom: 0px; /*fill remaining height space*/
     /* float: left; */
-    height: ;
     width: 100%;
     background-color: rgb(234, 236, 233);
     z-index: 50;
@@ -91,6 +92,7 @@ marquee img[type="scroll_img"] {
 .table-row{
     cursor:pointer;
 }
+/* ----- right view page by page -------------
 nav#sidebar {
     float: left;
     margin: 30px 10px 10px 20px;
@@ -111,14 +113,12 @@ nav#sidebar {
     float: left;
 }
 #edit_field .divs .form-row .form-group label {
-    font-size: 12px; /*default */
-    font-weight: 500 !important; /*default  700*/
-    margin-bottom: 0px; /*default  5px*/
-}
-#edit_field .divs .form-row .form-group .form-control {
+    font-size: 12px; 
+    font-weight: 500 !important; *default  700*
+    margin-bottom: 0px; *default  5px*
 }
 #edit_field .divs .form-row .form-group {
-    margin-bottom: 5px;/*default  15px*/
+    margin-bottom: 5px;*default  15px*
 }
 #edit_field .divs .form-row .form-group button#buttonsave {
     width: 150px ;
@@ -128,7 +128,7 @@ nav#sidebar {
 #edit_field .divs .form-row .form-group button#buttoncancel {
     width: 150px ;
     float: right ;
-}
+} */
 
 
 
@@ -139,6 +139,7 @@ nav#sidebar {
     margin: 0;
     border: 0;
     padding: 0;
+    /* position: fixed; */
 }
 .navbar-nav li a {
     font-size: 14px;

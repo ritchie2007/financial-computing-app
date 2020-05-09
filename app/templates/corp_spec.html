@@ -6,299 +6,210 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
 {% endblock %}
 
-
 {% block content %}
 <div class="container-fluid tbl-field"> 
   <h3>&nbsp Corporation Name: Garrett Winters -- add Name parameter here</h3>
-  <nav id="sidebar">
-    <ul class="list-unstyled components">
-      <li class="active"><a id="general" class="links" href="#" data-showdiv="Div1">General Information</a></li>
-      <li><a id="cra" class="links" href="#" data-showdiv="Div2">CRA Account</a></li>
-      <li><a id="wsib" class="links" href="#" data-showdiv="Div3">WSIB Account</a></li>
-      <li><a id="eht" class="links" href="#" data-showdiv="Div3">EHT Account</a></li>
-      <li><a id="other" class="links" href="#" data-showdiv="Div3">Other Account</a></li>
-      <li><a id="structure" class="links" href="#" data-showdiv="Div3">Corporate Structure</a></li>
-      <li><a id="operation" class="links" href="#" data-showdiv="Div3">Corporate Operation</a></li>
-      <li><a id="bank" class="links" href="#" data-showdiv="bank">Bank Information</a></li>
-      <li><a id="software" class="links" href="#" data-showdiv="software">Accounting Software</a></li>
-      <li><a id="engage" class="links" href="#" data-showdiv="engage">Engagement</a></li>
-      <li><a id="director" class="links" href="#" data-showdiv="director">Director Information</a></li>
-      <li><a id="share" class="links" href="#" data-showdiv="share">Share Holder</a></li>
-      <li><a id="task" class="links" href="#" data-showdiv="task">Task Information</a></li>
-      <li><a id="update" class="links" href="#" data-showdiv="update">Recent Updates</a></li>
-    </ul>
-  </nav>
-  <!-- <a id="Link1" class="links" href="#" data-showdiv="General">Link 1</a>
-  <a id="Link2" class="links" href="#" data-showdiv="Div2">Link 2</a>
-  <a id="Link3" class="links" href="#" data-showdiv="Div3">Link 3</a> -->
- <!-- 下面段落是窗口显示3种不同div内容，注意" style="display:none" 是默认不显示, id="Div1" must Upcase "D"
-  <div id="Div1" class="divs" style="display:none"><h1>This is div 1111</h1></div>
-  <div id="Div2" class="divs" style="display:none"><h1>This is div 2222 </h1></div>
-  <div id="Div3" class="divs" style="display:none"><h1>This is div 3333 </h1></div> -->
-
-  <div id="edit_field" class="edit_field col-md-10">
-    <!-- General infomation -->
-    <div id="Div1" class="divs" style="display: block;"> 
-      <form>
-        <br/>
-        <div class="form-row">
-          <div class="form-group col-md-10">
-            <label for="corpname">Corporation Name</label>
-            <input type="text" class="form-control" id="corpname">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="busino">Bussiness No.</label>
-            <input type="text" class="form-control" id="busino">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="regname">Registration Name</label>
-            <input type="text" class="form-control" id="regname">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="mastername">Master Business Name</label>
-            <input type="text" class="form-control" id="mastername">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="licencestart">Licence Start </label>
-            <input type="text" class="form-control" id="licencestart">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="licenceend">Licence End </label>
-            <input type="text" class="form-control" id="licencesend">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="incorpdate">Incorporation Date</label>
-            <input type="text" class="form-control" id="incorpdate">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="incorptype">Incorporation Date</label>
-            <input type="text" class="form-control" id="incorptype">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="anniversarydate">Anniversary Date</label>
-            <input type="text" class="form-control" id="anniversarydate">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="corpkey">Corporation Key</label>
-            <input type="text" class="form-control" id="corpkey">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="corpnum">Corporation Number</label>
-            <input type="text" class="form-control" id="corpnum">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="ontariocorpnum">ON Corp No.</label>
-            <input type="text" class="form-control" id="ontariocorpnum">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="busiaddr">Business Address</label>
-            <input type="text" class="form-control" id="busiaddr">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="othernum1">Other Prov No. 1</label>
-            <input type="text" class="form-control" id="othernum1">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="mailaddr">Mailing Address</label>
-            <input type="text" class="form-control" id="mailaddr">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="othernum2">Other Prov No. 2</label>
-            <input type="text" class="form-control" id="othernum2">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="firstname">CRA Contact Person : First name </label>
-            <input type="text" class="form-control" id="firstname">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="lastname">Lastname</label>
-            <input type="text" class="form-control" id="lastname">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="craphone">CRA Contact Phone</label>
-            <input type="text" class="form-control" id="craphone">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="fax">Office Fax</label>
-            <input type="text" class="form-control" id="fax">
-          </div>
-          <div class="form-group col-md-5">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" id="email">
-          </div>
-          <div class="form-group col-md-7">
-            <label for="website">Website</label>
-            <input type="text" class="form-control" id="website">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="wechat">Wechat/Twitter/LinkedIn/Facebook</label>
-            <input type="text" class="form-control" id="wechat">
-          </div>
-          <br/>
-          <!-- <div class="form-group">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck">
-              <label class="form-check-label" for="gridCheck">
-                Check me out
-              </label>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary">Sign in</button> -->
-          <div class="form-group">
-            <label class="col-md-10 control-label" for="button1id">&nbsp&nbsp</label>
-            <div class="col-md-10">
-              <button id="buttonsave" name="buttonsave" class="btn btn-success">Save</button>
-              <button id="buttoncancel" name="buttoncancel" class="btn btn-danger">Cancel</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <!-- CRA Account -->
-    <div id="Div2" class="divs" style="display: none;">
-      <form>
-        <br/>
-        <div class="form-row">
-          <div class="form-group col-md-2">
-            <label for="sidebar2-1">Tax Year End</label>
-            <input type="text" class="form-control" id="sidebar2-1">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="sidebar2-2">HST Reporting</label>
-            <input type="text" class="form-control" id="sidebar2-2">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="sidebar2-3">Reporting Method</label>
-            <input type="text" class="form-control" id="sidebar2-3">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="sidebar2-4">Heporting No.</label>
-            <input type="text" class="form-control" id="sidebar2-4">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="sidebar2-5">Payroll Acco No.</label>
-            <input type="text" class="form-control" id="sidebar2-5">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="sidebar2-6">HST Account</label>
-            <input type="text" class="form-control" id="sidebar2-6">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="sidebar2-7">Payroll Account and T4</label>
-            <input type="text" class="form-control" id="sidebar2-7">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="sidebar2-8">Subcontractor and T4A</label>
-            <input type="text" class="form-control" id="sidebar2-8">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="sidebar2-9">Dividend and T5 </label>
-            <input type="text" class="form-control" id="sidebar2-9">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="sidebar2-10">Withholding Tax Account </label>
-            <input type="text" class="form-control" id="sidebar2-10">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="sidebar2-11">Account No.</label>
-            <input type="text" class="form-control" id="sidebar2-11">
-          </div>
-          <div class="form-group col-md-9">
-            <label for="sidebar2-12">CRA other account</label>
-            <input type="text" class="form-control" id="sidebar2-12">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="sidebar2-13">Account No.</label>
-            <input type="text" class="form-control" id="sidebar2-13">
-          </div>
-          <br/>
-          <div class="form-group">
-            <label class="col-md-10 control-label" for="button1id">&nbsp&nbsp</label>
-            <div class="col-md-10">
-              <button id="buttonsave" name="buttonsave" class="btn btn-success">Save</button>
-              <button id="buttoncancel" name="buttoncancel" class="btn btn-danger">Cancel</button>
-            </div>
-          </div>
-        </div>  
-      </form>
-    </div>
-
-    <!-- WSIB -->
-    <div id="Div3" class="divs" style="display: none;">
-      <form>
-        <br/>
-        <div class="form-row">
-          <div class="form-group col-md-2">
-            <label for="sidebar3-1">Tax Year End</label>
-            <input type="text" class="form-control" id="sidebar3-1">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="sidebar3-2">HST Reporting</label>
-            <input type="text" class="form-control" id="sidebar3-2">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="sidebar3-3">Reporting Method</label>
-            <input type="text" class="form-control" id="sidebar3-3">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="sidebar3-4">Heporting No.</label>
-            <input type="text" class="form-control" id="sidebar3-4">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="sidebar3-5">Payroll Acco No.</label>
-            <input type="text" class="form-control" id="sidebar3-5">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="sidebar3-6">HST Account</label>
-            <input type="text" class="form-control" id="sidebar3-6">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="sidebar3-7">Payroll Account and T4</label>
-            <input type="text" class="form-control" id="sidebar3-7">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="sidebar3-8">Subcontractor and T4A</label>
-            <input type="text" class="form-control" id="sidebar3-8">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="sidebar3-9">Dividend and T5 </label>
-            <input type="text" class="form-control" id="sidebar3-9">
-          </div>
-          <div class="form-group col-md-10">
-            <label for="sidebar3-10">Withholding Tax Account </label>
-            <input type="text" class="form-control" id="sidebar3-10">
-          </div>
-          <div class="form-group col-md-2">
-            <label for="sidebar3-11">Account No.</label>
-            <input type="text" class="form-control" id="sidebar3-11">
-          </div>
-          <div class="form-group col-md-9">
-            <label for="sidebar3-12">CRA other account</label>
-            <input type="text" class="form-control" id="sidebar3-12">
-          </div>
-          <div class="form-group col-md-3">
-            <label for="sidebar3-13">Account No.</label>
-            <input type="text" class="form-control" id="sidebar3-13">
-          </div>
-          <br/>
-          <div class="form-group">
-            <label class="col-md-10 control-label" for="button1id">&nbsp&nbsp</label>
-            <div class="col-md-10">
-              <button id="buttonsave" name="buttonsave" class="btn btn-success">Save</button>
-              <button id="buttoncancel" name="buttoncancel" class="btn btn-danger">Cancel</button>
-            </div>
-          </div>
-        </div>  
-      </form>
+  <div class="col-sm-2">
+    <div id="menu" style="position: fixed;">
+        <ul>
+          <li><a href="#item1" class="sidenav-first sidenav item1">General Information</a></li>
+          <li><a href="#item2" class="sidenav-first item2">CRA Account</a></li>
+          <li><a href="#item3" class="sidenav-first item3">WSIB Account</a></li>
+          <li><a href="#item4" class="sidenav-first item4">EHT Account</a></li>
+          <li><a href="#item5" id="item-last" class="sidenav-first item5">Other Account</a></li>
+          <!-- <li><a href="#item6" class="sidenav-first item6">Corporate Structure</a></li>
+          <li><a href="#item7" class="sidenav-first item7">Corporate Operation</a></li>
+          <li><a href="#item8" class="sidenav-first item8">Bank Information</a></li>
+          <li><a href="#item9" class="sidenav-first item9">Accounting Software</a></li>
+          <li><a href="#item10" class="sidenav-first item10">Engagement</a></li>
+          <li><a href="#item11" class="sidenav-first item11">Director Information</a></li>
+          <li><a href="#item12" class="sidenav-first item12">Share Holder</a></li>
+          <li><a href="#item13" class="sidenav-first item13">Task Information</a></li>
+          <li><a href="#item14" id="item-last" class="sidenav-first item14">Recent Updates</a></li> -->
+        </ul>
     </div>
   </div>
+  <div class="col-sm-10">
+    <div id="editfield" class="scroll overflow-auto" style="height: 600px; overflow-y: auto;">
+      <div class="item" id="item1">
+        <div class="container">
+          <form>
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label for="corpname">Corporation Name</label>
+              <input type="text" class="form-control" id="corpname">
+            </div>
+            <div class="form-group col-md-2">
+              <label for="busino">Bussiness No.</label>
+              <input type="text" class="form-control" id="busino">
+            </div>
+              <div class="form-group col-md-4">
+                <label for="regname">Registration Name</label>
+                <input type="text" class="form-control" id="regname">
+              </div>
+              <br><br><br><br><br><br><br><br>
+              <div class="form-group col-md-10">
+                <label for="wechat">Wechat/Twitter/LinkedIn/Facebook</label>
+                <input type="text" class="form-control" id="wechat">
+              </div>
+              <br/>
+              <div class="form-group">
+                <label class="col-md-10 control-label" for="button1id">&nbsp&nbsp</label>
+                <div class="col-md-10">
+                  <button id="buttonsave" name="buttonsave" class="btn btn-success">Save</button>
+                  <button id="buttoncancel" name="buttoncancel" class="btn btn-danger">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+        <!-- CRA Account -->
+      <div class="item" id="item2">
+        <div class="container">
+          <form>
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label for="corpname">2222</label>
+              <input type="text" class="form-control" id="corpname">
+            </div>
+            <div class="form-group col-md-2">
+              <label for="busino">Bussiness No.</label>
+              <input type="text" class="form-control" id="busino">
+            </div>
+              <div class="form-group col-md-4">
+                <label for="regname">Registration Name</label>
+                <input type="text" class="form-control" id="regname">
+              </div>
+              <br><br><br><br><br><br><br><br>
+              <div class="form-group col-md-10">
+                <label for="wechat">Wechat/Twitter/LinkedIn/Facebook</label>
+                <input type="text" class="form-control" id="wechat">
+              </div>
+              <br/>
+              <div class="form-group">
+                <label class="col-md-10 control-label" for="button1id">&nbsp&nbsp</label>
+                <div class="col-md-10">
+                  <button id="buttonsave" name="buttonsave" class="btn btn-success">Save</button>
+                  <button id="buttoncancel" name="buttoncancel" class="btn btn-danger">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- 33333 -->
+      <div class="item" id="item3">
+        <div class="container">
+          <form>
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label for="corpname">3333</label>
+              <input type="text" class="form-control" id="corpname">
+            </div>
+            <div class="form-group col-md-2">
+              <label for="busino">Bussiness No.</label>
+              <input type="text" class="form-control" id="busino">
+            </div>
+              <div class="form-group col-md-4">
+                <label for="regname">Registration Name</label>
+                <input type="text" class="form-control" id="regname">
+              </div>
+              <br><br><br><br><br><br><br><br>
+              <div class="form-group col-md-10">
+                <label for="wechat">Wechat/Twitter/LinkedIn/Facebook</label>
+                <input type="text" class="form-control" id="wechat">
+              </div>
+              <br/>
+              <div class="form-group">
+                <label class="col-md-10 control-label" for="button1id">&nbsp&nbsp</label>
+                <div class="col-md-10">
+                  <button id="buttonsave" name="buttonsave" class="btn btn-success">Save</button>
+                  <button id="buttoncancel" name="buttoncancel" class="btn btn-danger">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- 4444 -->
+      <div class="item" id="item4">
+        <div class="container">
+          <form>
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label for="corpname">4444</label>
+              <input type="text" class="form-control" id="corpname">
+            </div>
+            <div class="form-group col-md-2">
+              <label for="busino">Bussiness No.</label>
+              <input type="text" class="form-control" id="busino">
+            </div>
+              <div class="form-group col-md-4">
+                <label for="regname">Registration Name</label>
+                <input type="text" class="form-control" id="regname">
+              </div>
+              <br><br><br><br><br><br><br><br>
+              <div class="form-group col-md-10">
+                <label for="wechat">Wechat/Twitter/LinkedIn/Facebook</label>
+                <input type="text" class="form-control" id="wechat">
+              </div>
+              <br/>
+              <div class="form-group">
+                <label class="col-md-10 control-label" for="button1id">&nbsp&nbsp</label>
+                <div class="col-md-10">
+                  <button id="buttonsave" name="buttonsave" class="btn btn-success">Save</button>
+                  <button id="buttoncancel" name="buttoncancel" class="btn btn-danger">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- 5555 -->
+      <div class="item" id="item5">
+        <div class="container">
+          <form>
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label for="corpname">5555</label>
+              <input type="text" class="form-control" id="corpname">
+            </div>
+            <div class="form-group col-md-2">
+              <label for="busino">Bussiness No.</label>
+              <input type="text" class="form-control" id="busino">
+            </div>
+              <div class="form-group col-md-4">
+                <label for="regname">Registration Name</label>
+                <input type="text" class="form-control" id="regname">
+              </div>
+              <br><br><br><br><br><br><br><br>
+              <div class="form-group col-md-10">
+                <label for="wechat">Wechat/Twitter/LinkedIn/Facebook</label>
+                <input type="text" class="form-control" id="wechat">
+              </div>
+              <br/>
+              <div class="form-group">
+                <label class="col-md-10 control-label" for="button1id">&nbsp&nbsp</label>
+                <div class="col-md-10">
+                  <button id="buttonsave" name="buttonsave" class="btn btn-success">Save</button>
+                  <button id="buttoncancel" name="buttoncancel" class="btn btn-danger">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
 
-{% endblock content%}
-{% block scripts %}
-    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
-    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
-    <script src="{{url_for('static', filename='js/main.js')}}"></script>
-{%- endblock scripts %}
 
-<legend>Form Name</legend>
+
+
+    </div>
+</div>
+
+{% endblock %}

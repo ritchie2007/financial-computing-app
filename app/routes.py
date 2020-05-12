@@ -4,7 +4,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
-from app.models import User
+from app.models import User, Data_table
 
 @app.before_request
 def before_request():
@@ -165,3 +165,49 @@ def temp():
         'temp.html',
         title='temp'
     )
+
+# **** following is to try Data table CRUD functions ******
+# This is the data_table root on all our employee data
+@app.route(
+    '/data_table'
+)
+def data_table():
+    all_data = Data_table.query.all() # Data_table is defined in models.py
+    return render_template(
+        'data_table.html',
+        employees = all_data,
+        title = 'data_table'
+    )
+#this route is for inserting data to mysql database via html forms
+@app.route('/data_table/insert', methods = ['POST'])
+def insert():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        phone = request.form['phone']
+ 
+        my_data = Data_table(name, email, phone)
+        db.session.add(my_data)
+        db.session.commit()
+        flash("Employee Inserted Successfully")
+        return redirect(url_for('data_table'))
+#this is our update route where we are going to update our employee
+@app.route('/data_table/update', methods = ['GET', 'POST'])
+def update():
+    if request.method == 'POST':
+        my_data = Data_table.query.get(request.form.get('id'))
+        my_data.name = request.form['name']
+        my_data.email = request.form['email']
+        my_data.phone = request.form['phone']
+        db.session.commit()
+        flash("Employee Updated Successfully")
+        return redirect(url_for('data_table'))
+#This route is for deleting our employee
+@app.route('/data_table/delete/<id>/', methods = ['GET', 'POST'])
+def delete(id):
+    my_data = Data_table.query.get(id)
+    db.session.delete(my_data)
+    db.session.commit()
+    flash("Employee Deleted Successfully")
+    return redirect(url_for('data_table'))
+ 

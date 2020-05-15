@@ -98,7 +98,24 @@ marquee img[type="scroll_img"] {
 #editfield {
     height: 700px; 
     overflow-y: auto;
-} 
+}
+form .form-row .form-group label {
+    font-size: 12px; 
+    font-weight: 500 !important; /*default  700*/
+    margin-bottom: 0px; /*default  5px*/
+}
+form .form-row .form-group {
+    margin: 0px 0px 0px 0px; /*default  5px*/
+}
+#select-btn .btn.btn-success.timesheetbtn:focus, #select-btn .btn.btn-success.timesheetbtn:hover {
+    color: red;
+    border-color: #4cae4c;
+    background-color: #5cb85c;
+}
+#select-btn .btn.btn-success.timesheetbtn.active {
+    color: red;
+    background-color: #5cb85c;
+}
 /* ----- right view page by page 点击左边导航栏右边窗口内容切换-------------
 nav#sidebar {
     float: left;

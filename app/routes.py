@@ -158,6 +158,15 @@ def corp_spec():
     )
 
 @app.route(
+    '/timesheet'
+)
+def timesheet():
+    return render_template(
+        'timesheet.html',
+        title='timesheet'
+    )
+
+@app.route(
     '/temp'
 )
 def temp():

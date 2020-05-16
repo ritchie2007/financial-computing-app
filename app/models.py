@@ -36,7 +36,7 @@ class Post(db.Model):
         return '<Post {}>'.format(self.body)
 
 class Data_table(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(100))
     phone = db.Column(db.String(100))
@@ -44,3 +44,59 @@ class Data_table(db.Model):
         self.name = name
         self.email = email
         self.phone = phone
+
+class activity_code(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    def __init__(self, id, name):
+        self.id = id
+        self.name = name
+
+class Dailyentry(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(12))
+    staff = db.Column(db.String(80))
+    starttime = db.Column(db.String(10))
+    calhr = db.Column(db.Float)
+    workhr = db.Column(db.Float)
+    comment = db.Column(db.String(200))
+    taskname = db.Column(db.String(100))
+    tasktype = db.Column(db.String(100))
+    taskcode = db.Column(db.Integer)
+    corp1 = db.Column(db.String(100))
+    corp2 = db.Column(db.String(100))
+    corp3 = db.Column(db.String(100))
+    corp4 = db.Column(db.String(100))
+    taskcontent = db.Column(db.Text)
+
+    def __init__(
+        self,
+        date,
+        staff,
+        starttime,
+        calhr,
+        workhr,
+        comment,
+        taskname,
+        tasktype,
+        taskcode,
+        corp1,
+        corp2,
+        corp3,
+        corp4,
+        taskcontent
+    ):
+        self.date = date
+        self.staff = staff
+        self.starttime = starttime
+        self.calhr = calhr
+        self.workhr = workhr
+        self.comment = comment
+        self.taskname = taskname
+        self.tasktype = tasktype
+        self.taskcode = taskcode
+        self.corp1 = corp1
+        self.corp2 = corp2
+        self.corp3 = corp3
+        self.corp4 = corp4
+        self.taskcontent = taskcontent

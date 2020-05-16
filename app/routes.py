@@ -4,7 +4,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
-from app.models import User, Data_table
+from app.models import User, Data_table, activity_code, Dailyentry
 
 @app.before_request
 def before_request():
@@ -161,10 +161,54 @@ def corp_spec():
     '/timesheet'
 )
 def timesheet():
+    all_data = activity_code.query.all()
     return render_template(
         'timesheet.html',
+        code_types=all_data,
         title='timesheet'
     )
+#timesheet dailyentry insert
+@app.route('/insert', methods=['POST'])
+def insert():
+    if request.method == 'POST':
+        #print('\n\nForm data\n{}\n\n'.format(request.form))
+        date = request.form['timesheet1-1']
+        staff = request.form['timesheet1-2']
+        starttime = request.form['timesheet1-3']
+        calhr = float(request.form['timesheet1-4'])
+        workhr = float(request.form['timesheet1-6'])
+        comment = request.form['timesheet1-15']
+        taskname = request.form['timesheet1-7']
+        tasktype = request.form['timesheet1-8']
+        taskcode = request.form['timesheet1-9']
+        corp1 = request.form['timesheet1-10']
+        corp2 = request.form['timesheet1-12']
+        corp3 = request.form['timesheet1-13']
+        corp4 = request.form['timesheet1-14']
+        taskcontent = request.form['timesheet1-11']
+
+        my_data = Dailyentry(
+            date,
+            staff,
+            starttime,
+            calhr,
+            workhr,
+            comment,
+            taskname,
+            tasktype,
+            taskcode,
+            corp1,
+            corp2,
+            corp3,
+            corp4,
+            taskcontent 
+        )
+        db.session.add(my_data)
+        db.session.commit()
+        flash("Dailyentry Inserted Successfully")
+        return render_template(
+            'timesheet.html'
+        )
 
 @app.route(
     '/temp'
@@ -178,18 +222,18 @@ def temp():
 # **** following is to try Data table CRUD functions ******
 # This is the data_table root on all our employee data
 @app.route(
-    '/data_table'
+    '/data_crud'
 )
-def data_table():
+def data_crud():
     all_data = Data_table.query.all() # Data_table is defined in models.py
     return render_template(
-        'data_table.html',
-        employees = all_data,
-        title = 'data_table'
+        'data_crud.html',
+        employees=all_data,
+        title='data_crud'
     )
 #this route is for inserting data to mysql database via html forms
-@app.route('/data_table/insert', methods = ['POST'])
-def insert():
+@app.route('/insertion', methods=['POST'])
+def insertion():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
@@ -199,9 +243,9 @@ def insert():
         db.session.add(my_data)
         db.session.commit()
         flash("Employee Inserted Successfully")
-        return redirect(url_for('data_table'))
+        return redirect(url_for('data_crud'))
 #this is our update route where we are going to update our employee
-@app.route('/data_table/update', methods = ['GET', 'POST'])
+@app.route('/update', methods=['GET', 'POST'])
 def update():
     if request.method == 'POST':
         my_data = Data_table.query.get(request.form.get('id'))
@@ -210,13 +254,13 @@ def update():
         my_data.phone = request.form['phone']
         db.session.commit()
         flash("Employee Updated Successfully")
-        return redirect(url_for('data_table'))
+        return redirect(url_for('data_crud'))
 #This route is for deleting our employee
-@app.route('/data_table/delete/<id>/', methods = ['GET', 'POST'])
+@app.route('/delete/<id>/', methods=['GET', 'POST'])
 def delete(id):
     my_data = Data_table.query.get(id)
     db.session.delete(my_data)
     db.session.commit()
     flash("Employee Deleted Successfully")
-    return redirect(url_for('data_table'))
+    return redirect(url_for('data_crud'))
  

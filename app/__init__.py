@@ -1,6 +1,7 @@
 from flask import Flask, request
 
 app = Flask(__name__)
+app.debug = True
 app.config['SECRET_KEY'] = 'Ritchie'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databases/users.db'
 

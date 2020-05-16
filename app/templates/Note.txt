@@ -1,6 +1,9 @@
+            Flask CRUD Application Full Course With SQLAlchemy | Python Flask
+            https://www.youtube.com/watch?v=XTpLbBJTOM4
+            https://codeloop.org/flask-crud-application-with-sqlalchemy/
             不过如果js不是写在html页面里，而是作为单独的.js外连接,那么是无法使用jinja的template语法的，像是{{}}这些都无法使用。
             "flask模板template 与js 的一些问题" https://spacewander.github.io/explore-flask-zh/8-templates.html
-            
+            $env:FLASK_ENV = "development" 在flask vs code虚拟机里输入，就打开了调试模式，出错时会在browser里面打印 出错误
             $(("#"+$(this).attr("targetgroup"))+" form #timesheet1-3").val(t);
             console.log(d.toDateString()); >> Thu May 14 2020
             console.log(d.toLocaleDateString()); >> 5/14/2020
@@ -19,5 +22,9 @@
             localStorage.setItem('Inputgroup01_01', 'value'); //即便关了浏览器，重新打开后依然存在， 除非clear历史
             sessionStorage.setItem('name', 'value'); //刷新reload浏览器，依然存在，关闭后当前page后，消失
             localStorage.getItem('Inputgroup01_01')；//注意 变量名依然 使用引号
+
+            create table activity_code (id Integer PRIMARY KEY, name text)
+            insert into activity_code (id, name) values 
+            (101, '101 _ Bookkeeping'), (103, '103 _ Payroll Preparation'), (105, '105 _ HST/GST Matters'), (107, '107 _ T2 Tax Preparation'), (109, '109 _ T1 Tax return'), (111, '111 _ T4/T4A/T5'), (113, '113 _ EHT'), (115, '115 _ WSIB'), (117, '117 _ CRA Audit/Review'), (119, '119 _ Preparation'), (201, '201 _ TaxRepresentative Authorization'), (203, '203 _ Incorporation/MasterBusinessLicense/BN/Address'), (205, '205 _ Initial Return'), (207, '207 _ Annual Filing'), (301, '301 _ GST Rebate'), (303, '303 _ NR Speculation Tax-ON'), (305, '305 _ ITN Application'), (307, '307 _ NRK Account Application'), (309, '309 _ NR4.PartXIII'), (311, '311 _ T1159.S216NRRent'), (313, '313 _ T2062/T2064NRCert'), (315, '315 _ T1S217NRSale'), (401, '401 _ Client Consulting'), (403, '403 _ Client personal  meeting '), (405, '405 _ Client Correspondence (Phone/Portal/Fax/E-mail)'), (407, '407 _ Training to Client'), (409, '409 _ Client Related Travel Time'), (411, '411 _ Back up Scanning  Printing, Assembly & Filing'),(413, '413 _ Billing & Collection (Chargeable)'), (415, '415 _ Tax planning'), (417, '417 _ Insurance/Trust Matters'),(419, '419 _ Estate & Succession Planning'), (501, '501 _ Lunch/Break time'), (503, '503 _ Enter Time Sheet'),(505, '505 _ Vacation/Statutory Holidays/Unpaid Leave'), (507, '507 _ Staff Self learning'),(509, '509 _ Staff Coaching & Training'), (511, '511 _ General Administration/HR/Personnel/Recruiting'), (513, '513 _ Software Improvement/ Information Technology')
 
             

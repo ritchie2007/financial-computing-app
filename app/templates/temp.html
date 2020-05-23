@@ -2,102 +2,37 @@
 
 {% block styles %}
     {{super()}} 
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.css')}}"> -->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-datetimepicker.min.css')}}">
 {% endblock %}
 
 {% block content %}
-
-<div class="form-group" style="color: white;">
-  <div class="col-sm-3">
-      <div class="form-group">
-          <label class="col-sm-5 control-label">产品价格</label>
-          <div class="col-sm-6">
-              <input class="form-control" name="prices">
-          </div>
+<div class="col-sm-6">
+  <div class="input-group date" data-provide="datepicker">
+    <input type="text" class="form-control" id="repdate" name="repdate" placeholder="Report date" required>
+      <div class="input-group-addon">
+        <span class="glyphicon glyphicon-time"></span>
       </div>
-  </div>
-  <div class="col-sm-3">
-      <div class="form-group">
-          <label class="col-sm-5 control-label">招生省份</label>
-          <div class="col-sm-6">
-              <select class="form-control" name="provinces"></select>
-          </div>
-      </div>
-  </div>
-  <div class="col-sm-2">
-      <button type="button" class="btn btn-default" οnclick="ProductInfoDlg.addPrices()"><i class="fa fa-plus"></i>
-      </button>
-  </div>
-</div> 
-<div class="form-group hide" id="priceTemplate">
-  <div class="col-sm-3">
-      <div class="form-group">
-          <label class="col-sm-5 control-label">产品价格</label>
-          <div class="col-sm-6">
-              <input class="form-control" name="pricesTemplate">
-          </div>
-      </div>
-  </div>
-  <div class="col-sm-3">
-      <div class="form-group">
-          <label class="col-sm-5 control-label">招生省份</label>
-          <div class="col-sm-6">
-              <select class="form-control" name="provincesTemplate"></select>
-          </div>
-      </div>
-  </div>
-  <div class="col-sm-2">
-      <button type="button" class="btn btn-default" οnclick="ProductInfoDlg.delPrices(this)"><i class="fa fa-minus"></i>
-      </button>
-  </div>
+   </div>
 </div>
 
-<script style="text/javascript">
-  /* 动态添加input组 */
-  ProductInfoDlg.addPrices = function () {
-      if (this.name > 0 && index == 0) {
-          index = this.name;
-      }
-      index++;
-      var $template = $('#priceTemplate'),
-          $clone = $template
-              .clone()
-              .removeClass('hide')
-              .removeAttr('id')
-              .attr('data-price-index', index)
-              .insertBefore($template);
-      $clone
-          .find('[name="pricesTemplate"]').attr('name', 'prices').end()
-          .find('[name="provincesTemplate"]').attr('name', 'provinces').end();
-  };
-  /**
-  * 动态移除input组
-  */
-  ProductInfoDlg.delPrices = function (e) {
-      var target = $(e).parents(".form-group");
-      target.remove();
-  };
-  /**
-  * 获取并处理价格和省份数据
-  */
-  ProductInfoDlg.setProvincePrice = function () {
-      var provincePrice = [];
-      var prices = $("*[name='prices']").map(function () {
-          return $(this).val()
-      }).get();
-      var provinces = $("*[name='provinces']").map(function () {
-          return $(this).val()
-      }).get();
-      for (var i = 0; i < prices.length; i++) {
-          if (!prices[i] || !provinces[i]) {
-              continue;
-          }
-          provincePrice.push({price: prices[i], province: provinces[i]})
-      }
-      this.productInfoData['provincePrice'] = provincePrice.length == 0 ? null : JSON.stringify(provincePrice);
-  };
-</script>
 
-{% endblock content%}
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrap.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='js/less.js')}}"></script>
+<script src="{{url_for('static', filename='js/moment.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrap-datetimepicker.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrap-datetimepicker.min.js')}}"></script>
+
+<script type="text/javascript">
+// $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+  $('[data-provide="datepicker"]').datetimepicker({
+    format: 'hh:ii'
+});
+// $(document).ready(function() {
+        // $('#datetimepicker').datetimepicker();
+// });
+</script>
+{% endblock content %}
 

@@ -4,7 +4,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
-from app.models import User, Data_table, activity_code, Dailyentry
+from app.models import User, Data_table, activity_code, Dailyentry, Mulform
 
 @app.before_request
 def before_request():
@@ -99,7 +99,6 @@ def register():
                 form=form
             )
 
-
 @app.route('/profile/<username>')
 @login_required
 def profile(username):
@@ -157,19 +156,10 @@ def corp_spec():
         title='Corp_Spec'
     )
 
-@app.route(
-    '/timesheet'
-)
+@app.route('/timesheet', methods=['GET','POST'])
 def timesheet():
     all_data = activity_code.query.all()
-    return render_template(
-        'timesheet.html',
-        code_types=all_data,
-        title='timesheet'
-    )
-#timesheet dailyentry insert
-@app.route('/insert', methods=['POST'])
-def insert():
+    list_data = Dailyentry.query.all()
     if request.method == 'POST':
         #print('\n\nForm data\n{}\n\n'.format(request.form))
         date = request.form['timesheet1-1']
@@ -206,9 +196,78 @@ def insert():
         db.session.add(my_data)
         db.session.commit()
         flash("Dailyentry Inserted Successfully")
-        return render_template(
-            'timesheet.html'
-        )
+        
+    return render_template(
+        'timesheet.html',
+        code_types=all_data,
+        list=list_data,
+        title='timesheet'
+    )
+
+@app.route('/timesheetupdate', methods=['GET', 'POST'])
+def timesheetupdate():
+    if request.method == 'POST':
+        da = Dailyentry.query.get(request.form.get('id'))
+        da.date =request.form['timesheet1-1']
+        da.staff =request.form['timesheet1-2']
+        da.starttime =request.form['timesheet1-3']
+        da.calhr =request.form['timesheet1-4']
+        da.workhr =request.form['timesheet1-6']
+        da.comment =request.form['timesheet1-15']
+        da.taskname =request.form['timesheet1-7']
+        da.tasktype =request.form['timesheet1-8']
+        da.taskcode =request.form['timesheet1-9']
+        da.corp1 =request.form['timesheet1-10']
+        da.corp2 =request.form['timesheet1-12']
+        da.corp3 =request.form['timesheet1-13']
+        da.corp4 =request.form['timesheet1-14']
+        da.taskcontent =request.form['timesheet1-11']
+        db.session.commit()
+        flash("Employee Updated Successfully")
+        return redirect(url_for('timesheet'))
+
+#timesheet dailyentry insert
+# @app.route('/insert', methods=['POST'])
+# def insert():
+#     if request.method == 'POST':
+#         #print('\n\nForm data\n{}\n\n'.format(request.form))
+#         date = request.form['timesheet1-1']
+#         staff = request.form['timesheet1-2']
+#         starttime = request.form['timesheet1-3']
+#         calhr = float(request.form['timesheet1-4'])
+#         workhr = float(request.form['timesheet1-6'])
+#         comment = request.form['timesheet1-15']
+#         taskname = request.form['timesheet1-7']
+#         tasktype = request.form['timesheet1-8']
+#         taskcode = request.form['timesheet1-9']
+#         corp1 = request.form['timesheet1-10']
+#         corp2 = request.form['timesheet1-12']
+#         corp3 = request.form['timesheet1-13']
+#         corp4 = request.form['timesheet1-14']
+#         taskcontent = request.form['timesheet1-11']
+
+#         my_data = Dailyentry(
+#             date,
+#             staff,
+#             starttime,
+#             calhr,
+#             workhr,
+#             comment,
+#             taskname,
+#             tasktype,
+#             taskcode,
+#             corp1,
+#             corp2,
+#             corp3,
+#             corp4,
+#             taskcontent 
+#         )
+#         db.session.add(my_data)
+#         db.session.commit()
+#         flash("Dailyentry Inserted Successfully")
+#         return render_template(
+#             'timesheet.html'
+#         )
 
 @app.route(
     '/temp'
@@ -217,6 +276,25 @@ def temp():
     return render_template(
         'temp.html',
         title='temp'
+    )
+
+@app.route('/multipleForms', methods=['GET','POST'])
+def multipleForms():
+    
+    if request.method == 'POST':
+        if request.form['btn_identifier'] == 'add-1':
+            name = request.form['box1']
+        elif request.form['btn_identifier'] == 'add-2':
+            name = request.form['box2']
+
+        my_data = Mulform(name)
+        db.session.add(my_data)
+        db.session.commit()
+        flash("Dailyentry Inserted Successfully")
+
+    return render_template(
+        'multipleForms.html',
+        title='multipleForms'
     )
 
 # **** following is to try Data table CRUD functions ******

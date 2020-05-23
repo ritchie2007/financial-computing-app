@@ -1,0 +1,47 @@
+
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{super()}} 
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+{% endblock %}
+
+{% block content %}
+    <div id="n1" class="form-group" style="font-size: 40px;">
+        <form action="{{url_for('multipleForms')}}" method="POST">
+            <input id="b01" name="box1" placeholder="box 01">
+            <input type="hidden" name="btn_identifier" value="add-1">
+            <button >Add</button>
+            <button type="reset">DDD</button>
+            <button type="menu">nemu</button>
+            <button type="button" id="btn01">submit</button>
+        </form>
+    </div>
+    <div id="n2" class="form-group" style="font-size: 40px;">
+        <form action="{{url_for('multipleForms')}}" method="POST">
+            <input id="b02" name="box2" placeholder="box 02">
+            <input type="hidden" name="btn_identifier" value="add-2">
+            <button >Add</button>
+        </form>
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+    <script type="text/javascript">
+        $("button#btn01").click(function() {
+            localStorage.setItem('box02', $('#b02').val());
+            console.log("submit");
+            this.form.submit();
+        });
+        $(window).on('load', function() {
+            $('#b02').val(localStorage.getItem('box02'));
+            console.log("submit");
+        });
+    </script>
+
+{%- endblock scripts %}

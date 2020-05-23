@@ -14,6 +14,7 @@
 {% block content %}
 <div class="tbl-field"> 
     <div id="select-btn" class="select-btn">
+        
         <h4>&nbsp&nbsp&nbsp Time Sheet &nbsp&nbsp&nbsp 
         <button type="button" class="btn btn-success timesheetbtn" data-showdiv="Dailyentry" >Daily Entry</button>&nbsp&nbsp&nbsp 
         <button type="button" class="btn btn-success timesheetbtn" data-showdiv="Sheetlist" >Sheet List</button>
@@ -21,384 +22,220 @@
     </div>
     <!-- Daily entry page -->
     <div id="Dailyentry" class="timesheettbl" style="display: block;">
-        <div id="Inputgroup01" class="entryinputgroup">
-            <div class="form-group col-md-12">
-                <br/><h4>&nbsp&nbsp&nbsp 
-                    <img class="newentryunlock" src="{{url_for('static', filename='images/Unlocked.png')}}" style="width: 20px; height: 20px; display: inline-block;" alt="">
-                    <img class="newentrylock" src="{{url_for('static', filename='images/locked.png')}}" style="width: 20px; height: 20px; display: none;" alt="">
-                    <button targetgroup="Inputgroup01" class="creat_new_entry" style="background-color: rgb(236, 231, 231); width: 200px; height: 25px; font-size: smaller;">Create New Entry (No. 01)</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <img src="{{url_for('static', filename='images/stopwatch.png')}}" style="width: 20px; height: 25px;" alt="">&nbsp
-                    <button targetgroup="Inputgroup01" class="inputgroupStart" disabled style="background-color: mediumseagreen; font-size: 14px; width: 70px;">Start</button>&nbsp
-                    <button targetgroup="Inputgroup01" class="inputgroupStop" disabled style="background-color: rgb(196, 122, 122); font-size: 14px; width: 70px;">Stop</button>
-                </h4>
-            </div>
-            <form action="{{url_for('insert')}}" method="POST">
-                <div class="form-row" style="color: rgb(212, 148, 65); opacity: 0.5">
-                    <div class="form-group col-md-2">
-                        <label for="timesheet1-1">Date</label>
-                        <input type="date" class="form-control" name="timesheet1-1" id="timesheet1-1" readonly>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="timesheet1-2">Staff</label>
-                        <input type="text" class="form-control" name="timesheet1-2" id="timesheet1-2" value="guest" readonly>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-3">Start time</label>
-                        <input type="text" class="form-control" name="timesheet1-3" id="timesheet1-3" readonly>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-4">Calendar hr</label>
-                        <input type="number" class="form-control" name="timesheet1-4" id="timesheet1-4" value="0" readonly>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-5">Time adjust</label>
-                        <input type="number" step="any" class="form-control fillable" name="timesheet1-5" id="timesheet1-5" value="0" disabled>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-6">Working hr</label>
-                        <input type="number" step="any" class="form-control" name="timesheet1-6" id="timesheet1-6" value="0" readonly>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-15">Comment</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-15" id="timesheet1-15" disabled>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-7">Task Name</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-7" id="timesheet1-7" value="task name" disabled>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="timesheet1-8">Task Type</label>
-                        <br/>
-                        <select class="browser-default custom-select" name="timesheet1-8" id="timesheet1-8" style="height: 33px; background-color: #eeeeee;">
-                            <option selected="">select code</option>
-                            {% for row in code_types %}
-                            <option >{{row.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-9">Task Code</label>
-                        <input type="number" class="form-control" name="timesheet1-9" id="timesheet1-9" readonly>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-10">Corporation 1</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-10" id="timesheet1-10" disabled>
-                    </div>
-                    <div class="form-group col-md-8">
-                        <label for="timesheet1-11">Task Content</label>
-                        <textarea type="text" class="form-control fillable" rows="6" name="timesheet1-11" id="timesheet1-11" disabled></textarea>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-12">Corporation 2</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-12" id="timesheet1-12" disabled>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-13">Corporation 3</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-13" id="timesheet1-13" disabled>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="timesheet1-14">Corporation 4</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-14" id="timesheet1-14" disabled>
-                    </div>
-                    <div class="form-group col-md-2" >
-                        <br/>
-                        <button type="reset" class="btn btn-primary" style="background-color: darkred; margin-right: 20px;" value="Reset">Reset</button>
-                        <button type="submit" class="btn btn-primary" style="background-color: green;" value="Submit" disabled>Submit</button>
-                    </div>
+        <div class="container-fluid">
+            <form action="{{url_for('timesheet')}}" method="POST">
+                <div class="row" style="color: rgb(212, 148, 65); margin-left: 5px; margin-right: 5px;">
+                    <div id="Inputgroup01" class="entryinputgroup">
+                        <div class="form-group col-md-2" style="margin-top: 13px; opacity: 1;">
+                            <label style="color: #000; font-size: 12px;">
+                                <button class="creat_new_entry">&nbsp;No. 1&nbsp;</button>
+                                <button hidden>&#x1f512 </button>
+                                <button class="inputgroupStart" disabled style="color: green; margin-left: 5px;">&#x23f5</button>
+                                <button class="inputgroupStop" disabled style="color: red;">&#x23f9</button>
+                                <button class="inputgroupRecopy" style="color: blue; margin-left: 0px;">Copy</button>
+                                <button type="reset" class="inputgroupReset" style="color: red; margin-left: 0px; ">Reset</button>
+                            </label>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label for="timesheet1-1">Date</label>
+                            <input type="text" class="form-control" name="timesheet1-1" readonly>
+                        </div>
+                        <!-- <div class="form-group col-md-1">
+                            <label for="timesheet1-2">Staff</label>
+                            <input type="text" class="form-control" name="timesheet1-2" id="timesheet1-2" readonly>
+                        </div> -->
+                        <div class="form-group col-md-2">
+                            <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
+                            <div>
+                                <input type="text" class="form-control col-sm-1 " name="timesheet1-3" style="width: 25%; text-align: center;" value="00 : 00" readonly>
+                                <input class="form-control col-sm-1 timecal" value="+" style="width: 8%; font-weight: 700; padding: 0px; text-align: center; border: none;" readonly>
+                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-41" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="8" step="1" value="00" disabled>
+                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-41" onblur="timevalidation01('Inputgroup01')" style="width: 13%; text-align: right; border-right: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;" value="00" disabled> -->
+                                <input type="text" class="form-control col-sm-1" value=":" style="width: 4%; border: 0px; border-left: 0px; border-right: 0px; border-radius: 0px;" readonly>
+                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-42" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="59" step="1" value="00" disabled>
+                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-42" onblur="timevalidation02('Inputgroup01')" style="width: 15%; text-align: left; border-left: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;" value="00" disabled> -->
+                                <input type="text" class="form-control col-sm-1" value="=" style="width: 6%; border: none; background-color: #eaece9;" disabled>
+                                <input type="text" class="form-control col-sm-1" name="timesheet1-5" style="width: 25%; text-align: center;" value="00 : 00" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="timesheet1-6">Task Name</label>
+                            <input type="text" class="form-control fillable" name="timesheet1-6" placeholder="input task name" disabled>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="timesheet1-7">Content</label>
+                            <input type="text" class="form-control" name="timesheet1-7" disabled>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="timesheet1-8">Task Type</label>
+                            <br/>
+                            <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
+                                <option selected="">select code</option>
+                                {% for row in code_types %}
+                                <option >{{row.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="timesheet1-9">Corporation 1</label>
+                            <input type="text" class="form-control" name="timesheet1-9" disabled>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="timesheet1-10">Corporation 2</label>
+                            <input type="text" class="form-control" name="timesheet1-10" disabled>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="timesheet1-11">Corporation 3</label>
+                            <input type="text" class="form-control" name="timesheet1-11" disabled>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="timesheet1-12">Corporation 4</label>
+                            <input type="text" class="form-control" name="timesheet1-12" disabled>
+                        </div>
+                        <!-- <div class="form-group col-md-2" >
+                            <br/>
+                            <button type="reset" class="btn btn-primary" style="background-color: darkred; margin-right: 20px;" value="Reset">Reset</button>
+                            <button type="submit" class="btn btn-primary" style="background-color: green;" value="Submit" disabled>Submit</button>
+                        </div> -->
 
+                    </div>
                 </div>
             </form>
         </div>
-        <div id="Inputgroup02" class="entryinputgroup">
-            <div class="form-group col-md-12">
-                <br/><h4>&nbsp&nbsp&nbsp 
-                    <img class="newentryunlock" src="{{url_for('static', filename='images/Unlocked.png')}}" style="width: 20px; height: 20px; display: inline-block;" alt="">
-                    <img class="newentrylock" src="{{url_for('static', filename='images/locked.png')}}" style="width: 20px; height: 20px; display: none;" alt="">
-                    <button targetgroup="Inputgroup01" class="creat_new_entry" style="background-color: rgb(236, 231, 231); width: 200px; height: 25px; font-size: smaller;">Create New Entry (No. 02)</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <img src="{{url_for('static', filename='images/stopwatch.png')}}" style="width: 20px; height: 25px;" alt="">&nbsp
-                    <button targetgroup="Inputgroup01" class="inputgroupStart" disabled style="background-color: mediumseagreen; font-size: 14px; width: 70px;">Start</button>&nbsp
-                    <button targetgroup="Inputgroup01" class="inputgroupStop" disabled style="background-color: rgb(196, 122, 122); font-size: 14px; width: 70px;">Stop</button>
-                </h4>
-            </div>
-            <form action="{{url_for('insert')}}" method="POST">
-                <div class="form-row" style="color: rgb(212, 148, 65); opacity: 0.5">
-                    <div class="form-group col-md-2">
-                        <label for="timesheet1-1">Date</label>
-                        <input type="date" class="form-control" name="timesheet1-1" id="timesheet1-1" readonly>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="timesheet1-2">Staff</label>
-                        <input type="text" class="form-control" name="timesheet1-2" id="timesheet1-2" value="guest" readonly>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-3">Start time</label>
-                        <input type="text" class="form-control" name="timesheet1-3" id="timesheet1-3" readonly>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-4">Calendar hr</label>
-                        <input type="number" class="form-control" name="timesheet1-4" id="timesheet1-4" value="0" readonly>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-5">Time adjust</label>
-                        <input type="number" step="any" class="form-control fillable" name="timesheet1-5" id="timesheet1-5" value="0" disabled>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-6">Working hr</label>
-                        <input type="number" step="any" class="form-control" name="timesheet1-6" id="timesheet1-6" value="0" readonly>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-15">Comment</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-15" id="timesheet1-15" disabled>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-7">Task Name</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-7" id="timesheet1-7" value="task name" disabled>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="timesheet1-8">Task Type</label>
-                        <br/>
-                        <select class="browser-default custom-select" name="timesheet1-8" id="timesheet1-8" style="height: 33px; background-color: #eeeeee;">
-                            <option selected="">select code</option>
-                            {% for row in code_types %}
-                            <option >{{row.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-9">Task Code</label>
-                        <input type="number" class="form-control" name="timesheet1-9" id="timesheet1-9" readonly>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-10">Corporation 1</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-10" id="timesheet1-10" disabled>
-                    </div>
-                    <div class="form-group col-md-8">
-                        <label for="timesheet1-11">Task Content</label>
-                        <textarea type="text" class="form-control fillable" rows="6" name="timesheet1-11" id="timesheet1-11" disabled></textarea>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-12">Corporation 2</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-12" id="timesheet1-12" disabled>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-13">Corporation 3</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-13" id="timesheet1-13" disabled>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="timesheet1-14">Corporation 4</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-14" id="timesheet1-14" disabled>
-                    </div>
-                    <div class="form-group col-md-2" >
-                        <br/>
-                        <button type="reset" class="btn btn-primary" style="background-color: darkred; margin-right: 20px;" value="Reset">Reset</button>
-                        <button type="submit" class="btn btn-primary" style="background-color: green;" value="Submit" disabled>Submit</button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-        <div id="Inputgroup03" class="entryinputgroup">
-            <div class="form-group col-md-12">
-                <br/><h4>&nbsp&nbsp&nbsp 
-                    <img class="newentryunlock" src="{{url_for('static', filename='images/Unlocked.png')}}" style="width: 20px; height: 20px; display: inline-block;" alt="">
-                    <img class="newentrylock" src="{{url_for('static', filename='images/locked.png')}}" style="width: 20px; height: 20px; display: none;" alt="">
-                    <button targetgroup="Inputgroup01" class="creat_new_entry" style="background-color: rgb(236, 231, 231); width: 200px; height: 25px; font-size: smaller;">Create New Entry (No. 03)</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <img src="{{url_for('static', filename='images/stopwatch.png')}}" style="width: 20px; height: 25px;" alt="">&nbsp
-                    <button targetgroup="Inputgroup01" class="inputgroupStart" disabled style="background-color: mediumseagreen; font-size: 14px; width: 70px;">Start</button>&nbsp
-                    <button targetgroup="Inputgroup01" class="inputgroupStop" disabled style="background-color: rgb(196, 122, 122); font-size: 14px; width: 70px;">Stop</button>
-                </h4>
-            </div>
-            <form action="{{url_for('insert')}}" method="POST">
-                <div class="form-row" style="color: rgb(212, 148, 65); opacity: 0.5">
-                    <div class="form-group col-md-2">
-                        <label for="timesheet1-1">Date</label>
-                        <input type="date" class="form-control" name="timesheet1-1" id="timesheet1-1" readonly>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="timesheet1-2">Staff</label>
-                        <input type="text" class="form-control" name="timesheet1-2" id="timesheet1-2" value="guest" readonly>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-3">Start time</label>
-                        <input type="text" class="form-control" name="timesheet1-3" id="timesheet1-3" readonly>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-4">Calendar hr</label>
-                        <input type="number" class="form-control" name="timesheet1-4" id="timesheet1-4" value="0" readonly>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-5">Time adjust</label>
-                        <input type="number" step="any" class="form-control fillable" name="timesheet1-5" id="timesheet1-5" value="0" disabled>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-6">Working hr</label>
-                        <input type="number" step="any" class="form-control" name="timesheet1-6" id="timesheet1-6" value="0" readonly>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-15">Comment</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-15" id="timesheet1-15" disabled>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-7">Task Name</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-7" id="timesheet1-7" value="task name" disabled>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="timesheet1-8">Task Type</label>
-                        <br/>
-                        <select class="browser-default custom-select" name="timesheet1-8" id="timesheet1-8" style="height: 33px; background-color: #eeeeee;">
-                            <option selected="">select code</option>
-                            {% for row in code_types %}
-                            <option >{{row.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="timesheet1-9">Task Code</label>
-                        <input type="number" class="form-control" name="timesheet1-9" id="timesheet1-9" readonly>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-10">Corporation 1</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-10" id="timesheet1-10" disabled>
-                    </div>
-                    <div class="form-group col-md-8">
-                        <label for="timesheet1-11">Task Content</label>
-                        <textarea type="text" class="form-control fillable" rows="6" name="timesheet1-11" id="timesheet1-11" disabled></textarea>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-12">Corporation 2</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-12" id="timesheet1-12" disabled>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="timesheet1-13">Corporation 3</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-13" id="timesheet1-13" disabled>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="timesheet1-14">Corporation 4</label>
-                        <input type="text" class="form-control fillable" name="timesheet1-14" id="timesheet1-14" disabled>
-                    </div>
-                    <div class="form-group col-md-2" >
-                        <br/>
-                        <button type="reset" class="btn btn-primary" style="background-color: darkred; margin-right: 20px;" value="Reset">Reset</button>
-                        <button type="submit" class="btn btn-primary" style="background-color: green;" value="Submit" disabled>Submit</button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-
     </div>
     <!-- Sheet list page -->
     <div id="Sheetlist" class="timesheettbl" style="display: none;">
-        <p>List -- List -- list</p><br>
+
     </div>
 </div>
 {% endblock %}
 {% block scripts %}
-    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
-    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
-    <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
     <script type="text/javascript">
         
-        var startTime = new Array(5);
-        var calHour = [0.0,0.0,0.0,0.0,0.0];
-        var adjust = [0.0,0.0,0.0,0.0,0.0];
+        var startTime = new Array(8);
+        var calHour = [0,0,0,0,0,0,0,0];
+        var adjust = [0,0,0,0,0,0,0,0];
 
         //start button
         $("button.inputgroupStart").click(function(){
             var root = $(this).parents('div').parents('div').attr("id");
-            $("#"+root+" form input.form-control").removeAttr('disabled');
-            $("#"+root+" form textarea.form-control").removeAttr('disabled');
-            $("#"+root+" form input.form-control.fillable").prop('readonly',false);
-            $("#"+root+" form textarea.form-control.fillable").prop('readonly',false);
+            $("#"+root+" .form-group input").removeAttr('disabled');
+            $("#"+root+" .form-group input").prop('readonly',false);
             $(this).prop('disabled', true);
             $(this).css({opacity: 0.4});
             $("#"+root+ " button.inputgroupStop").prop('disabled',false);
             $("#"+root+ " button.inputgroupStop").css({opacity: 1});
-
             var index = (parseInt(root.substr(10,2), 10)); //string变成十进制整数
             startTime[index-1] = new Date();
-            console.log(startTime[index-1]);
         });
 
         //stop button
         $("button.inputgroupStop").click(function(){
             var root = $(this).parents('div').parents('div').attr("id");
-            $("#"+root+" form input.form-control.fillable").prop('readonly',true);
-            $("#"+root+" form textarea.form-control.fillable").prop('readonly',true);
+            $("#"+root+" .form-group input").prop('readonly',true);
             $("#"+root+" button.inputgroupStart").prop('disabled',false);
             $("#"+root+" button.inputgroupStart").css({opacity: 1});
             $(this).prop('disabled', true);
             $(this).css({opacity: 0.4});
             var index = (parseInt(root.substr(10,2), 10)); //string变成十进制整数
-            var diff = ((new Date() - startTime[index-1])/3600000);//diff.toFixed(2)保留2位小数，但成字符串了！
-            diff = Math.round(diff * 1000) / 1000; //替代办法
-            console.log("-----------------------------------");
-            console.log(calHour[index-1]);
-            console.log(diff);
-            calHour[index-1] = (calHour[index-1] + diff);
-            $("#"+root+" form #timesheet1-4").val(calHour[index-1]);
-            console.log(calHour[index-1]);
-            if($("#"+root+" form #timesheet1-5").val() == ""){
-                adjust[index-1] = 0/100; //get Float format
+            //calculate time
+            var diff0 = (new Date() - startTime[index-1]);
+            calHour[index-1] += diff0;
+            var wt1 = "";
+            var wt2 = "";
+            var tf= new formattime(calHour[index-1]);
+            wt1 = (tf.hour<10)?"0"+(tf.hour).toString(10):(tf.hour).toString(10);
+            wt2 = (tf.min<10)?"0"+(tf.min).toString(10):(tf.min).toString(10);
+            $("#"+root+" .form-group [name='timesheet1-3']").val(wt1+" : "+wt2);
+            var adj1=$("#"+root+" .form-group [name='timesheet1-41']").val();
+            var adj2=$("#"+root+" .form-group [name='timesheet1-42']").val();
+            adj1 = (adj1 == ""||parseInt(adj1, 10)<0||parseInt(adj1, 10)>8)? "00":adj1; //输--++自动变""；输-5，变5；输>8,变0" 
+            adj2 = (adj2 == ""||parseInt(adj2, 10)<0||parseInt(adj2, 10)>59)? "00":adj2;
+            $("#"+root+" .form-group [name='timesheet1-41']").val(parseInt(adj1, 10));//输055,009,变55,9
+            $("#"+root+" .form-group [name='timesheet1-42']").val(parseInt(adj2),10);
+            adjust[index-1] = parseInt(adj1, 10)*3600000 + parseInt(adj2, 10)*60000;
+            if ($("#"+root+" input.timecal").val() == "+") {
+                tf = new formattime(calHour[index-1] + adjust[index-1]);
             } else {
-                adjust[index-1] = parseFloat($("#"+root+" form #timesheet1-5").val());
+                tf = new formattime(calHour[index-1] - adjust[index-1]);
             };
-            $("#"+root+" form #timesheet1-5").val(adjust[index-1]);
-            $("#"+root+" form #timesheet1-6").val(parseFloat(calHour[index-1]+adjust[index-1]));
-            $("#"+root+" form #timesheet1-9").val(parseInt((($("#"+root+ " form #timesheet1-8").val()).substr(0,3)),10));
-            console.log(calHour[index-1]);
-            console.log(adjust[index-1]);
+            var wt1 = tf.hour;
+            var wt2 = tf.min;
+            wt1 = (wt1 < 0)?0:wt1;
+            wt2 = (wt2 < 0)?0:wt2;
+            $("#"+root+" .form-group [name='timesheet1-5']").val(wt1+" : "+wt2);
         });
 
-        //entry lock and unlock
-        $(".newentrylock").click(function() {
-            var root = $(this).parents('div').parents('div').attr("id");
-            $("#"+root+" .newentrylock").hide();
-            $("#"+root+" .newentryunlock").show();
-            $("#"+root+" button.creat_new_entry").prop('disabled', false);
-        });
-
+        function formattime(num) {
+            this.hour = Math.floor(num/3600000);//diff.toFixed(2)保留2位小数，但成字符串了！
+            //diff = Math.round(diff * 1000) / 1000; //保留小数替代办法
+            this.min = Math.floor((num%3600000)/60000);
+        };
+        //timecalculation +/- change
+        $("input.timecal").click(function(){
+            if ($("input.timecal").val() == "+") {
+                $("input.timecal").val("-");
+            } else {
+                $("input.timecal").val("+");
+            }
+        })
         //create new entry button
         $("button.creat_new_entry").click(function(){
             var root = $(this).parents('div').parents('div').attr("id");
-            $("#"+root+" form input.form-control").removeAttr('disabled');
-            $("#"+root+" form textarea.form-control").removeAttr('disabled');
+            $("#"+root+" .form-group input").removeAttr('disabled');
             var d = new Date();
             var year = (d.getFullYear()).toString();
             var month = d.getMonth() + 1 < 10 ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1).toString();
             var day = d.getDate() < 10 ? "0" + d.getDate() : (d.getDate()).toString();
             var hour = d.getHours()< 10 ? "0" + d.getHours() : (d.getHours()).toString();
             var minute = d.getMinutes()< 10 ? "0" + d.getMinutes() : (d.getMinutes()).toString();
-            $("#"+root+" form #timesheet1-1").val(year+"-"+month+"-"+day);
-            $("#"+root+" form #timesheet1-3").val(hour+":"+minute);
-            $("#"+root+" form #timesheet1-2").val('{{current_user.username}}');
-            
-            localStorage.setItem((root+"_01"), (year+"-"+month+"-"+day));
-            localStorage.setItem((root+"_02"),'{{current_user.username}}');
-            localStorage.setItem((root+"_03"), ($("#"+root+" form #timesheet1-3").val()));
-            // console.log(localStorage.getItem('Inputgroup01_01'));
-            
-            $("#"+root+" form .form-row").css({opacity: 1});
+            var minute = d.getMinutes()< 10 ? "0" + d.getMinutes() : (d.getMinutes()).toString();       
+            $("#"+root+" .form-group [name='timesheet1-1']").val(year+"-"+month+"-"+day+" "+ hour+":"+minute);
+            // $("#"+root+" form #timesheet1-2").val('{{current_user.username}}');
             // $(this).addClass('disabled'); //这种方式不工作，下面2种都工作
             $(this).prop('disabled', true);
             // $(this).attr('disabled', 'disabled'); 
-            $("#"+root+" .newentryunlock").hide();
-            $("#"+root+" .newentrylock").show();
             var index = (parseInt(root.substr(10,2), 10)); //string变成十进制整数
             startTime[index-1] = new Date();
             calHour[index-1] = 0;
             $("#"+root+" button.inputgroupStart").css({opacity: 0.4});
             $("#"+root+" button.inputgroupStop").prop('disabled',false);
-            $("#"+root+" button.btn-primary").prop('disabled',false);
-        });
 
+            localStorage.setItem((root+"-1"), Date.now());
+        });
+        //reset action
+        $("button.inputgroupReset").click(function(){
+            var root = $(this).parents('label').parents('div').parents('div').attr("id");
+            $("#"+root+" button.creat_new_entry").prop('disabled',false);
+            saveSub(root, root+"-2"); //root: Inputgroup01, 
+        })
         //page reloading event
         window.onbeforeunload = function(event) {
-            console.log("********************************");
-            event.returnValue = "Write something clever here..";
+            localStorage.setItem("Inputgroup01", localStorage.getItem("Inputgroup01")+1);
         };
-
+        //sub-save data to Local
+        function saveSub (root, id) {
+            var datasave = $("#"+root+" .form-group [name='timesheet1-3']").val();
+            datasave = datasave + "|-|" + $("#"+root+" .form-group [name='timesheet1-41']").val();
+            datasave = datasave + "|-|" + $("#"+root+" .form-group [name='timesheet1-42']").val();
+            for (i=5; i<13; i++) {
+                datasave = datasave + "|-|" + $("#"+root+" .form-group [name='timesheet1-" + i + "']").val();
+            }
+            console.log(datasave);
+            localStorage.setItem(id, datasave);
+            datasave = localStorage.getItem(id).split("|-|");
+            console.log(datasave);
+        }
+        function saveTotal () {
+            var datasave = "";
+            for (i = 1; i<2; i++) {
+                datasave = localStorage.getItem("Inputgroup0"+i+"-01") + "|-|" + localStorage.getItem("Inputgroup0"+i+"-02");
+                localStorage.setItem("Inputgroup0"+i);
+            }
+        }
         //automatic fill the first 3 boxes when mouse click
         $('.entryinputgroup  form input.form-control').mousedown(function(event) {
             // $(("#"+l)+" form #timesheet1-1").val(localStorage.getItem('Inputgroup01_01'));
@@ -414,5 +251,6 @@
             var code = parseInt((($("#"+root+ " form #timesheet1-8").val()).substr(0,3)),10);
             $(this).val(code);
         });
+
     </script>
 {%- endblock scripts %}

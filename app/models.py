@@ -100,3 +100,9 @@ class Dailyentry(db.Model):
         self.corp3 = corp3
         self.corp4 = corp4
         self.taskcontent = taskcontent
+
+class Mulform(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(12))
+    def __init__(self, name):
+        self.name = name

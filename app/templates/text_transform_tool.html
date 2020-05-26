@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text_transform_tool</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/common.css"> -->
+</head>
+<body>
+    <button id="button">Transform</button>
+    <p id="text">placeholder</p>
+
+
+    <script src="../static/js/jquery-3.5.1.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("button#button").click(function(){
+            var str = "date text, corp text, task_name text, task_content text, task_type text, work_hour text,  validation text";
+            str = str.replace(/ text/g, "");
+            console.log(str);
+            str = str.replace(/ /g, "");
+            var str1 = str.split(",");
+            var str2 = str.split(",");
+            $("p#text").text(str);
+            for (i=0; i<str1.length; i++) {
+                str1[i] = str1[i] + " = db.Column(db.String(12))";
+                console.log(str1[i]);
+            };
+            //console.log(str1);
+            for (i=0; i<str2.length; i++) {
+                str2[i] = "self." + str2[i] + " = " + str2[i];
+                console.log(str2[i]);
+            };
+            //console.log(str2);
+        }); 
+    });    
+    </script>
+</body>
+</html>

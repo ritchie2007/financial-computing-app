@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{super()}} 
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+    <link rel="shortcut icon" href="{{url_for('static', filename='images/favicon.ico')}}">  <!-- fix error favicon.ico 404-->
+{% endblock %}
+
+{% block content %}
+<div class="tbl-field"> 
+    <div id="tasklist" class="container-fluid" style="margin-top: 10px;">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            {{message}}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+        <input class="form-control mb-4" id="tableSearch" type="text"
+            placeholder="Type something to search list items">
+        <br/>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr >
+                    <th class="col-1">ID</th>
+                    <th class="col-1">PeriodEnd</th>
+                    <th class="col-2">Client</th>
+                    <th class="col-1">Job_type</th>
+                    <th class="col-1">Details</th>
+                    <th class="col-1">Status</th>
+                    <th class="col-2">Priority</th>
+                    <th class="col-1">WorkHour</th>
+                    <th class="col-2">NextStart</th>
+                    <th class="col-1">Action</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                {% for row in tasks %}
+                    <tr>
+                        <td class="col-1">{{row.id}}</td>
+                        <td class="col-1">{{row.periodend}}_{{row.recurrence}}</td>
+                        <td class="col-1">{{row.client}}</td>
+                        <td class="col-2">{{row.jobtype}}</td>
+                        <td class="col-2">{{row.details}}</td>
+                        <td class="col-1">{{row.status}}</td>
+                        <td class="col-1">{{row.priority}}</td>
+                        <td class="col-1">{{row.worktime}}</td>
+                        <td class="col-1">{{row.nextstartdate}}</td>
+                        <td class="col-1">
+                            <a href="#" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalrenew{{row.id}}">Renew</a>
+                            <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
+                            <a href="/taskdelete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Del</a>
+                        </td>
+                    </tr>
+                <!-- Edit & update -->
+                <div id="modaledit{{row.id}}" class="modal" role="dialog" aria-hidden="true" style="z-index: 300;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Update Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{url_for('taskupdate')}}" method="POST">
+                                    <div class="container-fluid">
+                                        <div class="row">                                            
+                                            <div class="form-group col-sm-12">
+                                                <label for="taskedit-1">Client</label>
+                                                <input type="hidden" name="id" value="{{row.id}}">
+                                                <input type="text" class="form-control" name="taskedit-1" value="{{row.client}}">
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="taskedit-3">PeriodEnd</label>
+                                                <input type="text" class="form-control" name="taskedit-3" value="{{row.periodend}}">
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="taskedit-5">NextStart</label>
+                                                <input type="text" class="form-control" name="taskedit-5" value="{{row.nextstartdate}}">
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="taskedit-6">NextEnd</label>
+                                                <input type="text" class="form-control" name="taskedit-6" value="{{row.nextenddate}}">
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label for="taskedit-2">jobtype</label>
+                                                <input type="text" class="form-control" name="taskedit-2" value="{{row.jobtype}}">
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label for="taskedit-10">jobowner</label>
+                                                <input type="text" class="form-control" name="taskedit-10" value="{{row.jobowner}}">
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <label for="taskedit-4">details</label>
+                                                <input type="text" class="form-control" name="taskedit-4" value="{{row.details}}">
+                                            </div>
+                                            <div class="form-group  col-sm-3">
+                                                <label for="taskedit-7">status</label>
+                                                <input type="text" class="form-control" name="taskedit-7" value="{{row.status}}">
+                                            </div>
+                                            <div class="form-group  col-sm-3">
+                                                <label for="taskedit-8">priority</label>
+                                                <input type="text" class="form-control" name="taskedit-8" value="{{row.priority}}">
+                                            </div>
+                                            <div class="form-group  col-sm-3">
+                                                <label for="taskedit-9">recurrence</label>
+                                                <input type="text" class="form-control" name="taskedit-9" value="{{row.recurrence}}">
+                                            </div>
+                                            <div class="form-group  col-sm-3">
+                                                <label for="taskedit-11">worktime</label>
+                                                <input type="text" class="form-control" name="taskedit-11" value="{{row.worktime}}">
+                                            </div>
+                                            <div class="form-group" style="text-align: right;">
+                                                <button class="btn btn-primary" type="submit" style="margin-top: 10px; margin-right: 15px;">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div> <!--class="modal-body"-->
+                            <div class="modal-footer">
+                                <!-- <button type="button" id="generate" class="btn btn-info">Generate Recurrence Task</button>
+                                <button type="button" id="checked" class="btn btn-info">Checked, Yes</button> -->
+                                <button type="button" id="close" class="btn btn-light" data-dismiss="modal" style="padding: 3px 18px 3px 18px; margin-right: 5px;">Close</button>
+                            </div>
+                        </div> <!--class="modal-content"-->
+                    </div>
+                </div>
+                <!-- Add renew  -->
+                <div id="modalrenew{{row.id}}" class="modal" role="dialog" aria-hidden="true" style="z-index: 300;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Update Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{url_for('taskinsertion')}}" method="POST">
+                                    <div class="container-fluid">
+                                        <div class="row">                                            
+                                            <div class="form-group col-sm-12">
+                                                <label for="taskedit-1">Client</label>
+                                                <input type="hidden" name="id" value="{{row.id}}">
+                                                <input type="text" class="form-control" name="taskedit-1" value="{{row.client}}">
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="taskedit-3">PeriodEnd</label>
+                                                <input type="text" class="form-control" name="taskedit-3" value="{{row.periodend}}">
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="taskedit-5">NextStart</label>
+                                                <input type="text" class="form-control" name="taskedit-5" value="{{row.nextstartdate}}">
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label for="taskedit-6">NextEnd</label>
+                                                <input type="text" class="form-control" name="taskedit-6" value="{{row.nextenddate}}">
+                                            </div>
+                                            <div class="form-group renew col-sm-4" style="color: darkblue;">
+                                                <label>Renew</label>
+                                                <input type="text" class="form-control" name="taskedit-31" value="">
+                                            </div>
+                                            <div class="form-group renew col-sm-4" style="color: darkblue;">
+                                                <label >Renew</label>
+                                                <input type="text" class="form-control" name="taskedit-51" value="">
+                                            </div>
+                                            <div class="form-group renew col-sm-4" style="color: darkblue;">
+                                                <label >Renew</label>
+                                                <input type="text" class="form-control" name="taskedit-61" value="">
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label for="taskedit-2">jobtype</label>
+                                                <input type="text" class="form-control" name="taskedit-2" value="{{row.jobtype}}">
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label for="taskedit-10">jobowner</label>
+                                                <input type="text" class="form-control" name="taskedit-10" value="{{row.jobowner}}">
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <label for="taskedit-4">details</label>
+                                                <input type="text" class="form-control" name="taskedit-4" value="{{row.details}}">
+                                            </div>
+                                            <div class="form-group  col-sm-3">
+                                                <label for="taskedit-7">status</label>
+                                                <input type="text" class="form-control" name="taskedit-7" value="{{row.status}}">
+                                            </div>
+                                            <div class="form-group  col-sm-3">
+                                                <label for="taskedit-8">priority</label>
+                                                <input type="text" class="form-control" name="taskedit-8" value="{{row.priority}}">
+                                            </div>
+                                            <div class="form-group  col-sm-3">
+                                                <label for="taskedit-9">recurrence</label>
+                                                <input type="text" class="form-control" name="taskedit-9" value="{{row.recurrence}}">
+                                            </div>
+                                            <div class="form-group  col-sm-3">
+                                                <label for="taskedit-11">worktime</label>
+                                                <input type="text" class="form-control" name="taskedit-11" value="{{row.worktime}}">
+                                            </div>
+                                            <div class="form-group" style="text-align: right;">
+                                                <button class="btn btn-primary" type="submit" style="margin-top: 10px; margin-right: 15px;">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div> <!--class="modal-body"-->
+                            <div class="modal-footer">
+                                <button type="button" id="close" class="btn btn-light" data-dismiss="modal" style="padding: 3px 18px 3px 18px; margin-right: 5px;">Close</button>
+                            </div>
+                        </div> <!--class="modal-content"-->
+                    </div>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+    <script type="text/javascript">
+    //try open modal 
+    // $("#renew").on("click", function(event){
+        //     //location.reload();
+        //     var t = $(this).closest("tr").find("td").eq(0).text(); //读取表格内容
+        //     console.log(t);
+        //     $('#modaledit5').modal('show');//打开modal，bootstrap.min.js必须有,但调用了,黑屏
+    // });
+    //try click 'Edit' button
+        // $(".renew").on("click", function(event){
+        //     //location.reload();
+        //     var t = $(this).closest("tr").find("td").eq(0).text(); //读取表格内容
+        //     console.log(t);
+        //     $('#edit'+t).click();//打开modal，bootstrap.min.js必须有,但调用了,黑屏
+        // });
+    //生成新的任务
+        // $("#renew").click(function() {
+
+        // })
+    // $(".modal .modal-footer button#generate").click(function(){
+        // var t = "";
+        // $(".modal .modal-body [name='taskedit-31']").val("");
+        // $(".modal .modal-body [name='taskedit-51']").val("");
+        // $(".modal .modal-body [name='taskedit-61']").val("");
+        // console.log("------" + t + "-----------");
+        // $(".modal .modal-body [name='taskedit-31']").val('');
+        // $(".modal .modal-body [name='taskedit-51']").val(t);
+        // $(".modal .modal-body [name='taskedit-61']").val(t);
+        // var num1 = parseInt($(".modal .modal-body [name='taskedit-3']").val().substr(0,4), 10);
+        // if ($(".modal .modal-body [name='taskedit-3']").val().substr(5,2) !== "") {
+        //     var num2 = parseInt($(".modal .modal-body [name='taskedit-3']").val().substr(5,2), 10);
+        //     console.log($(".modal .modal-body [name='taskedit-3']").val());
+        //     console.log(parseInt($(".modal .modal-body [name='taskedit-3']").val().substr(5,2), 10));
+        //     console.log(num2);
+        // }
+        // var section = $(".modal .modal-body [name='taskedit-3']").val().substr(4,1)
+        // console.log(num1 + section + num2);
+        // if (section == "m") {
+        //     if (num2 == 12) {
+        //         num1 += 1;
+        //         num2 = 1;
+        //     } else {
+        //         num2 += 1;
+        //     };
+        //     $(".modal .modal-body [name='taskedit-5']").val(num1 + "-" + num2 + "- 1");
+        //     $(".modal .modal-body [name='taskedit-6']").val(num1 + "-" + num2 + "- 25");
+        // } else if (section == "q") {
+        //     if (num2 == 4) {
+        //         num1 += 1;
+        //         num2 = 1;
+        //     } else {
+        //         num2 += 1;
+        //     };
+        //     $(".modal .modal-body [name='taskedit-5']").val(num1 + "-" + num2*3-2 + "- 1");
+        //     $(".modal .modal-body [name='taskedit-6']").val(num1 + "-" + num2*3 + "- 25");
+        // } else if (section == "y") {
+        //     num1 += 1;
+        //     $(".modal .modal-body [name='taskedit-5']").val(num1 + "- 1- 1");
+        //     $(".modal .modal-body [name='taskedit-6']").val(num1 + "- 12 - 25");
+        // };
+        // localStorage.setItem("l2", '{{tasks}}');
+    // });
+    // try Reset modal data
+        // $('.modal').on('hidden.bs.modal', function(){
+        //     $('.modal').removeData('bs.modal');
+        //     console.log("close");
+        // });
+    </script>
+{%- endblock scripts %}

@@ -14,6 +14,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
     {{super()}} 
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+    <link rel="shortcut icon" href="{{url_for('static', filename='images/favicon.ico')}}"> <!-- fix error favicon.ico 404-->
 {% endblock %}
 
 {% block title %}
@@ -59,7 +60,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                     <li id="Corporate" class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Corporate<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('corporate') }}">List</a></li>
+                            <li><a href="{{ url_for('corporate')}}">List</a></li>
                             <li><a href="#">New</a></li>                 
                             <li><a href="#">Edit</a></li>
                             <li><a href="#">Export</a></li>
@@ -77,7 +78,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                     <li id="Task" class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Task<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">List</a></li>
+                            <li><a href="{{ url_for('task') }}">List</a></li>
                             <li><a href="#">New</a></li>                 
                             <li><a href="#">Edit</a></li>
                             <li><a href="#">Export</a></li>

@@ -10,6 +10,10 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 
+from random import random
+from sqlalchemy import desc
+from sqlalchemy import asc
+
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
 login = LoginManager(app)

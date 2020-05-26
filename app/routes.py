@@ -2,9 +2,16 @@ from datetime import datetime
 from flask import render_template, flash, redirect, request, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from sqlalchemy import desc # for table.order_by(Task.enddate).all()
+from sqlalchemy import asc
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
-from app.models import User, Data_table, activity_code, Dailyentry, Mulform
+from app.models import User, Data_table, activity_code, Task, Timesheet, Mulform
+from random import random
+#from app import dateCalculate
+from time import strftime, strptime, localtime
+from datetime import datetime, timedelta, date
+from dateutil.relativedelta import relativedelta
 
 @app.before_request
 def before_request():
@@ -156,42 +163,126 @@ def corp_spec():
         title='Corp_Spec'
     )
 
+@app.route('/task')
+def task():
+    all_data = Task.query.order_by(Task.periodend.asc()).all()
+    return render_template(
+        'task.html',
+        tasks=all_data,
+        title='Task'
+        )
+
+@app.route('/taskinsertion', methods=['GET','POST'])
+def taskinsertion():
+    if request.method == 'POST':
+        client = request.form['taskedit-1']
+        jobtype = request.form['taskedit-2']
+        details = request.form['taskedit-4']
+        status = request.form['taskedit-7']
+        priority = request.form['taskedit-8']
+        recurrence = request.form['taskedit-9']
+        jobowner = request.form['taskedit-10']
+        validation = random()
+        worktime = request.form['taskedit-11']
+        periodend = request.form['taskedit-31']
+        nextstartdate = request.form['taskedit-51']
+        nextenddate = request.form['taskedit-61']
+
+        if periodend == '':
+            n = 0
+            if recurrence == 'y' or recurrence == 'Y':
+                n = 12
+            elif recurrence == 'q' or recurrence == 'Q':
+                n = 3
+            elif recurrence == 'm' or recurrence == 'M':
+                n = 1
+            periodend = datetime.strptime(request.form['taskedit-3'], '%Y-%m-%d') + relativedelta(months=n)
+            nextstartdate = datetime.strptime(request.form['taskedit-5'], '%Y-%m-%d') + relativedelta(months=n)
+            nextenddate = datetime.strptime(request.form['taskedit-6'], '%Y-%m-%d') + relativedelta(months=n)
+            renewperiod = (periodend + relativedelta(months=n)).strftime("%Y-%m-%d")
+            renewstartdate = (nextstartdate + relativedelta(months=n)).strftime("%Y-%m-%d")
+            renewenddate = (nextenddate + relativedelta(months=n)).strftime("%Y-%m-%d")
+            periodend = periodend.strftime("%Y-%m-%d")
+            nextstartdate = nextstartdate.strftime("%Y-%m-%d")
+            nextenddate = nextenddate.strftime("%Y-%m-%d")
+
+        my_data = Task(
+            client,
+            jobtype,
+            periodend,
+            details,
+            nextstartdate,
+            nextenddate,
+            status,
+            priority,
+            recurrence,
+            jobowner,
+            validation,
+            worktime,
+            renewperiod,
+            renewstartdate,
+            renewenddate
+        )
+        db.session.add(my_data)
+        db.session.commit()
+        flash("Dailyentry Inserted Successfully")
+    return redirect(url_for('task'))
+
+@app.route('/taskupdate', methods=['POST'])
+def taskupdate():
+    if request.method == 'POST':
+        my_data = Task.query.get(request.form.get('id'))
+        my_data.client = request.form['taskedit-1']
+        my_data.jobtype = request.form['taskedit-2']
+        my_data.periodend = request.form['taskedit-3']
+        my_data.details = request.form['taskedit-4']
+        my_data.nextstartdate = request.form['taskedit-5']
+        my_data.nextenddate = request.form['taskedit-6']
+        my_data.status = request.form['taskedit-7']
+        my_data.priority = request.form['taskedit-8']
+        my_data.recurrence = request.form['taskedit-9']
+        my_data.jobowner = request.form['taskedit-10']
+        my_data.validation = random()
+        my_data.worktime = request.form['taskedit-11']
+        
+        db.session.commit()
+        flash("Dailyentry Inserted Successfully")
+        return redirect(url_for('task'))
+
 @app.route('/timesheet', methods=['GET','POST'])
 def timesheet():
     all_data = activity_code.query.all()
-    list_data = Dailyentry.query.all()
+    list_data = Timesheet.query.all()
     if request.method == 'POST':
         #print('\n\nForm data\n{}\n\n'.format(request.form))
         date = request.form['timesheet1-1']
-        staff = request.form['timesheet1-2']
-        starttime = request.form['timesheet1-3']
-        calhr = float(request.form['timesheet1-4'])
-        workhr = float(request.form['timesheet1-6'])
-        comment = request.form['timesheet1-15']
-        taskname = request.form['timesheet1-7']
+        calhour = request.form['timesheet1-3']
+        adjhour = float(request.form['timesheet1-41'])
+        workhour = float(request.form['timesheet1-5'])
+        taskname = request.form['timesheet1-15']
+        taskcontent = request.form['timesheet1-7']
         tasktype = request.form['timesheet1-8']
-        taskcode = request.form['timesheet1-9']
         corp1 = request.form['timesheet1-10']
         corp2 = request.form['timesheet1-12']
         corp3 = request.form['timesheet1-13']
         corp4 = request.form['timesheet1-14']
-        taskcontent = request.form['timesheet1-11']
+        staff = 'susan'
+        validation = '12345'
 
-        my_data = Dailyentry(
+        my_data = Timesheet(
             date,
-            staff,
-            starttime,
-            calhr,
-            workhr,
-            comment,
+            calhour,
+            adjhour,
+            workhour,
             taskname,
+            taskcontent,
             tasktype,
-            taskcode,
             corp1,
             corp2,
             corp3,
             corp4,
-            taskcontent 
+            staff,
+            validation
         )
         db.session.add(my_data)
         db.session.commit()
@@ -207,7 +298,7 @@ def timesheet():
 @app.route('/timesheetupdate', methods=['GET', 'POST'])
 def timesheetupdate():
     if request.method == 'POST':
-        da = Dailyentry.query.get(request.form.get('id'))
+        da = Timesheet.query.get(request.form.get('id'))
         da.date =request.form['timesheet1-1']
         da.staff =request.form['timesheet1-2']
         da.starttime =request.form['timesheet1-3']
@@ -335,7 +426,7 @@ def update():
         return redirect(url_for('data_crud'))
 #This route is for deleting our employee
 @app.route('/delete/<id>/', methods=['GET', 'POST'])
-def delete(id):
+def delete():
     my_data = Data_table.query.get(id)
     db.session.delete(my_data)
     db.session.commit()

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{super()}} 
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-select.min.css')}}">
+{% endblock %}
+
+{% block content %}
+<style>
+    table {
+    border-collapse: collapse;
+    width: 50%;
+    }
+
+    td, th {
+    border: 1px solid #08ec54;
+    text-align: center;
+    padding: 8px;
+    }
+
+    tr:nth-child(even) {
+    background-color: #dddddd;
+    }
+</style>
+<div class="container-fluid" style="background-color: rgb(149, 196, 193); margin: 0px;">
+    <table id="table1" style="margin: 15px;">
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Age</th>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+        </tr>
+        <tr>
+            <td>21</td>
+            <td>22</td>
+            <td>23</td>
+        </tr>
+    </table>
+    <br/>
+    <table id="table2" style="margin: 15px;">
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Age</th>
+        </tr>
+    </table>
+</div>
+<!-- <script type="text/javascript" src="../static/js/jquery-3.5.1.js"></script> -->
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrap.js')}}"></script>
+<script>
+    var array = [["a11","a12","a13"], ["a21","a22","a23"]];
+
+    var tab = document.getElementById("table1");
+			//表格行数
+    var rowNum = tab.rows.length ;
+    //method 01:  
+    for (var i = 1; i < rowNum; i++) {
+        for (var j = 0; j < tab.rows[i].cells.length; j++) {
+            tab.rows[i].cells[j].innerHTML = array[i-1][j];
+        };
+    };
+    //method 02:
+    tab = document.getElementById("table2");
+    for (var i=0; i<array.length; i++) {
+        var newRow = tab.insertRow(tab.length);
+        for (var j=0; j<array[i].length; j++) {
+            var cell = newRow.insertCell(j);
+            cell.innerHTML = array[i][j];
+        }
+    }
+</script>
+{% endblock content %}

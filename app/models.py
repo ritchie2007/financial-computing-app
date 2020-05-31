@@ -53,10 +53,10 @@ class activity_code(db.Model):
 
 class Timesheet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.String(12))
-    calhour = db.Column(db.String(12))
-    adjhour = db.Column(db.String(12))
-    workhour = db.Column(db.String(12))
+    date = db.Column(db.String(15))
+    calhour = db.Column(db.String(10))
+    adjhour = db.Column(db.String(10))
+    workhour = db.Column(db.String(10))
     taskname = db.Column(db.String(100))
     taskcontent = db.Column(db.Text)
     tasktype = db.Column(db.String(100))

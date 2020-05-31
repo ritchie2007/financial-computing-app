@@ -101,9 +101,9 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                         </ul>
                     </li>
                     <li id="Task" class="nav-item dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Task<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">DailyEntry<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">List</a></li>
+                            <li><a href="{{ url_for('timesheet') }}">TimeSheet</a></li>
                             <li><a href="#">New</a></li>                 
                             <li><a href="#">Edit</a></li>
                             <li><a href="#">Export</a></li>

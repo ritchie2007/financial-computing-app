@@ -1,10 +1,13 @@
             Flask CRUD Application Full Course With SQLAlchemy | Python Flask
             https://www.youtube.com/watch?v=XTpLbBJTOM4
             https://codeloop.org/flask-crud-application-with-sqlalchemy/
+            
             不过如果js不是写在html页面里，而是作为单独的.js外连接,那么是无法使用jinja的template语法的，像是{{}}这些都无法使用。
             "flask模板template 与js 的一些问题" https://spacewander.github.io/explore-flask-zh/8-templates.html
+           
             $env:FLASK_ENV = "development" 在flask vs code虚拟机里输入，就打开了调试模式，出错时会在browser里面打印 出错误
             $(("#"+$(this).attr("targetgroup"))+" form #timesheet1-3").val(t);
+            
             console.log(d.toDateString()); >> Thu May 14 2020
             console.log(d.toLocaleDateString()); >> 5/14/2020
             console.log(d.toLocaleString()); >> 5/14/2020, 9:48:38 AM

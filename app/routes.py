@@ -12,6 +12,8 @@ from random import random
 from time import strftime, strptime, localtime
 from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
+from flask import make_response
+import json
 
 @app.before_request
 def before_request():
@@ -225,7 +227,7 @@ def taskinsertion():
         )
         db.session.add(my_data)
         db.session.commit()
-        flash("Dailyentry Inserted Successfully")
+        flash("Task Renew Successfully")
     return redirect(url_for('task'))
 
 @app.route('/taskupdate', methods=['POST'])
@@ -246,28 +248,29 @@ def taskupdate():
         my_data.worktime = request.form['taskedit-11']
         
         db.session.commit()
-        flash("Dailyentry Inserted Successfully")
+        flash("Task Updated Successfully")
         return redirect(url_for('task'))
 
 @app.route('/timesheet', methods=['GET','POST'])
 def timesheet():
     all_data = activity_code.query.all()
     list_data = Timesheet.query.all()
+    tasklist = Task.query.all()
     if request.method == 'POST':
         #print('\n\nForm data\n{}\n\n'.format(request.form))
         date = request.form['timesheet1-1']
         calhour = request.form['timesheet1-3']
-        adjhour = float(request.form['timesheet1-41'])
-        workhour = float(request.form['timesheet1-5'])
-        taskname = request.form['timesheet1-15']
+        adjhour = (request.form['timesheet1-41'] + request.form['timesheet1-42'])
+        workhour = request.form['timesheet1-5']
+        taskname = request.form['timesheet1-6']
         taskcontent = request.form['timesheet1-7']
         tasktype = request.form['timesheet1-8']
-        corp1 = request.form['timesheet1-10']
-        corp2 = request.form['timesheet1-12']
-        corp3 = request.form['timesheet1-13']
-        corp4 = request.form['timesheet1-14']
+        corp1 = request.form['timesheet1-9']
+        corp2 = request.form['timesheet1-10']
+        corp3 = request.form['timesheet1-11']
+        corp4 = request.form['timesheet1-12']
         staff = 'susan'
-        validation = '12345'
+        validation = random()
 
         my_data = Timesheet(
             date,
@@ -287,12 +290,15 @@ def timesheet():
         db.session.add(my_data)
         db.session.commit()
         flash("Dailyentry Inserted Successfully")
-        
+    num = [['tom1','tom2','tom3','tom4'], ['mike1','mike2','mike3'], 'amuxia', 'zhao', 'lisi']
+    #num = ['tom1','mike1','mike2','mike3','amuxia', 'zhao', 'lisi']
     return render_template(
         'timesheet.html',
         code_types=all_data,
         list=list_data,
-        title='timesheet'
+        tasklist = tasklist,
+        title='timesheet',
+        num = num
     )
 
 @app.route('/timesheetupdate', methods=['GET', 'POST'])
@@ -317,48 +323,24 @@ def timesheetupdate():
         flash("Employee Updated Successfully")
         return redirect(url_for('timesheet'))
 
-#timesheet dailyentry insert
-# @app.route('/insert', methods=['POST'])
-# def insert():
-#     if request.method == 'POST':
-#         #print('\n\nForm data\n{}\n\n'.format(request.form))
-#         date = request.form['timesheet1-1']
-#         staff = request.form['timesheet1-2']
-#         starttime = request.form['timesheet1-3']
-#         calhr = float(request.form['timesheet1-4'])
-#         workhr = float(request.form['timesheet1-6'])
-#         comment = request.form['timesheet1-15']
-#         taskname = request.form['timesheet1-7']
-#         tasktype = request.form['timesheet1-8']
-#         taskcode = request.form['timesheet1-9']
-#         corp1 = request.form['timesheet1-10']
-#         corp2 = request.form['timesheet1-12']
-#         corp3 = request.form['timesheet1-13']
-#         corp4 = request.form['timesheet1-14']
-#         taskcontent = request.form['timesheet1-11']
+@app.route('/postmethod01', methods=['POST']) #接收前台数据 #发送数据到前台
+def get_post01():
+    # receive a single string from javascript post
+    jsdata = request.form['js_data']
+    # json.loads(jsdata)[0]
+    print ("*****route*******" + jsdata)
+    return jsdata
 
-#         my_data = Dailyentry(
-#             date,
-#             staff,
-#             starttime,
-#             calhr,
-#             workhr,
-#             comment,
-#             taskname,
-#             tasktype,
-#             taskcode,
-#             corp1,
-#             corp2,
-#             corp3,
-#             corp4,
-#             taskcontent 
-#         )
-#         db.session.add(my_data)
-#         db.session.commit()
-#         flash("Dailyentry Inserted Successfully")
-#         return render_template(
-#             'timesheet.html'
-#         )
+@app.route('/postmethod02', methods=['POST']) #接收前台数据 #发送数据到前台
+def get_post02():
+    # receive a array from javascript post
+    if request.method == 'POST':
+        asd = request.json
+        print(asd)
+        if 'key1' in asd:
+            return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+    return render_template("createform.html")
+    # request.get_data(as_text=True)：获取前端POST请求传过来的 json 数据
 
 @app.route(
     '/temp'
@@ -366,6 +348,13 @@ def timesheetupdate():
 def temp():
     return render_template(
         'temp.html',
+        title='temp'
+    )
+
+@app.route('/learning_js_pass_data')
+def js_pass_data():
+    return render_template(
+        'learning_js_pass_data.html',
         title='temp'
     )
 

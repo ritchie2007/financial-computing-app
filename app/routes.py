@@ -6,7 +6,7 @@ from sqlalchemy import desc # for table.order_by(Task.enddate).all()
 from sqlalchemy import asc
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
-from app.models import User, Data_table, activity_code, Task, Timesheet, Mulform
+from app.models import User, Data_table, activity_code, Task, Timesheet, Mulform, TimesheetTempData
 from random import random
 #from app import dateCalculate
 from time import strftime, strptime, localtime
@@ -24,10 +24,7 @@ def before_request():
         pass
 
 @app.route('/')
-@app.route(
-    '/index',
-    methods=['GET', 'POST']
-)
+@app.route('/index', methods=['GET', 'POST'])
 # @login_required
 def index():
     form = WebNavForm()
@@ -44,10 +41,8 @@ def index():
         title='Home',
         form=form
     )
-@app.route(
-    '/login',
-    methods=['GET', 'POST']
-)
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -82,10 +77,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route(
-    '/register',
-    methods=['GET', 'POST']
-)
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -117,10 +109,7 @@ def profile(username):
         user=user
     )
 
-@app.route(
-    '/edit_profile',
-    methods=['GET', 'POST']
-)
+@app.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
     form = EditProfileForm(current_user.username)
 
@@ -137,7 +126,7 @@ def edit_profile():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
-    
+   
     else:
         pass
 
@@ -147,18 +136,14 @@ def edit_profile():
         form=form
     )
 
-@app.route(
-    '/corporate'
-)
+@app.route('/corporate')
 def corporate():
     return render_template(
         'corporate.html',
         title='Corporate'
     )
 
-@app.route(
-    '/Corp_Spec'
-)
+@app.route('/Corp_Spec')
 def corp_spec():
     return render_template(
         'corp_spec.html',
@@ -184,7 +169,7 @@ def taskinsertion():
         priority = request.form['taskedit-8']
         recurrence = request.form['taskedit-9']
         jobowner = request.form['taskedit-10']
-        validation = random()
+        serialno = random()
         worktime = request.form['taskedit-11']
         periodend = request.form['taskedit-31']
         nextstartdate = request.form['taskedit-51']
@@ -219,7 +204,7 @@ def taskinsertion():
             priority,
             recurrence,
             jobowner,
-            validation,
+            serialno,
             worktime,
             renewperiod,
             renewstartdate,
@@ -244,38 +229,51 @@ def taskupdate():
         my_data.priority = request.form['taskedit-8']
         my_data.recurrence = request.form['taskedit-9']
         my_data.jobowner = request.form['taskedit-10']
-        my_data.validation = random()
+        my_data.serialno = random()
         my_data.worktime = request.form['taskedit-11']
         
         db.session.commit()
         flash("Task Updated Successfully")
         return redirect(url_for('task'))
 
-@app.route('/timesheet', methods=['GET','POST'])
+@app.route('/timesheet')
 def timesheet():
     all_data = activity_code.query.all()
     list_data = Timesheet.query.all()
     tasklist = Task.query.all()
+    return render_template(
+        'timesheet.html',
+        code_types=all_data,
+        list=list_data,
+        tasklist = tasklist,
+        title='timesheet',
+    )
+
+@app.route('/timesheetInsertion', methods=['POST'])
+def timesheetInsertion():
     if request.method == 'POST':
-        #print('\n\nForm data\n{}\n\n'.format(request.form))
-        date = request.form['timesheet1-1']
-        calhour = request.form['timesheet1-3']
-        adjhour = (request.form['timesheet1-41'] + request.form['timesheet1-42'])
-        workhour = request.form['timesheet1-5']
-        taskname = request.form['timesheet1-6']
-        taskcontent = request.form['timesheet1-7']
-        tasktype = request.form['timesheet1-8']
-        corp1 = request.form['timesheet1-9']
-        corp2 = request.form['timesheet1-10']
-        corp3 = request.form['timesheet1-11']
-        corp4 = request.form['timesheet1-12']
-        staff = 'susan'
-        validation = random()
+        da = request.json
+        print("----> " + da[0] + " <---- type(da) is list")
+        startdate = da[1]
+        calhour = da[2]
+        adjhour = da[3]
+        adjmin = da[4]
+        workhour = da[5]
+        taskname = da[6]
+        taskcontent = da[7]
+        tasktype = da[8]
+        corp1 = da[9]
+        corp2 = da[10]
+        corp3 = da[11]
+        corp4 = da[12]
+        staff = "Susan" #current_user.username
+        serialno = random()
 
         my_data = Timesheet(
-            date,
+            startdate,
             calhour,
             adjhour,
+            adjmin,
             workhour,
             taskname,
             taskcontent,
@@ -285,22 +283,57 @@ def timesheet():
             corp3,
             corp4,
             staff,
-            validation
+            serialno
         )
         db.session.add(my_data)
         db.session.commit()
-        flash("Dailyentry Inserted Successfully")
-    num = [['tom1','tom2','tom3','tom4'], ['mike1','mike2','mike3'], 'amuxia', 'zhao', 'lisi']
-    #num = ['tom1','mike1','mike2','mike3','amuxia', 'zhao', 'lisi']
-    return render_template(
-        'timesheet.html',
-        code_types=all_data,
-        list=list_data,
-        tasklist = tasklist,
-        title='timesheet',
-        num = num
-    )
-
+        # flash("Dailyentry Inserted Successfully")
+    return redirect(url_for("timesheet"))
+   
+"""
+@app.route('/timesheet_tempdata', methods=['GET', 'POST'])
+def timesheet_tempdata():
+    if request.method == 'POST':
+        rsl = request.json # rsl is list type, very similar to array
+        # read data from db
+        da = TimesheetTempData.query.filter_by(t0 = rsl[0]).first()
+        if (type(da) == type(None)) :
+            my_data = TimesheetTempData(t0 = rsl[0],
+            t1 = rsl[1],
+            t2 = rsl[2],
+            t3 = rsl[3],
+            t4 = rsl[4],
+            t5 = rsl[5],
+            t6 = rsl[6],
+            t7 = rsl[7],
+            t8 = rsl[8],
+            t9 = rsl[9],
+            t10 = rsl[10],
+            t11 = rsl[11],
+            t12 = rsl[12],
+            t13 = 1)
+            db.session.add(my_data)
+            db.session.commit()
+            #flash("Task Renew Successfully")
+        if (da.t0 == rsl[0]) :
+            my_data = TimesheetTempData.query.get(rsl[0])
+            my_data.t1 = rsl[1]
+            my_data.t2 = rsl[2]
+            my_data.t3 = rsl[3]
+            my_data.t4 = rsl[4]
+            my_data.t5 = rsl[5]
+            my_data.t6 = rsl[6]
+            my_data.t7 = rsl[7]
+            my_data.t8 = rsl[8]
+            my_data.t9 = rsl[9]
+            my_data.t10 = rsl[10]
+            my_data.t11 = rsl[11]
+            my_data.t12 = rsl[12]
+            my_data.t13 = 1
+            db.session.commit()
+            #flash("Task Renew Successfully")
+        return "data is saved."
+"""
 @app.route('/timesheetupdate', methods=['GET', 'POST'])
 def timesheetupdate():
     if request.method == 'POST':
@@ -342,9 +375,7 @@ def get_post02():
     return render_template("createform.html")
     # request.get_data(as_text=True)：获取前端POST请求传过来的 json 数据
 
-@app.route(
-    '/temp'
-)
+@app.route('/temp')
 def temp():
     return render_template(
         'temp.html',
@@ -379,9 +410,7 @@ def multipleForms():
 
 # **** following is to try Data table CRUD functions ******
 # This is the data_table root on all our employee data
-@app.route(
-    '/data_crud'
-)
+@app.route('/data_crud')
 def data_crud():
     all_data = Data_table.query.all() # Data_table is defined in models.py
     return render_template(

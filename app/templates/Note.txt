@@ -31,3 +31,11 @@
             (101, '101 _ Bookkeeping'), (103, '103 _ Payroll Preparation'), (105, '105 _ HST/GST Matters'), (107, '107 _ T2 Tax Preparation'), (109, '109 _ T1 Tax return'), (111, '111 _ T4/T4A/T5'), (113, '113 _ EHT'), (115, '115 _ WSIB'), (117, '117 _ CRA Audit/Review'), (119, '119 _ Preparation'), (201, '201 _ TaxRepresentative Authorization'), (203, '203 _ Incorporation/MasterBusinessLicense/BN/Address'), (205, '205 _ Initial Return'), (207, '207 _ Annual Filing'), (301, '301 _ GST Rebate'), (303, '303 _ NR Speculation Tax-ON'), (305, '305 _ ITN Application'), (307, '307 _ NRK Account Application'), (309, '309 _ NR4.PartXIII'), (311, '311 _ T1159.S216NRRent'), (313, '313 _ T2062/T2064NRCert'), (315, '315 _ T1S217NRSale'), (401, '401 _ Client Consulting'), (403, '403 _ Client personal  meeting '), (405, '405 _ Client Correspondence (Phone/Portal/Fax/E-mail)'), (407, '407 _ Training to Client'), (409, '409 _ Client Related Travel Time'), (411, '411 _ Back up Scanning  Printing, Assembly & Filing'),(413, '413 _ Billing & Collection (Chargeable)'), (415, '415 _ Tax planning'), (417, '417 _ Insurance/Trust Matters'),(419, '419 _ Estate & Succession Planning'), (501, '501 _ Lunch/Break time'), (503, '503 _ Enter Time Sheet'),(505, '505 _ Vacation/Statutory Holidays/Unpaid Leave'), (507, '507 _ Staff Self learning'),(509, '509 _ Staff Coaching & Training'), (511, '511 _ General Administration/HR/Personnel/Recruiting'), (513, '513 _ Software Improvement/ Information Technology')
 
             $env:FLASK_ENV = "development" 打开开发环境
+
+
+
+<!-- {% block body_attribs %} 
+    onbeforeunload="return leaving()" 
+{% endblock body_attribs %} -->
+($("#Inputgroup0"+i+" button.inputgroupStop").prop('disabled') == false) 
+($('#Inputgroup0' + i +' [name="timesheet1-6"]').attr('disabled') == "disabled"

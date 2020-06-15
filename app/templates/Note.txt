@@ -39,3 +39,13 @@
 {% endblock body_attribs %} -->
 ($("#Inputgroup0"+i+" button.inputgroupStop").prop('disabled') == false) 
 ($('#Inputgroup0' + i +' [name="timesheet1-6"]').attr('disabled') == "disabled"
+
+    if request.method == 'POST':
+        jsdata = request.form['jsdata']
+        dateselect = (jsdata.split(','))[0]
+        userselect = (jsdata.split(','))[1]
+        print(jsdata)
+        print(dateselect)
+        print(userselect)
+        list_data = Timesheet.query.filter(Timesheet.startdate == '2020-06-12', Timesheet.staff == 'Susan').all()
+        print(list_data)

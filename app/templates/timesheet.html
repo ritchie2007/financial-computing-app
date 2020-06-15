@@ -75,7 +75,7 @@
 
                 <div id="Inputgroup01" class="entryinputgroup">
                     <form action="{{url_for('timesheet')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 13px; opacity: 1;">
+                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 1&nbsp;</button>
                                 <button hidden>&#x1f512 </button>
@@ -122,7 +122,7 @@
                             <label for="timesheet1-8">Task Type</label>
                             <br/>
                             <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in code_types %}
                                 <option >{{row.name}}</option>
                                 {% endfor %}
@@ -133,9 +133,9 @@
                             <label for="timesheet1-9">Corporation 1</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -143,9 +143,9 @@
                             <label for="timesheet1-10">Corporation 2</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -153,9 +153,9 @@
                             <label for="timesheet1-11">Corporation 3</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -163,9 +163,9 @@
                             <label for="timesheet1-12">Corporation 4</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -178,7 +178,7 @@
                 </div>
                 <div id="Inputgroup02" class="entryinputgroup">
                     <form action="{{url_for('timesheet')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 13px; opacity: 1;">
+                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 2&nbsp;</button>
                                 <button hidden>&#x1f512 </button>
@@ -225,7 +225,7 @@
                             <label for="timesheet1-8">Task Type</label>
                             <br/>
                             <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in code_types %}
                                 <option >{{row.name}}</option>
                                 {% endfor %}
@@ -236,9 +236,9 @@
                             <label for="timesheet1-9">Corporation 1</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -246,9 +246,9 @@
                             <label for="timesheet1-10">Corporation 2</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -256,9 +256,9 @@
                             <label for="timesheet1-11">Corporation 3</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -266,9 +266,9 @@
                             <label for="timesheet1-12">Corporation 4</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -281,7 +281,7 @@
                 </div>
                 <div id="Inputgroup03" class="entryinputgroup">
                     <form action="{{url_for('timesheet')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 13px; opacity: 1;">
+                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 3&nbsp;</button>
                                 <button hidden>&#x1f512 </button>
@@ -328,7 +328,7 @@
                             <label for="timesheet1-8">Task Type</label>
                             <br/>
                             <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in code_types %}
                                 <option >{{row.name}}</option>
                                 {% endfor %}
@@ -339,9 +339,9 @@
                             <label for="timesheet1-9">Corporation 1</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -349,9 +349,9 @@
                             <label for="timesheet1-10">Corporation 2</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -359,9 +359,9 @@
                             <label for="timesheet1-11">Corporation 3</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -369,9 +369,9 @@
                             <label for="timesheet1-12">Corporation 4</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -384,7 +384,7 @@
                 </div>
                 <div id="Inputgroup04" class="entryinputgroup">
                     <form action="{{url_for('timesheet')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 13px; opacity: 1;">
+                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 4&nbsp;</button>
                                 <button hidden>&#x1f512 </button>
@@ -431,7 +431,7 @@
                             <label for="timesheet1-8">Task Type</label>
                             <br/>
                             <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in code_types %}
                                 <option >{{row.name}}</option>
                                 {% endfor %}
@@ -442,9 +442,9 @@
                             <label for="timesheet1-9">Corporation 1</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -452,9 +452,9 @@
                             <label for="timesheet1-10">Corporation 2</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -462,9 +462,9 @@
                             <label for="timesheet1-11">Corporation 3</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -472,9 +472,9 @@
                             <label for="timesheet1-12">Corporation 4</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -487,7 +487,7 @@
                 </div>
                 <div id="Inputgroup05" class="entryinputgroup">
                     <form action="{{url_for('timesheet')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 13px; opacity: 1;">
+                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 5&nbsp;</button>
                                 <button hidden>&#x1f512 </button>
@@ -534,7 +534,7 @@
                             <label for="timesheet1-8">Task Type</label>
                             <br/>
                             <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in code_types %}
                                 <option >{{row.name}}</option>
                                 {% endfor %}
@@ -545,9 +545,9 @@
                             <label for="timesheet1-9">Corporation 1</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -555,9 +555,9 @@
                             <label for="timesheet1-10">Corporation 2</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -565,9 +565,9 @@
                             <label for="timesheet1-11">Corporation 3</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -575,9 +575,9 @@
                             <label for="timesheet1-12">Corporation 4</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -590,7 +590,7 @@
                 </div>
                 <div id="Inputgroup06" class="entryinputgroup">
                     <form action="{{url_for('timesheet')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 13px; opacity: 1;">
+                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 6&nbsp;</button>
                                 <button hidden>&#x1f512 </button>
@@ -637,7 +637,7 @@
                             <label for="timesheet1-8">Task Type</label>
                             <br/>
                             <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in code_types %}
                                 <option >{{row.name}}</option>
                                 {% endfor %}
@@ -648,9 +648,9 @@
                             <label for="timesheet1-9">Corporation 1</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -658,9 +658,9 @@
                             <label for="timesheet1-10">Corporation 2</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -668,9 +668,9 @@
                             <label for="timesheet1-11">Corporation 3</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -678,9 +678,9 @@
                             <label for="timesheet1-12">Corporation 4</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -693,7 +693,7 @@
                 </div>
                 <div id="Inputgroup07" class="entryinputgroup">
                     <form action="{{url_for('timesheet')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 13px; opacity: 1;">
+                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 7&nbsp;</button>
                                 <button hidden>&#x1f512 </button>
@@ -740,7 +740,7 @@
                             <label for="timesheet1-8">Task Type</label>
                             <br/>
                             <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in code_types %}
                                 <option >{{row.name}}</option>
                                 {% endfor %}
@@ -751,9 +751,9 @@
                             <label for="timesheet1-9">Corporation 1</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -761,9 +761,9 @@
                             <label for="timesheet1-10">Corporation 2</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -771,9 +771,9 @@
                             <label for="timesheet1-11">Corporation 3</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -781,9 +781,9 @@
                             <label for="timesheet1-12">Corporation 4</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -796,7 +796,7 @@
                 </div>
                 <div id="Inputgroup08" class="entryinputgroup">
                     <form action="{{url_for('timesheet')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 13px; opacity: 1;">
+                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 8&nbsp;</button>
                                 <button hidden>&#x1f512 </button>
@@ -843,7 +843,7 @@
                             <label for="timesheet1-8">Task Type</label>
                             <br/>
                             <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in code_types %}
                                 <option >{{row.name}}</option>
                                 {% endfor %}
@@ -854,9 +854,9 @@
                             <label for="timesheet1-9">Corporation 1</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -864,9 +864,9 @@
                             <label for="timesheet1-10">Corporation 2</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -874,9 +874,9 @@
                             <label for="timesheet1-11">Corporation 3</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -884,9 +884,9 @@
                             <label for="timesheet1-12">Corporation 4</label>
                             <br/>
                             <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" selected disabled>Please select</option>
+                                <option value="" >Please select</option>
                                 {% for row in tasklist %}
-                                    <option >{{row.periodend}}--{{row.recurrence}}--{{row.jobtype}}--{{row.client}}</option>
+                                    <option >{{row.periodend}} | {{row.recurrence}} | {{row.jobtype}} | {{row.client}} | {{row.id}}</option>
                                 {% endfor %} -->
                             </select>
                         </div>
@@ -936,6 +936,143 @@
     </div>
     <!-- Sheet list page -->
     <div id="Sheetlist" class="timesheettbl" style="display: none;">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            {{message}}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+        <input class="form-control mb-4" id="tableSearch" type="text"
+            placeholder="Type something to search list items">
+        <br/>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr >
+                    <th class="col-1">ID</th>
+                    <th class="col-1">Date</th>
+                    <th class="col-2">TaskName</th>
+                    <th class="col-1">TaskType</th>
+                    <th class="col-2">Corporation</th>
+                    <th class="col-1">WorkHour</th>
+                    <th class="col-2">Content</th>
+                    <th class="col-1">Staff</th>
+                    <th class="col-1">Action</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                {% for row in list %}
+                    <tr >
+                        <td class="col-1">{{row[1]}}</td>
+                        <td class="col-1">{{row.startdate}}</td>
+                        <td class="col-2">{{row.taskname}}</td>
+                        <td class="col-1">{{row.tasktype}}</td>
+                        <td class="col-2">{{row.corp1}}</td>
+                        <!-- <td class="col-1">{{row[4]}}</td> -->
+                        <td class="col-2">{{row.client}}</td>
+                        <td class="col-1">{{row.workhour}}</td>
+                        <td class="col-2">{{row.taskcontent}}</td>
+                        <td class="col-1">{{row.staff}}</td>
+                        <td class="col-1">
+                            <a href="/timesheetupdate/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
+                            <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+                        </td>
+                    </tr>
+
+                <!-- Edit & update -->
+                <div id="modaledit{{row.id}}" class="modal" role="dialog" aria-hidden="true" style="z-index: 300;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Update Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{url_for('timesheetupdate')}}" method="POST">
+                                    <div class="form-group">
+                                        <label for="timesheet1-1">Date</label>
+                                        <input type="hidden"  name="id" value="{{row.id}}">
+                                        <input type="text" class="form-control" name="timesheet1-1" value="{{row.startdate}}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-2">Staff</label>
+                                        <input type="text" class="form-control" name="timesheet1-2" value="{{row.staff}}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-3">Start time</label>
+                                        <input type="text" class="form-control" name="timesheet1-3" value="{{row.starttime}}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-4">Calendar hr</label>
+                                        <input type="number" class="form-control" name="timesheet1-4" value="{{row.calhr}}" readonly>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="timesheet1-6">Working hr</label>
+                                        <input type="number" step="any" class="form-control" name="timesheet1-6" value="{{row.workhr}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-15">Comment</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-15" value="{{row.comment}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-7">Task Name</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-7" value="{{row.taskname}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-8">Task Type</label>
+                                        <br/>
+                                        <select class="browser-default custom-select" name="timesheet1-8" value="{{row.tasktype}}" style="height: 33px; background-color: #eeeeee;">
+                                            <option selected="">select code</option>
+                                            {% for row in code_types %}
+                                            <option >{{row.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-9">Task Code</label>
+                                        <input type="number" class="form-control" name="timesheet1-9" } value="{{row.taskcode}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-10">Corporation 1</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-10" value="{{row.corp1}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-11">Task Content</label>
+                                        <textarea type="text" class="form-control fillable" rows="6" name="timesheet1-11" value="{{row.taskcontent}}"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-12">Corporation 2</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-12" value="{{row.corp2}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-13">Corporation 3</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-13" value="{{row.corp3}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-14">Corporation 4</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-14" value="{{row.corp4}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     </div>
 </div>
@@ -982,7 +1119,7 @@
             //calculate time
             var diff0 = (new Date() - startTime[index-1]);
             calHour[index-1] += diff0; //calendar hour
-            console.log(calHour[index-1]);
+            //console.log(calHour[index-1]);
             // go to adjustment and display
             adjustment(root, index);
             // save data
@@ -1032,7 +1169,7 @@
             var root = $(this).parents('div').parents('div').attr("id");
             $("#"+root+" .form-group input").removeAttr('disabled');
             $("#"+root+" .form-group input").prop('readonly',false);
-            var time = timeformat((new Date()), 'yyyy-mm-dd hh:ii  ss');
+            var time = timeformat((new Date()), 'yyyy-mm-dd hh:ii');
             $("#"+root+" .form-group [name='timesheet1-1']").val(time);
             // $("#"+root+" form #timesheet1-2").val('{{current_user.username}}');//flask模板template 与js问题js须和html在同一文件里.docx
             // $(this).addClass('disabled'); //这种方式不工作，下面2种都工作
@@ -1096,6 +1233,7 @@
         
         //sub-save data to Local
         function saveSub (root, runningCode, accomTime) {
+
             var str = new Array(16);
             str[0] = root;
             str[1] = $("#"+root+" .form-group [name='timesheet1-1']").val();
@@ -1138,7 +1276,7 @@
         function loadData(root) {
             var datasave = localStorage.getItem(root);
             if (datasave == null) { 
-                console.log("No data is saved for this card");
+                console.log("loadData: No data is saved for this card");
             } else {
                 datasave = datasave.split("|&|");
                 $("#"+root+" .form-group [name='timesheet1-1']").val(datasave[1]);
@@ -1187,8 +1325,6 @@
         window.onload = function(event) {
             //check data existed start Modal
             // $("#myModal").modal('show');
-
-            $("#myModal").modal('show');
             var root = "";
             var str = "";
             for (iload=1; iload<9; iload++) {
@@ -1225,13 +1361,17 @@
         // submit
         $("button#timesheetsubmit").click(function(){
             // stop time recording
-            var str = new Array(13);
+            var str = new Array(19);
             var root = '';
-            for (i=1; i<9; i++) {
-                root = 'Inputgroup0' + i;
+            var avg = '';
+            var flag = 0;
+            var temp = 0;
+            for (isub=1; isub<9; isub++) {
+                root = 'Inputgroup0' + isub;
                 if ($("#"+root+" .form-group [name='timesheet1-1']").val() == "") {
-                    console.log("No. " + i + " is empty and not to be submited.");
+                    console.log("No. " + isub + " is empty and not to be submited.");
                 } else {
+                    document.querySelector('#Inputgroup0' + isub + ' .inputgroupStop').click();
                     str[0] = root;
                     str[1] = $("#"+root+" .form-group [name='timesheet1-1']").val();
                     str[2] = $("#"+root+" .form-group [name='timesheet1-3']").val();
@@ -1240,6 +1380,19 @@
                     for (j=5; j<13; j++) {
                         str[j] = $("#"+root+" .form-group [name='timesheet1-" + j + "']").val();
                     };
+                    str[13] = Date.now();
+                    avg = (str[5].replace(' ','')).split(":");
+                    if (avg==NaN) {avg =['0','0']};
+                    temp = parseInt(avg[0])*60 + parseInt(avg[1]);
+                    flag = [str[9], str[10], str[11], str[12]].filter(String).length;
+                    flag = (flag ==0)?1:flag;
+                    console.log("Total: " + temp + " flag: " + flag);
+                    str[14] =(Math.round(temp/flag/0.60)/100)
+                    for (j=15; j<19; j++){
+                        str[j] = parseInt((str[j-6].split(' | '))[4]);
+                        str[j] = (Number.isNaN(str[j]))?0:str[j]
+                    }
+                    // str[14] = String(Math.floor(temp/flag/60)) + ":" + String(Math.floor(temp/flag)%60);
                     console.log(str);
                     $.ajax({
                         url: "/timesheetInsertion",
@@ -1250,7 +1403,7 @@
                         success: function(e){console.log(e);},
                         error: function(error) {console.log(error);}
                     });
-                    console.log("Submiting ... : " + i);
+                    console.log("Submiting ... : " + isub);
                 };
             }
 
@@ -1329,7 +1482,7 @@
                 min = ((d.getHours()*60 + d.getMinutes()) - (h1*60 + m1));
                 hour = Math.floor(min/60);
                 min = min%60;
-                $("#"+root+" .form-group [name='timesheet1-1']").val(d.getFullYear()+"-"+t(d.getMonth()+1)+"-"+t(d.getDate())+" "+t(hour)+":"+t(min)+"  "+t(d.getSeconds()));
+                $("#"+root+" .form-group [name='timesheet1-1']").val(d.getFullYear()+"-"+t(d.getMonth()+1)+"-"+t(Math.floor(Math.random()*13+1))+" "+t(hour)+":"+t(min));//+"  "+t(d.getSeconds()));
                 calHour[i-1] = h1*3600000 + m1*60000;
                 tf= new formattime(calHour[i-1]);
                 $("#"+root+" .form-group [name='timesheet1-3']").val(t(tf.hour)+" : "+t(tf.min));
@@ -1338,8 +1491,8 @@
                 var adj1=$("#"+root+" .form-group [name='timesheet1-41']").val(t(h2));
                 var adj2=$("#"+root+" .form-group [name='timesheet1-42']").val(t(m2));
                 $("#"+root+" .form-group [name='timesheet1-5']").val(h1+h2+Math.floor((m1+m2)/60)+" : "+(m1+m2)%60);
-                $("#"+root+" .form-group [name='timesheet1-6']").val("TaskName No. "+i+" on "+d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
-                $("#"+root+" .form-group [name='timesheet1-7']").val("text_Content No. "+i+" on "+d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
+                $("#"+root+" .form-group [name='timesheet1-6']").val("TaskName No. "+i+" on ");//+d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
+                $("#"+root+" .form-group [name='timesheet1-7']").val("text_Content No. "+i+" on ");//+d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
                 document.querySelector("#"+root+" .form-group [name='timesheet1-8']").selectedIndex = Math.floor(Math.random()*40);
                 $("#"+root+" .form-group [name='timesheet1-9']").get(0).selectedIndex = Math.floor(Math.random()*3+1);
                 $("#"+root+" .form-group [name='timesheet1-10']").get(0).selectedIndex = Math.floor(Math.random()*3+4);

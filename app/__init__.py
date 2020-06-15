@@ -1,18 +1,19 @@
+from random import random
 from flask import Flask, request
-
-app = Flask(__name__)
-app.debug = True
-app.config['SECRET_KEY'] = 'Ritchie'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databases/users.db'
-
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
-
-from random import random
 from sqlalchemy import desc
 from sqlalchemy import asc
+
+app = Flask(__name__)
+app.debug = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['SECRET_KEY'] = 'Ritchie'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databases/users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True # add on 2020-06-14
+app.config['WHOOSH_BASE']='whoosh' # add on 2020-06-14
 
 bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)

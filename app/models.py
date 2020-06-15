@@ -1,11 +1,12 @@
 from datetime import datetime
-from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from app import db, login
 
 @login.user_loader
-def load_user(id): # load_user(id):
-    return User.query.get(int(id))
+def load_user(userid):
+    ''' get user info'''
+    return User.query.get(int(userid))
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,7 +53,7 @@ class activity_code(db.Model):
 
 class Timesheet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    startdate = db.Column(db.String(20))
+    startdate = db.Column(db.String(10))
     calhour = db.Column(db.String(10))
     adjhour = db.Column(db.String(4))
     adjmin = db.Column(db.String(4))
@@ -65,22 +66,16 @@ class Timesheet(db.Model):
     corp3 = db.Column(db.String(100))
     corp4 = db.Column(db.String(100))
     staff = db.Column(db.String(50))
+    timestamp = db.Column(db.Integer)
+    avgtime = db.Column(db.String(10))
+    jobid1 = db.Column(db.Integer)
+    jobid2 = db.Column(db.Integer)
+    jobid3 = db.Column(db.Integer)
+    jobid4 = db.Column(db.Integer)
+    starttime = db.Column(db.String(5))
     serialno = db.Column(db.String(20))
-    def __init__(self,
-        startdate,
-        calhour,
-        adjhour,
-        adjmin,
-        workhour,
-        taskname,
-        taskcontent,
-        tasktype,
-        corp1,
-        corp2,
-        corp3,
-        corp4,
-        staff,
-        serialno):
+    def __init__(self, startdate, calhour, adjhour, adjmin, workhour, taskname, taskcontent, tasktype, \
+             corp1, corp2, corp3, corp4, staff, timestamp, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno):
         self.startdate = startdate
         self.calhour = calhour
         self.adjhour = adjhour
@@ -94,6 +89,13 @@ class Timesheet(db.Model):
         self.corp3 = corp3
         self.corp4 = corp4
         self.staff = staff
+        self.timestamp = timestamp
+        self.avgtime = avgtime
+        self.jobid1 = jobid1
+        self.jobid2 = jobid2
+        self.jobid3 = jobid3
+        self.jobid4 = jobid4
+        self.starttime = starttime
         self.serialno = serialno
 
 class Task(db.Model):
@@ -114,8 +116,9 @@ class Task(db.Model):
     renewstartdate = db.Column(db.String(10))
     renewenddate = db.Column(db.String(10))
     
-    def __init__(self, client, jobtype, periodend, details, nextstartdate, nextenddate, 
-    status, priority, recurrence, jobowner, serialno, worktime, renewperiod, renewstartdate, renewenddate):
+    def __init__(self, client, jobtype, periodend, details, nextstartdate, nextenddate, \
+        status, priority, recurrence, jobowner, serialno, worktime, renewperiod, renewstartdate, \
+        renewenddate):
         self.client = client
         self.jobtype = jobtype
         self.periodend = periodend
@@ -134,36 +137,43 @@ class Task(db.Model):
 
 class Staff(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    job = db.Column(db.String(100))
-    calendar_hour = db.Column(db.String(12))
-    adj_hour = db.Column(db.String(12))
+    name = db.Column(db.String(80))
+    job = db.Column(db.String(80))
+    calendar_hour = db.Column(db.String(10))
+    adj_hour = db.Column(db.String(5))
+    adj_min = db.Column(db.String(5))
     work_hour = db.Column(db.String(12))
-    serialno = db.Column(db.String(12))
-    def __init__(self, name, job, calendar_hour, adj_hour, work_hour, serialno):
+    timestamp = db.Column(db.Integer)
+    serialno = db.Column(db.String(20))
+    def __init__(self, name, job, calendar_hour, adj_hour, adj_min, work_hour, timestamp, serialno):
         self.name = name
         self.job = job
         self.calendar_hour = calendar_hour
         self.adj_hour = adj_hour
+        self.adj_min = adj_min
         self.work_hour = work_hour
+        self.timestamp = timestamp
         self.serialno = serialno
 
-class Corpration_report(db.Model):
+class CorprationReport(db.Model):
+    __tablename__ = "corpration_report"
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.String(12))
     corp = db.Column(db.String(100))
-    task_name = db.Column(db.String(100))
+    date = db.Column(db.String(20))
+    task_name = db.Column(db.String(80))
+    task_type = db.Column(db.String(80))
     task_content = db.Column(db.Text)
-    task_type = db.Column(db.String(100))
-    work_hour = db.Column(db.String(12))
-    serialno = db.Column(db.String(12))
-    def __init__(self, date, corp, task_name, task_content, task_type, work_hour, serialno):
-        self.date = date
+    work_hour = db.Column(db.String(10))
+    timestamp = db.Column(db.Integer)
+    serialno = db.Column(db.String(20))
+    def __init__(self, corp, date, task_name, task_type, task_content, work_hour, timestamp, serialno):
         self.corp = corp
+        self.date = date
         self.task_name = task_name
-        self.task_content = task_content
         self.task_type = task_type
+        self.task_content = task_content
         self.work_hour = work_hour
+        self.timestamp = timestamp
         self.serialno = serialno
 
 class TimesheetTempData(db.Model):

@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+    {{super()}} 
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap-select.min.css')}}">
+{% endblock %}
+
+
+{% block content %}
+<div class="tbl-field container-fluid"> 
+    <!-- Daily entry page -->
+    <!-- Sheet list page -->
+    <div id="Sheetlist" class="timesheettbl">
+        <style>
+            #Sheetlist {
+                font-size: 13px;
+            }
+            #timesheettopbar {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                height: 35px;
+            }
+            #timesheettopbar input#tableSearch {
+                margin: 0px;
+                height: 30px;
+                vertical-align: middle;
+            }
+            #timesheettopbar select {
+                height: 30px;
+            }
+            #timesheettopbar button {
+                height: 30px;
+                padding: 5px 15px 15px;
+            }
+            .table th {
+                text-align: center;
+            }
+            #myTable td {
+                padding: 3px;
+                vertical-align: middle;
+            }
+        </style>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">x</span>
+                </button>
+            {{message}}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        <div id="timesheettopbar" class="container-fluid row">
+            <input class="form-group col-sm-4" id="tableSearch" type="text"
+            placeholder="Type something to search list items">
+            <div class="form-group col-sm-8" style="text-align: right;">
+                Filter
+                <select name="datefilter" style="width: 25%;">
+                    <option value="" >Please select date</option>
+                    {% for row in datefilter %}
+                    <option >{{row.startdate}}</option>
+                    {% endfor %}
+                </select>
+                <select name="userfilter" style="width: 25%;">
+                    <option value="" >Please select user</option>
+                    {% for row in userfilter %}
+                    <option >{{row.staff}}</option>
+                    {% endfor %}
+                </select>
+                <!-- <a href="{{url_for('timesheetlist')}}">Go</a> -->
+                <button type="button" class="btn btn btn-success">Go</button>
+            
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr >
+                    <th class="col-1">ID</th>
+                    <th class="col-1">Date</th>
+                    <th class="col-2">TaskName</th>
+                    <th class="col-1">TaskType</th>
+                    <th class="col-2">Corporation</th>
+                    <th class="col-1">WorkHour</th>
+                    <th class="col-2">Content</th>
+                    <th class="col-1">Staff</th>
+                    <th class="col-1">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <p id="myTable">
+                {% for row in listdata %}
+                    <tr >
+                        <td class="col-1">{{row.id}}</td>
+                        <td class="col-1">{{row.startdate}}</td>
+                        <td class="col-2">{{row.taskname}}</td>
+                        <td class="col-1">{{row.tasktype}}</td>
+                        <td class="col-2">{{row.corp1}}</td>
+                        <!-- <td class="col-1">{{row[4]}}</td> -->
+                        <!-- <td class="col-2">{{row.client}}</td> -->
+                        <td class="col-1" style="text-align: center;">{{row.workhour}}</td>
+                        <td class="col-2">{{row.taskcontent}}</td>
+                        <td class="col-1">{{row.staff}}</td>
+                        <td class="col-1">
+                            <a href="/timesheetupdate/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
+                            <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+                        </td>
+                    </tr>
+                </p>
+                <!-- Edit & update -->
+                <div id="modaledit{{row.id}}" class="modal" role="dialog" aria-hidden="true" style="z-index: 300;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Update Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{url_for('timesheetupdate')}}" method="POST">
+                                    <div class="form-group">
+                                        <label for="timesheet1-1">Date</label>
+                                        <input type="hidden"  name="id" value="{{row.id}}">
+                                        <input type="text" class="form-control" name="timesheet1-1" value="{{row.startdate}}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-2">Staff</label>
+                                        <input type="text" class="form-control" name="timesheet1-2" value="{{row.staff}}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-3">Start time</label>
+                                        <input type="text" class="form-control" name="timesheet1-3" value="{{row.starttime}}" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-4">Calendar hr</label>
+                                        <input type="number" class="form-control" name="timesheet1-4" value="{{row.calhr}}" readonly>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="timesheet1-6">Working hr</label>
+                                        <input type="number" step="any" class="form-control" name="timesheet1-6" value="{{row.workhr}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-15">Comment</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-15" value="{{row.comment}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-7">Task Name</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-7" value="{{row.taskname}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-8">Task Type</label>
+                                        <br/>
+                                        <select class="browser-default custom-select" name="timesheet1-8" value="{{row.tasktype}}" style="height: 33px; background-color: #eeeeee;">
+                                            <option selected="">select code</option>
+                                            {% for row in code_types %}
+                                            <option >{{row.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-9">Task Code</label>
+                                        <input type="number" class="form-control" name="timesheet1-9" } value="{{row.taskcode}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-10">Corporation 1</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-10" value="{{row.corp1}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-11">Task Content</label>
+                                        <textarea type="text" class="form-control fillable" rows="6" name="timesheet1-11" value="{{row.taskcontent}}"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-12">Corporation 2</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-12" value="{{row.corp2}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-13">Corporation 3</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-13" value="{{row.corp3}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="timesheet1-14">Corporation 4</label>
+                                        <input type="text" class="form-control fillable" name="timesheet1-14" value="{{row.corp4}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap-select.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    
+    <!-- <script type="module" src="{{url_for('static', filename='js/popper.js')}}"></script> -->
+    <!-- <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script> -->
+    <!-- <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script> -->
+    
+    <script type="text/javascript">
+    // filter table
+        $('#timesheettopbar button').click(function(){
+            var datefilter = $('#timesheettopbar [name="datefilter"]').val();
+            var userfilter = $('#timesheettopbar [name="userfilter"]').val();
+            // $.post('/timesheetlist', {
+            //    jsdata: (datefilter + ',' + userfilter),
+            // });
+
+            $.ajax({
+                // async: true,
+                url: "/timesheetlist",
+                type: "POST",
+                // dataType: "JSON", // 最好自动匹配，小心使用，否则即便发送成功，得到200状态，仍然返回error信息
+                headers: {"Content-Type": "application/json;charset=utf-8"},
+                contentType:'application/json; charset=utf-8',
+                data: JSON.stringify([datefilter, userfilter]),
+                success: function(response){
+                    // console.log(response);
+                    // $('p#myTable').load(location.href + "p#myTable");
+                    // $('p#myTable').html(response);
+                    // window.location.reload();
+                    window.location.replace('/timesheetlist')
+                },
+                error: function(error){
+                    // console.log("error msg: " + error);
+                    console.log(error);
+                    console.log("failed...");   
+                }
+            });
+        });
+    </script>
+{%- endblock scripts %}

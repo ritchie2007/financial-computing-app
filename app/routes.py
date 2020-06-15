@@ -1,22 +1,23 @@
-from datetime import datetime
-from flask import render_template, flash, redirect, request, url_for
-from flask_login import current_user, login_user, logout_user, login_required
+from random import random
+#from time import strftime, strptime, localtime
+from datetime import timedelta, datetime#, date
+from dateutil.relativedelta import relativedelta
 from werkzeug.urls import url_parse
-from sqlalchemy import desc # for table.order_by(Task.enddate).all()
-from sqlalchemy import asc
+from sqlalchemy import desc, asc# for table.order_by(Task.enddate).all()
+
+from flask_login import current_user, login_user, logout_user, login_required
+from flask import render_template, flash, redirect, request, url_for, session, make_response, json
+
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
-from app.models import User, Data_table, activity_code, Task, Timesheet, Mulform, TimesheetTempData
-from random import random
+from app.models import User, Data_table, activity_code, CorprationReport, Staff, Task, \
+    Timesheet, Mulform, TimesheetTempData
+
 #from app import dateCalculate
-from time import strftime, strptime, localtime
-from datetime import datetime, timedelta, date
-from dateutil.relativedelta import relativedelta
-from flask import make_response
-import json
 
 @app.before_request
 def before_request():
+    ''' is_authenticated'''
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
@@ -37,10 +38,10 @@ def index():
             return redirect(link)
     else:
         return render_template(
-        'index.html',
-        title='Home',
-        form=form
-    )
+            'index.html',
+            title='Home',
+            form=form
+        )
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -159,7 +160,7 @@ def task():
         title='Task'
         )
 
-@app.route('/taskinsertion', methods=['GET','POST'])
+@app.route('/taskinsertion', methods=['GET', 'POST'])
 def taskinsertion():
     if request.method == 'POST':
         client = request.form['taskedit-1']
@@ -176,19 +177,19 @@ def taskinsertion():
         nextenddate = request.form['taskedit-61']
 
         if periodend == '':
-            n = 0
+            num_mon = 0
             if recurrence == 'y' or recurrence == 'Y':
-                n = 12
+                num_mon = 12
             elif recurrence == 'q' or recurrence == 'Q':
-                n = 3
+                num_mon = 3
             elif recurrence == 'm' or recurrence == 'M':
-                n = 1
-            periodend = datetime.strptime(request.form['taskedit-3'], '%Y-%m-%d') + relativedelta(months=n)
-            nextstartdate = datetime.strptime(request.form['taskedit-5'], '%Y-%m-%d') + relativedelta(months=n)
-            nextenddate = datetime.strptime(request.form['taskedit-6'], '%Y-%m-%d') + relativedelta(months=n)
-            renewperiod = (periodend + relativedelta(months=n)).strftime("%Y-%m-%d")
-            renewstartdate = (nextstartdate + relativedelta(months=n)).strftime("%Y-%m-%d")
-            renewenddate = (nextenddate + relativedelta(months=n)).strftime("%Y-%m-%d")
+                num_mon = 1
+            periodend = datetime.strptime(request.form['taskedit-3'], '%Y-%m-%d') + relativedelta(months=num_mon)
+            nextstartdate = datetime.strptime(request.form['taskedit-5'], '%Y-%m-%d') + relativedelta(months=num_mon)
+            nextenddate = datetime.strptime(request.form['taskedit-6'], '%Y-%m-%d') + relativedelta(months=num_mon)
+            renewperiod = (periodend + relativedelta(months=num_mon)).strftime("%Y-%m-%d")
+            renewstartdate = (nextstartdate + relativedelta(months=num_mon)).strftime("%Y-%m-%d")
+            renewenddate = (nextenddate + relativedelta(months=num_mon)).strftime("%Y-%m-%d")
             periodend = periodend.strftime("%Y-%m-%d")
             nextstartdate = nextstartdate.strftime("%Y-%m-%d")
             nextenddate = nextenddate.strftime("%Y-%m-%d")
@@ -239,6 +240,11 @@ def taskupdate():
 @app.route('/timesheet')
 def timesheet():
     all_data = activity_code.query.all()
+    # list_data = Timesheet.query.join(Task, Timesheet.id == Task.id).add_columns(Timesheet.id, Timesheet.taskname, Timesheet.corp1, Task.id, Task.client)
+    # list_data = Timesheet.query.join(Task, Timesheet.id == Task.id).all()
+    # list_data = db.session.query(Timesheet.id, Timesheet.taskname, Timesheet.corp1, Task.id, Task.client).filter(Timesheet.id == Task.id).all()
+    # print(list_data[0])
+    # print(list_data[1])
     list_data = Timesheet.query.all()
     tasklist = Task.query.all()
     return render_template(
@@ -252,21 +258,31 @@ def timesheet():
 @app.route('/timesheetInsertion', methods=['POST'])
 def timesheetInsertion():
     if request.method == 'POST':
-        da = request.json
-        print("----> " + da[0] + " <---- type(da) is list")
-        startdate = da[1]
-        calhour = da[2]
-        adjhour = da[3]
-        adjmin = da[4]
-        workhour = da[5]
-        taskname = da[6]
-        taskcontent = da[7]
-        tasktype = da[8]
-        corp1 = da[9]
-        corp2 = da[10]
-        corp3 = da[11]
-        corp4 = da[12]
-        staff = "Susan" #current_user.username
+        data = request.json
+        print("----> " + data[0] + " <---- type(da) is list")
+        startdate = (data[1])[0:10] # 注意 string[start: end: step] 中end是那位是不包含的，所以('0123')[0:2] ==> '01'
+        calhour = data[2]
+        adjhour = data[3]
+        adjmin = data[4]
+        workhour = data[5]
+        taskname = data[6]
+        taskcontent = data[7]
+        tasktype = data[8]
+        corp1 = data[9]
+        corp2 = data[10]
+        corp3 = data[11]
+        corp4 = data[12]
+        userstr = ['Susan', 'Dannijo', 'Michael', 'Aser', 'Kidden']
+        userstridx = round(random()*4)
+        staff = userstr[userstridx]
+        # staff = "Susan" #current_user.username
+        timestamp = data[13]
+        avgtime = float(data[14])
+        jobid1 = int(data[15])
+        jobid2 = int(data[16])
+        jobid3 = int(data[17])
+        jobid4 = int(data[18])
+        starttime = (data[1])[11:16]
         serialno = random()
 
         my_data = Timesheet(
@@ -283,85 +299,129 @@ def timesheetInsertion():
             corp3,
             corp4,
             staff,
+            timestamp,
+            avgtime,
+            jobid1,
+            jobid2,
+            jobid3,
+            jobid4,
+            starttime,
             serialno
         )
         db.session.add(my_data)
         db.session.commit()
         # flash("Dailyentry Inserted Successfully")
     return redirect(url_for("timesheet"))
-   
-"""
-@app.route('/timesheet_tempdata', methods=['GET', 'POST'])
-def timesheet_tempdata():
-    if request.method == 'POST':
-        rsl = request.json # rsl is list type, very similar to array
-        # read data from db
-        da = TimesheetTempData.query.filter_by(t0 = rsl[0]).first()
-        if (type(da) == type(None)) :
-            my_data = TimesheetTempData(t0 = rsl[0],
-            t1 = rsl[1],
-            t2 = rsl[2],
-            t3 = rsl[3],
-            t4 = rsl[4],
-            t5 = rsl[5],
-            t6 = rsl[6],
-            t7 = rsl[7],
-            t8 = rsl[8],
-            t9 = rsl[9],
-            t10 = rsl[10],
-            t11 = rsl[11],
-            t12 = rsl[12],
-            t13 = 1)
-            db.session.add(my_data)
-            db.session.commit()
-            #flash("Task Renew Successfully")
-        if (da.t0 == rsl[0]) :
-            my_data = TimesheetTempData.query.get(rsl[0])
-            my_data.t1 = rsl[1]
-            my_data.t2 = rsl[2]
-            my_data.t3 = rsl[3]
-            my_data.t4 = rsl[4]
-            my_data.t5 = rsl[5]
-            my_data.t6 = rsl[6]
-            my_data.t7 = rsl[7]
-            my_data.t8 = rsl[8]
-            my_data.t9 = rsl[9]
-            my_data.t10 = rsl[10]
-            my_data.t11 = rsl[11]
-            my_data.t12 = rsl[12]
-            my_data.t13 = 1
-            db.session.commit()
-            #flash("Task Renew Successfully")
-        return "data is saved."
-"""
+
+@app.route('/timesheetlist', methods=['GET','POST'])
+def timesheetlist():
+    '''display timesheet'''
+    list_data = Timesheet.query.all()
+    # list_data = db.session.query(Timesheet.id, Timesheet.taskname, Timesheet.corp1, Task.id, Task.client).filter(Timesheet.id == Task.id).all()
+    tasklist = Task.query.all()
+    # print(dir(list_data)) # 查询 所有的属性
+    # print(type(list_data))
+    # print(type(list_data[0]))
+    datefilter = db.session.query(Timesheet.startdate).distinct().order_by(Timesheet.startdate.desc()).all()
+    userfilter = db.session.query(Timesheet.staff).distinct().order_by(Timesheet.staff.asc()).all()
+    # print(datefilter)
+    # print(userfilter)
+    if request.method == "POST":
+        jsdata = request.json
+        # dateselect = jsdata[0]
+        # userselect = jsdata[1]
+        print(type(jsdata))
+        print(jsdata)
+        list_data = Timesheet.query.filter(Timesheet.startdate == '2020-06-12', Timesheet.staff == 'Susan').all()
+        for item in list_data:
+            print('start date = {}\ntask name = {}\ntask type = {}'.format(
+                item.startdate,
+                item.taskname,
+                item.tasktype
+                )
+            )
+
+    return render_template(
+        'timesheetlist.html',
+        listdata=list_data,
+        tasklist=tasklist,
+        datefilter=datefilter,
+        userfilter=userfilter,
+        title='timesheetlist'
+    )
+
+# @app.route('/timesheet_tempdata', methods=['GET', 'POST'])
+# def timesheet_tempdata():
+    # if request.method == 'POST':
+    #     rsl = request.json # rsl is list type, very similar to array
+    #     # read data from db
+    #     da = TimesheetTempData.query.filter_by(t0 = rsl[0]).first()
+    #     if (type(da) == type(None)) :
+    #         my_data = TimesheetTempData(t0 = rsl[0],
+    #         t1 = rsl[1],
+    #         t2 = rsl[2],
+    #         t3 = rsl[3],
+    #         t4 = rsl[4],
+    #         t5 = rsl[5],
+    #         t6 = rsl[6],
+    #         t7 = rsl[7],
+    #         t8 = rsl[8],
+    #         t9 = rsl[9],
+    #         t10 = rsl[10],
+    #         t11 = rsl[11],
+    #         t12 = rsl[12],
+    #         t13 = 1)
+    #         db.session.add(my_data)
+    #         db.session.commit()
+    #         #flash("Task Renew Successfully")
+    #     if (da.t0 == rsl[0]) :
+    #         my_data = TimesheetTempData.query.get(rsl[0])
+    #         my_data.t1 = rsl[1]
+    #         my_data.t2 = rsl[2]
+    #         my_data.t3 = rsl[3]
+    #         my_data.t4 = rsl[4]
+    #         my_data.t5 = rsl[5]
+    #         my_data.t6 = rsl[6]
+    #         my_data.t7 = rsl[7]
+    #         my_data.t8 = rsl[8]
+    #         my_data.t9 = rsl[9]
+    #         my_data.t10 = rsl[10]
+    #         my_data.t11 = rsl[11]
+    #         my_data.t12 = rsl[12]
+    #         my_data.t13 = 1
+    #         db.session.commit()
+    #         #flash("Task Renew Successfully")
+    #     return "data is saved."
+
 @app.route('/timesheetupdate', methods=['GET', 'POST'])
 def timesheetupdate():
+    ''' update timesheet daily entry '''
     if request.method == 'POST':
-        da = Timesheet.query.get(request.form.get('id'))
-        da.date =request.form['timesheet1-1']
-        da.staff =request.form['timesheet1-2']
-        da.starttime =request.form['timesheet1-3']
-        da.calhr =request.form['timesheet1-4']
-        da.workhr =request.form['timesheet1-6']
-        da.comment =request.form['timesheet1-15']
-        da.taskname =request.form['timesheet1-7']
-        da.tasktype =request.form['timesheet1-8']
-        da.taskcode =request.form['timesheet1-9']
-        da.corp1 =request.form['timesheet1-10']
-        da.corp2 =request.form['timesheet1-12']
-        da.corp3 =request.form['timesheet1-13']
-        da.corp4 =request.form['timesheet1-14']
-        da.taskcontent =request.form['timesheet1-11']
+        updatedata = Timesheet.query.get(request.form.get('id'))
+        updatedata.date = request.form['timesheet1-1']
+        updatedata.staff = request.form['timesheet1-2']
+        updatedata.starttime = request.form['timesheet1-3']
+        updatedata.calhr = request.form['timesheet1-4']
+        updatedata.workhr = request.form['timesheet1-6']
+        updatedata.comment = request.form['timesheet1-15']
+        updatedata.taskname = request.form['timesheet1-7']
+        updatedata.tasktype = request.form['timesheet1-8']
+        updatedata.taskcode = request.form['timesheet1-9']
+        updatedata.corp1 = request.form['timesheet1-10']
+        updatedata.corp2 = request.form['timesheet1-12']
+        updatedata.corp3 = request.form['timesheet1-13']
+        updatedata.corp4 = request.form['timesheet1-14']
+        updatedata.taskcontent = request.form['timesheet1-11']
         db.session.commit()
         flash("Employee Updated Successfully")
-        return redirect(url_for('timesheet'))
+    return redirect(url_for('timesheet'))
 
 @app.route('/postmethod01', methods=['POST']) #接收前台数据 #发送数据到前台
 def get_post01():
     # receive a single string from javascript post
     jsdata = request.form['js_data']
     # json.loads(jsdata)[0]
-    print ("*****route*******" + jsdata)
+    print("*****route*******" + jsdata)
     return jsdata
 
 @app.route('/postmethod02', methods=['POST']) #接收前台数据 #发送数据到前台

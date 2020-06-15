@@ -14,7 +14,7 @@ body {
 header {
     position: absolute fixed;
     top: 0;
-    height:80px;
+    height:75px;
     width: 100%;
     background-color: rgba(128, 218, 26, 0.432);
     padding-left: 2%;
@@ -23,7 +23,7 @@ header {
 header .logo a {
     font-size: 45px;
     color: #d2f50b;
-    line-height: 80px;
+    line-height: 75px;
     text-decoration: none;
 }
 header .search {
@@ -76,7 +76,7 @@ marquee img[type="scroll_img"] {
 .tbl-field {
     position: absolute;
     /* min-height: fit-content;  */
-    top: 130px;
+    top: 125px;
     /*bottom: 0px; /*fill remaining height space */
     width: 100%;
     background-color: rgb(234, 236, 233);

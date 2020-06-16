@@ -313,42 +313,44 @@ def timesheetInsertion():
         # flash("Dailyentry Inserted Successfully")
     return redirect(url_for("timesheet"))
 
-@app.route('/timesheetlist', methods=['GET','POST'])
-def timesheetlist():
+@app.route('/timesheetlist', methods=['GET','POST'], defaults={"page":1})
+@app.route('/timesheetlist/<int:page>', methods=['GET','POST'])
+def timesheetlist(page):
     '''display timesheet'''
-    list_data = Timesheet.query.all()
-    # list_data = db.session.query(Timesheet.id, Timesheet.taskname, Timesheet.corp1, Task.id, Task.client).filter(Timesheet.id == Task.id).all()
+    page = page
+    pages = 5
+    list_data = Timesheet.query.paginate(page, per_page=pages, error_out=True)
     tasklist = Task.query.all()
-    # print(dir(list_data)) # 查询 所有的属性
-    # print(type(list_data))
-    # print(type(list_data[0]))
     datefilter = db.session.query(Timesheet.startdate).distinct().order_by(Timesheet.startdate.desc()).all()
     userfilter = db.session.query(Timesheet.staff).distinct().order_by(Timesheet.staff.asc()).all()
-    # print(datefilter)
-    # print(userfilter)
     if request.method == "POST":
-        jsdata = request.json
-        # dateselect = jsdata[0]
-        # userselect = jsdata[1]
-        print(type(jsdata))
-        print(jsdata)
-        list_data = Timesheet.query.filter(Timesheet.startdate == '2020-06-12', Timesheet.staff == 'Susan').all()
-        for item in list_data:
-            print('start date = {}\ntask name = {}\ntask type = {}'.format(
-                item.startdate,
-                item.taskname,
-                item.tasktype
-                )
-            )
+        dateselect = (request.form['dateselect']).replace(" ","")
+        userselect = (request.form['userselect']).replace(" ","")
+        if dateselect != "" and userselect != "":
+            list_data = Timesheet.query.filter(Timesheet.startdate == dateselect, Timesheet.staff == userselect).paginate(per_page=pages, error_out=True)
+        elif dateselect != "" and userselect == "":
+            list_data = Timesheet.query.filter(Timesheet.startdate == dateselect).paginate(per_page=pages, error_out=True)
+        elif dateselect == "" and userselect != "":
+            list_data = Timesheet.query.filter(Timesheet.staff == userselect).paginate(per_page=pages, error_out=True)
 
-    return render_template(
-        'timesheetlist.html',
-        listdata=list_data,
-        tasklist=tasklist,
-        datefilter=datefilter,
-        userfilter=userfilter,
-        title='timesheetlist'
-    )
+        print(list_data)
+        return render_template(
+            'timesheetlist.html',
+            listdata=list_data,
+            tasklist=tasklist,
+            datefilter=datefilter,
+            userfilter=userfilter,
+            title='timesheetlist'
+        )
+    else:
+        return render_template(
+            'timesheetlist.html',
+            listdata=list_data,
+            tasklist=tasklist,
+            datefilter=datefilter,
+            userfilter=userfilter,
+            title='timesheetlist'
+        )
 
 # @app.route('/timesheet_tempdata', methods=['GET', 'POST'])
 # def timesheet_tempdata():

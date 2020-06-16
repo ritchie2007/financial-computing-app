@@ -59,22 +59,23 @@
             <input class="form-group col-sm-4" id="tableSearch" type="text"
             placeholder="Type something to search list items">
             <div class="form-group col-sm-8" style="text-align: right;">
-                Filter
-                <select name="datefilter" style="width: 25%;">
-                    <option value="" >Please select date</option>
-                    {% for row in datefilter %}
-                    <option >{{row.startdate}}</option>
-                    {% endfor %}
-                </select>
-                <select name="userfilter" style="width: 25%;">
-                    <option value="" >Please select user</option>
-                    {% for row in userfilter %}
-                    <option >{{row.staff}}</option>
-                    {% endfor %}
-                </select>
-                <!-- <a href="{{url_for('timesheetlist')}}">Go</a> -->
-                <button type="button" class="btn btn btn-success">Go</button>
-            
+                <form action="" method="POST" autocomplete="off">
+                    Filter
+                    <select name="dateselect" style="width: 25%;">
+                        <option value="" >Please select date</option>
+                        {% for row in datefilter %}
+                        <option >{{row.startdate}}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="userselect" style="width: 25%;">
+                        <option value="" >Please select user</option>
+                        {% for row in userfilter %}
+                        <option >{{row.staff}}</option>
+                        {% endfor %}
+                    </select>
+                    <!-- <a href="{{url_for('timesheetlist')}}">Go</a> -->
+                    <button type="submit" class="btn btn btn-success">Go</button>
+                </form>
             </div>
         </div>
 
@@ -94,7 +95,7 @@
             </thead>
             <tbody>
                 <p id="myTable">
-                {% for row in listdata %}
+                {% for row in listdata.items %}
                     <tr >
                         <td class="col-1">{{row.id}}</td>
                         <td class="col-1">{{row.startdate}}</td>
@@ -199,6 +200,33 @@
                 {% endfor %}
             </tbody>
         </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if listdata.has_prev %}
+                    <li class="page-item"> <a class="page-link" href="{{ url_for('timesheetlist', page=listdata.prev_num) }}">Previous</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link btn disabled" href="#">Previous</a></li>
+                {% endif %}
+
+                {% for page in listdata.iter_pages(left_edge=3, right_edge=3) %}
+                    {% if page %}
+                        {% if page==listdata.page %}
+                            <li class="page-item active"><a class="page-link" href="{{ url_for('timesheetlist', page=page) }}">{{ page }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="{{ url_for('timesheetlist', page=page) }}">{{ page }}</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li class="page-item disabled" id="example_ellipsis"><a href="#" class="page-link">…</a></li> 
+                    {% endif %}
+                {% endfor %}
+
+                {% if listdata.has_next %}
+                    <li class="page-item"> <a class="page-link" href="{{ url_for('timesheetlist', page=listdata.next_num) }}">Next</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link btn disabled" href="#">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
 </div>
 {% endblock %}
@@ -215,34 +243,6 @@
     
     <script type="text/javascript">
     // filter table
-        $('#timesheettopbar button').click(function(){
-            var datefilter = $('#timesheettopbar [name="datefilter"]').val();
-            var userfilter = $('#timesheettopbar [name="userfilter"]').val();
-            // $.post('/timesheetlist', {
-            //    jsdata: (datefilter + ',' + userfilter),
-            // });
 
-            $.ajax({
-                // async: true,
-                url: "/timesheetlist",
-                type: "POST",
-                // dataType: "JSON", // 最好自动匹配，小心使用，否则即便发送成功，得到200状态，仍然返回error信息
-                headers: {"Content-Type": "application/json;charset=utf-8"},
-                contentType:'application/json; charset=utf-8',
-                data: JSON.stringify([datefilter, userfilter]),
-                success: function(response){
-                    // console.log(response);
-                    // $('p#myTable').load(location.href + "p#myTable");
-                    // $('p#myTable').html(response);
-                    // window.location.reload();
-                    window.location.replace('/timesheetlist')
-                },
-                error: function(error){
-                    // console.log("error msg: " + error);
-                    console.log(error);
-                    console.log("failed...");   
-                }
-            });
-        });
     </script>
 {%- endblock scripts %}

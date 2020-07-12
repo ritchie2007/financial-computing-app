@@ -9,7 +9,7 @@ from sqlalchemy import asc, desc, or_
 app = Flask(__name__)
 app.debug = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.config['SECRET_KEY'] = 'Ritchie'
+app.config['SECRET_KEY'] = 'Ritchie2020-06-16'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///databases/users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True # add on 2020-06-14
 

@@ -1,0 +1,10 @@
+#corpedit .form-row .form-group label {
+    font-size: 12px; 
+    font-weight: 500 !important; /*default  700*/
+    margin-bottom: 0px; /*default  5px*/
+}
+#corpedit .form-row .form-group, #corpedit .form-row .form-group input.form-control {
+    font-size: 12px;
+    margin: 0px 0px 0px 0px; /*default  5px*/
+    padding: 3px;
+}

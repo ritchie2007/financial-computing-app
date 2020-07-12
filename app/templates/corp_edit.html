@@ -1,0 +1,717 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{{super()}}
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+  <link rel="stylesheet" href="static/css/bootstrap.min.css"><!-- 这句 用本地bootstrap.min.css格式就乱了-->
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style-corp.css')}}">
+  <style>
+    body {
+      position: relative; 
+    }
+    #scrollmenu .menu .nav-link.active {
+        color: red;
+    }
+  </style>
+{% endblock %}
+
+{% block body_attribs %}
+  data-spy="scroll" data-target="#scrollmenu" data-offset="10"
+  onscroll="scroll()"
+{% endblock body_attribs %}
+
+{% block content %}
+<div class="tbl-field" style="height: fit-content;">
+  <h3>&nbsp Corporation Name: Garrett Winters -- add Name parameter here</h3>
+  <div class="row">
+    <div class="col-sm-2">
+      <nav id="scrollmenu" style="overflow: auto;">
+        <ul class="menu" style="position: fixed;">
+          <li class="nav-item"><a href="#item-1" class="nav-link">General Information</a></li>
+          <li class="nav-item"><a href="#item-2" class="nav-link">CRA Account</a></li>
+          <li class="nav-item"><a href="#item-3" class="nav-link">WSIB Account</a></li>
+          <li class="nav-item"><a href="#item-4" class="nav-link">EHT Account</a></li>
+          <li class="nav-item"><a href="#item-5" class="nav-link">Other Account</a></li>
+          <li class="nav-item"><a href="#item-6" class="nav-link">Corporate Structure</a></li>
+          <li class="nav-item"><a href="#item-7" class="nav-link">Corporate Operation</a></li>
+          <li class="nav-item"><a href="#item-8" class="nav-link">Bank Information</a></li>
+          <li class="nav-item"><a href="#item-9" class="nav-link">Accounting Software</a></li>
+          <li class="nav-item"><a href="#item-10" class="nav-link">Engagement</a></li>
+          <li class="nav-item"><a href="#item-11" class="nav-link">Contact Information</a></li>
+          <li class="nav-item"><a href="#item-12" class="nav-link">Director Information</a></li>
+          <li class="nav-item"><a href="#item-13" class="nav-link">Share Holder</a></li>
+          <li class="nav-item"><a href="#item-14" class="nav-link">Task Information</a></li>
+          <li class="nav-item"><a href="#item-15" class="nav-link">Recent Updates</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <style>
+      #scrollmenu ul {
+        border: 1px solid #cccccc;
+        margin: 20px 0px 0px 30px;
+        padding: 20px;
+        list-style-type: none;
+      }
+      #scrollmenu li {
+        padding: 2px;
+        list-style-type: none;
+      }
+      #scrollmenu li a.nav-link:hover {
+        display: block;
+        background-color: #ddecc7;
+        color:#c618d3;
+      }
+      .item .form-row .form-group label {
+        font-size: 12px; 
+        font-weight: 500 !important; /*default  700*/
+        margin-bottom: 0px; /*default  5px*/
+      }
+      .item .form-row .form-group, .item .form-row .form-group input.form-control {
+        font-size: 12px;
+        margin: 0px 0px 0px 0px; /*default  5px*/
+        padding: 3px;
+      }
+    </style>
+    <div class="col-sm-10">
+      <!-- <div id="corpedit" class="scroll overflow-auto" style="height: 600px; overflow-y: auto;"> -->
+      <div id="item1" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">General Information</h4></label>
+            </div>
+
+            <div class="form-group col-md-2">
+              <label>Bussiness No.</label>
+              <input type="text" class="form-control" name="corp1">
+            </div>
+            <div class="form-group col-md-5">
+              <label>Corporation Name</label>
+              <input type="text" class="form-control" name="corp2">
+            </div>
+            <div class="form-group col-md-4">
+              <label >Registration Name</label>
+              <input type="text" class="form-control" name="corp3">
+            </div>
+            <div class="form-group col-md-1">
+              <label >Corp No</label>
+              <input type="text" class="form-control" name="corp12">
+            </div>
+
+            <div class="form-group col-md-4">
+              <label>Master Business Name</label>
+              <input type="text" class="form-control" name="corp4">
+            </div>
+            <div class="form-group col-md-3">
+              <label>Master Busi Licence Period </label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp5" placeholder="yyyy-mm-dd" style="width: 45%;">
+                <input type="text" class="form-control col-sm-1" value=" to " style="width: 10%; border: none; background: transparent;">
+                <input type="text" class="form-control col-sm-1" name="corp6" placeholder="yyyy-mm-dd" style="width: 45%;">
+              </div>
+            </div>
+            <div class="form-group col-md-1">
+              <label>Incorp Date</label>
+              <input type="text" class="form-control" name="corp7" placeholder="yyyy-mm-dd">
+            </div>
+            <div class="form-group col-md-1">
+              <label>Incorp Type</label>
+              <select class="browser-default custom-select" name="corp8" style="width: 100%; height: 32px; border: none; background: #ffffff;">
+                <option >Federal</option>
+                <option >Ontario</option>
+            </select>
+            </div>
+            <div class="form-group col-md-2">
+              <label>Anniversary Date</label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp9" placeholder="mm/dd" style="width: 42%;">
+                <input type="text" class="form-control col-sm-1" value=" to " style="width: 16%; border: none; background: transparent;">
+                <input type="text" class="form-control col-sm-1" name="corp10" placeholder="mm/dd" style="width: 42%;">
+              </div>
+            </div>
+            <div class="form-group col-md-1">
+              <label>Corp Key</label>
+              <input type="text" class="form-control" name="corp11">
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>Business Address</label>
+              <input type="text" class="form-control" name="corp16">
+            </div>
+            <div class="form-group col-md-5">
+              <label>Mailing Address</label>
+              <input type="text" class="form-control" name="corp17">
+            </div>
+            <div class="form-group col-md-1">
+              <label>On corp No</label>
+              <input type="text" class="form-control" name="corp13">
+            </div>
+
+            <div class="form-group col-md-3">
+              <label">CRA Contact Person: First name </label>
+              <input type="text" class="form-control" name="corp18">
+            </div>
+            <div class="form-group col-md-2">
+              <label>Last name</label>
+              <input type="text" class="form-control" name="corp19">
+            </div>
+            <div class="form-group col-md-2">
+              <label>CRA Contact Phone</label>
+              <input type="text" class="form-control" name="corp20">
+            </div>
+            <div class="form-group col-md-2">
+              <label>Office Fax</label>
+              <input type="text" class="form-control" name="corp21">
+            </div>
+            <div class="form-group col-md-3">
+              <label>Other Provincial Number</label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp14" placeholder="Number 01" style="width: 50%;">
+                <input type="text" class="form-control col-sm-1" name="corp15" placeholder="Number 02" style="width: 50%;">
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label>Email</label>
+              <input type="text" class="form-control" name="corp22">
+            </div>
+            <div class="form-group col-md-5">
+              <label>Website</label>
+              <input type="text" class="form-control" name="corp23">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Wechat/Twitter/LinkedIn/Facebook</label>
+              <input type="text" class="form-control" name="corp24">
+            </div>
+          </div>
+
+      </div>
+        <!-- CRA Account -->
+      <div id="item2" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">CRA Account</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-2">
+              <label>Corp Tax Year End</label>
+              <input type="text" class="form-control" name="corp25">
+            </div>
+            <div class="form-group col-md-5">
+              <label>Account</label>
+              <input type="text" class="form-control" name="corp29">
+            </div>
+            <div class="form-group col-md-1">
+              <label>HST Report</label>
+              <input type="text" class="form-control" name="corp26">
+            </div>
+            <div class="form-group col-md-2">
+              <label>Method</label>
+              <select class="browser-default custom-select"  name="corp27" style="width: 100%; height: 32px; border: none; background: #ffffff;">
+                <option >Normal</option>
+                <option >Quick</option>
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <label>Account No</label>
+              <input type="text" class="form-control" name="corp28">
+            </div>
+
+            <div class="form-group col-md-2">
+              <label>Payroll Acco No.</label>
+              <input type="text" class="form-control" name="corp30">
+            </div>
+            <div class="form-group col-md-5">
+              <label>Payroll Account and T4</label>
+              <input type="text" class="form-control" name="corp31">
+            </div>
+            <div class="form-group col-md-5">
+              <label>Subcontractor and T4A</label>
+              <input type="text" class="form-control" name="corp32">
+            </div>
+
+            <div class="form-group col-md-5">
+              <label>Dividend and T5 </label>
+              <input type="text" class="form-control" name="corp33">
+            </div>
+            <div class="form-group col-md-5">
+              <label>Withholding Tax Account </label>
+              <input type="text" class="form-control" name="corp35">
+            </div>
+            <div class="form-group col-md-2">
+              <label>Account No.</label>
+              <input type="text" class="form-control" name="corp34">
+            </div>
+
+            <div class="form-group col-md-5">
+              <label>CRA other account</label>
+              <input type="text" class="form-control" name="corp37">
+            </div>
+            <div class="form-group col-md-2">
+              <label>Account No.</label>
+              <input type="text" class="form-control" name="corp36">
+            </div>
+          </div>
+
+      </div>
+      <!-- WSIB Account -->
+      <div id="item3" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">WSIB Account</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-2">
+              <label>WSIB Account Number</label>
+              <input type="text" class="form-control" name="corp38">
+            </div>
+            <div class="form-group col-md-5">
+              <label>WSIB Account</label>
+              <input type="text" class="form-control" name="corp39">
+            </div>
+          </div>
+
+      </div>
+      <!-- EHT Account -->
+      <div id="item4" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">EHT Account</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-2">
+              <label>EHT Account Number</label>
+              <input type="text" class="form-control" name="corp40">
+            </div>
+            <div class="form-group col-md-5">
+              <label>EHT Account</label>
+              <input type="text" class="form-control" name="corp41">
+            </div>
+          </div>
+
+      </div>
+      <!-- Other Account -->
+      <div id="item5" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">Other Account</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-2">
+              <label>Other Account Number</label>
+              <input type="text" class="form-control" name="corp42">
+            </div>
+            <div class="form-group col-md-5">
+              <label>Other Account</label>
+              <input type="text" class="form-control" name="corp43">
+            </div>
+          </div>
+
+      </div>
+      <!-- Corporate Structure -->
+      <div id="item6" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">Corporate Structure</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-6">
+              <label>Holding Corporation </label>
+              <input type="text" class="form-control" name="corp44">
+            </div>
+            <div class="form-group col-md-6">
+              <label>Ovesea Investment Corporation</label>
+              <input type="text" class="form-control" name="corp45">
+            </div>
+          </div>
+
+      </div>
+      <!-- Corporate Operation  -->
+      <div id="item7" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">Corporate Operation</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-2">
+              <label>Corporation Indursty</label>
+              <input type="text" class="form-control" name="corp46">
+            </div>
+            <div class="form-group col-md-10">
+              <label>Corporation Information </label>
+              <input type="text" class="form-control" name="corp47">
+            </div>
+            <div class="form-group col-md-12">
+              <label>Specific Information </label>
+              <input type="text" class="form-control" name="corp48">
+            </div>            
+          </div>
+
+      </div>
+      <!-- Bank Information -->
+      <div id="item8" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">Bank Information</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-4">
+              <label>Bank Account 1</label>
+              <input type="text" class="form-control" name="corp49">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Bank Account 2</label>
+              <input type="text" class="form-control" name="corp50">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Bank Account 3</label>
+              <input type="text" class="form-control" name="corp51">
+            </div>
+          </div>
+
+      </div>      
+      <!-- Software -->
+      <div id="item9" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">Software</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-4">
+              <label>Software (QB/Sagel/Lawyer)</label>
+              <input type="text" class="form-control" name="corp52">
+            </div>
+            <div class="form-group col-md-2">
+              <label>Password</label>
+              <input type="text" class="form-control" name="corp53">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Payroll Software</label>
+              <input type="text" class="form-control" name="corp54">
+            </div>
+            <div class="form-group col-md-2">
+              <label>Password</label>
+              <input type="text" class="form-control" name="corp55">
+            </div>
+          </div>
+
+      </div>      
+      <!-- Engagement -->
+      <div id="item10" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">Engagement</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-12">
+              <label>Account Service</label>
+              <input type="text" class="form-control" name="corp56">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Account Service Type</label>
+              <input type="text" class="form-control" name="corp57">
+            </div>
+            <div class="form-group col-md-8">
+              <label>Leading</label>
+              <input type="text" class="form-control" name="corp58">
+            </div>
+          </div>
+
+      </div>
+      <!-- CONTACTS Infomation -->
+      <div id="item11" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">CONTACTS</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-12">
+              <label>1st Contact ( Position | first name | last name | phone number | wechat | email )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp59" placeholder="Position" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp60" placeholder="first name" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp61" placeholder="last name" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp62" placeholder="phone number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp63" placeholder="wechat / other" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp64" placeholder="email" style="width: 22%;">  
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>2nd Contact<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp65" placeholder="Position" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp66" placeholder="first name" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp67" placeholder="last name" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp68" placeholder="phone number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp69" placeholder="wechat / other" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp70" placeholder="email" style="width: 22%;">  
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>3rd Contact<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp71" placeholder="Position" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp72" placeholder="first name" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp73" placeholder="last name" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp74" placeholder="phone number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp75" placeholder="wechat / other" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp76" placeholder="email" style="width: 22%;">  
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>4th Contact<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp77" placeholder="Position" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp78" placeholder="first name" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp79" placeholder="last name" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp80" placeholder="phone number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp81" placeholder="wechat / other" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp82" placeholder="email" style="width: 22%;">  
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <!-- DIRECTOR Infomation -->
+      <div id="item12" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">DIRECTORS</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-12">
+              <label>1st Director  ( first name | last name | SIN number | address | phone number | email )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp83" placeholder="first name" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp84" placeholder="last name" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp85" placeholder="SIN number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp86" placeholder="address" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp87" placeholder="phone number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp88" placeholder="email" style="width: 22%;">  
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>2nd Director<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp89" placeholder="first name" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp90" placeholder="last name" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp91" placeholder="SIN number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp92" placeholder="address" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp93" placeholder="phone number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp94" placeholder="email" style="width: 22%;">  
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>3rd Director<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp95" placeholder="first name" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp96" placeholder="last name" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp97" placeholder="SIN number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp98" placeholder="address" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp99" placeholder="phone number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp100" placeholder="email" style="width: 22%;">  
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>4th Director<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp101" placeholder="first name" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp102" placeholder="last name" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp103" placeholder="SIN number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp104" placeholder="address" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp105" placeholder="phone number" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp106" placeholder="email" style="width: 22%;">  
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <!-- SHAREHOLDER INFORMATION -->
+      <div id="item13" class="item">
+
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">SHAREHOLDERS</h4></label>
+            </div>
+          <br/>
+            <div class="form-group col-md-12">
+              <label>1st ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp107" placeholder="share class and shares" style="width: 35%;">
+                <input type="text" class="form-control col-sm-1" name="corp108" placeholder="share (%)" style="width: 12%;">
+                <input type="text" class="form-control col-sm-1" name="corp109" placeholder="first name" style="width: 22%;">
+                <input type="text" class="form-control col-sm-1" name="corp110" placeholder="last name" style="width: 18%;">
+                <input type="text" class="form-control col-sm-1" name="corp111" placeholder="SIN number" style="width: 13%;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>( address | phone number | email )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp112" placeholder="address" style="width: 50%;">
+                <input type="text" class="form-control col-sm-1" name="corp113" placeholder="phone number" style="width: 15%;">
+                <input type="text" class="form-control col-sm-1" name="corp114" placeholder="email" style="width: 35%;">  
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>2nd ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp115" placeholder="share class and shares" style="width: 35%;">
+                <input type="text" class="form-control col-sm-1" name="corp116" placeholder="share (%)" style="width: 12%;">
+                <input type="text" class="form-control col-sm-1" name="corp117" placeholder="first name" style="width: 22%;">
+                <input type="text" class="form-control col-sm-1" name="corp118" placeholder="last name" style="width: 18%;">
+                <input type="text" class="form-control col-sm-1" name="corp119" placeholder="SIN number" style="width: 13%;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>( address | phone number | email )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp120" placeholder="address" style="width: 50%;">
+                <input type="text" class="form-control col-sm-1" name="corp121" placeholder="phone number" style="width: 15%;">
+                <input type="text" class="form-control col-sm-1" name="corp122" placeholder="email" style="width: 35%;">  
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>3rd ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp123" placeholder="share class and shares" style="width: 35%;">
+                <input type="text" class="form-control col-sm-1" name="corp124" placeholder="share (%)" style="width: 12%;">
+                <input type="text" class="form-control col-sm-1" name="corp125" placeholder="first name" style="width: 22%;">
+                <input type="text" class="form-control col-sm-1" name="corp126" placeholder="last name" style="width: 18%;">
+                <input type="text" class="form-control col-sm-1" name="corp127" placeholder="SIN number" style="width: 13%;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>( address | phone number | email )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp128" placeholder="address" style="width: 50%;">
+                <input type="text" class="form-control col-sm-1" name="corp129" placeholder="phone number" style="width: 15%;">
+                <input type="text" class="form-control col-sm-1" name="corp130" placeholder="email" style="width: 35%;">  
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>4th ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp131" placeholder="share class and shares" style="width: 35%;">
+                <input type="text" class="form-control col-sm-1" name="corp132" placeholder="share (%)" style="width: 12%;">
+                <input type="text" class="form-control col-sm-1" name="corp133" placeholder="first name" style="width: 22%;">
+                <input type="text" class="form-control col-sm-1" name="corp134" placeholder="last name" style="width: 18%;">
+                <input type="text" class="form-control col-sm-1" name="corp135" placeholder="SIN number" style="width: 13%;">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label>( address | phone number | email )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp136" placeholder="address" style="width: 50%;">
+                <input type="text" class="form-control col-sm-1" name="corp137" placeholder="phone number" style="width: 15%;">
+                <input type="text" class="form-control col-sm-1" name="corp138" placeholder="email" style="width: 35%;">  
+              </div>
+            </div>
+          </div>
+
+      </div>
+      <!-- Task Information -->
+      <div id="item14" class="item">
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">Task Information</h4></label>
+            </div>
+          </div>
+      </div>
+      <!-- Recent update -->
+      <div id="item15" class="item">
+        <br/>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">Recent Updates</h4></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script><!-- 这句 控制navbar是否跟着变-->
+    <!-- <script src="{{url_for('static', filename='js/bootstrap-select.min.js')}}"></script> -->
+    <!-- <script src="{{url_for('static', filename='js/main.js')}}"></script> -->
+    <script type="text/javascript">
+      //根据窗口大小设置动态CSS，注意var height_val得到的结果总是固定的(CSS文件中设定的值)，
+      //如果这个函数里使用location.reload(); 则是死循环，屏幕一直抖动
+      //height: '100%' 目的是 去掉窗口太大时，下面漏出的背景
+      //height: 'fit-content' 目的是 窗口缩小出现滚动条时，而此时滚动窗口尺寸大于屏幕尺寸，下面出现背景
+      
+      //$(document).ready(function () {
+        $(function () {  
+          var height_window=$(window).height();
+          var height_val = $('.tbl-field').css("height");
+             //此处不严谨，可以通过$(window).height()获取整个屏幕高度后，结合屏幕的内容高度$（‘’）.height()，相减得出判断条件。
+          if(height_window>880){
+                  $('.tbl-field').css({height: 'fit-content'}); //100%
+          } else {
+              $('.tbl-field').css({height: 'fit-content'});
+          };
+          // console.log(height_window);
+          // console.log(height_val);
+        });
+      //})
+
+      $(document).ready(function(){
+        var num = [0,530,805,910,1005,1110,1210,1370,1475,1575,1735,2010,2280,2600,2700];
+        $('.nav-link').click(function(){
+          var index = parseInt(($(this).attr('href')).substring(6));
+          if (index == NaN) { index = 1};
+          document.documentElement.scrollTop = num[index - 1];
+        });
+      });
+
+      function scroll(){
+        var num = [0,530,805,910,1005,1110,1210,1370,1475,1575,1735,2010,2280,2600,2700];
+        var h = document.documentElement.scrollTop;
+        for (i=0; i<13; i++) {
+          if (h < 225) {
+            $('#scrollmenu .menu .nav-link').css({color: '#337ab7'});
+            $('#scrollmenu .menu [href="#item-1"]').css({color: 'Red'});
+            break;
+          } else if (h > (num[i]+30)  && h < num[i+1]) {
+            $('#scrollmenu .menu .nav-link').css({color: '#337ab7'});
+            $('#scrollmenu .menu [href="#item-' + (i+2) + '"]').css({color: 'Red'});
+            break;
+          };
+        };
+      };
+
+      //改变窗口大小后，自动刷新，如想清楚cache则需要location.reload(true);，这是配合上面的动态CSS使用的
+      //$(document).ready(function () 所以页面都生效
+      $(window).bind('resize', function() {
+        location.reload();
+      });
+    </script>
+{%- endblock scripts %}

@@ -64,13 +64,13 @@
                     <select name="dateselect" style="width: 25%;">
                         <option value="" >Please select date</option>
                         {% for row in datefilter %}
-                        <option >{{row.startdate}}</option>
+                        <option >{{row.date}}</option>
                         {% endfor %}
                     </select>
                     <select name="userselect" style="width: 25%;">
-                        <option value="" >Please select user</option>
-                        {% for row in userfilter %}
-                        <option >{{row.staff}}</option>
+                        <option value="" >Please select Corpration</option>
+                        {% for row in corpfilter %}
+                        <option >{{row.corp}}</option>
                         {% endfor %}
                     </select>
                     <!-- <a href="{{url_for('timesheetlist')}}">Go</a> -->
@@ -83,13 +83,13 @@
             <thead>
                 <tr >
                     <th class="col-1">ID</th>
-                    <th class="col-1">Date</th>
-                    <th class="col-2">TaskName</th>
-                    <th class="col-1">TaskType</th>
-                    <th class="col-2">Corporation</th>
+                    <th class="col-1">Corpation</th>
+                    <th class="col-2">Date</th>
+                    <th class="col-1">TaskName</th>
+                    <th class="col-2">TaskType</th>
                     <th class="col-1">WorkHour</th>
-                    <th class="col-2">Content</th>
-                    <th class="col-1">Staff</th>
+                    <th class="col-2">JobType</th>
+                    <th class="col-1">JobId</th>
                     <th class="col-1">Action</th>
                 </tr>
             </thead>
@@ -97,15 +97,15 @@
                 {% for row in listdata.items %}
                     <tr >
                         <td class="col-1">{{row.id}}</td>
-                        <td class="col-1">{{row.startdate}}</td>
-                        <td class="col-2">{{row.taskname}}</td>
-                        <td class="col-1">{{row.tasktype}}</td>
-                        <td class="col-2">{{row.corp1}}</td>
+                        <td class="col-1">{{row.corp}}</td>
+                        <td class="col-1">{{row.date}}</td>
+                        <td class="col-2">{{row.task_name}}</td>
+                        <td class="col-1">{{row.task_type}}</td>
+                        <td class="col-1" style="text-align: center;">{{row.work_hour}}</td>
                         <!-- <td class="col-1">{{row[4]}}</td> -->
                         <!-- <td class="col-2">{{row.client}}</td> -->
-                        <td class="col-1" style="text-align: center;">{{row.workhour}}</td>
-                        <td class="col-2">{{row.taskcontent}}</td>
-                        <td class="col-1">{{row.staff}}</td>
+                        <td class="col-1" ></td>
+                        <td class="col-2">{{row.jobid}}</td>
                         <td class="col-1">
                             <a href="/timesheetupdate/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
                             <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
@@ -201,7 +201,7 @@
         <!-- <nav aria-label="Page navigation"> -->
         <div>
             {% from "render_pagination.html" import render_pagination %}
-            {{render_pagination(listdata, 'timesheetlist')}}
+            {{render_pagination(listdata, 'corpration_report')}}
         </div>
     </div>
 </div>

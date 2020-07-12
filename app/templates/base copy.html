@@ -14,7 +14,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
     {{super()}} 
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
-    <!-- <link rel="shortcut icon" href="{{url_for('static', filename='images/favicon.ico')}}"> fix error favicon.ico 404 -->
+    <link rel="shortcut icon" href="{{url_for('static', filename='images/favicon.ico')}}"> <!-- fix error favicon.ico 404-->
 {% endblock %}
 
 {% block title %}
@@ -56,7 +56,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
  
-                    <li id="home" class="nav-item"><a href="{{ url_for('index') }}">Home</a></li>
+                    <li id="home" class="nav-item"><a href="{{ url_for('login') }}">Home</a></li>
                     <li id="Corporate" class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Corporate<span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -138,22 +138,34 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
         </div>
         <br/><br/><br/>
         <div id="discription" >We're always together with you, help you analyze, design, invest your finance and property.
-        <br/><br/><br/><br/><br/><br/>
-            <a href="#" target="_blank">To know us in detail</a>
+        <br/><br/>
+            <a href="#" target="_blank">TO KNOW US IN DETAIL</a>
         </div>
         <br/><br/>
-        <!-- <div id="flowfield">
+        <div id="videofield">
+            <iframe width="400" src="https://www.youtube.com/embed/YjkRSlTxsZM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <br/><br/>
+        <div id="webfield">
+            <strong>Websites: </strong> <input type="text" id="txtURL" placeholder="Please input website"/>
+            <button type="button" onclick="goUrl()">Submit</button>
+            <input type="checkbox"/>Remember Websites
+            <br/><br/>
+            <iframe id="ifweb" style="width: 500px; height: 150px;" src="https://www.51.ca/" frameborder="0"></iframe>
+        </div>
+        <div id="flowfield">
             <marquee behavior="" direction="up" onmouseover="javascript:this.stop()" onmouseout="javascript:this.start()">
                 <img type="scroll_img" src="{{url_for('static', filename='images/accountant.jpg')}}" alt="">
                 <p>This is scrolling text.</p>
                 <img type="scroll_img" src="{{url_for('static', filename='images/Accounting2.jpg')}}" alt="">
             </marquee>
-        </div> -->
+        </div>
     {% endblock centerfield %}
 
-    {% block app_content %}
-    {% endblock %}
-
+    <div class="container-fluid">
+        {% block app_content %}
+        {% endblock %}
+    </div>
 
     <div class="container-fluid">
         {% with messages = get_flashed_messages() %}
@@ -168,10 +180,8 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
     </div>
 
     {% block footer %}
-        <footer class="footer">
-            <div class="container">
-                <span class="text-muted">Hong Xing Accounting Inc. &copy Copyright 2020.01</span>
-            </div>
+        <footer>
+            <p>Hong Xing Accounting Inc. &copy Copyright 2020.01</p>
         </footer>
     {% endblock %}
 

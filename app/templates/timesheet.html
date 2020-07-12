@@ -1072,6 +1072,7 @@
                 {% endfor %}
             </tbody>
         </table>
+
     </div>
 
     </div>
@@ -1151,20 +1152,22 @@
             $("#"+root+" .form-group [name='timesheet1-5']").val(tf.hour+" : "+tf.min);
         };
 
+        // convert time number to hour and min
         function formattime(num) {
             this.hour = Math.floor(num/3600000);//diff.toFixed(2)保留2位小数，但成字符串了！
             //diff = Math.round(diff * 1000) / 1000; //保留小数替代办法
             this.min = Math.floor((num%3600000)/60000);
         };
+
         //timecalculation +/- change
         $("input.timecal").click(function(){
-            if ($("input.timecal").val() == "+") {
-                $("input.timecal").val("-");
+            if ($(this).val() == "+") {
+                $(this).val("-");
             } else {
-                $("input.timecal").val("+");
+                $(this).val("+");
             }
         })
-        //create new entry button
+        //create new entry button 
         $("button.creat_new_entry").click(function(){
             var root = $(this).parents('div').parents('div').attr("id");
             $("#"+root+" .form-group input").removeAttr('disabled');

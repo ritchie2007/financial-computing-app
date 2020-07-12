@@ -1,0 +1,46 @@
+--create table staff_daily_sum (id integer primary key, name varchar(80), date varchar(12), hour varchar(5));
+--insert into staff_daily_sum (name, date, hour) values (
+--select name, date, max(work_hour) from staff group by date, name order by name asc, date desc)
+--where date in (SELECT DISTINCT [date] FROM [staff] ORDER  BY [date] desc);
+
+--select * from administrator
+--insert into administrator (username, password_hash) values('admin02', '123456')
+--create table tbl_corpname_number (id integer, category varchar(20), name varchar(80));
+
+--Insert into tbl_corpname_number (id, category, name, rule) values
+--(56, "Engagement ", "Accounting Service ", "最多字符 背景信息"),
+--(57, "Engagement", "Accounting Service Type", "120个字符"),
+--(58, "Engagement", "Leading ", "150个字符"),
+--(59, "Contact", "contact id", "1,2,3,4"), 
+--(60, "Director", "Director id", "1,2,3,4"), 
+--(61, "Shareholder", "Shareholder id", "1,2,3,4")
+
+Create table tbl_Corporation(
+corp_id integer primary key, corp1 varchar(10), corp2 varchar(150), corp3 varchar(50), 
+corp4 varchar(50), corp5 varchar(20), corp6 varchar(20), corp7 varchar(20), corp8 varchar(20), 
+corp9 varchar(20), corp10 varchar(20), corp11 varchar(10), corp12 varchar(10), corp13 varchar(10), 
+corp14 varchar(10), corp15 varchar(10), corp16 varchar(150), corp17 varchar(150), corp18 varchar(100), 
+corp19 varchar(100), corp20 varchar(20), corp21 varchar(20), corp22 varchar(100), corp23 varchar(200), 
+corp24 varchar(150), corp25 varchar(20), corp26 varchar(20), corp27 varchar(20), corp28 varchar(20), 
+corp29 varchar(150), corp30 varchar(20), corp31 varchar(150), corp32 varchar(150), corp33 varchar(150), 
+corp34 varchar(20), corp35 varchar(150), corp36 varchar(50), corp37 varchar(150), corp38 varchar(20), 
+corp39 varchar(80), corp40 varchar(20), corp41 varchar(80), corp42 varchar(50), corp43 varchar(150), 
+corp44 varchar(150), corp45 varchar(150), corp46 varchar(80), corp47 varchar(200), corp48 varchar(200), 
+corp49 varchar(120), corp50 varchar(120), corp51 varchar(120), corp52 varchar(80), corp53 varchar(30), 
+corp54 varchar(80), corp55 varchar(30), corp56 varchar(200), corp57 varchar(120), corp58 varchar(150), 
+corp59 varchar(20), corp60 varchar(20),corp61 varchar(20))
+
+Create table tbl_Contacts(
+contact_id integer primary key, corp_no varchar(20), corp_contact_no integer, 
+position varchar(40), first_name varchar(100), last_name varchar(100), phone varchar(20), 
+wechat varchar(150), email varchar(100))
+
+Create table tbl_Directors(
+director_id integer primary key, corp_no varchar(20), corp_director_no integer,
+first_name varchar(100), last_name varchar(100), sin varchar(20), address varchar(150),
+phone varchar(20), email varchar(100))
+
+Create table tbl_Shareholders(
+shareholder_id integer primary key, corp_no varchar(20), corp_share_no integer,
+shares varchar(80), shares_percent varchar(10), first_name varchar(100), last_name varchar(100),
+sin varchar(20), address varchar(150), phone varchar(20), email varchar(100))

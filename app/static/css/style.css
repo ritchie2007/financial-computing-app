@@ -42,7 +42,7 @@ header .welcome {
     text-align: center;
     color: rgb(86, 140, 129);
     font-size: 70px;
-    margin-top: 15%;
+    margin: 15% 0px 0px 0px;
 }
 #discription {
     font-size: 22px;
@@ -75,12 +75,14 @@ marquee img[type="scroll_img"] {
 
 .tbl-field {
     position: absolute;
+    margin: 0px;
     /* min-height: fit-content;  */
-    top: 125px;
-    /*bottom: 0px; /*fill remaining height space */
+    top: 126px;
+    bottom: 18px; /*fill remaining height space */
     width: 100%;
     background-color: rgb(234, 236, 233);
     z-index: 50;
+    float: left;
 }
 .tbl-list{
     margin: 10px 10px 10px 10px;
@@ -246,17 +248,15 @@ nav#sidebar {
     .navbar-collapse.collapse {
         display: block !important;
         height: auto;
+    }
 }
-
 
 footer {
-    background-color: greenyellow;
-}
-footer p {
+    background-color: #d6e7c0;
     font-size: 12px;
     text-align: left;
-    color: #aa0a82;
-}
-
-
+    color: #777;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
 }

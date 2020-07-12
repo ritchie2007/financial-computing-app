@@ -1,3 +1,5 @@
+1 # pylint: disable=no-member
+
 from random import random
 #from time import strftime, strptime, localtime
 from datetime import timedelta, datetime#, date
@@ -7,7 +9,6 @@ from sqlalchemy import desc, asc# for table.order_by(Task.enddate).all()
 
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import render_template, flash, redirect, request, url_for, session, make_response, json
-
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
 from app.models import User, Data_table, activity_code, CorprationReport, Staff, Task, \
@@ -144,11 +145,13 @@ def corporate():
         title='Corporate'
     )
 
-@app.route('/Corp_Spec')
-def corp_spec():
+@app.route('/Corp_add', methods=['GET', 'POST'])
+def corp_add():
+    if request.method == 'POST':
+
     return render_template(
-        'corp_spec.html',
-        title='Corp_Spec'
+        'corp_add.html',
+        title='Add_new_Corporation'
     )
 
 @app.route('/task')
@@ -268,10 +271,10 @@ def timesheetInsertion():
         taskname = data[6]
         taskcontent = data[7]
         tasktype = data[8]
-        corp1 = data[9]
-        corp2 = data[10]
-        corp3 = data[11]
-        corp4 = data[12]
+        corp1 = (data[9].split(" | "))[3]
+        corp2 = (data[10].split(" | "))[3]
+        corp3 = (data[11].split(" | "))[3]
+        corp4 = (data[12].split(" | "))[3]
         userstr = ['Susan', 'Dannijo', 'Michael', 'Aser', 'Kidden']
         userstridx = round(random()*4)
         staff = userstr[userstridx]
@@ -318,12 +321,27 @@ def timesheetInsertion():
 def timesheetlist(page):
     '''display timesheet'''
     page = page
-    pages = 5
+    pages = 10
+    c = session.get("cc")
+
+    print(c)
+    if (session.get("filterstatus") is None):
+        print("check session")
+    print(session.get("filterstatus"))
+    # status = session.get("filterstatus")
+    # if ( status is None):
+    #     print("enter into session...")
+    #     list_data = Timesheet.query.paginate(page, per_page=pages, error_out=True)
+    # else:
+    #     list_data = Timesheet.query.filter(Timesheet.staff == "Susan").paginate(per_page=pages, error_out=True)
+    
     list_data = Timesheet.query.paginate(page, per_page=pages, error_out=True)
     tasklist = Task.query.all()
     datefilter = db.session.query(Timesheet.startdate).distinct().order_by(Timesheet.startdate.desc()).all()
     userfilter = db.session.query(Timesheet.staff).distinct().order_by(Timesheet.staff.asc()).all()
+
     if request.method == "POST":
+        status = 1
         dateselect = (request.form['dateselect']).replace(" ","")
         userselect = (request.form['userselect']).replace(" ","")
         if dateselect != "" and userselect != "":
@@ -332,25 +350,55 @@ def timesheetlist(page):
             list_data = Timesheet.query.filter(Timesheet.startdate == dateselect).paginate(per_page=pages, error_out=True)
         elif dateselect == "" and userselect != "":
             list_data = Timesheet.query.filter(Timesheet.staff == userselect).paginate(per_page=pages, error_out=True)
+        
+        # session['filterstatus'] = 'usingfilter'
 
-        print(list_data)
-        return render_template(
-            'timesheetlist.html',
-            listdata=list_data,
-            tasklist=tasklist,
-            datefilter=datefilter,
-            userfilter=userfilter,
-            title='timesheetlist'
-        )
-    else:
-        return render_template(
-            'timesheetlist.html',
-            listdata=list_data,
-            tasklist=tasklist,
-            datefilter=datefilter,
-            userfilter=userfilter,
-            title='timesheetlist'
-        )
+    return render_template(
+        'timesheetlist.html',
+        listdata=list_data,
+        tasklist=tasklist,
+        datefilter=datefilter,
+        userfilter=userfilter,
+        title='timesheetlist'
+    )
+
+@app.route('/corpration_report', methods=['GET','POST'], defaults={"page":1})
+@app.route('/corpration_report/<int:page>', methods=['GET','POST'])
+def corpration_report(page):
+    page = page
+    pages = 10
+    list_data = CorprationReport.query.paginate(page, per_page=pages, error_out=True)
+    tasklist = Task.query.all()
+    datefilter = db.session.query(CorprationReport.date).distinct().order_by(CorprationReport.date.desc()).all()
+    corpfilter = db.session.query(CorprationReport.corp).distinct().order_by(CorprationReport.corp.asc()).all()
+    return render_template(
+        'corpration_report.html',
+        listdata=list_data,
+        tasklist=tasklist,
+        datefilter=datefilter,
+        corpfilter=corpfilter,
+        title='CorprationReport'
+    )
+
+@app.route('/staff', methods=['GET','POST'], defaults={"page":1})
+@app.route('/staff/<int:page>', methods=['GET','POST'])
+def staff(page):
+    page = page
+    pages = 10
+    # list_data = Staff.query.paginate(page, per_page=pages, error_out=True)
+    list_data = db.session.query(Staff.name, Staff.date, Staff.work_hour).distinct(Staff.name, Staff.date).order_by(Staff.name.asc(), Staff.date.desc()).all()
+    print(list_data)
+    tasklist = Task.query.all()
+    datefilter = db.session.query(Staff.date).distinct().order_by(Staff.date.desc()).all()
+    stafffilter = db.session.query(Staff.name).distinct().order_by(Staff.name.asc()).all()
+    return render_template(
+        'staff.html',
+        listdata=list_data,
+        tasklist=tasklist,
+        datefilter=datefilter,
+        stafffilter=stafffilter,
+        title='staff'
+    )
 
 # @app.route('/timesheet_tempdata', methods=['GET', 'POST'])
 # def timesheet_tempdata():

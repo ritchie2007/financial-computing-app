@@ -263,22 +263,150 @@ class Corporation(db.Model):
     corp56 = db.Column(db.String(200))
     corp57 = db.Column(db.String(120))
     corp58 = db.Column(db.String(150))
-    corp59 = db.Column(db.String(20))
-    corp60 = db.Column(db.String(20))
-    corp61 = db.Column(db.String(20))
+    corp59 = db.Column(db.String(40))
+    corp60 = db.Column(db.String(40))
+    corp61 = db.Column(db.String(40))
+    timestamp = db.Column(db.String(26))
 
-class Contacts(db.Model):
-    ''' contacts linked to corporation'''
-    __tablename__ = 'tbl_Contacts'
-    contact_id = db.Column(db.String(15), primary_key=True)
-    corp_no = db.Column(db.String(20))
-    corp_contact_no = db.Column(db.Integer)
-    position = db.Column(db.String(40))
-    first_name = db.Column(db.String(100))
-    last_name = db.Column(db.String(100))
-    phone = db.Column(db.String(20))
+    def __init__(self,corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,corp59,corp60,corp61,timestamp):
+        self.corp1 = corp1
+        self.corp2 = corp2
+        self.corp3 = corp3
+        self.corp4 = corp4
+        self.corp5 = corp5
+        self.corp6 = corp6
+        self.corp7 = corp7
+        self.corp8 = corp8
+        self.corp9 = corp9
+        self.corp10 = corp10
+        self.corp11 = corp11
+        self.corp12 = corp12
+        self.corp13 = corp13
+        self.corp14 = corp14
+        self.corp15 = corp15
+        self.corp16 = corp16
+        self.corp17 = corp17
+        self.corp18 = corp18
+        self.corp19 = corp19
+        self.corp20 = corp20
+        self.corp21 = corp21
+        self.corp22 = corp22
+        self.corp23 = corp23
+        self.corp24 = corp24
+        self.corp25 = corp25
+        self.corp26 = corp26
+        self.corp27 = corp27
+        self.corp28 = corp28
+        self.corp29 = corp29
+        self.corp30 = corp30
+        self.corp31 = corp31
+        self.corp32 = corp32
+        self.corp33 = corp33
+        self.corp34 = corp34
+        self.corp35 = corp35
+        self.corp36 = corp36
+        self.corp37 = corp37
+        self.corp38 = corp38
+        self.corp39 = corp39
+        self.corp40 = corp40
+        self.corp41 = corp41
+        self.corp42 = corp42
+        self.corp43 = corp43
+        self.corp44 = corp44
+        self.corp45 = corp45
+        self.corp46 = corp46
+        self.corp47 = corp47
+        self.corp48 = corp48
+        self.corp49 = corp49
+        self.corp50 = corp50
+        self.corp51 = corp51
+        self.corp52 = corp52
+        self.corp53 = corp53
+        self.corp54 = corp54
+        self.corp55 = corp55
+        self.corp56 = corp56
+        self.corp57 = corp57
+        self.corp58 = corp58
+        self.corp59 = corp59
+        self.corp60 = corp60
+        self.corp61 = corp61
+        self.timestamp = timestamp
+
+class Individual(db.Model):
+    ''' Indivuduals detail information '''
+    __tablename__ = 'tbl_Individual'
+    indiv_id = db.Column(db.Integer, primary_key=True)
+    sin = db.Column(db.Integer)
+    prefix = db.Column(db.String(10))
+    last_name = db.Column(db.String(80))
+    first_name = db.Column(db.String(80))
+    middle_name = db.Column(db.String(80))
+    other_name = db.Column(db.String(80))
+    phone1 = db.Column(db.String(15))
+    phone2 = db.Column(db.String(15))
+    address1 = db.Column(db.String(150))
+    address2 = db.Column(db.String(150))
+    mail_address = db.Column(db.String(150))
     wechat = db.Column(db.String(150))
-    email = db.Column(db.String(100))
+    cra_sole_proprietor = db.Column(db.String(100))
+    cra_hst_report  = db.Column(db.String(100))
+    cra_payroll  = db.Column(db.String(100))
+    cra_withhold_tax  = db.Column(db.String(100))
+    cra_wsib = db.Column(db.String(50))
+    cra_other = db.Column(db.String(100))
+    oversea_asset_t1135 = db.Column(db.String(200))
+    oversea_corp_t1134 = db.Column(db.String(200))
+    tslip = db.Column(db.String(50))
+    tax_personal_info = db.Column(db.String(200))
+    specific_info = db.Column(db.String(200))
+    engage_account = db.Column(db.String(200))
+    engage_leading = db.Column(db.String(200))
+    note = db.Column(db.String(200))
+    contact_corp = db.Column(db.String(30))
+    director_corp = db.Column(db.String(30))
+    sharehold_corp = db.Column(db.String(30))
+    spouse = db.Column(db.String(20))
+    parent = db.Column(db.String(40))
+    child = db.Column(db.String(40))
+    timestamp = db.Column(db.String(26))
+    def __init__(self,sin,prefix,last_name,first_name,middle_name,other_name,phone1,phone2,address1,address2,mail_address,
+        wechat,cra_sole_proprietor,cra_hst_report,cra_payroll,cra_withhold_tax,cra_wsib,cra_other,oversea_asset_t1135,
+        oversea_corp_t1134,tslip,tax_personal_info,specific_info,engage_account,engage_leading,note,
+        contact_corp,director_corp,sharehold_corp,spouse,parent,child,timestamp):
+
+        self.sin = sin
+        self.prefix = prefix
+        self.last_name = last_name
+        self.first_name = first_name
+        self.middle_name = middle_name
+        self.other_name = other_name
+        self.phone1 = phone1
+        self.phone2 = phone2
+        self.address1 = address1
+        self.address2 = address2
+        self.mail_address = mail_address
+        self.wechat = wechat
+        self.cra_sole_proprietor = cra_sole_proprietor
+        self.cra_hst_report = cra_hst_report
+        self.cra_payroll = cra_payroll
+        self.cra_withhold_tax = cra_withhold_tax
+        self.cra_wsib = cra_wsib
+        self.cra_other = cra_other
+        self.oversea_asset_t1135 = oversea_asset_t1135
+        self.oversea_corp_t1134 = oversea_corp_t1134
+        self.tslip = tslip
+        self.tax_personal_info = tax_personal_info
+        self.specific_info = specific_info
+        self.engage_account = engage_account
+        self.engage_leading = engage_leading
+        self.note = note
+        self.contact_corp = contact_corp
+        self.director_corp = director_corp
+        self.sharehold_corp = sharehold_corp
+        self.spouse = spouse
+        self.parent = parent
+        self.child = child
+        self.timestamp = timestamp
 
 class Directors(db.Model):
     ''' directors linked to corporation'''

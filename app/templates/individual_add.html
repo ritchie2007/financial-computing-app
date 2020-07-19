@@ -1,0 +1,464 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{{super()}}
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/common.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.min.css')}}"><!-- 这句 用本地bootstrap.min.css格式就乱了-->
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap-multiselect.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style-corp.css')}}">
+  <style>
+    .item .form-row .form-group label {
+      font-size: 12px; 
+      font-weight: 500 !important; /*default  700*/
+      margin-bottom: 0px; /*default  5px*/
+    }
+    .item .form-row .form-group, .item .form-row .form-group input.form-control {
+      font-size: 12px;
+      margin: 0px 0px 0px 0px; /*default  5px*/
+      padding: 3px;
+    }
+    form .browser-default.custom-select {
+      width: 100%; 
+      height: 32px; 
+      border: none; 
+      background: #ffffff;
+    }
+  </style>
+ {% endblock %}
+
+{% block body_attribs %}
+
+{% endblock body_attribs %}
+
+{% block content %}
+<div class="tbl-field" style="height: fit-content;">
+  <h3>&nbsp Add new individual</h3>
+
+  <div class="row" style="margin-left: 15px; margin-right: 15px;">
+    
+    <form action="{{url_for('individual_add')}}" method="POST">
+      <!-- <div id="corpedit" class="scroll overflow-auto" style="height: 600px; overflow-y: auto;"> -->
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">General Information</h4></label>
+          </div>
+
+          <div class="form-group col-md-1">
+            <label>SIN</label>
+            <input type="text" class="form-control" name="indiv1">
+          </div>
+          <div class="form-group col-md-1">
+            <label>Prefix</label>
+            <select class="browser-default custom-select" name="indiv2" style="width: 100%; height: 32px; border: none; background: #ffffff;">
+              <option>Mr.</option>
+              <option>Mrs.</option>
+              <option>Ms.</option>
+              <option>Miss.</option>
+            </select>
+          </div>
+          <div class="form-group col-md-2">
+            <label>Last name</label>
+            <input type="text" class="form-control" name="indiv3">
+          </div>
+          <div class="form-group col-md-2">
+            <label >First name</label>
+            <input type="text" class="form-control" name="indiv4">
+          </div>
+          <div class="form-group col-md-2">
+            <label >Middle</label>
+            <input type="text" class="form-control" name="indiv5">
+          </div>
+          <div class="form-group col-md-2">
+            <label>Other name</label>
+            <input type="text" class="form-control" name="indiv6">
+          </div>
+          <div class="form-group col-md-1">
+            <label>Phone1</label>
+            <input type="text" class="form-control" name="indiv7">
+          </div>
+          <div class="form-group col-md-1">
+            <label>Phone2</label>
+            <input type="text" class="form-control" name="indiv8">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Address 1</label>
+            <input type="text" class="form-control" name="indiv9">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Address 2</label>
+            <input type="text" class="form-control" name="indiv10">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Mailing address</label>
+            <input type="text" class="form-control" name="indiv11">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Wechat/Twitter/LinkedIn/Facebook/</label>
+            <input type="text" class="form-control" name="indiv12">
+          </div>
+          <!-- CRA -->
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">CRA Information</h4></label>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Sole proprietorship and T4A</label>
+            <input type="text" class="form-control" name="indiv13">
+          </div>
+          <div class="form-group col-md-4">
+            <label>HST Reporting</label>
+            <input type="text" class="form-control" name="indiv14">
+          </div>
+          <div class="form-group col-md-4">
+            <label >Payroll Account</label>
+            <input type="text" class="form-control" name="indiv15">
+          </div>
+          <div class="form-group col-md-4">
+            <label >Withholding Tax Account</label>
+            <input type="text" class="form-control" name="indiv16">
+          </div>
+          <div class="form-group col-md-2">
+            <label>WSIB Account</label>
+            <input type="text" class="form-control" name="indiv17">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Other Account</label>
+            <input type="text" class="form-control" name="indiv18">
+          </div>
+          <!-- Oversea Assets/corporation -->
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">Oversea Assets/corporation</h4></label>
+          </div>
+
+          <!-- <div class="form-group col-md-2">
+            <label>Oversea Assets </label>
+            <input type="text" class="form-control" name="indiv1" placeholder="Yes/No">
+          </div> -->
+          <div class="form-group col-md-12">
+            <label>T1135 Oversea Assets Report</label>
+            <input type="text" class="form-control" name="indiv19">
+          </div>
+          <!-- <div class="form-group col-md-2">
+            <label >Oversea Corporation</label>
+            <input type="text" class="form-control" name="indiv3" placeholder="Yes/No">
+          </div> -->
+          <div class="form-group col-md-12">
+            <label >T1134 Oversea Corporation</label>
+            <input type="text" class="form-control" name="indiv20">
+          </div>
+          <!-- T1 Information -->
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">T1 Information</h4></label>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Tslip Type</label>
+            <input type="text" class="form-control" name="indiv21">
+          </div>
+          <div class="form-group col-md-9">
+            <label>Tax personal information</label>
+            <input type="text" class="form-control" name="indiv22">
+          </div>
+          <div class="form-group col-md-12">
+            <label>Specific information</label>
+            <input type="text" class="form-control" name="indiv23">
+          </div>
+          <!-- Engagement  -->
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">Engagement</h4></label>
+          </div>
+
+          <div class="form-group col-md-12">
+            <label>Accounting Service </label>
+            <input type="text" class="form-control" name="indiv24">
+          </div>
+          <div class="form-group col-md-12">
+            <label>Leading </label>
+            <input type="text" class="form-control" name="indiv25">
+          </div>
+          <!-- Note  -->
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">Note</h4></label>
+          </div>
+          <div class="form-group col-md-12">
+            <input type="text" class="form-control" name="indiv26">
+          </div>
+
+          <!-- As contacts for Corporations  -->
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">Corporatons, as Contact for</h4></label>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Corporaton 01</label>
+            <select class="browser-default custom-select" name="indiv27">
+              <option value="" >Please select</option>
+              {% for row in corp_data %}
+              <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Corporaton 02</label>
+            <select class="browser-default custom-select" name="indiv28">
+              <option value="" >Please select</option>
+              {% for row in corp_data %}
+              <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Corporaton 03</label>
+            <select class="browser-default custom-select" name="indiv29">
+              <option value="" >Please select</option>
+              {% for row in corp_data %}
+              <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- As Director for Corporations  -->
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">Corporatons, as Director for</h4></label>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Corporaton 01</label>
+            <select class="browser-default custom-select" name="indiv30">
+              <option value="" >Please select</option>
+              {% for row in corp_data %}
+              <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Corporaton 02</label>
+            <select class="browser-default custom-select" name="indiv31">
+              <option value="" >Please select</option>
+              {% for row in corp_data %}
+              <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Corporaton 03</label>
+            <select class="browser-default custom-select" name="indiv32">
+              <option value="" >Please select</option>
+              {% for row in corp_data %}
+              <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- As Shareholder for Corporations  -->
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">Corporatons, as Shareholder for</h4></label>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Corporaton 01</label>
+            <select class="browser-default custom-select" name="indiv33">
+              <option value="" >Please select</option>
+              {% for row in corp_data %}
+              <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Corporaton 02</label>
+            <select class="browser-default custom-select" name="indiv34">
+              <option value="" >Please select</option>
+              {% for row in corp_data %}
+              <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Corporaton 03</label>
+            <select class="browser-default custom-select" name="indiv35">
+              <option value="" >Please select</option>
+              {% for row in corp_data %}
+              <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Spouse  -->
+          <div class="form-group col-md-12">
+            <hr style="height:2px;border-width:0;color:gray;background-color:#dad7d7; margin-bottom: 10px;">
+            <label><h4 style="color: #337ab7;">Spouse</h4></label>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Spouse/Common_law</label>
+            <select class="browser-default custom-select" name="indiv36">
+              <option value="" >Please select</option>
+              {% for row in indiv_data %}
+              <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Spouse, ...</label>
+            <select class="browser-default custom-select" name="indiv37">
+              <option value="" >Please select</option>
+              {% for row in indiv_data %}
+              <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Parents  -->
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">Parents</h4></label>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Parent</label><txt style="font-size: xx-small;"> &nbsp 10</txt>
+            <select class="browser-default custom-select" name="indiv38">
+              <option value="" >Please select</option>
+              {% for row in indiv_data %}
+              <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Parent</label><txt style="font-size: xx-small;"> &nbsp 11</txt>
+            <select class="browser-default custom-select" name="indiv39">
+              <option value="" >Please select</option>
+              {% for row in indiv_data %}
+              <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Parent</label><txt style="font-size: xx-small;"> &nbsp 20</txt>
+            <select class="browser-default custom-select" name="indiv40">
+              <option value="" >Please select</option>
+              {% for row in indiv_data %}
+              <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Parent</label><txt style="font-size: xx-small;"> &nbsp 21</txt>
+            <select class="browser-default custom-select" name="indiv41">
+              <option value="" >Please select</option>
+              {% for row in indiv_data %}
+              <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Children  -->
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">Children</h4></label>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Child</label><txt style="font-size: xx-small;"> &nbsp 01</txt>
+            <select class="browser-default custom-select" name="indiv42">
+              <option value="" >Please select</option>
+              {% for row in indiv_data %}
+              <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Child</label><txt style="font-size: xx-small;"> &nbsp 02</txt>
+            <select class="browser-default custom-select" name="indiv43">
+              <option value="" >Please select</option>
+              {% for row in indiv_data %}
+              <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Child</label><txt style="font-size: xx-small;"> &nbsp 03</txt>
+            <select class="browser-default custom-select" name="indiv44">
+              <option value="" >Please select</option>
+              {% for row in indiv_data %}
+              <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Child</label><txt style="font-size: xx-small;"> &nbsp 04</txt>
+            <select class="browser-default custom-select" name="indiv45">
+              <option value="" >Please select</option>
+              {% for row in indiv_data %}
+              <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group col-md-12">
+              <label> &nbsp</label>
+          </div>
+          <div>
+            <div class="form-group col-md-11" style="text-align: right;">
+                <a href="#"><button type="submit" class="btn btn-success">Submit</button></a>
+                <a href="{{ url_for('corporate')}}" type="cancel" class="btn btn-danger" >Cancel</a>
+            </div>
+          </div>
+        </div>
+    </form> 
+      <div class="form-group col-md-1">
+        <button style="font-size: 10;" name="test" onclick="testinput()">test</button>
+      </div> 
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script><!-- 这句 控制navbar是否跟着变-->
+    <script src="{{url_for('static', filename='js/bootstrap-multiselect.js')}}"></script>
+    <!-- <script src="{{url_for('static', filename='js/main.js')}}"></script> -->
+    <script type="text/javascript">
+        //根据窗口大小设置动态CSS，注意var height_val得到的结果总是固定的(CSS文件中设定的值)，
+        //如果这个函数里使用location.reload(); 则是死循环，屏幕一直抖动
+        //height: '100%' 目的是 去掉窗口太大时，下面漏出的背景
+        //height: 'fit-content' 目的是 窗口缩小出现滚动条时，而此时滚动窗口尺寸大于屏幕尺寸，下面出现背景
+        
+        //$(document).ready(function () {
+        $(function () {  
+            var height_window=$(window).height();
+            var height_val = $('.tbl-field').css("height");
+               //此处不严谨，可以通过$(window).height()获取整个屏幕高度后，结合屏幕的内容高度$（‘’）.height()，相减得出判断条件。
+            if(height_window>880){
+                    $('.tbl-field').css({height: 'fit-content'}); //100%
+            } else {
+                $('.tbl-field').css({height: 'fit-content'});
+            };
+            // console.log(height_window);
+            // console.log(height_val);
+        });
+        //})
+
+        function testinput(){
+          var b = localStorage.getItem('serialnum');
+          var a = Math.floor(Math.random()*(987654321-123456789)+123456789);
+          $('form [name="indiv1"]').val(a);
+          a = Math.floor(Math.random()*(4-1)+1);
+          $('form [name="indiv2"]').prop('selectedIndex',a)
+          for (i=3; i<27; i++) {
+              a = $('form [name="indiv' + i + '"]').parent('div').find('label').text();
+              a = 'no_' + b + '_' + a; 
+              $('form [name="indiv' + i + '"]').val(a);
+          }
+          a = Math.floor(Math.random()*(9876543210-1234567890)+1234567890);
+          $('form [name="indiv7"]').val(a);
+          a = Math.floor(Math.random()*(9876543210-1234567890)+1234567890);
+          $('form [name="indiv8"]').val(a);
+          $('form [name="indiv26"]').val('no_' + b + '- notes.' );
+          // for (i=27; i<36; i++) {
+          //   a = Math.floor(Math.random()*(37-1)+1);
+          //   $('form [name="indiv' + i + '"]').prop('selectedIndex',a)
+          // }
+
+          localStorage.setItem('serialnum', (parseInt(b)+1));
+        }
+
+        //改变窗口大小后，自动刷新，如想清楚cache则需要location.reload(true);，这是配合上面的动态CSS使用的
+        //$(document).ready(function () 所以页面都生效
+        $(window).bind('resize', function() {
+        location.reload();
+        });
+    </script>
+{%- endblock scripts %}

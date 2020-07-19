@@ -75,6 +75,7 @@
       }
     </style>
     <div class="col-sm-10">
+    <form action="{{url_for('corp_add')}}" method="POST">
       <!-- <div id="corpedit" class="scroll overflow-auto" style="height: 600px; overflow-y: auto;"> -->
       <div id="item1" class="item">
 
@@ -119,10 +120,10 @@
             </div>
             <div class="form-group col-md-1">
               <label>Incorp Type</label>
-              <select class="browser-default custom-select" name="corp8" style="width: 100%; height: 32px; border: none; background: #ffffff;">
+              <select class="browser-default custom-select" name="corp8" value="Federal" style="width: 100%; height: 32px; border: none; background: #ffffff;">
                 <option >Federal</option>
                 <option >Ontario</option>
-            </select>
+              </select>
             </div>
             <div class="form-group col-md-2">
               <label>Anniversary Date</label>
@@ -151,7 +152,7 @@
             </div>
 
             <div class="form-group col-md-3">
-              <label">CRA Contact Person: First name </label>
+              <label>CRA Contact Person: First name </label>
               <input type="text" class="form-control" name="corp18">
             </div>
             <div class="form-group col-md-2">
@@ -212,7 +213,7 @@
             </div>
             <div class="form-group col-md-2">
               <label>Method</label>
-              <select class="browser-default custom-select"  name="corp27" style="width: 100%; height: 32px; border: none; background: #ffffff;">
+              <select class="browser-default custom-select"  name="corp27" value="Normal" style="width: 100%; height: 32px; border: none; background: #ffffff;">
                 <option >Normal</option>
                 <option >Quick</option>
               </select>
@@ -442,59 +443,60 @@
       <!-- CONTACTS Infomation -->
       <div id="item11" class="item">
 
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">CONTACTS</h4></label>
-            </div>
-          <br/>
-            <div class="form-group col-md-12">
-              <label>1st Contact ( Position | first name | last name | phone number | wechat | email )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp59" placeholder="Position" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp60" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp61" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp62" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp63" placeholder="wechat / other" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp64" placeholder="email" style="width: 22%;">  
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>2nd Contact<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp65" placeholder="Position" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp66" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp67" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp68" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp69" placeholder="wechat / other" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp70" placeholder="email" style="width: 22%;">  
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>3rd Contact<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp71" placeholder="Position" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp72" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp73" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp74" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp75" placeholder="wechat / other" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp76" placeholder="email" style="width: 22%;">  
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>4th Contact<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp77" placeholder="Position" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp78" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp79" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp80" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp81" placeholder="wechat / other" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp82" placeholder="email" style="width: 22%;">  
-              </div>
+        <br/>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label><h4 style="color: #337ab7;">CONTACTS</h4></label>
+            <input type="text" name="corp-59" value='  [serial no: ]' style="height: 40%; font-size: 9px; border: none; background-color: #eaece9;">
+          </div>
+        <br/>
+          <div class="form-group col-md-12">
+            <label>1st Contact ( Position | first name | last name | phone number | wechat | email )<br></label>
+            <div>
+              <input type="text" class="form-control col-sm-1" name="corp59" placeholder="Position" style="width: 10%;">
+              <input type="text" class="form-control col-sm-1" name="corp60" placeholder="first name" style="width: 16%;">
+              <input type="text" class="form-control col-sm-1" name="corp61" placeholder="last name" style="width: 14%;">
+              <input type="text" class="form-control col-sm-1" name="corp62" placeholder="phone number" style="width: 10%;">
+              <input type="text" class="form-control col-sm-1" name="corp63" placeholder="wechat / other" style="width: 28%;">
+              <input type="text" class="form-control col-sm-1" name="corp64" placeholder="email" style="width: 22%;">  
             </div>
           </div>
+          <div class="form-group col-md-12">
+            <label>2nd Contact<br></label>
+            <div>
+              <input type="text" class="form-control col-sm-1" name="corp65" placeholder="Position" style="width: 10%;">
+              <input type="text" class="form-control col-sm-1" name="corp66" placeholder="first name" style="width: 16%;">
+              <input type="text" class="form-control col-sm-1" name="corp67" placeholder="last name" style="width: 14%;">
+              <input type="text" class="form-control col-sm-1" name="corp68" placeholder="phone number" style="width: 10%;">
+              <input type="text" class="form-control col-sm-1" name="corp69" placeholder="wechat / other" style="width: 28%;">
+              <input type="text" class="form-control col-sm-1" name="corp70" placeholder="email" style="width: 22%;">  
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <label>3rd Contact<br></label>
+            <div>
+              <input type="text" class="form-control col-sm-1" name="corp71" placeholder="Position" style="width: 10%;">
+              <input type="text" class="form-control col-sm-1" name="corp72" placeholder="first name" style="width: 16%;">
+              <input type="text" class="form-control col-sm-1" name="corp73" placeholder="last name" style="width: 14%;">
+              <input type="text" class="form-control col-sm-1" name="corp74" placeholder="phone number" style="width: 10%;">
+              <input type="text" class="form-control col-sm-1" name="corp75" placeholder="wechat / other" style="width: 28%;">
+              <input type="text" class="form-control col-sm-1" name="corp76" placeholder="email" style="width: 22%;">  
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <label>4th Contact<br></label>
+            <div>
+              <input type="text" class="form-control col-sm-1" name="corp77" placeholder="Position" style="width: 10%;">
+              <input type="text" class="form-control col-sm-1" name="corp78" placeholder="first name" style="width: 16%;">
+              <input type="text" class="form-control col-sm-1" name="corp79" placeholder="last name" style="width: 14%;">
+              <input type="text" class="form-control col-sm-1" name="corp80" placeholder="phone number" style="width: 10%;">
+              <input type="text" class="form-control col-sm-1" name="corp81" placeholder="wechat / other" style="width: 28%;">
+              <input type="text" class="form-control col-sm-1" name="corp82" placeholder="email" style="width: 22%;">  
+            </div>
+          </div>
+        </div>
 
-      </div>
+    </div>
       <!-- DIRECTOR Infomation -->
       <div id="item12" class="item">
 
@@ -561,7 +563,7 @@
             </div>
           <br/>
             <div class="form-group col-md-12">
-              <label>1st ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+              <label>1st ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
               <div>
                 <input type="text" class="form-control col-sm-1" name="corp107" placeholder="share class and shares" style="width: 35%;">
                 <input type="text" class="form-control col-sm-1" name="corp108" placeholder="share (%)" style="width: 12%;">
@@ -571,7 +573,7 @@
               </div>
             </div>
             <div class="form-group col-md-12">
-              <label>( address | phone number | email )<br></label>
+              <label>1st ShareHolder ( address | phone number | email )<br></label>
               <div>
                 <input type="text" class="form-control col-sm-1" name="corp112" placeholder="address" style="width: 50%;">
                 <input type="text" class="form-control col-sm-1" name="corp113" placeholder="phone number" style="width: 15%;">
@@ -579,7 +581,7 @@
               </div>
             </div>
             <div class="form-group col-md-12">
-              <label>2nd ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+              <label>2nd ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
               <div>
                 <input type="text" class="form-control col-sm-1" name="corp115" placeholder="share class and shares" style="width: 35%;">
                 <input type="text" class="form-control col-sm-1" name="corp116" placeholder="share (%)" style="width: 12%;">
@@ -589,7 +591,7 @@
               </div>
             </div>
             <div class="form-group col-md-12">
-              <label>( address | phone number | email )<br></label>
+              <label>2nd ShareHolder ( address | phone number | email )<br></label>
               <div>
                 <input type="text" class="form-control col-sm-1" name="corp120" placeholder="address" style="width: 50%;">
                 <input type="text" class="form-control col-sm-1" name="corp121" placeholder="phone number" style="width: 15%;">
@@ -597,7 +599,7 @@
               </div>
             </div>
             <div class="form-group col-md-12">
-              <label>3rd ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+              <label>3rd ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
               <div>
                 <input type="text" class="form-control col-sm-1" name="corp123" placeholder="share class and shares" style="width: 35%;">
                 <input type="text" class="form-control col-sm-1" name="corp124" placeholder="share (%)" style="width: 12%;">
@@ -607,7 +609,7 @@
               </div>
             </div>
             <div class="form-group col-md-12">
-              <label>( address | phone number | email )<br></label>
+              <label>3rd ShareHolder ( address | phone number | email )<br></label>
               <div>
                 <input type="text" class="form-control col-sm-1" name="corp128" placeholder="address" style="width: 50%;">
                 <input type="text" class="form-control col-sm-1" name="corp129" placeholder="phone number" style="width: 15%;">
@@ -615,7 +617,7 @@
               </div>
             </div>
             <div class="form-group col-md-12">
-              <label>4th ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+              <label>4th ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
               <div>
                 <input type="text" class="form-control col-sm-1" name="corp131" placeholder="share class and shares" style="width: 35%;">
                 <input type="text" class="form-control col-sm-1" name="corp132" placeholder="share (%)" style="width: 12%;">
@@ -625,7 +627,7 @@
               </div>
             </div>
             <div class="form-group col-md-12">
-              <label>( address | phone number | email )<br></label>
+              <label>4th ShareHolder ( address | phone number | email )<br></label>
               <div>
                 <input type="text" class="form-control col-sm-1" name="corp136" placeholder="address" style="width: 50%;">
                 <input type="text" class="form-control col-sm-1" name="corp137" placeholder="phone number" style="width: 15%;">
@@ -648,11 +650,20 @@
       <div id="item15" class="item">
         <br/>
         <div class="form-row">
-          <div class="form-group col-md-12">
+          <div class="form-group col-md-9">
             <label><h4 style="color: #337ab7;">Recent Updates</h4></label>
           </div>
+          <div class="form-group col-md-2">
+            <a href="#"><button type="submit" class="btn btn-success">Submit</button></a>
+            <a href="{{ url_for('corporate')}}" type="cancel" class="btn btn-danger" >Cancel</a>
+          </div>
         </div>
+
       </div>
+    </form> 
+      <div class="form-group col-md-1">
+        <button style="font-size: 10;" onclick="testinput()">test</button>
+      </div> 
     </div>
   </div>
 </div>
@@ -708,6 +719,59 @@
         };
       };
 
+      function testinput(){
+        for (i=1; i<139; i++) {
+          var a="";
+          var b = "016_"
+          if (i==5 || i==6 || i==7 || i==9 || i==10){
+            a = 'yyyy-mm-dd';
+          } else if (i == 8 || i==27) {
+            a = $('form [name="corp' + i + '"]').val();
+          } else if (i < 59) {
+            a = $('form [name="corp' + i + '"]').parent('div').find('label').text();
+            a = b + a;
+          } else if (i < 83) {
+            a = ($('form [name="corp' + i + '"]').parent('div').find('label').text()).substr(0,1);
+            a = b + "C" + a + "-" + $('form [name="corp' + i + '"]').attr('placeholder');
+          } else if ( i < 107) {
+            a = ($('form [name="corp' + i + '"]').parent('div').find('label').text()).substr(0,1);
+            a = b + "D" + a + "-" + $('form [name="corp' + i + '"]').attr('placeholder');
+          } else {
+            a = ($('form [name="corp' + i + '"]').parent('div').find('label').text()).substr(0,1);
+            a = b + "S" + a + "-" + $('form [name="corp' + i + '"]').attr('placeholder');
+          }
+          $('form [name="corp' + i + '"]').val(a);          
+        }
+      }
+
+      $('label[name="add_contact"]').click(function() {
+        var index = 0;
+        var txt = $('#item11 .form-group [name="corp59"]').val();
+        txt = txt.substr(14, txt.length-15).replace(/ /g, "");
+        if (txt.leng>0){
+          index = txt.split(",").length;
+        }
+        
+        var txt = '<div>\
+                <select class="browser-default custom-select" name="corp592" style="height: 33px; width: 30%; background-color: #eeeeee;">\
+                  <option selected="">select full name</option>\
+                  {% for row in code_types %}\
+                  <option >{{row.name}}</option>\
+                  {% endfor %}\
+                </select>\
+                <input type="text" class="form-control col-sm-1" name="corp591" placeholder="Position" style="width: 10%;">\
+                <input type="text" class="form-control col-sm-1" name="corp593" placeholder="phone number" style="width: 10%;">\
+                <input type="text" class="form-control col-sm-1" name="corp594" placeholder="wechat / other" style="width: 28%;">\
+                <input type="text" class="form-control col-sm-1" name="corp595" placeholder="email" style="width: 22%;">\
+              </div>';
+        $('label[name="add_contact"]').after(txt);
+        $('label[name="add_contact"]').val($('label[name="add_contact"]').parent('div').attr('id') + '( Name | Position | phone number | wechat | email )');
+
+        
+        
+        console.log($('label[name="add_contact"]').text());
+        console.log($(this).text());
+      });
       //改变窗口大小后，自动刷新，如想清楚cache则需要location.reload(true);，这是配合上面的动态CSS使用的
       //$(document).ready(function () 所以页面都生效
       $(window).bind('resize', function() {

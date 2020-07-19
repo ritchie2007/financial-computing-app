@@ -1,6 +1,50 @@
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
+{% block content %}
+    {% block centerfield %}
+    <div class="wrapper"> 
+        <div id="caption1" class="row">
+            <div class="col-md-10 col-md-offset-1">Let's help you with your finance.</div>
+        </div>
+        <br/><br/><br/>
+        <div id="discription" >We're always together with you, help you analyze, design, invest your finance and property.
+        <br/><br/><br/><br/><br/><br/>
+            <a href="#" target="_blank">To know us in detail</a>
+        </div>
+        <br/><br/>
+    </div>
+        <!-- <div id="flowfield">
+            <marquee behavior="" direction="up" onmouseover="javascript:this.stop()" onmouseout="javascript:this.start()">
+                <img type="scroll_img" src="{{url_for('static', filename='images/accountant.jpg')}}" alt="">
+                <p>This is scrolling text.</p>
+                <img type="scroll_img" src="{{url_for('static', filename='images/Accounting2.jpg')}}" alt="">
+            </marquee>
+        </div> -->
+    {% endblock centerfield %}
+
+    <div class="container-fluid">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{message}}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {% block footer %}
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted">Hong Xing Accounting Inc. &copy Copyright 2020.01</span>
+            </div>
+        </footer>
+    {% endblock footer %}
+
+{% endblock content %}
+
 {% block app_content %}
     <!-- <h1>Hi, {{ current_user.username }}!</h1> -->
     

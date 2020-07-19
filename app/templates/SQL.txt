@@ -44,3 +44,20 @@ Create table tbl_Shareholders(
 shareholder_id integer primary key, corp_no varchar(20), corp_share_no integer,
 shares varchar(80), shares_percent varchar(10), first_name varchar(100), last_name varchar(100),
 sin varchar(20), address varchar(150), phone varchar(20), email varchar(100))
+
+create table tbl_Individual(
+indiv_id integer primary key, sin integer, prefix varchar(10), last_name varchar(80), first_name varchar(80), middle_name varchar(80), other_name varchar(80),
+phone1 varchar(15), phone2 varchar(15), address1 varchar(150), address2 varchar(150), mail_address varchar(150), wechat varchar(150),
+cra_sole_proprietor varchar(100), cra_hst_report  varchar(100), cra_payroll varchar(100), cra_withhold_tax  varchar(100),
+cra_wsib varchar(50), cra_other varchar(100), 
+oversea_asset_t1135 varchar(200), oversea_corp_t1134 varchar(200),
+tslip varchar(50), tax_personal_info varchar(200), specific_info varchar(200), engage_account varchar(200), engage_leading varchar(200),
+note varchar(200), 
+contact_corp1 integer, contact_corp2 integer, contact_corp3 integer, 
+director_corp1 integer, director_corp2 integer,director_corp3 integer,
+sharehold_corp1 integer, sharehold_corp2 integer,sharehold_corp3 integer,
+spouse1 integer, spouse2 integer,
+parent10 integer, parent11 integer,parent20 integer,parent21 integer,
+child01 integer, child02 integer, child03 integer, child04 integer
+)
+

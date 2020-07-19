@@ -14,7 +14,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
     {{super()}} 
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
-    <!-- <link rel="shortcut icon" href="{{url_for('static', filename='images/favicon.ico')}}"> fix error favicon.ico 404 -->
+    <link rel="shortcut icon" href="{{url_for('static', filename='images/favicon.ico')}}"> <!--fix error favicon.ico 404 -->
 {% endblock %}
 
 {% block title %}
@@ -26,23 +26,30 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
 {% endblock title %}
 
 {% block navbar %}
-    <header >
-        <span class="logo">
-            <a href="{{ url_for('index') }}">HongXing Accounting</a>
-        </span>
-        <span class="search">
-            Search <input type="search-phone-number" id="search-phone-number" placeholder="Please phone number"/>
-            <button type="button" onclick="goUrl()">Submit</button>
-        </span>
-        <span class="welcome">
-            {% if current_user.is_anonymous %}
-                <label for="Welcome">Welcome Guest!</label>
-            {% else %}
-                <label for="Welcome">Welcome {{ current_user.username }}!</label>
-            {% endif %}
-        </span>
+    <header class="container-fluid">
+        <div class="row">
+            <div class="logo col-sm-5">
+                <a href="{{ url_for('index') }}">HongXing Accounting</a>
+            </div>
+            <div class="col-sm-4" style="height: 75px;">
+                <div class="search" style="height: 25px; vertical-align:middle; display:inline-block">
+                    Search <input id="search-phone-number" placeholder="Please phone number"/>
+                    <button type="button" onclick="goUrl()">Submit</button>
+                </div>
+                <div style="height: 100%; vertical-align:middle; display: inline-block;"> 
+                    &nbsp;
+                </div>
+            </div>
+            <div class="welcome col-sm-2">
+                {% if current_user.is_anonymous %}
+                    <label for="Welcome">Welcome Guest!</label>
+                {% else %}
+                    <label for="Welcome">Welcome {{ current_user.username }}!</label>
+                {% endif %}
+            </div>
+        </div>
     </header>
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation" style="background-color: none !important;">
         <div class="container"></div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -61,7 +68,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Corporate<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ url_for('corporate')}}">List</a></li>
-                            <li><a href="#">New</a></li>                 
+                            <li><a href="{{ url_for('corp_add')}}">New</a></li>                 
                             <li><a href="#">Edit</a></li>
                             <li><a href="#">Export</a></li>
                         </ul>
@@ -70,7 +77,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Individual<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">List</a></li>
-                            <li><a href="#">New</a></li>                 
+                            <li><a href="{{ url_for('individual_add') }}">New</a></li>                 
                             <li><a href="#">Edit</a></li>
                             <li><a href="#">Export</a></li>
                         </ul>
@@ -131,29 +138,8 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
         </div>
     </nav>
 {% endblock navbar %}
+
 {% block content %}
-    {% block centerfield %}    
-        <div id="caption1" class="row">
-            <div class="col-md-10 col-md-offset-1">Let's help you with your finance.</div>
-        </div>
-        <br/><br/><br/>
-        <div id="discription" >We're always together with you, help you analyze, design, invest your finance and property.
-        <br/><br/><br/><br/><br/><br/>
-            <a href="#" target="_blank">To know us in detail</a>
-        </div>
-        <br/><br/>
-        <!-- <div id="flowfield">
-            <marquee behavior="" direction="up" onmouseover="javascript:this.stop()" onmouseout="javascript:this.start()">
-                <img type="scroll_img" src="{{url_for('static', filename='images/accountant.jpg')}}" alt="">
-                <p>This is scrolling text.</p>
-                <img type="scroll_img" src="{{url_for('static', filename='images/Accounting2.jpg')}}" alt="">
-            </marquee>
-        </div> -->
-    {% endblock centerfield %}
-
-    {% block app_content %}
-    {% endblock %}
-
 
     <div class="container-fluid">
         {% with messages = get_flashed_messages() %}
@@ -173,7 +159,7 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                 <span class="text-muted">Hong Xing Accounting Inc. &copy Copyright 2020.01</span>
             </div>
         </footer>
-    {% endblock %}
+    {% endblock footer %}
 
 {% endblock content %}
 

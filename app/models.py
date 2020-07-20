@@ -266,9 +266,10 @@ class Corporation(db.Model):
     corp59 = db.Column(db.String(40))
     corp60 = db.Column(db.String(40))
     corp61 = db.Column(db.String(40))
+    corp62 = db.Column(db.Integer)
     timestamp = db.Column(db.String(26))
 
-    def __init__(self,corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,corp59,corp60,corp61,timestamp):
+    def __init__(self,corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,corp59,corp60,corp61,corp62,timestamp):
         self.corp1 = corp1
         self.corp2 = corp2
         self.corp3 = corp3
@@ -330,6 +331,7 @@ class Corporation(db.Model):
         self.corp59 = corp59
         self.corp60 = corp60
         self.corp61 = corp61
+        self.corp62 = corp62
         self.timestamp = timestamp
 
 class Individual(db.Model):

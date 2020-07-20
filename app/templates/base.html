@@ -63,13 +63,13 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
  
-                    <li id="home" class="nav-item"><a href="{{ url_for('index') }}">Home</a></li>
+                    <li id="home" class="nav-item"><a href="{{ url_for('index') }}">Home</a>
+                    </li>
                     <li id="Corporate" class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Corporate<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ url_for('corporate')}}">List</a></li>
                             <li><a href="{{ url_for('corp_add')}}">New</a></li>                 
-                            <li><a href="#">Edit</a></li>
                             <li><a href="#">Export</a></li>
                         </ul>
                     </li>

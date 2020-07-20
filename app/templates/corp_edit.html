@@ -22,7 +22,7 @@
 {% endblock body_attribs %}
 
 {% block content %}
-<div class="tbl-field" style="height: fit-content;">
+<div class="tbl-field">
   <h3>&nbsp Corporation Name: Garrett Winters -- add Name parameter here</h3>
   <div class="row">
     <div class="col-sm-2">
@@ -75,9 +75,9 @@
       }
     </style>
     <div class="col-sm-10">
-      <!-- <div id="corpedit" class="scroll overflow-auto" style="height: 600px; overflow-y: auto;"> -->
-      <div id="item1" class="item">
-
+      <form action="{{url_for('corp_edit')}}" method="POST">
+        <!-- <div id="corpedit" class="scroll overflow-auto" style="height: 600px; overflow-y: auto;"> -->
+        <div id="item1" class="item"> 
           <br/>
           <div class="form-row">
             <div class="form-group col-md-12">
@@ -86,573 +86,580 @@
 
             <div class="form-group col-md-2">
               <label>Bussiness No.</label>
-              <input type="text" class="form-control" name="corp1">
+              <input type="text" class="form-control" name="corp1" value="{{corp.corp1}}">
             </div>
             <div class="form-group col-md-5">
               <label>Corporation Name</label>
-              <input type="text" class="form-control" name="corp2">
+              <input type="text" class="form-control" name="corp2" value="{{corp.corp2}}">
             </div>
             <div class="form-group col-md-4">
               <label >Registration Name</label>
-              <input type="text" class="form-control" name="corp3">
+              <input type="text" class="form-control" name="corp3" value="{{corp.corp3}}">
             </div>
-            <div class="form-group col-md-1">
-              <label >Corp No</label>
-              <input type="text" class="form-control" name="corp12">
-            </div>
-
-            <div class="form-group col-md-4">
-              <label>Master Business Name</label>
-              <input type="text" class="form-control" name="corp4">
-            </div>
-            <div class="form-group col-md-3">
-              <label>Master Busi Licence Period </label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp5" placeholder="yyyy-mm-dd" style="width: 45%;">
-                <input type="text" class="form-control col-sm-1" value=" to " style="width: 10%; border: none; background: transparent;">
-                <input type="text" class="form-control col-sm-1" name="corp6" placeholder="yyyy-mm-dd" style="width: 45%;">
+              <div class="form-group col-md-1">
+                <label >Corp No</label>
+                <input type="text" class="form-control" name="corp12" value="{{corp.corp12}}">
+              </div>
+  
+              <div class="form-group col-md-4">
+                <label>Master Business Name</label>
+                <input type="text" class="form-control" name="corp4" value="{{corp.corp4}}">
+              </div>
+              <div class="form-group col-md-3">
+                <label>Master Busi Licence Period </label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp5" value="{{corp.corp5}}" style="width: 45%;">
+                  <input type="text" class="form-control col-sm-1" value=" to " style="width: 10%; border: none; background: transparent;">
+                  <input type="text" class="form-control col-sm-1" name="corp6" value="{{corp.corp6}}" style="width: 45%;">
+                </div>
+              </div>
+              <div class="form-group col-md-1">
+                <label>Incorp Date</label>
+                <input type="text" class="form-control" name="corp7" value="{{corp.corp7}}">
+              </div>
+              <div class="form-group col-md-1">
+                <label>Incorp Type</label>
+                <select class="browser-default custom-select" name="corp8" value="{{corp.corp8}}" style="width: 100%; height: 32px; border: none; background: #ffffff;">
+                  <option >Federal</option>
+                  <option >Ontario</option>
+                </select>
+              </div>
+              <div class="form-group col-md-2">
+                <label>Anniversary Date</label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp9" value="{{corp.corp9}}" style="width: 42%;">
+                  <input type="text" class="form-control col-sm-1" value=" to " style="width: 16%; border: none; background: transparent;">
+                  <input type="text" class="form-control col-sm-1" name="corp10" value="{{corp.corp10}}" style="width: 42%;">
+                </div>
+              </div>
+              <div class="form-group col-md-1">
+                <label>Corp Key</label>
+                <input type="text" class="form-control" name="corp11" value="{{corp.corp11}}">
+              </div>
+  
+              <div class="form-group col-md-6">
+                <label>Business Address</label>
+                <input type="text" class="form-control" name="corp16" value="{{corp.corp16}}">
+              </div>
+              <div class="form-group col-md-5">
+                <label>Mailing Address</label>
+                <input type="text" class="form-control" name="corp17" value="{{corp.corp17}}">
+              </div>
+              <div class="form-group col-md-1">
+                <label>On corp No</label>
+                <input type="text" class="form-control" name="corp13" value="{{corp.corp13}}">
+              </div>
+  
+              <div class="form-group col-md-3">
+                <label>CRA Contact Person: First name </label>
+                <input type="text" class="form-control" name="corp18" value="{{corp.corp18}}">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Last name</label>
+                <input type="text" class="form-control" name="corp19" value="{{corp.corp19}}">
+              </div>
+              <div class="form-group col-md-2">
+                <label>CRA Contact Phone</label>
+                <input type="text" class="form-control" name="corp20" value="{{corp.corp20}}">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Office Fax</label>
+                <input type="text" class="form-control" name="corp21" value="{{corp.corp21}}">
+              </div>
+              <div class="form-group col-md-3">
+                <label>Other Provincial Number</label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp14" value="{{corp.corp14}}" style="width: 50%;">
+                  <input type="text" class="form-control col-sm-1" name="corp15" value="{{corp.corp15}}" style="width: 50%;">
+                </div>
+              </div>
+  
+              <div class="form-group col-md-3">
+                <label>Email</label>
+                <input type="text" class="form-control" name="corp22" value="{{corp.corp22}}">
+              </div>
+              <div class="form-group col-md-5">
+                <label>Website</label>
+                <input type="text" class="form-control" name="corp23" value="{{corp.corp23}}">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Wechat/Twitter/LinkedIn/Facebook</label>
+                <input type="text" class="form-control" name="corp24" value="{{corp.corp24}}">
               </div>
             </div>
-            <div class="form-group col-md-1">
-              <label>Incorp Date</label>
-              <input type="text" class="form-control" name="corp7" placeholder="yyyy-mm-dd">
-            </div>
-            <div class="form-group col-md-1">
-              <label>Incorp Type</label>
-              <select class="browser-default custom-select" name="corp8" style="width: 100%; height: 32px; border: none; background: #ffffff;">
-                <option >Federal</option>
-                <option >Ontario</option>
-            </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label>Anniversary Date</label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp9" placeholder="mm/dd" style="width: 42%;">
-                <input type="text" class="form-control col-sm-1" value=" to " style="width: 16%; border: none; background: transparent;">
-                <input type="text" class="form-control col-sm-1" name="corp10" placeholder="mm/dd" style="width: 42%;">
+  
+        </div>
+          <!-- CRA Account -->
+        <div id="item2" class="item">
+  
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">CRA Account</h4></label>
+              </div>
+            <br/>
+              <div class="form-group col-md-2">
+                <label>Corp Tax Year End</label>
+                <input type="text" class="form-control" name="corp25" value="{{corp.corp25}}">
+              </div>
+              <div class="form-group col-md-5">
+                <label>Account</label>
+                <input type="text" class="form-control" name="corp29" value="{{corp.corp29}}">
+              </div>
+              <div class="form-group col-md-1">
+                <label>HST Report</label>
+                <input type="text" class="form-control" name="corp26" value="{{corp.corp26}}">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Method</label>
+                <select class="browser-default custom-select"  name="corp27" value="{{corp.corp27}}" style="width: 100%; height: 32px; border: none; background: #ffffff;">
+                  <option >Normal</option>
+                  <option >Quick</option>
+                </select>
+              </div>
+              <div class="form-group col-md-2">
+                <label>Account No</label>
+                <input type="text" class="form-control" name="corp28" value="{{corp.corp28}}">
+              </div>
+  
+              <div class="form-group col-md-2">
+                <label>Payroll Acco No.</label>
+                <input type="text" class="form-control" name="corp30" value="{{corp.corp30}}">
+              </div>
+              <div class="form-group col-md-5">
+                <label>Payroll Account and T4</label>
+                <input type="text" class="form-control" name="corp31" value="{{corp.corp31}}">
+              </div>
+              <div class="form-group col-md-5">
+                <label>Subcontractor and T4A</label>
+                <input type="text" class="form-control" name="corp32" value="{{corp.corp32}}">
+              </div>
+  
+              <div class="form-group col-md-5">
+                <label>Dividend and T5 </label>
+                <input type="text" class="form-control" name="corp33" value="{{corp.corp33}}">
+              </div>
+              <div class="form-group col-md-5">
+                <label>Withholding Tax Account </label>
+                <input type="text" class="form-control" name="corp35" value="{{corp.corp35}}">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Account No.</label>
+                <input type="text" class="form-control" name="corp34" value="{{corp.corp34}}">
+              </div>
+  
+              <div class="form-group col-md-5">
+                <label>CRA other account</label>
+                <input type="text" class="form-control" name="corp37" value="{{corp.corp37}}">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Account No.</label>
+                <input type="text" class="form-control" name="corp36" value="{{corp.corp36}}">
               </div>
             </div>
-            <div class="form-group col-md-1">
-              <label>Corp Key</label>
-              <input type="text" class="form-control" name="corp11">
-            </div>
-
-            <div class="form-group col-md-6">
-              <label>Business Address</label>
-              <input type="text" class="form-control" name="corp16">
-            </div>
-            <div class="form-group col-md-5">
-              <label>Mailing Address</label>
-              <input type="text" class="form-control" name="corp17">
-            </div>
-            <div class="form-group col-md-1">
-              <label>On corp No</label>
-              <input type="text" class="form-control" name="corp13">
-            </div>
-
-            <div class="form-group col-md-3">
-              <label">CRA Contact Person: First name </label>
-              <input type="text" class="form-control" name="corp18">
-            </div>
-            <div class="form-group col-md-2">
-              <label>Last name</label>
-              <input type="text" class="form-control" name="corp19">
-            </div>
-            <div class="form-group col-md-2">
-              <label>CRA Contact Phone</label>
-              <input type="text" class="form-control" name="corp20">
-            </div>
-            <div class="form-group col-md-2">
-              <label>Office Fax</label>
-              <input type="text" class="form-control" name="corp21">
-            </div>
-            <div class="form-group col-md-3">
-              <label>Other Provincial Number</label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp14" placeholder="Number 01" style="width: 50%;">
-                <input type="text" class="form-control col-sm-1" name="corp15" placeholder="Number 02" style="width: 50%;">
+  
+        </div>
+        <!-- WSIB Account -->
+        <div id="item3" class="item">
+  
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">WSIB Account</h4></label>
+              </div>
+            <br/>
+              <div class="form-group col-md-2">
+                <label>WSIB Account Number</label>
+                <input type="text" class="form-control" name="corp38" value="{{corp.corp38}}">
+              </div>
+              <div class="form-group col-md-5">
+                <label>WSIB Account</label>
+                <input type="text" class="form-control" name="corp39" value="{{corp.corp39}}">
               </div>
             </div>
-
-            <div class="form-group col-md-3">
-              <label>Email</label>
-              <input type="text" class="form-control" name="corp22">
+  
+        </div>
+        <!-- EHT Account -->
+        <div id="item4" class="item">
+  
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">EHT Account</h4></label>
+              </div>
+            <br/>
+              <div class="form-group col-md-2">
+                <label>EHT Account Number</label>
+                <input type="text" class="form-control" name="corp40" value="{{corp.corp40}}">
+              </div>
+              <div class="form-group col-md-5">
+                <label>EHT Account</label>
+                <input type="text" class="form-control" name="corp41" value="{{corp.corp41}}">
+              </div>
             </div>
-            <div class="form-group col-md-5">
-              <label>Website</label>
-              <input type="text" class="form-control" name="corp23">
+  
+        </div>
+        <!-- Other Account -->
+        <div id="item5" class="item">
+  
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">Other Account</h4></label>
+              </div>
+            <br/>
+              <div class="form-group col-md-2">
+                <label>Other Account Number</label>
+                <input type="text" class="form-control" name="corp42" value="{{corp.corp42}}">
+              </div>
+              <div class="form-group col-md-5">
+                <label>Other Account</label>
+                <input type="text" class="form-control" name="corp43" value="{{corp.corp43}}">
+              </div>
             </div>
-            <div class="form-group col-md-4">
-              <label>Wechat/Twitter/LinkedIn/Facebook</label>
-              <input type="text" class="form-control" name="corp24">
+  
+        </div>
+        <!-- Corporate Structure -->
+        <div id="item6" class="item">
+  
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">Corporate Structure</h4></label>
+              </div>
+            <br/>
+              <div class="form-group col-md-6">
+                <label>Holding Corporation </label>
+                <input type="text" class="form-control" name="corp44" value="{{corp.corp44}}">
+              </div>
+              <div class="form-group col-md-6">
+                <label>Ovesea Investment Corporation</label>
+                <input type="text" class="form-control" name="corp45" value="{{corp.corp45}}">
+              </div>
             </div>
-          </div>
-
-      </div>
-        <!-- CRA Account -->
-      <div id="item2" class="item">
-
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">CRA Account</h4></label>
+  
+        </div>
+        <!-- Corporate Operation  -->
+        <div id="item7" class="item">
+  
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">Corporate Operation</h4></label>
+              </div>
+            <br/>
+              <div class="form-group col-md-2">
+                <label>Corporation Indursty</label>
+                <input type="text" class="form-control" name="corp46" value="{{corp.corp46}}">
+              </div>
+              <div class="form-group col-md-10">
+                <label>Corporation Information </label>
+                <input type="text" class="form-control" name="corp47" value="{{corp.corp47}}">
+              </div>
+              <div class="form-group col-md-12">
+                <label>Specific Information </label>
+                <input type="text" class="form-control" name="corp48" value="{{corp.corp48}}">
+              </div>            
             </div>
-          <br/>
-            <div class="form-group col-md-2">
-              <label>Corp Tax Year End</label>
-              <input type="text" class="form-control" name="corp25">
+  
+        </div>
+        <!-- Bank Information -->
+        <div id="item8" class="item">
+  
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">Bank Information</h4></label>
+              </div>
+            <br/>
+              <div class="form-group col-md-4">
+                <label>Bank Account 1</label>
+                <input type="text" class="form-control" name="corp49" value="{{corp.corp49}}">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Bank Account 2</label>
+                <input type="text" class="form-control" name="corp50" value="{{corp.corp50}}">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Bank Account 3</label>
+                <input type="text" class="form-control" name="corp51" value="{{corp.corp51}}">
+              </div>
             </div>
-            <div class="form-group col-md-5">
-              <label>Account</label>
-              <input type="text" class="form-control" name="corp29">
+  
+        </div>      
+        <!-- Software -->
+        <div id="item9" class="item">
+  
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">Software</h4></label>
+              </div>
+            <br/>
+              <div class="form-group col-md-4">
+                <label>Software (QB/Sagel/Lawyer)</label>
+                <input type="text" class="form-control" name="corp52" value="{{corp.corp55}}">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Password</label>
+                <input type="text" class="form-control" name="corp53" value="{{corp.corp53}}">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Payroll Software</label>
+                <input type="text" class="form-control" name="corp54" value="{{corp.corp54}}">
+              </div>
+              <div class="form-group col-md-2">
+                <label>Password</label>
+                <input type="text" class="form-control" name="corp55" value="{{corp.corp55}}">
+              </div>
             </div>
-            <div class="form-group col-md-1">
-              <label>HST Report</label>
-              <input type="text" class="form-control" name="corp26">
+  
+        </div>      
+        <!-- Engagement -->
+        <div id="item10" class="item">
+  
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">Engagement</h4></label>
+              </div>
+            <br/>
+              <div class="form-group col-md-12">
+                <label>Account Service</label>
+                <input type="text" class="form-control" name="corp56" value="{{corp.corp56}}">
+              </div>
+              <div class="form-group col-md-4">
+                <label>Account Service Type</label>
+                <input type="text" class="form-control" name="corp57" value="{{corp.corp57}}">
+              </div>
+              <div class="form-group col-md-8">
+                <label>Leading</label>
+                <input type="text" class="form-control" name="corp58" value="{{corp.corp58}}">
+              </div>
             </div>
-            <div class="form-group col-md-2">
-              <label>Method</label>
-              <select class="browser-default custom-select"  name="corp27" style="width: 100%; height: 32px; border: none; background: #ffffff;">
-                <option >Normal</option>
-                <option >Quick</option>
-              </select>
-            </div>
-            <div class="form-group col-md-2">
-              <label>Account No</label>
-              <input type="text" class="form-control" name="corp28">
-            </div>
-
-            <div class="form-group col-md-2">
-              <label>Payroll Acco No.</label>
-              <input type="text" class="form-control" name="corp30">
-            </div>
-            <div class="form-group col-md-5">
-              <label>Payroll Account and T4</label>
-              <input type="text" class="form-control" name="corp31">
-            </div>
-            <div class="form-group col-md-5">
-              <label>Subcontractor and T4A</label>
-              <input type="text" class="form-control" name="corp32">
-            </div>
-
-            <div class="form-group col-md-5">
-              <label>Dividend and T5 </label>
-              <input type="text" class="form-control" name="corp33">
-            </div>
-            <div class="form-group col-md-5">
-              <label>Withholding Tax Account </label>
-              <input type="text" class="form-control" name="corp35">
-            </div>
-            <div class="form-group col-md-2">
-              <label>Account No.</label>
-              <input type="text" class="form-control" name="corp34">
-            </div>
-
-            <div class="form-group col-md-5">
-              <label>CRA other account</label>
-              <input type="text" class="form-control" name="corp37">
-            </div>
-            <div class="form-group col-md-2">
-              <label>Account No.</label>
-              <input type="text" class="form-control" name="corp36">
-            </div>
-          </div>
-
-      </div>
-      <!-- WSIB Account -->
-      <div id="item3" class="item">
-
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">WSIB Account</h4></label>
-            </div>
-          <br/>
-            <div class="form-group col-md-2">
-              <label>WSIB Account Number</label>
-              <input type="text" class="form-control" name="corp38">
-            </div>
-            <div class="form-group col-md-5">
-              <label>WSIB Account</label>
-              <input type="text" class="form-control" name="corp39">
-            </div>
-          </div>
-
-      </div>
-      <!-- EHT Account -->
-      <div id="item4" class="item">
-
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">EHT Account</h4></label>
-            </div>
-          <br/>
-            <div class="form-group col-md-2">
-              <label>EHT Account Number</label>
-              <input type="text" class="form-control" name="corp40">
-            </div>
-            <div class="form-group col-md-5">
-              <label>EHT Account</label>
-              <input type="text" class="form-control" name="corp41">
-            </div>
-          </div>
-
-      </div>
-      <!-- Other Account -->
-      <div id="item5" class="item">
-
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">Other Account</h4></label>
-            </div>
-          <br/>
-            <div class="form-group col-md-2">
-              <label>Other Account Number</label>
-              <input type="text" class="form-control" name="corp42">
-            </div>
-            <div class="form-group col-md-5">
-              <label>Other Account</label>
-              <input type="text" class="form-control" name="corp43">
-            </div>
-          </div>
-
-      </div>
-      <!-- Corporate Structure -->
-      <div id="item6" class="item">
-
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">Corporate Structure</h4></label>
-            </div>
-          <br/>
-            <div class="form-group col-md-6">
-              <label>Holding Corporation </label>
-              <input type="text" class="form-control" name="corp44">
-            </div>
-            <div class="form-group col-md-6">
-              <label>Ovesea Investment Corporation</label>
-              <input type="text" class="form-control" name="corp45">
-            </div>
-          </div>
-
-      </div>
-      <!-- Corporate Operation  -->
-      <div id="item7" class="item">
-
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">Corporate Operation</h4></label>
-            </div>
-          <br/>
-            <div class="form-group col-md-2">
-              <label>Corporation Indursty</label>
-              <input type="text" class="form-control" name="corp46">
-            </div>
-            <div class="form-group col-md-10">
-              <label>Corporation Information </label>
-              <input type="text" class="form-control" name="corp47">
-            </div>
-            <div class="form-group col-md-12">
-              <label>Specific Information </label>
-              <input type="text" class="form-control" name="corp48">
-            </div>            
-          </div>
-
-      </div>
-      <!-- Bank Information -->
-      <div id="item8" class="item">
-
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">Bank Information</h4></label>
-            </div>
-          <br/>
-            <div class="form-group col-md-4">
-              <label>Bank Account 1</label>
-              <input type="text" class="form-control" name="corp49">
-            </div>
-            <div class="form-group col-md-4">
-              <label>Bank Account 2</label>
-              <input type="text" class="form-control" name="corp50">
-            </div>
-            <div class="form-group col-md-4">
-              <label>Bank Account 3</label>
-              <input type="text" class="form-control" name="corp51">
-            </div>
-          </div>
-
-      </div>      
-      <!-- Software -->
-      <div id="item9" class="item">
-
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">Software</h4></label>
-            </div>
-          <br/>
-            <div class="form-group col-md-4">
-              <label>Software (QB/Sagel/Lawyer)</label>
-              <input type="text" class="form-control" name="corp52">
-            </div>
-            <div class="form-group col-md-2">
-              <label>Password</label>
-              <input type="text" class="form-control" name="corp53">
-            </div>
-            <div class="form-group col-md-4">
-              <label>Payroll Software</label>
-              <input type="text" class="form-control" name="corp54">
-            </div>
-            <div class="form-group col-md-2">
-              <label>Password</label>
-              <input type="text" class="form-control" name="corp55">
-            </div>
-          </div>
-
-      </div>      
-      <!-- Engagement -->
-      <div id="item10" class="item">
-
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">Engagement</h4></label>
-            </div>
-          <br/>
-            <div class="form-group col-md-12">
-              <label>Account Service</label>
-              <input type="text" class="form-control" name="corp56">
-            </div>
-            <div class="form-group col-md-4">
-              <label>Account Service Type</label>
-              <input type="text" class="form-control" name="corp57">
-            </div>
-            <div class="form-group col-md-8">
-              <label>Leading</label>
-              <input type="text" class="form-control" name="corp58">
-            </div>
-          </div>
-
-      </div>
-      <!-- CONTACTS Infomation -->
-      <div id="item11" class="item">
-
+  
+        </div>
+        <!-- CONTACTS Infomation -->
+        <div id="item11" class="item">
+  
           <br/>
           <div class="form-row">
             <div class="form-group col-md-12">
               <label><h4 style="color: #337ab7;">CONTACTS</h4></label>
+              <input type="text" name="corp-59" value='  [serial no: ]' style="height: 40%; font-size: 9px; border: none; background-color: #eaece9;">
             </div>
           <br/>
             <div class="form-group col-md-12">
               <label>1st Contact ( Position | first name | last name | phone number | wechat | email )<br></label>
               <div>
-                <input type="text" class="form-control col-sm-1" name="corp59" placeholder="Position" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp60" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp61" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp62" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp63" placeholder="wechat / other" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp64" placeholder="email" style="width: 22%;">  
+                <input type="text" class="form-control col-sm-1" name="corp59" value="{{corp.corp59}}" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp60" value="{{corp.corp60}}" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp61" value="{{corp.corp61}}" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp62" value="{{corp.corp62}}" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp63" value="{{corp.corp63}}" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp64" value="{{corp.corp64}}" style="width: 22%;">  
               </div>
             </div>
             <div class="form-group col-md-12">
               <label>2nd Contact<br></label>
               <div>
-                <input type="text" class="form-control col-sm-1" name="corp65" placeholder="Position" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp66" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp67" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp68" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp69" placeholder="wechat / other" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp70" placeholder="email" style="width: 22%;">  
+                <input type="text" class="form-control col-sm-1" name="corp65" value="{{corp.corp65}}" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp66" value="{{corp.corp66}}" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp67" value="{{corp.corp67}}" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp68" value="{{corp.corp68}}" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp69" value="{{corp.corp69}}" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp70" value="{{corp.corp70}}" style="width: 22%;">  
               </div>
             </div>
             <div class="form-group col-md-12">
               <label>3rd Contact<br></label>
               <div>
-                <input type="text" class="form-control col-sm-1" name="corp71" placeholder="Position" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp72" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp73" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp74" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp75" placeholder="wechat / other" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp76" placeholder="email" style="width: 22%;">  
+                <input type="text" class="form-control col-sm-1" name="corp71" value="{{corp.corp71}}" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp72" value="{{corp.corp72}}" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp73" value="{{corp.corp73}}" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp74" value="{{corp.corp74}}" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp75" value="{{corp.corp75}}" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp76" value="{{corp.corp76}}" style="width: 22%;">  
               </div>
             </div>
             <div class="form-group col-md-12">
               <label>4th Contact<br></label>
               <div>
-                <input type="text" class="form-control col-sm-1" name="corp77" placeholder="Position" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp78" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp79" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp80" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp81" placeholder="wechat / other" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp82" placeholder="email" style="width: 22%;">  
+                <input type="text" class="form-control col-sm-1" name="corp77" value="{{corp.corp77}}" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp78" value="{{corp.corp78}}" style="width: 16%;">
+                <input type="text" class="form-control col-sm-1" name="corp79" value="{{corp.corp79}}" style="width: 14%;">
+                <input type="text" class="form-control col-sm-1" name="corp80" value="{{corp.corp80}}" style="width: 10%;">
+                <input type="text" class="form-control col-sm-1" name="corp81" value="{{corp.corp81}}" style="width: 28%;">
+                <input type="text" class="form-control col-sm-1" name="corp82" value="{{corp.corp82}}" style="width: 22%;">  
               </div>
             </div>
           </div>
-
+  
       </div>
-      <!-- DIRECTOR Infomation -->
-      <div id="item12" class="item">
-
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">DIRECTORS</h4></label>
-            </div>
-          <br/>
-            <div class="form-group col-md-12">
-              <label>1st Director  ( first name | last name | SIN number | address | phone number | email )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp83" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp84" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp85" placeholder="SIN number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp86" placeholder="address" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp87" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp88" placeholder="email" style="width: 22%;">  
+        <!-- DIRECTOR Infomation -->
+        <div id="item12" class="item">
+  
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">DIRECTORS</h4></label>
+              </div>
+            <br/>
+              <div class="form-group col-md-12">
+                <label>1st Director  ( first name | last name | SIN number | address | phone number | email )<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp83" value="{{corp.corp83}}" style="width: 16%;">
+                  <input type="text" class="form-control col-sm-1" name="corp84" value="{{corp.corp84}}" style="width: 14%;">
+                  <input type="text" class="form-control col-sm-1" name="corp85" value="{{corp.corp85}}" style="width: 10%;">
+                  <input type="text" class="form-control col-sm-1" name="corp86" value="{{corp.corp86}}" style="width: 28%;">
+                  <input type="text" class="form-control col-sm-1" name="corp87" value="{{corp.corp87}}" style="width: 10%;">
+                  <input type="text" class="form-control col-sm-1" name="corp88" value="{{corp.corp88}}" style="width: 22%;">  
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>2nd Director<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp89" value="{{corp.corp89}}" style="width: 16%;">
+                  <input type="text" class="form-control col-sm-1" name="corp90" value="{{corp.corp90}}" style="width: 14%;">
+                  <input type="text" class="form-control col-sm-1" name="corp91" value="{{corp.corp91}}" style="width: 10%;">
+                  <input type="text" class="form-control col-sm-1" name="corp92" value="{{corp.corp92}}" style="width: 28%;">
+                  <input type="text" class="form-control col-sm-1" name="corp93" value="{{corp.corp93}}" style="width: 10%;">
+                  <input type="text" class="form-control col-sm-1" name="corp94" value="{{corp.corp94}}" style="width: 22%;">  
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>3rd Director<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp95" value="{{corp.corp95}}" style="width: 16%;">
+                  <input type="text" class="form-control col-sm-1" name="corp96" value="{{corp.corp96}}" style="width: 14%;">
+                  <input type="text" class="form-control col-sm-1" name="corp97" value="{{corp.corp97}}" style="width: 10%;">
+                  <input type="text" class="form-control col-sm-1" name="corp98" value="{{corp.corp98}}" style="width: 28%;">
+                  <input type="text" class="form-control col-sm-1" name="corp99" value="{{corp.corp99}}" style="width: 10%;">
+                  <input type="text" class="form-control col-sm-1" name="corp100" value="{{corp.corp100}}" style="width: 22%;">  
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>4th Director<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp101" value="{{corp.corp101}}" style="width: 16%;">
+                  <input type="text" class="form-control col-sm-1" name="corp102" value="{{corp.corp102}}" style="width: 14%;">
+                  <input type="text" class="form-control col-sm-1" name="corp103" value="{{corp.corp103}}" style="width: 10%;">
+                  <input type="text" class="form-control col-sm-1" name="corp104" value="{{corp.corp104}}" style="width: 28%;">
+                  <input type="text" class="form-control col-sm-1" name="corp105" value="{{corp.corp105}}" style="width: 10%;">
+                  <input type="text" class="form-control col-sm-1" name="corp106" value="{{corp.corp106}}" style="width: 22%;">  
+                </div>
               </div>
             </div>
-            <div class="form-group col-md-12">
-              <label>2nd Director<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp89" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp90" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp91" placeholder="SIN number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp92" placeholder="address" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp93" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp94" placeholder="email" style="width: 22%;">  
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>3rd Director<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp95" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp96" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp97" placeholder="SIN number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp98" placeholder="address" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp99" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp100" placeholder="email" style="width: 22%;">  
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>4th Director<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp101" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp102" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp103" placeholder="SIN number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp104" placeholder="address" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp105" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp106" placeholder="email" style="width: 22%;">  
-              </div>
-            </div>
-          </div>
-
-      </div>
-      <!-- SHAREHOLDER INFORMATION -->
-      <div id="item13" class="item">
-
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">SHAREHOLDERS</h4></label>
-            </div>
-          <br/>
-            <div class="form-group col-md-12">
-              <label>1st ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp107" placeholder="share class and shares" style="width: 35%;">
-                <input type="text" class="form-control col-sm-1" name="corp108" placeholder="share (%)" style="width: 12%;">
-                <input type="text" class="form-control col-sm-1" name="corp109" placeholder="first name" style="width: 22%;">
-                <input type="text" class="form-control col-sm-1" name="corp110" placeholder="last name" style="width: 18%;">
-                <input type="text" class="form-control col-sm-1" name="corp111" placeholder="SIN number" style="width: 13%;">
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>( address | phone number | email )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp112" placeholder="address" style="width: 50%;">
-                <input type="text" class="form-control col-sm-1" name="corp113" placeholder="phone number" style="width: 15%;">
-                <input type="text" class="form-control col-sm-1" name="corp114" placeholder="email" style="width: 35%;">  
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>2nd ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp115" placeholder="share class and shares" style="width: 35%;">
-                <input type="text" class="form-control col-sm-1" name="corp116" placeholder="share (%)" style="width: 12%;">
-                <input type="text" class="form-control col-sm-1" name="corp117" placeholder="first name" style="width: 22%;">
-                <input type="text" class="form-control col-sm-1" name="corp118" placeholder="last name" style="width: 18%;">
-                <input type="text" class="form-control col-sm-1" name="corp119" placeholder="SIN number" style="width: 13%;">
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>( address | phone number | email )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp120" placeholder="address" style="width: 50%;">
-                <input type="text" class="form-control col-sm-1" name="corp121" placeholder="phone number" style="width: 15%;">
-                <input type="text" class="form-control col-sm-1" name="corp122" placeholder="email" style="width: 35%;">  
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>3rd ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp123" placeholder="share class and shares" style="width: 35%;">
-                <input type="text" class="form-control col-sm-1" name="corp124" placeholder="share (%)" style="width: 12%;">
-                <input type="text" class="form-control col-sm-1" name="corp125" placeholder="first name" style="width: 22%;">
-                <input type="text" class="form-control col-sm-1" name="corp126" placeholder="last name" style="width: 18%;">
-                <input type="text" class="form-control col-sm-1" name="corp127" placeholder="SIN number" style="width: 13%;">
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>( address | phone number | email )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp128" placeholder="address" style="width: 50%;">
-                <input type="text" class="form-control col-sm-1" name="corp129" placeholder="phone number" style="width: 15%;">
-                <input type="text" class="form-control col-sm-1" name="corp130" placeholder="email" style="width: 35%;">  
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>4th ShareHolder  ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp131" placeholder="share class and shares" style="width: 35%;">
-                <input type="text" class="form-control col-sm-1" name="corp132" placeholder="share (%)" style="width: 12%;">
-                <input type="text" class="form-control col-sm-1" name="corp133" placeholder="first name" style="width: 22%;">
-                <input type="text" class="form-control col-sm-1" name="corp134" placeholder="last name" style="width: 18%;">
-                <input type="text" class="form-control col-sm-1" name="corp135" placeholder="SIN number" style="width: 13%;">
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>( address | phone number | email )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp136" placeholder="address" style="width: 50%;">
-                <input type="text" class="form-control col-sm-1" name="corp137" placeholder="phone number" style="width: 15%;">
-                <input type="text" class="form-control col-sm-1" name="corp138" placeholder="email" style="width: 35%;">  
-              </div>
-            </div>
-          </div>
-
-      </div>
-      <!-- Task Information -->
-      <div id="item14" class="item">
-          <br/>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label><h4 style="color: #337ab7;">Task Information</h4></label>
-            </div>
-          </div>
-      </div>
-      <!-- Recent update -->
-      <div id="item15" class="item">
-        <br/>
-        <div class="form-row">
-          <div class="form-group col-md-12">
-            <label><h4 style="color: #337ab7;">Recent Updates</h4></label>
-          </div>
+  
         </div>
-      </div>
+        <!-- SHAREHOLDER INFORMATION -->
+        <div id="item13" class="item">
+  
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">SHAREHOLDERS</h4></label>
+              </div>
+            <br/>
+              <div class="form-group col-md-12">
+                <label>1st ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp107" value="{{corp.corp107}}" style="width: 35%;">
+                  <input type="text" class="form-control col-sm-1" name="corp108" value="{{corp.corp108}}" style="width: 12%;">
+                  <input type="text" class="form-control col-sm-1" name="corp109" value="{{corp.corp109}}" style="width: 22%;">
+                  <input type="text" class="form-control col-sm-1" name="corp110" value="{{corp.corp110}}" style="width: 18%;">
+                  <input type="text" class="form-control col-sm-1" name="corp111" value="{{corp.corp111}}" style="width: 13%;">
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>1st ShareHolder ( address | phone number | email )<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp112" value="{{corp.corp112}}" style="width: 50%;">
+                  <input type="text" class="form-control col-sm-1" name="corp113" value="{{corp.corp113}}" style="width: 15%;">
+                  <input type="text" class="form-control col-sm-1" name="corp114" value="{{corp.corp114}}" style="width: 35%;">  
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>2nd ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp115" value="{{corp.corp115}}" style="width: 35%;">
+                  <input type="text" class="form-control col-sm-1" name="corp116" value="{{corp.corp116}}" style="width: 12%;">
+                  <input type="text" class="form-control col-sm-1" name="corp117" value="{{corp.corp117}}" style="width: 22%;">
+                  <input type="text" class="form-control col-sm-1" name="corp118" value="{{corp.corp118}}" style="width: 18%;">
+                  <input type="text" class="form-control col-sm-1" name="corp119" value="{{corp.corp119}}" style="width: 13%;">
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>2nd ShareHolder ( address | phone number | email )<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp120" value="{{corp.corp120}}" style="width: 50%;">
+                  <input type="text" class="form-control col-sm-1" name="corp121" value="{{corp.corp121}}" style="width: 15%;">
+                  <input type="text" class="form-control col-sm-1" name="corp122" value="{{corp.corp122}}" style="width: 35%;">  
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>3rd ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp123" value="{{corp.corp123}}" style="width: 35%;">
+                  <input type="text" class="form-control col-sm-1" name="corp124" value="{{corp.corp124}}" style="width: 12%;">
+                  <input type="text" class="form-control col-sm-1" name="corp125" value="{{corp.corp125}}" style="width: 22%;">
+                  <input type="text" class="form-control col-sm-1" name="corp126" value="{{corp.corp126}}" style="width: 18%;">
+                  <input type="text" class="form-control col-sm-1" name="corp127" value="{{corp.corp127}}" style="width: 13%;">
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>3rd ShareHolder ( address | phone number | email )<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp128" value="{{corp.corp128}}" style="width: 50%;">
+                  <input type="text" class="form-control col-sm-1" name="corp129" value="{{corp.corp129}}" style="width: 15%;">
+                  <input type="text" class="form-control col-sm-1" name="corp130" value="{{corp.corp130}}" style="width: 35%;">  
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>4th ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp131" value="{{corp.corp131}}" style="width: 35%;">
+                  <input type="text" class="form-control col-sm-1" name="corp132" value="{{corp.corp132}}" style="width: 12%;">
+                  <input type="text" class="form-control col-sm-1" name="corp133" value="{{corp.corp133}}" style="width: 22%;">
+                  <input type="text" class="form-control col-sm-1" name="corp134" value="{{corp.corp134}}" style="width: 18%;">
+                  <input type="text" class="form-control col-sm-1" name="corp135" value="{{corp.corp135}}" style="width: 13%;">
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label>4th ShareHolder ( address | phone number | email )<br></label>
+                <div>
+                  <input type="text" class="form-control col-sm-1" name="corp136" value="{{corp.corp136}}" style="width: 50%;">
+                  <input type="text" class="form-control col-sm-1" name="corp137" value="{{corp.corp137}}" style="width: 15%;">
+                  <input type="text" class="form-control col-sm-1" name="corp138" value="{{corp.corp138}}" style="width: 35%;">  
+                </div>
+              </div>
+            </div>
+  
+        </div>
+        <!-- Task Information -->
+        <div id="item14" class="item">
+            <br/>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label><h4 style="color: #337ab7;">Task Information</h4></label>
+              </div>
+            </div>
+        </div>
+        <!-- Recent update -->
+        <div id="item15" class="item">
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-9">
+              <label><h4 style="color: #337ab7;">Recent Updates</h4></label>
+            </div>
+            <div class="form-group col-md-2">
+              <a href="#"><button type="submit" class="btn btn-success">Submit</button></a>
+              <a href="{{ url_for('corporate')}}" type="cancel" class="btn btn-danger" >Cancel</a>
+            </div>
+          </div>
+  
+        </div>
+      </form> 
     </div>
   </div>
 </div>

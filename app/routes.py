@@ -140,8 +140,12 @@ def edit_profile():
 
 @app.route('/corporate')
 def corporate():
+    corp = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2,Corporation.corp8,Corporation.corp9,Corporation.corp10,Corporation.corp25, Corporation.corp18, Corporation.corp19, Corporation.corp20, Corporation.corp62)
+    # ID, 1-Business No., 2-Corporation name, 8-type, 9,10-anniversary date 'from + to', 25-CRA tax year end, 18,19-CRA contact 'first + last name', 20-phone, 62-task
+    #print(corp[0][2])
     return render_template(
         'corp.html',
+        corp = corp,
         title='Corporate'
     )
 
@@ -209,8 +213,9 @@ def corp_add():
         corp59 = "contacts"
         corp60 = "directors"
         corp61 = "shareholders"
+        corp62 = 0
         timestamp = datetime.utcnow()
-        my_data = Corporation(corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,corp59,corp60,corp61,timestamp)
+        my_data = Corporation(corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,corp59,corp60,corp61,corp62,timestamp)
         db.session.add(my_data)
         db.session.commit()
         flash("Corporation add Successfully")
@@ -220,10 +225,14 @@ def corp_add():
     )
 
 @app.route('/corp_edit', methods=['GET', 'POST'])
-def corp_edit():
-
+@app.route('/corp_edit/<int:id>', methods=['GET', 'POST'])
+def corp_edit(id):
+    my_data = Corporation.query.get(id)
+    if request.method == 'POST':
+        pass
     return render_template(
         'corp_edit.html',
+        corp = my_data,
         title='Edit_Corporation'
     )
 

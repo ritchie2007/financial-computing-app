@@ -16,303 +16,29 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
               <tr>
-                <th class="th-sm">Corporation Name</th>
-                <th class="th-sm">Business No</th>
-                <th class="th-sm">Registration Name</th>
-                <th class="th-sm">Contact Name</th>
-                <th class="th-sm">Contact Number</th>
-                <th class="th-sm">Modified Date</th>
-                <th class="th-sm">Task Need to do</th>
+                <th class="th-sm">Corp Name</th>
+                <th class="th-sm">Busi. No</th>
+                <th class="th-sm">Type</th>
+                <th class="th-sm">Anni. Date</th>
+                <th class="th-sm">Tax year</th>
+                <th class="th-sm">Contact</th>
+                <th class="th-sm">Phone</th>
+                <th class="th-sm">Task No.</th>
               </tr>
             </thead>
             <tbody id="myTable">
-              <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-                <td>Tiger Nixon</td>
-                <td data-field="snum" data-formatter="LinkFormatter">123546789</td>
-                <td>Edinburgh</td>
-                <td>Saskatoon</td>
-                <td>416-897-5874</td>
-                <td>2015-02-12</td>
-                <td>9</td>
+            {% for row in corp %}
+              <tr class="table-row" data-href="{{url_for('corp_edit')}}/{{row.corp_id}}">
+                <td class="col-1">{{row.corp2}}</td>
+                <td class="col-1">{{row.corp1}}</td>
+                <td class="col-1">{{row.corp8}}</td>
+                <td class="col-1">{{row.corp9}}-{{row.corp10}}</td>
+                <td class="col-1">{{row.corp25}}</td>
+                <td class="col-2">{{row.corp19}}, {{row.corp18}}</td>
+                <td class="col-2">{{row.corp20}}</td>
+                <td class="col-1">{{row.corp62}}</td>
               </tr>
-              <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-                <td>Garrett Winters</td>
-                <td>654789123</td>
-                <td>Fitzpatrick</td>
-                <td>Michael Silva</td>
-                <td>416-725-5824</td>
-                <td>2011/07/25</td>
-                <td>5</td>
-              </tr>
-              <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-                <td>Ahed</td>
-                <td>196945786</td>
-                <td>Consumer goods</td>
-                <td>Toronto</td>
-                <td>416-257-8545</td>
-                <td>2014-05-14</td>
-                <td>3</td>
-                
-              </tr>
-              <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-                <td>Air Canada</td>
-                <td>194512537</td>
-                <td>Consumer services</td>
-                <td>Montreal</td>
-                <td>416-569-8745</td>
-                <td>2019-06-14</td>
-                <td>5</td>                        
-              </tr>
-              <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-                <td>Aldo Group</td>
-                <td>156234972</td>
-                <td>Consumer services</td>
-                <td>Montreal</td>
-                <td>647-897-8569</td>
-                <td>2019-01-28</td>
-                <td>1</td>                        
-              </tr>
-              <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-                <td>AldrichPears Associates</td>
-                <td>195623479</td>
-                <td>Industrials</td>
-                <td>Vancouver</td>
-                <td>416-892-7845</td>
-                <td>2020-01-02</td>
-                <td>0</td>                        
-              </tr>
-              <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-                <td>Algonquin Power & Utilities</td>
-                <td>198954697</td>
-                <td>Utilities</td>
-                <td>Oakville</td>
-                <td>416-247-8754</td>
-                <td>2020-03-21</td>
-                <td>0</td>                        
-              </tr>
-              <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-                <td>Allied Shipbuilders</td>
-                <td>191235648</td>
-                <td>Industrials</td>
-                <td>North Vancouver</td>
-                <td>416-012-6523</td>
-                <td>2020-02-24</td>
-                <td>0</td>                        
-              </tr>
-              <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-                <td>Alta Newspaper Group</td>
-                <td>195632199</td>
-                <td>Consumer services</td>
-                <td>Vancouver</td>
-                <td>416-564-0124</td>
-                <td>2020-03-24</td>
-                <td>0</td>                        
-              </tr>
-              <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-                <td>Alterra Power</td>
-                <td>208954211</td>
-                <td>Utilities</td>
-                <td>Vancouver</td>
-                <td>416-354-4158</td>
-                <td>2013-09-12</td>
-                <td>3</td>                        
-              </tr>
-              <td class="table-row" data-href="{{url_for('corp_edit')}}">Tiger Nixon</td>
-              <td>123546789</td>
-              <td>Edinburgh</td>
-              <td>Saskatoon</td>
-              <td>416-897-5874</td>
-              <td>2015-02-12</td>
-              <td>9</td>
-            </tr>
-            <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-              <td>Garrett Winters</td>
-              <td>654789123</td>
-              <td>Fitzpatrick</td>
-              <td>Michael Silva</td>
-              <td>416-725-5824</td>
-              <td>2011/07/25</td>
-              <td>5</td>
-            </tr>
-            <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-              <td>Ahed</td>
-              <td>196945786</td>
-              <td>Consumer goods</td>
-              <td>Toronto</td>
-              <td>416-257-8545</td>
-              <td>2014-05-14</td>
-              <td>3</td>                      
-            </tr>
-            <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-              <td>Air Canada</td>
-              <td>194512537</td>
-              <td>Consumer services</td>
-              <td>Montreal</td>
-              <td>416-569-8745</td>
-              <td>2019-06-14</td>
-              <td>5</td>                        
-            </tr>
-            <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-              <td>Aldo Group</td>
-              <td>156234972</td>
-              <td>Consumer services</td>
-              <td>Montreal</td>
-              <td>647-897-8569</td>
-              <td>2019-01-28</td>
-              <td>1</td>                      
-            </tr>
-            <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-              <td>AldrichPears Associates</td>
-              <td>195623479</td>
-              <td>Industrials</td>
-              <td>Vancouver</td>
-              <td>416-892-7845</td>
-              <td>2020-01-02</td>
-              <td>0</td>                      
-            </tr>
-            <tr class="table-row" data-href="{{url_for('corp_edit')}}">
-              <td>Algonquin Power & Utilities</td>
-              <td>198954697</td>
-              <td>Utilities</td>
-              <td>Oakville</td>
-              <td>416-247-8754</td>
-              <td>2020-03-21</td>
-              <td>0</td>                      
-            </tr>
-            <tr>
-              <td>Allied Shipbuilders</td>
-              <td>191235648</td>
-              <td>Industrials</td>
-              <td>North Vancouver</td>
-              <td>416-012-6523</td>
-              <td>2020-02-24</td>
-              <td>0</td>                        
-            </tr>
-            <tr>
-              <td>Alta Newspaper Group</td>
-              <td>195632199</td>
-              <td>Consumer services</td>
-              <td>Vancouver</td>
-              <td>416-564-0124</td>
-              <td>2020-03-24</td>
-              <td>0</td>                        
-            </tr>
-            <tr>
-              <td>Alterra Power</td>
-              <td>208954211</td>
-              <td>Utilities</td>
-              <td>Vancouver</td>
-              <td>416-354-4158</td>
-              <td>2013-09-12</td>
-              <td>3</td>                        
-            </tr>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>123546789</td>
-                <td>Edinburgh</td>
-                <td>Saskatoon</td>
-                <td>416-897-5874</td>
-                <td>2015-02-12</td>
-                <td>9</td>
-              </tr>
-              <tr>
-                <td>Garrett Winters</td>
-                <td>654789123</td>
-                <td>Fitzpatrick</td>
-                <td>Michael Silva</td>
-                <td>416-725-5824</td>
-                <td>2011/07/25</td>
-                <td>5</td>
-              </tr>
-              <tr>
-                <td>Ahed</td>
-                <td>196945786</td>
-                <td>Consumer goods</td>
-                <td>Toronto</td>
-                <td>416-257-8545</td>
-                <td>2014-05-14</td>
-                <td>3</td>                        
-              </tr>
-              <tr>
-                <td>Air Canada</td>
-                <td>194512537</td>
-                <td>Consumer services</td>
-                <td>Montreal</td>
-                <td>416-569-8745</td>
-                <td>2019-06-14</td>
-                <td>5</td>                        
-              </tr>
-              <tr>
-                <td>Aldo Group</td>
-                <td>156234972</td>
-                <td>Consumer services</td>
-                <td>Montreal</td>
-                <td>647-897-8569</td>
-                <td>2019-01-28</td>
-                <td>1</td>                        
-              </tr>
-              <tr>
-                <td>AldrichPears Associates</td>
-                <td>195623479</td>
-                <td>Industrials</td>
-                <td>Vancouver</td>
-                <td>416-892-7845</td>
-                <td>2020-01-02</td>
-                <td>0</td>                        
-              </tr>
-              <tr>
-                <td>Algonquin Power & Utilities</td>
-                <td>198954697</td>
-                <td>Utilities</td>
-                <td>Oakville</td>
-                <td>416-247-8754</td>
-                <td>2020-03-21</td>
-                <td>0</td>                        
-              </tr>
-              <tr>
-                <td>Allied Shipbuilders</td>
-                <td>191235648</td>
-                <td>Industrials</td>
-                <td>North Vancouver</td>
-                <td>416-012-6523</td>
-                <td>2020-02-24</td>
-                <td>0</td>                        
-              </tr>
-              <tr>
-                <td>Alta Newspaper Group</td>
-                <td>195632199</td>
-                <td>Consumer services</td>
-                <td>Vancouver</td>
-                <td>416-564-0124</td>
-                <td>2020-03-24</td>
-                <td>0</td>                        
-              </tr>
-              <tr>
-                <td>Alterra Power</td>
-                <td>208954211</td>
-                <td>Utilities</td>
-                <td>Vancouver</td>
-                <td>416-354-4158</td>
-                <td>2013-09-12</td>
-                <td>3</td>                        
-              </tr>
-              <td>Tiger Nixon</td>
-              <td>123546789</td>
-              <td>Edinburgh</td>
-              <td>Saskatoon</td>
-              <td>416-897-5874</td>
-              <td>2015-02-12</td>
-              <td>9</td>
-            </tr>
-            <tr>
-              <td>Garrett Winters</td>
-              <td>654789123</td>
-              <td>Fitzpatrick</td>
-              <td>Michael Silva</td>
-              <td>416-725-5824</td>
-              <td>2011/07/25</td>
-              <td>5</td>
-            </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
@@ -323,4 +49,6 @@
     <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+    <script type="text/javascript">
+    </script>
 {%- endblock scripts %}

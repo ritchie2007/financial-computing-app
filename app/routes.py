@@ -140,7 +140,7 @@ def edit_profile():
 
 @app.route('/corporate')
 def corporate():
-    corp = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2,Corporation.corp8,Corporation.corp9,Corporation.corp10,Corporation.corp25, Corporation.corp18, Corporation.corp19, Corporation.corp20, Corporation.corp62)
+    corp = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2, Corporation.corp8, Corporation.corp9, Corporation.corp10, Corporation.corp25, Corporation.corp18, Corporation.corp19, Corporation.corp20, Corporation.task)
     # ID, 1-Business No., 2-Corporation name, 8-type, 9,10-anniversary date 'from + to', 25-CRA tax year end, 18,19-CRA contact 'first + last name', 20-phone, 62-task
     #print(corp[0][2])
     return render_template(
@@ -151,6 +151,9 @@ def corporate():
 
 @app.route('/corp_add', methods=['GET', 'POST'])
 def corp_add():
+    indiv = Individual.query.with_entities(Individual.indiv_id, Individual.sin, Individual.prefix, Individual.last_name, Individual.first_name, Individual.address1, Individual.phone1, Individual.email, Individual.wechat)
+    max_id = db.session.query(func.max(Corporation.corp_id)).scalar()
+
     if request.method == 'POST':
         corp1 = request.form['corp1']
         corp2 = request.form['corp2']
@@ -210,17 +213,58 @@ def corp_add():
         corp56 = request.form['corp56']
         corp57 = request.form['corp57']
         corp58 = request.form['corp58']
-        corp59 = "contacts"
-        corp60 = "directors"
-        corp61 = "shareholders"
-        corp62 = 0
+        task = 0
+        recent_update = ""
         timestamp = datetime.utcnow()
-        my_data = Corporation(corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,corp59,corp60,corp61,corp62,timestamp)
+        contact_position = ""
+        contact_position += ((request.form['corp'+str(59)])+','+(request.form['corp'+str(61)])+',')
+        contact_position += ((request.form['corp'+str(63)])+','+(request.form['corp'+str(65)]))
+
+        shareholder_info = ""
+        shareholder_info += (request.form['corp'+str(71)]+','+request.form['corp'+str(72)]+',')
+        shareholder_info += (request.form['corp'+str(74)]+','+request.form['corp'+str(75)]+',')
+        shareholder_info += (request.form['corp'+str(77)]+','+request.form['corp'+str(78)]+',')
+        shareholder_info += (request.form['corp'+str(80)]+','+request.form['corp'+str(81)])
+
+        name = []
+        for x in [60, 62, 64, 66, 67, 68, 69, 70, 73, 76, 79, 82]:
+            a = (request.form['corp' + str(x)])
+            name.append(request.form['corp' + str(x)])
+        contact = utility.get_id_from_name(name, 0, 4)
+        director = utility.get_id_from_name(name, 4, 4)
+        shareholder = utility.get_id_from_name(name, 8, 4)
+        
+        if (max_id == None):
+            max_id = 1
+        else:
+            max_id = max_id + 1
+        
+        # contact
+        if contact == []:
+            contact = ""
+        else:
+            utility.corp_contact_to_indiv(contact, max_id, 0, "")
+            contact = ",".join(contact)
+        # director
+        if director == []:
+            director = ""
+        else:
+            utility.corp_director_to_indiv(director, max_id, 0, "")
+            director = ",".join(director)
+        # shareholder
+        if shareholder == []:
+            shareholder = ""
+        else:
+            utility.corp_shareholder_to_indiv(shareholder, max_id, 0, "")
+            shareholder = ",".join(shareholder)
+
+        my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task,recent_update, contact_position, shareholder_info, timestamp)
         db.session.add(my_data)
         db.session.commit()
         flash("Corporation add Successfully")
     return render_template(
         'corp_add.html',
+        indiv_data = indiv,
         title='Add_new_Corporation'
     )
 
@@ -228,13 +272,153 @@ def corp_add():
 @app.route('/corp_edit/<int:id>', methods=['GET', 'POST'])
 def corp_edit(id):
     my_data = Corporation.query.get(id)
+    indiv_data = Individual.query.with_entities(Individual.indiv_id, Individual.sin, Individual.prefix, Individual.last_name, Individual.first_name, Individual.phone1, Individual.wechat, Individual.email)
+    value0 = []
+    value0.append(my_data.contact)
+    value0.append(my_data.director)
+    value0.append(my_data.shareholder)
+    indiv_list = utility.get_indiv_index(value0, indiv_data)
+
     if request.method == 'POST':
-        pass
+        my_data.corp1 = request.form['corp1']
+        my_data.corp2 = request.form['corp2']
+        my_data.corp3 = request.form['corp3']
+        my_data.corp4 = request.form['corp4']
+        my_data.corp5 = request.form['corp5']
+        my_data.corp6 = request.form['corp6']
+        my_data.corp7 = request.form['corp7']
+        my_data.corp8 = request.form['corp8']
+        my_data.corp9 = request.form['corp9']
+        my_data.corp10 = request.form['corp10']
+        my_data.corp11 = request.form['corp11']
+        my_data.corp12 = request.form['corp12']
+        my_data.corp13 = request.form['corp13']
+        my_data.corp14 = request.form['corp14']
+        my_data.corp15 = request.form['corp15']
+        my_data.corp16 = request.form['corp16']
+        my_data.corp17 = request.form['corp17']
+        my_data.corp18 = request.form['corp18']
+        my_data.corp19 = request.form['corp19']
+        my_data.corp20 = request.form['corp20']
+        my_data.corp21 = request.form['corp21']
+        my_data.corp22 = request.form['corp22']
+        my_data.corp23 = request.form['corp23']
+        my_data.corp24 = request.form['corp24']
+        my_data.corp25 = request.form['corp25']
+        my_data.corp26 = request.form['corp26']
+        my_data.corp27 = request.form['corp27']
+        my_data.corp28 = request.form['corp28']
+        my_data.corp29 = request.form['corp29']
+        my_data.corp30 = request.form['corp30']
+        my_data.corp31 = request.form['corp31']
+        my_data.corp32 = request.form['corp32']
+        my_data.corp33 = request.form['corp33']
+        my_data.corp34 = request.form['corp34']
+        my_data.corp35 = request.form['corp35']
+        my_data.corp36 = request.form['corp36']
+        my_data.corp37 = request.form['corp37']
+        my_data.corp38 = request.form['corp38']
+        my_data.corp39 = request.form['corp39']
+        my_data.corp40 = request.form['corp40']
+        my_data.corp41 = request.form['corp41']
+        my_data.corp42 = request.form['corp42']
+        my_data.corp43 = request.form['corp43']
+        my_data.corp44 = request.form['corp44']
+        my_data.corp45 = request.form['corp45']
+        my_data.corp46 = request.form['corp46']
+        my_data.corp47 = request.form['corp47']
+        my_data.corp48 = request.form['corp48']
+        my_data.corp49 = request.form['corp49']
+        my_data.corp50 = request.form['corp50']
+        my_data.corp51 = request.form['corp51']
+        my_data.corp52 = request.form['corp52']
+        my_data.corp53 = request.form['corp53']
+        my_data.corp54 = request.form['corp54']
+        my_data.corp55 = request.form['corp55']
+        my_data.corp56 = request.form['corp56']
+        my_data.corp57 = request.form['corp57']
+        my_data.corp58 = request.form['corp58']
+        my_data.task = 0
+        my_data.recent_update = ""
+        my_data.timestamp = datetime.utcnow()
+        
+        contact_position = ""
+        contact_position += ((request.form['corp'+str(59)])+','+(request.form['corp'+str(61)])+',')
+        contact_position += ((request.form['corp'+str(63)])+','+(request.form['corp'+str(65)]))
+        shareholder_info = ""
+        shareholder_info += (request.form['corp'+str(71)]+','+request.form['corp'+str(72)]+',')
+        shareholder_info += (request.form['corp'+str(74)]+','+request.form['corp'+str(75)]+',')
+        shareholder_info += (request.form['corp'+str(77)]+','+request.form['corp'+str(78)]+',')
+        shareholder_info += (request.form['corp'+str(80)]+','+request.form['corp'+str(81)])
+        my_data.contact_position = contact_position
+        my_data.shareholder_info = shareholder_info
+
+        name = []
+        for x in [60, 62, 64, 66, 67, 68, 69, 70, 73, 76, 79, 82]:
+            a = (request.form['corp' + str(x)])
+            name.append(request.form['corp' + str(x)])
+        contact = utility.get_id_from_name(name, 0, 4)
+        director = utility.get_id_from_name(name, 4, 4)
+        shareholder = utility.get_id_from_name(name, 8, 4)
+        
+        max_id = id
+        print("-- new contact id array --", contact, director, shareholder)
+
+        # contact
+        if contact == []:
+            my_data.contact = ""
+        else:
+            utility.corp_contact_to_indiv(contact, max_id, 1, value0[0])
+            my_data.contact = (",".join(contact)).replace('[','').replace(']','').replace(' ','')
+        # director
+        if director == []:
+            my_data.director = ""
+        else:
+            utility.corp_director_to_indiv(director, max_id, 1, value0[1])
+            my_data.director = ",".join(director).replace('[','').replace(']','').replace(' ','')
+        # shareholder
+        if shareholder == []:
+            my_data.shareholder = ""
+        else:
+            utility.corp_shareholder_to_indiv(shareholder, max_id, 1, value0[2])
+            my_data.shareholder = ",".join(shareholder).replace('[','').replace(']','').replace(' ','')
+
+        db.session.commit()
+        flash("Corporation Updated Successfully")
+        return redirect(url_for('corporate'))
+
     return render_template(
         'corp_edit.html',
         corp = my_data,
+        indiv_data = indiv_data,
+        indiv_list = indiv_list,
         title='Edit_Corporation'
     )
+
+@app.route('/corp_del', methods=['GET', 'POST'])
+@app.route('/corp_del/<int:id>', methods=['GET', 'POST'])
+def corp_del(id):
+    my_data = Corporation.query.get(id)
+    if request.method == 'POST':
+        # contact
+        if len(my_data.contact) > 0:
+            utility.corp_contact_to_indiv('', id, 2, my_data.contact)
+        # director
+        if len(my_data.director) > 0:
+            utility.corp_director_to_indiv('', id, 2, my_data.director)
+        # shareholder
+        if len(my_data.shareholder) > 0:
+            utility.corp_shareholder_to_indiv('', id, 2, my_data.shareholder)
+
+        db.session.delete(my_data)
+        db.session.commit()
+        flash("Corporation Deleted Successfully")
+        return redirect(url_for('corporate'))
+
+    return render_template(
+        'corp_edit.html',
+        corp = my_data,
+        title='Edit_Corporation')
 
 @app.route('/individual_add', methods=['GET', 'POST'])
 def individual_add():
@@ -246,8 +430,8 @@ def individual_add():
         prefix = request.form['indiv2']
         last_name = request.form['indiv3']
         first_name = request.form['indiv4']
-        middle_name = request.form['indiv5']
-        other_name = request.form['indiv6']
+        other_name = request.form['indiv5']
+        email = request.form['indiv6']
         phone1 = request.form['indiv7']
         phone2 = request.form['indiv8']
         address1 = request.form['indiv9']
@@ -269,8 +453,6 @@ def individual_add():
         engage_leading = request.form['indiv25']
         note = request.form['indiv26']
         name = []
-        print("-----------")
-        print(prefix)
         for x in range(19):
             name.append(request.form['indiv' + str(x+27)])
         contact_corp = utility.get_id_from_name(name, 0, 3)
@@ -323,7 +505,7 @@ def individual_add():
             utility.indiv_to_child(child, max_id)
             child = ",".join(child)
         
-        my_data = Individual(sin,prefix,last_name,first_name,middle_name,other_name,phone1,phone2,address1,address2,mail_address,wechat,cra_sole_proprietor,cra_hst_report,cra_payroll,cra_withhold_tax,cra_wsib,cra_other,oversea_asset_t1135,
+        my_data = Individual(sin,prefix,last_name,first_name,other_name,email,phone1,phone2,address1,address2,mail_address,wechat,cra_sole_proprietor,cra_hst_report,cra_payroll,cra_withhold_tax,cra_wsib,cra_other,oversea_asset_t1135,
         oversea_corp_t1134,tslip,tax_personal_info,specific_info,engage_account,engage_leading,note,contact_corp,director_corp,sharehold_corp,spouse,parent,child,timestamp)
         db.session.add(my_data)
         db.session.commit()

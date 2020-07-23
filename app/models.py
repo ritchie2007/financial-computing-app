@@ -263,13 +263,16 @@ class Corporation(db.Model):
     corp56 = db.Column(db.String(200))
     corp57 = db.Column(db.String(120))
     corp58 = db.Column(db.String(150))
-    corp59 = db.Column(db.String(40))
-    corp60 = db.Column(db.String(40))
-    corp61 = db.Column(db.String(40))
-    corp62 = db.Column(db.Integer)
+    contact = db.Column(db.String(40))
+    director = db.Column(db.String(40))
+    shareholder = db.Column(db.String(40))
+    task = db.Column(db.Integer)
+    recent_update = db.Column(db.String(50))
+    contact_position = db.Column(db.String(200))
+    shareholder_info = db.Column(db.String(400))
     timestamp = db.Column(db.String(26))
 
-    def __init__(self,corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,corp59,corp60,corp61,corp62,timestamp):
+    def __init__(self,corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,contact,director,shareholder,task,recent_update,contact_position,shareholder_info,timestamp):
         self.corp1 = corp1
         self.corp2 = corp2
         self.corp3 = corp3
@@ -327,11 +330,13 @@ class Corporation(db.Model):
         self.corp55 = corp55
         self.corp56 = corp56
         self.corp57 = corp57
-        self.corp58 = corp58
-        self.corp59 = corp59
-        self.corp60 = corp60
-        self.corp61 = corp61
-        self.corp62 = corp62
+        self.contact = contact
+        self.director = director
+        self.shareholder = shareholder
+        self.task = task
+        self.recent_update = recent_update
+        self.contact_position = contact_position
+        self.shareholder_info = shareholder_info
         self.timestamp = timestamp
 
 class Individual(db.Model):
@@ -342,8 +347,8 @@ class Individual(db.Model):
     prefix = db.Column(db.String(10))
     last_name = db.Column(db.String(80))
     first_name = db.Column(db.String(80))
-    middle_name = db.Column(db.String(80))
     other_name = db.Column(db.String(80))
+    email = db.Column(db.String(80))
     phone1 = db.Column(db.String(15))
     phone2 = db.Column(db.String(15))
     address1 = db.Column(db.String(150))
@@ -371,7 +376,7 @@ class Individual(db.Model):
     parent = db.Column(db.String(40))
     child = db.Column(db.String(40))
     timestamp = db.Column(db.String(26))
-    def __init__(self,sin,prefix,last_name,first_name,middle_name,other_name,phone1,phone2,address1,address2,mail_address,
+    def __init__(self,sin,prefix,last_name,first_name,other_name,email,phone1,phone2,address1,address2,mail_address,
         wechat,cra_sole_proprietor,cra_hst_report,cra_payroll,cra_withhold_tax,cra_wsib,cra_other,oversea_asset_t1135,
         oversea_corp_t1134,tslip,tax_personal_info,specific_info,engage_account,engage_leading,note,
         contact_corp,director_corp,sharehold_corp,spouse,parent,child,timestamp):
@@ -380,8 +385,8 @@ class Individual(db.Model):
         self.prefix = prefix
         self.last_name = last_name
         self.first_name = first_name
-        self.middle_name = middle_name
         self.other_name = other_name
+        self.email = email
         self.phone1 = phone1
         self.phone2 = phone2
         self.address1 = address1

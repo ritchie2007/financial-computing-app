@@ -16,6 +16,7 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
               <tr>
+                <th class="th-sm">ID.</th>
                 <th class="th-sm">Corp Name</th>
                 <th class="th-sm">Busi. No</th>
                 <th class="th-sm">Type</th>
@@ -29,6 +30,7 @@
             <tbody id="myTable">
             {% for row in corp %}
               <tr class="table-row" data-href="{{url_for('corp_edit')}}/{{row.corp_id}}">
+                <td class="col-1">{{row.corp_id}}</td>
                 <td class="col-1">{{row.corp2}}</td>
                 <td class="col-1">{{row.corp1}}</td>
                 <td class="col-1">{{row.corp8}}</td>
@@ -36,7 +38,7 @@
                 <td class="col-1">{{row.corp25}}</td>
                 <td class="col-2">{{row.corp19}}, {{row.corp18}}</td>
                 <td class="col-2">{{row.corp20}}</td>
-                <td class="col-1">{{row.corp62}}</td>
+                <td class="col-1">{{row.task}}</td>
               </tr>
             {% endfor %}
             </tbody>

@@ -26,109 +26,449 @@ def get_id_from_name(name, start, count):
     return(id_list)
 
 # contact
-def indiv_to_corp_contact(name, id):
+def indiv_to_corp_contact(value1, corpid, oper, value0): # 人里公司改，公司里人改
     print(' --- contact ---')
-    print(name)
-    for i in name:
-        my_data = Corporation.query.get(i)
-        if my_data.corp59 == "":
-            my_data.corp59 = str(id)
-        else:
-            print(" -- my_data -- " + my_data.corp59)
-            tmp = (my_data.corp59).split(',')
-            if (str(id) not in tmp):
-                tmp.append(str(id))
-                my_data.corp59 = ",".join(tmp)
-        print(my_data.corp59)
-        db.session.commit()
-        flash("Contact Updated Successfully")
+    print(value1)
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Corporation.query.get(x)
+                    tmp = (my_data.contact)
+                    if len(tmp) > 0:
+                        tmp = (my_data.contact).split(',')
+                        if str(corpid) in tmp:
+                            tmp.remove(str(corpid))
+                            my_data.contact = ",".join(tmp)
+                            db.session.commit()
+
+        for x in value1:
+            my_data = Corporation.query.get(x)
+            if my_data.contact == "":
+                my_data.contact = str(corpid)
+            else:
+                print(" -- my_data -- " + my_data.contact)
+                tmp = (my_data.contact).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.contact = ",".join(tmp)
+            print(my_data.contact)
+            db.session.commit()
+
+    elif oper == 2:
+        if len(value0) > 0:
+            for x in value0:
+                my_data = Corporation.query.get(x)
+                tmp = (my_data.contact)
+                if len(tmp) >0:
+                    tmp = (my_data.contact).split(',')
+                    if str(corpid) in tmp:
+                        tmp.remove(str(corpid))
+                        my_data.contact = ",".join(tmp)
+                        db.session.commit()
+        flash("Corp from Individual was updated in Corp table")
+
+def corp_contact_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
+    print(' --- utility contact ---')
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Individual.query.get(x)
+                    tmp = (my_data.contact_corp)
+                    if len(tmp) > 0:
+                        tmp = (my_data.contact_corp).split(',')
+                        if str(corpid) in tmp:
+                            tmp.remove(str(corpid))
+                            my_data.contact_corp = ",".join(tmp)
+                            db.session.commit()
+
+        for x in value1:
+            my_data = Individual.query.get(x)
+            if my_data.contact_corp == "":
+                my_data.contact_corp = str(corpid)
+            else:
+                print(" -- my_data -- " + my_data.contact_corp)
+                tmp = (my_data.contact_corp).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.contact_corp = ",".join(tmp)
+            print(my_data.contact_corp)
+            db.session.commit()
+
+    elif oper == 2:
+        if len(value0) > 0:
+            for x in value0:
+                my_data = Individual.query.get(x)
+                tmp = (my_data.contact_corp)
+                if len(tmp) >0:
+                    tmp = (my_data.contact_corp).split(',')
+                    if str(corpid) in tmp:
+                        tmp.remove(str(corpid))
+                        my_data.contact_corp = ",".join(tmp)
+                        db.session.commit()
+
+    flash("Contact from Corp was updated in Individual table")
 
 # director
-def indiv_to_corp_director(name,id):
+def indiv_to_corp_director(value1, corpid, oper, value0): # 人里公司改，公司里人改
     print(' --- director ---')
-    print(name)
-    for i in name:
-        my_data = Corporation.query.get(i)
-        if my_data.corp60 == "":
-            my_data.corp60 = str(id)
-        else:
-            print(" -- my_data -- " + my_data.corp60)
-            tmp = (my_data.corp60).split(',')
-            if (str(id) not in tmp):
-                tmp.append(str(id))
-                my_data.corp60 = ",".join(tmp)
-        print(my_data.corp60)
-        db.session.commit()
-        flash("Director Updated Successfully")
+    print(value1)
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Corporation.query.get(x)
+                    tmp = (my_data.director)
+                    if len(tmp) > 0:
+                        tmp = (my_data.director).split(',')
+                        if str(corpid) in tmp:
+                            tmp.remove(str(corpid))
+                            my_data.director = ",".join(tmp)
+                            db.session.commit()
+
+        for x in value1:
+            my_data = Corporation.query.get(x)
+            if my_data.director == "":
+                my_data.director = str(corpid)
+            else:
+                print(" -- my_data -- " + my_data.director)
+                tmp = (my_data.director).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.director = ",".join(tmp)
+            print(my_data.director)
+            db.session.commit()
+
+    elif oper == 2:
+        if len(value0) > 0:
+            for x in value0:
+                my_data = Corporation.query.get(x)
+                tmp = (my_data.director)
+                if len(tmp) >0:
+                    tmp = (my_data.director).split(',')
+                    if str(corpid) in tmp:
+                        tmp.remove(str(corpid))
+                        my_data.director = ",".join(tmp)
+                        db.session.commit()
+        flash("Director from Individual was updated in Corp table")
+
+def corp_director_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
+    print(' --- director ---')
+    print(value1)
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Individual.query.get(x)
+                    tmp = (my_data.director_corp)
+                    if len(tmp) > 0:
+                        tmp = (my_data.director_corp).split(',')
+                        if str(corpid) in tmp:
+                            tmp.remove(str(corpid))
+                            my_data.director_corp = ",".join(tmp)
+                            db.session.commit()
+
+        for x in value1:
+            my_data = Individual.query.get(x)
+            if my_data.director_corp == "":
+                my_data.director_corp = str(corpid)
+            else:
+                print(" -- my_data -- " + my_data.director_corp)
+                tmp = (my_data.director_corp).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.director_corp = ",".join(tmp)
+            print(my_data.director_corp)
+            db.session.commit()
+
+    elif oper == 2:
+        if len(value0) > 0:
+            for x in value0:
+                my_data = Individual.query.get(x)
+                tmp = (my_data.director_corp)
+                if len(tmp) >0:
+                    tmp = (my_data.director_corp).split(',')
+                    if str(corpid) in tmp:
+                        tmp.remove(str(corpid))
+                        my_data.director_corp = ",".join(tmp)
+                        db.session.commit()
+
+    flash("Director from Corp was updated in Individual table")
 
 # shareholder
-def indiv_to_corp_shareholder(name,id):
+def indiv_to_corp_shareholder(value1, corpid, oper, value0): # 人里公司改，公司里人改
     print(' --- shareholder ---')
-    print(name)
-    for i in name:
-        my_data = Corporation.query.get(i)
-        if my_data.corp61 == "":
-            my_data.corp61 = str(id)
-        else:
-            print(" -- my_data -- " + my_data.corp61)
-            tmp = (my_data.corp61).split(',')
-            if (str(id) not in tmp):
-                tmp.append(str(id))
-                my_data.corp61 = ",".join(tmp)
-        print(my_data.corp61)
-        db.session.commit()
-        flash("Director Updated Successfully")
+    print(value1)
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Corporation.query.get(x)
+                    tmp = (my_data.shareholder)
+                    if len(tmp) > 0:
+                        tmp = (my_data.shareholder).split(',')
+                        if str(corpid) in tmp:
+                            tmp.remove(str(corpid))
+                            my_data.shareholder = ",".join(tmp)
+                            db.session.commit()
+
+        for x in value1:
+            my_data = Corporation.query.get(x)
+            if my_data.shareholder == "":
+                my_data.shareholder = str(corpid)
+            else:
+                print(" -- my_data -- " + my_data.shareholder)
+                tmp = (my_data.shareholder).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.shareholder = ",".join(tmp)
+            print(my_data.shareholder)
+            db.session.commit()
+
+    elif oper == 2:
+        if len(value0) > 0:
+            for x in value0:
+                my_data = Corporation.query.get(x)
+                tmp = (my_data.shareholder)
+                if len(tmp) >0:
+                    tmp = (my_data.shareholder).split(',')
+                    if str(corpid) in tmp:
+                        tmp.remove(str(corpid))
+                        my_data.shareholder = ",".join(tmp)
+                        db.session.commit()
+    flash("Shareholder from Indiv was updated in Corp table")
+
+def corp_shareholder_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
+    print(' --- shareholder ---')
+    print(value1)
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Individual.query.get(x)
+                    tmp = (my_data.sharehold_corp)
+                    if len(tmp) > 0:
+                        tmp = (my_data.sharehold_corp).split(',')
+                        if str(corpid) in tmp:
+                            tmp.remove(str(corpid))
+                            my_data.sharehold_corp = ",".join(tmp)
+                            db.session.commit()
+
+        for x in value1:
+            my_data = Individual.query.get(x)
+            if my_data.sharehold_corp == "":
+                my_data.sharehold_corp = str(corpid)
+            else:
+                print(" -- my_data -- " + my_data.sharehold_corp)
+                tmp = (my_data.sharehold_corp).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.sharehold_corp = ",".join(tmp)
+            print(my_data.sharehold_corp)
+            db.session.commit()
+
+    elif oper == 2:
+        if len(value0) > 0:
+            for x in value0:
+                my_data = Individual.query.get(x)
+                tmp = (my_data.sharehold_corp)
+                if len(tmp) >0:
+                    tmp = (my_data.sharehold_corp).split(',')
+                    if str(corpid) in tmp:
+                        tmp.remove(str(corpid))
+                        my_data.sharehold_corp = ",".join(tmp)
+                        db.session.commit()
+    flash("Shareholder from Corp was updated in Individual table")
 
 # spouse
-def indiv_to_spouse(name,id):
+def indiv_to_spouse(value1, corpid, oper, value0): # 配偶改
     print(' --- spouse ---')
-    print(name)
-    for i in name:
-        my_data = Individual.query.get(i)
-        if my_data.spouse == "":
-            my_data.spouse = str(id)
-        else:
-            print(" -- my_data -- " + my_data.spouse)
-            tmp = (my_data.spouse).split(',')
-            if (str(id) not in tmp):
-                tmp.append(str(id))
-                my_data.spouse = ",".join(tmp)
-        print(my_data.spouse)
-        db.session.commit()
-        flash("Shareholder Updated Successfully")
+    print(value1)
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Individual.query.get(x)
+                    tmp = (my_data.spouse)
+                    if len(tmp) > 0:
+                        tmp = (my_data.spouse).split(',')
+                        if str(corpid) in tmp:
+                            tmp.remove(str(corpid))
+                            my_data.spouse = ",".join(tmp)
+                            db.session.commit()
+
+        for x in value1:
+            my_data = Individual.query.get(x)
+            if my_data.spouse == "":
+                my_data.spouse = str(corpid)
+            else:
+                print(" -- my_data -- " + my_data.spouse)
+                tmp = (my_data.spouse).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.spouse = ",".join(tmp)
+            print(my_data.spouse)
+            db.session.commit()
+
+    elif oper == 2:
+        if len(value0) > 0:
+            for x in value0:
+                my_data = Individual.query.get(x)
+                tmp = (my_data.spouse)
+                if len(tmp) >0:
+                    tmp = (my_data.spouse).split(',')
+                    if str(corpid) in tmp:
+                        tmp.remove(str(corpid))
+                        my_data.spouse = ",".join(tmp)
+                        db.session.commit()
+    flash("Spouse Updated Successfully")
 
 # parents
-def indiv_to_parent(name,id):
+def parent_to_child(value1, corpid, oper, value0): # 父里子改，子里父改
     print(' --- parents ---')
-    print(name)
-    for i in name:
-        my_data = Individual.query.get(i)
-        if my_data.child == "":
-            my_data.child = str(id)
-        else:
-            print(" -- my_data -- " + my_data.child)
-            tmp = (my_data.child).split(',')
-            if (str(id) not in tmp):
-                tmp.append(str(id))
-                my_data.child = ",".join(tmp)
-        print(my_data.child)
-        db.session.commit()
-        flash("Parent Updated Successfully")
+    print(value1)
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Individual.query.get(x)
+                    tmp = (my_data.child)
+                    if len(tmp) > 0:
+                        tmp = (my_data.child).split(',')
+                        if str(corpid) in tmp:
+                            tmp.remove(str(corpid))
+                            my_data.child = ",".join(tmp)
+                            db.session.commit()
+
+        for x in value1:
+            my_data = Individual.query.get(x)
+            if my_data.child == "":
+                my_data.child = str(corpid)
+            else:
+                print(" -- my_data -- " + my_data.child)
+                tmp = (my_data.child).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.child = ",".join(tmp)
+            print(my_data.child)
+            db.session.commit()
+
+    elif oper == 2:
+        if len(value0) > 0:
+            for x in value0:
+                my_data = Individual.query.get(x)
+                tmp = (my_data.child)
+                if len(tmp) >0:
+                    tmp = (my_data.child).split(',')
+                    if str(corpid) in tmp:
+                        tmp.remove(str(corpid))
+                        my_data.child = ",".join(tmp)
+                        db.session.commit()
+    flash("parents updated")
 
 # child
-def indiv_to_child(name,id):
+def child_to_parent(value1, corpid, oper, value0): # 子里父改，父里子改
     print(' --- child ---')
-    print(name)
-    for i in name:
-        my_data = Individual.query.get(i)
-        if my_data.parent == "":
-            my_data.parent = str(id)
-        else:
-            print(" -- my_data -- " + my_data.parent)
-            tmp = (my_data.parent).split(',')
-            if (str(id) not in tmp):
-                tmp.append(str(id))
-                my_data.parent = ",".join(tmp)
-        print(my_data.parent)
-        db.session.commit()
-        flash("Child Updated Successfully")
+    print(value1)
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Individual.query.get(x)
+                    tmp = (my_data.parent)
+                    if len(tmp) > 0:
+                        tmp = (my_data.parent).split(',')
+                        if str(corpid) in tmp:
+                            tmp.remove(str(corpid))
+                            my_data.parent = ",".join(tmp)
+                            db.session.commit()
+
+        for x in value1:
+            my_data = Individual.query.get(x)
+            if my_data.parent == "":
+                my_data.parent = str(corpid)
+            else:
+                print(" -- my_data -- " + my_data.parent)
+                tmp = (my_data.parent).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.parent = ",".join(tmp)
+            print(my_data.parent)
+            db.session.commit()
+
+    elif oper == 2:
+        if len(value0) > 0:
+            for x in value0:
+                my_data = Individual.query.get(x)
+                tmp = (my_data.parent)
+                if len(tmp) >0:
+                    tmp = (my_data.parent).split(',')
+                    if str(corpid) in tmp:
+                        tmp.remove(str(corpid))
+                        my_data.parent = ",".join(tmp)
+                        db.session.commit()
+    flash("Child Updated Successfully")
+
+# get Individual detail info
+def get_indiv_index(corp_list, indiv_list): # 通过公司中联系人{}数组，获取每个联系人详细信息，连成字串返回
+    print(corp_list)
+    index_list = []
+    tmp0 = []
+    for x in indiv_list:
+        tmp0.append(str(x.indiv_id))
+    print(tmp0)
+    for x in corp_list:
+        tmp1 = []
+        if (len(x)>0):
+            for y in x:
+                if len(y)>0:
+                    if tmp0.count(y)>0:
+                        tmp1.append(tmp0.index(y))
+        index_list.append(tmp1)
+    return index_list

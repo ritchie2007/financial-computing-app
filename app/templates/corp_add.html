@@ -447,51 +447,55 @@
         <div class="form-row">
           <div class="form-group col-md-12">
             <label><h4 style="color: #337ab7;">CONTACTS</h4></label>
-            <input type="text" name="corp-59" value='  [serial no: ]' style="height: 40%; font-size: 9px; border: none; background-color: #eaece9;">
+            <input type="text" name="corp590" value='  [serial no: ]' style="height: 40%; font-size: 9px; border: none; background-color: #eaece9;">
           </div>
         <br/>
           <div class="form-group col-md-12">
             <label>1st Contact ( Position | first name | last name | phone number | wechat | email )<br></label>
             <div>
               <input type="text" class="form-control col-sm-1" name="corp59" placeholder="Position" style="width: 10%;">
-              <input type="text" class="form-control col-sm-1" name="corp60" placeholder="first name" style="width: 16%;">
-              <input type="text" class="form-control col-sm-1" name="corp61" placeholder="last name" style="width: 14%;">
-              <input type="text" class="form-control col-sm-1" name="corp62" placeholder="phone number" style="width: 10%;">
-              <input type="text" class="form-control col-sm-1" name="corp63" placeholder="wechat / other" style="width: 28%;">
-              <input type="text" class="form-control col-sm-1" name="corp64" placeholder="email" style="width: 22%;">  
+              <select class="browser-default custom-select form-control" value="" name="corp60" style="width: 90%;">
+                <option value="">Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.wechat}} | {{row.email}}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
           <div class="form-group col-md-12">
             <label>2nd Contact<br></label>
             <div>
-              <input type="text" class="form-control col-sm-1" name="corp65" placeholder="Position" style="width: 10%;">
-              <input type="text" class="form-control col-sm-1" name="corp66" placeholder="first name" style="width: 16%;">
-              <input type="text" class="form-control col-sm-1" name="corp67" placeholder="last name" style="width: 14%;">
-              <input type="text" class="form-control col-sm-1" name="corp68" placeholder="phone number" style="width: 10%;">
-              <input type="text" class="form-control col-sm-1" name="corp69" placeholder="wechat / other" style="width: 28%;">
-              <input type="text" class="form-control col-sm-1" name="corp70" placeholder="email" style="width: 22%;">  
+              <input type="text" class="form-control col-sm-1" name="corp61" placeholder="Position" style="width: 10%;">
+              <select class="browser-default custom-select form-control" value="" name="corp62" style="width: 90%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.wechat}} | {{row.email}}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
           <div class="form-group col-md-12">
             <label>3rd Contact<br></label>
             <div>
-              <input type="text" class="form-control col-sm-1" name="corp71" placeholder="Position" style="width: 10%;">
-              <input type="text" class="form-control col-sm-1" name="corp72" placeholder="first name" style="width: 16%;">
-              <input type="text" class="form-control col-sm-1" name="corp73" placeholder="last name" style="width: 14%;">
-              <input type="text" class="form-control col-sm-1" name="corp74" placeholder="phone number" style="width: 10%;">
-              <input type="text" class="form-control col-sm-1" name="corp75" placeholder="wechat / other" style="width: 28%;">
-              <input type="text" class="form-control col-sm-1" name="corp76" placeholder="email" style="width: 22%;">  
+              <input type="text" class="form-control col-sm-1" name="corp63" placeholder="Position" style="width: 10%;">
+              <select class="browser-default custom-select form-control" value="" name="corp64" style="width: 90%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.wechat}} | {{row.email}}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
           <div class="form-group col-md-12">
             <label>4th Contact<br></label>
             <div>
-              <input type="text" class="form-control col-sm-1" name="corp77" placeholder="Position" style="width: 10%;">
-              <input type="text" class="form-control col-sm-1" name="corp78" placeholder="first name" style="width: 16%;">
-              <input type="text" class="form-control col-sm-1" name="corp79" placeholder="last name" style="width: 14%;">
-              <input type="text" class="form-control col-sm-1" name="corp80" placeholder="phone number" style="width: 10%;">
-              <input type="text" class="form-control col-sm-1" name="corp81" placeholder="wechat / other" style="width: 28%;">
-              <input type="text" class="form-control col-sm-1" name="corp82" placeholder="email" style="width: 22%;">  
+              <input type="text" class="form-control col-sm-1" name="corp65" placeholder="Position" style="width: 10%;">
+              <select class="browser-default custom-select form-control" value="" name="corp66" style="width: 90%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.wechat}} | {{row.email}}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
         </div>
@@ -504,51 +508,44 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label><h4 style="color: #337ab7;">DIRECTORS</h4></label>
+              <input type="text" name="corp670" value='  [serial no: ]' style="height: 40%; font-size: 9px; border: none; background-color: #eaece9;">
             </div>
           <br/>
             <div class="form-group col-md-12">
-              <label>1st Director  ( first name | last name | SIN number | address | phone number | email )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp83" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp84" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp85" placeholder="SIN number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp86" placeholder="address" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp87" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp88" placeholder="email" style="width: 22%;">  
-              </div>
+              <label>1st Director ( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
+              <select class="browser-default custom-select form-control" value="" name="corp67" style="width: 90%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
             </div>
             <div class="form-group col-md-12">
               <label>2nd Director<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp89" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp90" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp91" placeholder="SIN number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp92" placeholder="address" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp93" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp94" placeholder="email" style="width: 22%;">  
-              </div>
+              <select class="browser-default custom-select form-control" value="" name="corp68" style="width: 90%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
             </div>
             <div class="form-group col-md-12">
               <label>3rd Director<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp95" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp96" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp97" placeholder="SIN number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp98" placeholder="address" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp99" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp100" placeholder="email" style="width: 22%;">  
-              </div>
+              <select class="browser-default custom-select form-control" value="" name="corp69" style="width: 90%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
             </div>
             <div class="form-group col-md-12">
               <label>4th Director<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp101" placeholder="first name" style="width: 16%;">
-                <input type="text" class="form-control col-sm-1" name="corp102" placeholder="last name" style="width: 14%;">
-                <input type="text" class="form-control col-sm-1" name="corp103" placeholder="SIN number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp104" placeholder="address" style="width: 28%;">
-                <input type="text" class="form-control col-sm-1" name="corp105" placeholder="phone number" style="width: 10%;">
-                <input type="text" class="form-control col-sm-1" name="corp106" placeholder="email" style="width: 22%;">  
-              </div>
+              <select class="browser-default custom-select form-control" value="" name="corp70" style="width: 90%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
 
@@ -560,82 +557,74 @@
           <div class="form-row">
             <div class="form-group col-md-12">
               <label><h4 style="color: #337ab7;">SHAREHOLDERS</h4></label>
+              <input type="text" name="corp710" value='  [serial no: ]' style="height: 40%; font-size: 9px; border: none; background-color: #eaece9;">
             </div>
           <br/>
-            <div class="form-group col-md-12">
-              <label>1st ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+            <div class="form-group col-md-6">
+              <label>1st ShareHolder ( Share Class and Shares | Share Percentage )<br></label>
               <div>
-                <input type="text" class="form-control col-sm-1" name="corp107" placeholder="share class and shares" style="width: 35%;">
-                <input type="text" class="form-control col-sm-1" name="corp108" placeholder="share (%)" style="width: 12%;">
-                <input type="text" class="form-control col-sm-1" name="corp109" placeholder="first name" style="width: 22%;">
-                <input type="text" class="form-control col-sm-1" name="corp110" placeholder="last name" style="width: 18%;">
-                <input type="text" class="form-control col-sm-1" name="corp111" placeholder="SIN number" style="width: 13%;">
+                <input type="text" class="form-control col-sm-1" name="corp71" placeholder="share class and shares" style="width: 85%;">
+                <input type="text" class="form-control col-sm-1" name="corp72" placeholder="share (%)" style="width: 15%;">
               </div>
             </div>
             <div class="form-group col-md-12">
-              <label>1st ShareHolder ( address | phone number | email )<br></label>
+              <label>1st ShareHolder ( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
+              <select class="browser-default custom-select form-control" value="" name="corp73" style="width: 90%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label>2nd ShareHolder ( Share Class and Shares | Share Percentage )<br></label>
               <div>
-                <input type="text" class="form-control col-sm-1" name="corp112" placeholder="address" style="width: 50%;">
-                <input type="text" class="form-control col-sm-1" name="corp113" placeholder="phone number" style="width: 15%;">
-                <input type="text" class="form-control col-sm-1" name="corp114" placeholder="email" style="width: 35%;">  
+                <input type="text" class="form-control col-sm-1" name="corp74" placeholder="share class and shares" style="width: 85%;">
+                <input type="text" class="form-control col-sm-1" name="corp75" placeholder="share (%)" style="width: 15%;">
               </div>
             </div>
             <div class="form-group col-md-12">
-              <label>2nd ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
+              <label>2nd ShareHolder ( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
+              <select class="browser-default custom-select form-control" value="" name="corp76" style="width: 90%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label>3rd ShareHolder ( Share Class and Shares | Share Percentage )<br></label>
               <div>
-                <input type="text" class="form-control col-sm-1" name="corp115" placeholder="share class and shares" style="width: 35%;">
-                <input type="text" class="form-control col-sm-1" name="corp116" placeholder="share (%)" style="width: 12%;">
-                <input type="text" class="form-control col-sm-1" name="corp117" placeholder="first name" style="width: 22%;">
-                <input type="text" class="form-control col-sm-1" name="corp118" placeholder="last name" style="width: 18%;">
-                <input type="text" class="form-control col-sm-1" name="corp119" placeholder="SIN number" style="width: 13%;">
+                <input type="text" class="form-control col-sm-1" name="corp77" placeholder="share class and shares" style="width: 85%;">
+                <input type="text" class="form-control col-sm-1" name="corp78" placeholder="share (%)" style="width: 15%;">
               </div>
             </div>
             <div class="form-group col-md-12">
-              <label>2nd ShareHolder ( address | phone number | email )<br></label>
+              <label>3rd ShareHolder ( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
+              <select class="browser-default custom-select form-control" value="" name="corp79" style="width: 90%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label>4th ShareHolder ( Share Class and Shares | Share Percentage )<br></label>
               <div>
-                <input type="text" class="form-control col-sm-1" name="corp120" placeholder="address" style="width: 50%;">
-                <input type="text" class="form-control col-sm-1" name="corp121" placeholder="phone number" style="width: 15%;">
-                <input type="text" class="form-control col-sm-1" name="corp122" placeholder="email" style="width: 35%;">  
+                <input type="text" class="form-control col-sm-1" name="corp80" placeholder="share class and shares" style="width: 85%;">
+                <input type="text" class="form-control col-sm-1" name="corp81" placeholder="share (%)" style="width: 15%;">
               </div>
             </div>
             <div class="form-group col-md-12">
-              <label>3rd ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp123" placeholder="share class and shares" style="width: 35%;">
-                <input type="text" class="form-control col-sm-1" name="corp124" placeholder="share (%)" style="width: 12%;">
-                <input type="text" class="form-control col-sm-1" name="corp125" placeholder="first name" style="width: 22%;">
-                <input type="text" class="form-control col-sm-1" name="corp126" placeholder="last name" style="width: 18%;">
-                <input type="text" class="form-control col-sm-1" name="corp127" placeholder="SIN number" style="width: 13%;">
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>3rd ShareHolder ( address | phone number | email )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp128" placeholder="address" style="width: 50%;">
-                <input type="text" class="form-control col-sm-1" name="corp129" placeholder="phone number" style="width: 15%;">
-                <input type="text" class="form-control col-sm-1" name="corp130" placeholder="email" style="width: 35%;">  
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>4th ShareHolder ( Share Class and Shares | Share Percentage | First name | Last name | SIN number )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp131" placeholder="share class and shares" style="width: 35%;">
-                <input type="text" class="form-control col-sm-1" name="corp132" placeholder="share (%)" style="width: 12%;">
-                <input type="text" class="form-control col-sm-1" name="corp133" placeholder="first name" style="width: 22%;">
-                <input type="text" class="form-control col-sm-1" name="corp134" placeholder="last name" style="width: 18%;">
-                <input type="text" class="form-control col-sm-1" name="corp135" placeholder="SIN number" style="width: 13%;">
-              </div>
-            </div>
-            <div class="form-group col-md-12">
-              <label>4th ShareHolder ( address | phone number | email )<br></label>
-              <div>
-                <input type="text" class="form-control col-sm-1" name="corp136" placeholder="address" style="width: 50%;">
-                <input type="text" class="form-control col-sm-1" name="corp137" placeholder="phone number" style="width: 15%;">
-                <input type="text" class="form-control col-sm-1" name="corp138" placeholder="email" style="width: 35%;">  
-              </div>
+              <label>4th ShareHolder ( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
+              <select class="browser-default custom-select form-control" value="" name="corp82" style="width: 90%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
             </div>
           </div>
-
       </div>
       <!-- Task Information -->
       <div id="item14" class="item">
@@ -720,26 +709,30 @@
       };
 
       function testinput(){
-        for (i=1; i<139; i++) {
+        for (i=1; i<82; i++) {
           var a="";
           var b = "016_"
           if (i==5 || i==6 || i==7 || i==9 || i==10){
             a = 'yyyy-mm-dd';
           } else if (i == 8 || i==27) {
             a = $('form [name="corp' + i + '"]').val();
-          } else if (i < 59) {
+          } else if (i < 59 ) {
             a = $('form [name="corp' + i + '"]').parent('div').find('label').text();
             a = b + a;
-          } else if (i < 83) {
-            a = ($('form [name="corp' + i + '"]').parent('div').find('label').text()).substr(0,1);
-            a = b + "C" + a + "-" + $('form [name="corp' + i + '"]').attr('placeholder');
-          } else if ( i < 107) {
-            a = ($('form [name="corp' + i + '"]').parent('div').find('label').text()).substr(0,1);
-            a = b + "D" + a + "-" + $('form [name="corp' + i + '"]').attr('placeholder');
-          } else {
-            a = ($('form [name="corp' + i + '"]').parent('div').find('label').text()).substr(0,1);
-            a = b + "S" + a + "-" + $('form [name="corp' + i + '"]').attr('placeholder');
+          } else if ( i==14 || i==15 || i==59 || i==71 || i==72){
+            a = ($('form [name="corp' + i + '"]').parent('div').parent('div').find('label').text()).substr(0,1);
+            a = b + a;
           }
+          // } else if (i < 83) {
+          //   a = ($('form [name="corp' + i + '"]').parent('div').find('label').text()).substr(0,1);
+          //   a = b + "C" + a + "-" + $('form [name="corp' + i + '"]').attr('placeholder');
+          // } else if ( i < 107) {
+          //   a = ($('form [name="corp' + i + '"]').parent('div').find('label').text()).substr(0,1);
+          //   a = b + "D" + a + "-" + $('form [name="corp' + i + '"]').attr('placeholder');
+          // } else {
+          //   a = ($('form [name="corp' + i + '"]').parent('div').find('label').text()).substr(0,1);
+          //   a = b + "S" + a + "-" + $('form [name="corp' + i + '"]').attr('placeholder');
+          // }
           $('form [name="corp' + i + '"]').val(a);          
         }
       }

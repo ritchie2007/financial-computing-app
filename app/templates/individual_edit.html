@@ -5,7 +5,6 @@
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/common.css')}}">
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.min.css')}}"><!-- 这句 用本地bootstrap.min.css格式就乱了-->
-  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap-multiselect.css')}}">
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style-corp.css')}}">
   <style>
     form .form-row .form-group label {
@@ -32,12 +31,23 @@
 {% endblock body_attribs %}
 
 {% block content %}
-<div class="tbl-field" style="height: fit-content;">
+<div class="tbl-field">
+    <div class="row">
+        <form action="{{url_for('individual_del')}}/{{indiv_data.indiv_id}}" method="POST">
+          <div class="form-group col-md-9" style="margin-bottom: 0px;">
+            <h3>&nbsp Individual ID: {{indiv_data.indiv_id}} &nbsp Name: {{indiv_data.prefix}} {{indiv_data.last_name}}, {{indiv_data.first_name}}</h3>
+          </div>
+          <div class="form-group col-md-3" style="margin: 20px 0px 0px 0px;">
+            <a href="{{url_for('individual_del')}}/{{indiv_data.indiv_id}}"><button type="submit" class="btn btn-info" style="padding: 3px 12px 3px 12px;">Delete Individual</button></a>
+            <a href="{{ url_for('individual')}}" type="cancel" class="btn btn-info" style="padding: 3px 12px 3px 12px;">Cancel</a>
+          </div>
+        </form>
+      </div>
   <h3 style="margin-left: 50px;">&nbsp Add new individual</h3>
 
   <div class="row" style="margin-left: 70px; margin-right: 70px;">
     
-    <form action="{{url_for('individual_add')}}" method="POST">
+    <form action="{{url_for('individual_edit')}}/{{indiv_data.indiv_id}}" method="POST">
       <!-- <div id="corpedit" class="scroll overflow-auto" style="height: 600px; overflow-y: auto;"> -->
         <div class="form-row">
           <div class="form-group col-md-12">
@@ -46,11 +56,11 @@
 
           <div class="form-group col-md-1">
             <label>SIN</label>
-            <input type="text" class="form-control" name="indiv1">
+            <input type="text" class="form-control" name="indiv1" value="{{indiv_data.sin}}">
           </div>
           <div class="form-group col-md-1">
             <label>Prefix</label>
-            <select class="browser-default custom-select" name="indiv2" style="width: 100%; height: 32px; border: none; background: #ffffff;">
+            <select class="browser-default custom-select" name="indiv2" value="{{indiv_data.prefix}}" style="width: 100%; height: 32px; border: none; background: #ffffff;">
               <option>Mr.</option>
               <option>Mrs.</option>
               <option>Ms.</option>
@@ -59,44 +69,44 @@
           </div>
           <div class="form-group col-md-2">
             <label>Last name</label>
-            <input type="text" class="form-control" name="indiv3">
+            <input type="text" class="form-control" name="indiv3" value="{{indiv_data.last_name}}">
           </div>
           <div class="form-group col-md-2">
             <label >First name</label>
-            <input type="text" class="form-control" name="indiv4">
+            <input type="text" class="form-control" name="indiv4" value="{{indiv_data.first_name}}">
           </div>
           <div class="form-group col-md-2">
             <label >Middle/other name</label>
-            <input type="text" class="form-control" name="indiv5">
+            <input type="text" class="form-control" name="indiv5" value="{{indiv_data.other_name}}">
           </div>
           <div class="form-group col-md-2">
             <label>Email</label>
-            <input type="text" class="form-control" name="indiv6">
+            <input type="text" class="form-control" name="indiv6" value="{{indiv_data.email}}">
           </div>
           <div class="form-group col-md-1">
             <label>Phone1</label>
-            <input type="text" class="form-control" name="indiv7">
+            <input type="text" class="form-control" name="indiv7" value="{{indiv_data.phone1}}">
           </div>
           <div class="form-group col-md-1">
             <label>Phone2</label>
-            <input type="text" class="form-control" name="indiv8">
+            <input type="text" class="form-control" name="indiv8" value="{{indiv_data.phone2}}">
           </div>
 
           <div class="form-group col-md-3">
             <label>Address 1</label>
-            <input type="text" class="form-control" name="indiv9">
+            <input type="text" class="form-control" name="indiv9" value="{{indiv_data.address1}}">
           </div>
           <div class="form-group col-md-3">
             <label>Address 2</label>
-            <input type="text" class="form-control" name="indiv10">
+            <input type="text" class="form-control" name="indiv10" value="{{indiv_data.address2}}">
           </div>
           <div class="form-group col-md-3">
             <label>Mailing address</label>
-            <input type="text" class="form-control" name="indiv11">
+            <input type="text" class="form-control" name="indiv11" value="{{indiv_data.mail_address}}">
           </div>
           <div class="form-group col-md-3">
             <label>Wechat/Twitter/LinkedIn/Facebook/</label>
-            <input type="text" class="form-control" name="indiv12">
+            <input type="text" class="form-control" name="indiv12" value="{{indiv_data.wechat}}">
           </div>
           <!-- CRA -->
           <div class="form-group col-md-12">
@@ -105,27 +115,27 @@
 
           <div class="form-group col-md-4">
             <label>Sole proprietorship and T4A</label>
-            <input type="text" class="form-control" name="indiv13">
+            <input type="text" class="form-control" name="indiv13" value= "{{indiv_data.cra_sole_proprietor}}">
           </div>
           <div class="form-group col-md-4">
             <label>HST Reporting</label>
-            <input type="text" class="form-control" name="indiv14">
+            <input type="text" class="form-control" name="indiv14" value = "{{indiv_data.cra_hst_report}}">
           </div>
           <div class="form-group col-md-4">
             <label >Payroll Account</label>
-            <input type="text" class="form-control" name="indiv15">
+            <input type="text" class="form-control" name="indiv15" value = "{{indiv_data.cra_payroll}}">
           </div>
           <div class="form-group col-md-4">
             <label >Withholding Tax Account</label>
-            <input type="text" class="form-control" name="indiv16">
+            <input type="text" class="form-control" name="indiv16" value = "{{indiv_data.cra_withhold_tax}}">
           </div>
           <div class="form-group col-md-2">
             <label>WSIB Account</label>
-            <input type="text" class="form-control" name="indiv17">
+            <input type="text" class="form-control" name="indiv17" value = "{{indiv_data.cra_wsib}}">
           </div>
           <div class="form-group col-md-4">
             <label>Other Account</label>
-            <input type="text" class="form-control" name="indiv18">
+            <input type="text" class="form-control" name="indiv18" value = "{{indiv_data.cra_other}}">
           </div>
           <!-- Oversea Assets/corporation -->
           <div class="form-group col-md-12">
@@ -138,7 +148,7 @@
           </div> -->
           <div class="form-group col-md-12">
             <label>T1135 Oversea Assets Report</label>
-            <input type="text" class="form-control" name="indiv19">
+            <input type="text" class="form-control" name="indiv19" value = "{{indiv_data.oversea_asset_t1135}}">
           </div>
           <!-- <div class="form-group col-md-2">
             <label >Oversea Corporation</label>
@@ -146,7 +156,7 @@
           </div> -->
           <div class="form-group col-md-12">
             <label >T1134 Oversea Corporation</label>
-            <input type="text" class="form-control" name="indiv20">
+            <input type="text" class="form-control" name="indiv20" value = "{{indiv_data.oversea_corp_t1134}}">
           </div>
           <!-- T1 Information -->
           <div class="form-group col-md-12">
@@ -155,15 +165,15 @@
 
           <div class="form-group col-md-3">
             <label>Tslip Type</label>
-            <input type="text" class="form-control" name="indiv21">
+            <input type="text" class="form-control" name="indiv21" value = "{{indiv_data.tslip}}">
           </div>
           <div class="form-group col-md-9">
             <label>Tax personal information</label>
-            <input type="text" class="form-control" name="indiv22">
+            <input type="text" class="form-control" name="indiv22" value = "{{indiv_data.tax_personal_info}}">
           </div>
           <div class="form-group col-md-12">
             <label>Specific information</label>
-            <input type="text" class="form-control" name="indiv23">
+            <input type="text" class="form-control" name="indiv23" value = "{{indiv_data.specific_info}}">
           </div>
           <!-- Engagement  -->
           <div class="form-group col-md-12">
@@ -172,18 +182,18 @@
 
           <div class="form-group col-md-12">
             <label>Accounting Service </label>
-            <input type="text" class="form-control" name="indiv24">
+            <input type="text" class="form-control" name="indiv24" value = "{{indiv_data.engage_account}}">
           </div>
           <div class="form-group col-md-12">
             <label>Leading </label>
-            <input type="text" class="form-control" name="indiv25">
+            <input type="text" class="form-control" name="indiv25" value = "{{indiv_data.engage_leading}}">
           </div>
           <!-- Note  -->
           <div class="form-group col-md-12">
             <label><h4 style="color: #337ab7;">Note</h4></label>
           </div>
           <div class="form-group col-md-12">
-            <input type="text" class="form-control" name="indiv26">
+            <input type="text" class="form-control" name="indiv26" value = "{{indiv_data.note}}">
           </div>
 
           <!-- As contacts for Corporations  -->
@@ -192,9 +202,9 @@
           </div>
           <div class="form-group col-md-4">
             <label>Corporaton 01</label>
-            <select class="browser-default custom-select" name="indiv27">
+            <select class="browser-default custom-select" name="indiv27" value="{{corp_list[0]}}">
               <option value="" >Please select</option>
-              {% for row in corp_data %}
+              {% for row in corp_dropdown %}
               <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
               {% endfor %}
             </select>
@@ -203,7 +213,7 @@
             <label>Corporaton 02</label>
             <select class="browser-default custom-select" name="indiv28">
               <option value="" >Please select</option>
-              {% for row in corp_data %}
+              {% for row in corp_dropdown %}
               <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
               {% endfor %}
             </select>
@@ -212,7 +222,7 @@
             <label>Corporaton 03</label>
             <select class="browser-default custom-select" name="indiv29">
               <option value="" >Please select</option>
-              {% for row in corp_data %}
+              {% for row in corp_dropdown %}
               <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
               {% endfor %}
             </select>
@@ -224,9 +234,9 @@
           </div>
           <div class="form-group col-md-4">
             <label>Corporaton 01</label>
-            <select class="browser-default custom-select" name="indiv30">
+            <select class="browser-default custom-select" name="indiv30" value="{{corp_list[1]}}">
               <option value="" >Please select</option>
-              {% for row in corp_data %}
+              {% for row in corp_dropdown %}
               <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
               {% endfor %}
             </select>
@@ -235,7 +245,7 @@
             <label>Corporaton 02</label>
             <select class="browser-default custom-select" name="indiv31">
               <option value="" >Please select</option>
-              {% for row in corp_data %}
+              {% for row in corp_dropdown %}
               <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
               {% endfor %}
             </select>
@@ -244,7 +254,7 @@
             <label>Corporaton 03</label>
             <select class="browser-default custom-select" name="indiv32">
               <option value="" >Please select</option>
-              {% for row in corp_data %}
+              {% for row in corp_dropdown %}
               <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
               {% endfor %}
             </select>
@@ -256,9 +266,9 @@
           </div>
           <div class="form-group col-md-4">
             <label>Corporaton 01</label>
-            <select class="browser-default custom-select" name="indiv33">
+            <select class="browser-default custom-select" name="indiv33" value="{{corp_list[2]}}">
               <option value="" >Please select</option>
-              {% for row in corp_data %}
+              {% for row in corp_dropdown %}
               <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
               {% endfor %}
             </select>
@@ -267,7 +277,7 @@
             <label>Corporaton 02</label>
             <select class="browser-default custom-select" name="indiv34">
               <option value="" >Please select</option>
-              {% for row in corp_data %}
+              {% for row in corp_dropdown %}
               <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
               {% endfor %}
             </select>
@@ -276,7 +286,7 @@
             <label>Corporaton 03</label>
             <select class="browser-default custom-select" name="indiv35">
               <option value="" >Please select</option>
-              {% for row in corp_data %}
+              {% for row in corp_dropdown %}
               <option >{{row.corp_id}} | {{row.corp2}} | {{row.corp1}}</option>
               {% endfor %}
             </select>
@@ -289,9 +299,9 @@
           </div>
           <div class="form-group col-md-4">
             <label>Spouse/Common_law</label>
-            <select class="browser-default custom-select" name="indiv36">
+            <select class="browser-default custom-select" name="indiv36" value="{{indiv_relation_list[0]}}">
               <option value="" >Please select</option>
-              {% for row in indiv_data %}
+              {% for row in indiv_dropdown %}
               <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
               {% endfor %}
             </select>
@@ -300,7 +310,7 @@
             <label>Spouse, ...</label>
             <select class="browser-default custom-select" name="indiv37">
               <option value="" >Please select</option>
-              {% for row in indiv_data %}
+              {% for row in indiv_dropdown %}
               <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
               {% endfor %}
             </select>
@@ -312,9 +322,9 @@
           </div>
           <div class="form-group col-md-3">
             <label>Parent</label><txt style="font-size: xx-small;"> &nbsp 10</txt>
-            <select class="browser-default custom-select" name="indiv38">
+            <select class="browser-default custom-select" name="indiv38" value="{{indiv_relation_list[1]}}">
               <option value="" >Please select</option>
-              {% for row in indiv_data %}
+              {% for row in indiv_dropdown %}
               <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
               {% endfor %}
             </select>
@@ -323,7 +333,7 @@
             <label>Parent</label><txt style="font-size: xx-small;"> &nbsp 11</txt>
             <select class="browser-default custom-select" name="indiv39">
               <option value="" >Please select</option>
-              {% for row in indiv_data %}
+              {% for row in indiv_dropdown %}
               <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
               {% endfor %}
             </select>
@@ -332,7 +342,7 @@
             <label>Parent</label><txt style="font-size: xx-small;"> &nbsp 20</txt>
             <select class="browser-default custom-select" name="indiv40">
               <option value="" >Please select</option>
-              {% for row in indiv_data %}
+              {% for row in indiv_dropdown %}
               <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
               {% endfor %}
             </select>
@@ -341,7 +351,7 @@
             <label>Parent</label><txt style="font-size: xx-small;"> &nbsp 21</txt>
             <select class="browser-default custom-select" name="indiv41">
               <option value="" >Please select</option>
-              {% for row in indiv_data %}
+              {% for row in indiv_dropdown %}
               <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
               {% endfor %}
             </select>
@@ -353,9 +363,9 @@
           </div>
           <div class="form-group col-md-3">
             <label>Child</label><txt style="font-size: xx-small;"> &nbsp 01</txt>
-            <select class="browser-default custom-select" name="indiv42">
+            <select class="browser-default custom-select" name="indiv42" value="{{indiv_relation_list[2]}}">
               <option value="" >Please select</option>
-              {% for row in indiv_data %}
+              {% for row in indiv_dropdown %}
               <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
               {% endfor %}
             </select>
@@ -364,7 +374,7 @@
             <label>Child</label><txt style="font-size: xx-small;"> &nbsp 02</txt>
             <select class="browser-default custom-select" name="indiv43">
               <option value="" >Please select</option>
-              {% for row in indiv_data %}
+              {% for row in indiv_dropdown %}
               <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
               {% endfor %}
             </select>
@@ -373,7 +383,7 @@
             <label>Child</label><txt style="font-size: xx-small;"> &nbsp 03</txt>
             <select class="browser-default custom-select" name="indiv44">
               <option value="" >Please select</option>
-              {% for row in indiv_data %}
+              {% for row in indiv_dropdown %}
               <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
               {% endfor %}
             </select>
@@ -382,7 +392,7 @@
             <label>Child</label><txt style="font-size: xx-small;"> &nbsp 04</txt>
             <select class="browser-default custom-select" name="indiv45">
               <option value="" >Please select</option>
-              {% for row in indiv_data %}
+              {% for row in indiv_dropdown %}
               <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}}</option>
               {% endfor %}
             </select>
@@ -399,9 +409,6 @@
           </div>
         </div>
     </form> 
-      <div class="form-group col-md-1">
-        <button style="font-size: 10;" name="test" onclick="testinput()">test</button>
-      </div> 
   </div>
 </div>
 {% endblock %}
@@ -430,31 +437,39 @@
             // console.log(height_val);
         });
         //})
-        
-        // add test data
-        function testinput(){
-          var b = localStorage.getItem('serialnum');
-          var a = Math.floor(Math.random()*(987654321-123456789)+123456789);
-          $('form [name="indiv1"]').val(a);
-          a = Math.floor(Math.random()*(4-1)+1);
-          $('form [name="indiv2"]').prop('selectedIndex',a)
-          for (i=3; i<27; i++) {
-              a = $('form [name="indiv' + i + '"]').parent('div').find('label').text();
-              a = 'no_' + b + '_' + a; 
-              $('form [name="indiv' + i + '"]').val(a);
-          }
-          a = Math.floor(Math.random()*(9876543210-1234567890)+1234567890);
-          $('form [name="indiv7"]').val(a);
-          a = Math.floor(Math.random()*(9876543210-1234567890)+1234567890);
-          $('form [name="indiv8"]').val(a);
-          $('form [name="indiv26"]').val('no_' + b + '- notes.' );
-          // for (i=27; i<36; i++) {
-          //   a = Math.floor(Math.random()*(37-1)+1);
-          //   $('form [name="indiv' + i + '"]').prop('selectedIndex',a)
-          // }
 
-          localStorage.setItem('serialnum', (parseInt(b)+1));
-        }
+        window.onload = function(event) {
+            var tmp = $('form [name="indiv2"]').attr('value')
+            var index = ['Mr.','Mrs.','Ms.','Miss.'].indexOf(tmp)
+            if (index >= 0 && index < 4) {
+                $('form [name="indiv2"]').prop('selectedIndex',index);
+            }
+            tmp = ($('form [name="indiv27"]').attr('value').replace('[','').replace(']','').replace(' ','')).split(',');
+            for (i=0; i<tmp.length; i++) {
+            $('form [name="indiv' + (i+27) + '"]').prop('selectedIndex',parseInt(tmp[i])+1);
+            };
+            tmp = ($('form [name="indiv30"]').attr('value').replace('[','').replace(']','').replace(' ','')).split(',');
+            for (i=0; i<tmp.length; i++) {
+            $('form [name="indiv' + (i+30) + '"]').prop('selectedIndex',parseInt(tmp[i])+1);
+            };
+            tmp = ($('form [name="indiv33"]').attr('value').replace('[','').replace(']','').replace(' ','')).split(',');
+            for (i=0; i<tmp.length; i++) {
+            $('form [name="indiv' + (i+33) + '"]').prop('selectedIndex',parseInt(tmp[i])+1);
+            };
+            tmp = ($('form [name="indiv36"]').attr('value').replace('[','').replace(']','').replace(' ','')).split(',');
+            for (i=0; i<tmp.length; i++) {
+            $('form [name="indiv' + (i+36) + '"]').prop('selectedIndex',parseInt(tmp[i])+1);
+            };
+            tmp = ($('form [name="indiv38"]').attr('value').replace('[','').replace(']','').replace(' ','')).split(',');
+            for (i=0; i<tmp.length; i++) {
+            $('form [name="indiv' + (i+38) + '"]').prop('selectedIndex',parseInt(tmp[i])+1);
+            };
+            tmp = ($('form [name="indiv42"]').attr('value').replace('[','').replace(']','').replace(' ','')).split(',');
+            for (i=0; i<tmp.length; i++) {
+            $('form [name="indiv' + (i+42) + '"]').prop('selectedIndex',parseInt(tmp[i])+1);
+            };
+
+        };
 
         //改变窗口大小后，自动刷新，如想清楚cache则需要location.reload(true);，这是配合上面的动态CSS使用的
         //$(document).ready(function () 所以页面都生效

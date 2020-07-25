@@ -18,27 +18,27 @@
             <thead>
               <tr>
                 <th class="th-sm">ID.</th>
-                <th class="th-sm">Corp Name</th>
-                <th class="th-sm">Busi. No</th>
-                <th class="th-sm">Type</th>
-                <th class="th-sm">Anni. Date</th>
-                <th class="th-sm">Tax year</th>
-                <th class="th-sm">Contact</th>
+                <th class="th-sm">Name</th>
+                <th class="th-sm">SIN</th>
                 <th class="th-sm">Phone</th>
-                <th class="th-sm">Task No.</th>
+                <th class="th-sm">Email</th>
+                <th class="th-sm">Sole_propprietor</th>
+                <th class="th-sm">Oversea T1135</th>
+                <th class="th-sm">Engage</th>
+                <th class="th-sm">Group</th>
               </tr>
             </thead>
             <tbody id="myTable">
-            {% for row in corp %}
-              <tr class="table-row" data-href="{{url_for('corp_edit')}}/{{row.corp_id}}">
-                <td class="col-1">{{row.corp_id}}</td>
-                <td class="col-1">{{row.corp2}}</td>
-                <td class="col-1">{{row.corp1}}</td>
-                <td class="col-1">{{row.corp8}}</td>
-                <td class="col-1">{{row.corp9}}-{{row.corp10}}</td>
-                <td class="col-1">{{row.corp25}}</td>
-                <td class="col-2">{{row.corp19}}, {{row.corp18}}</td>
-                <td class="col-2">{{row.corp20}}</td>
+            {% for row in indiv %}
+              <tr class="table-row" data-href="{{url_for('individual_edit')}}/{{row.indiv_id}}">
+                <td class="col-1">{{row.indiv_id}}</td>
+                <td class="col-1">{{row.prefix}} {{row.last_name}}, {{row.first_name}}</td>
+                <td class="col-1">{{row.sin}}</td>
+                <td class="col-1">{{row.phone1}}</td>
+                <td class="col-1">{{row.email}}</td>
+                <td class="col-1">{{row.cra_sole_proprietor}}</td>
+                <td class="col-2">{{row.oversea_asset_t1135}}, {{row.corp18}}</td>
+                <td class="col-2">{{row.engage_account}}</td>
                 <td class="col-1">{{row.task}}</td>
               </tr>
             {% endfor %}

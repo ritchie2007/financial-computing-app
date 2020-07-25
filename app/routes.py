@@ -277,7 +277,7 @@ def corp_edit(id):
     value0.append(my_data.contact)
     value0.append(my_data.director)
     value0.append(my_data.shareholder)
-    indiv_list = utility.get_indiv_index(value0, indiv_data)
+    indiv_list = utility.get_index_index('Corporation', value0, indiv_data)
 
     if request.method == 'POST':
         my_data.corp1 = request.form['corp1']
@@ -369,19 +369,19 @@ def corp_edit(id):
             my_data.contact = ""
         else:
             utility.corp_contact_to_indiv(contact, max_id, 1, value0[0])
-            my_data.contact = (",".join(contact)).replace('[','').replace(']','').replace(' ','')
+            my_data.contact = ",".join(contact)
         # director
         if director == []:
             my_data.director = ""
         else:
             utility.corp_director_to_indiv(director, max_id, 1, value0[1])
-            my_data.director = ",".join(director).replace('[','').replace(']','').replace(' ','')
+            my_data.director = ",".join(director)
         # shareholder
         if shareholder == []:
             my_data.shareholder = ""
         else:
             utility.corp_shareholder_to_indiv(shareholder, max_id, 1, value0[2])
-            my_data.shareholder = ",".join(shareholder).replace('[','').replace(']','').replace(' ','')
+            my_data.shareholder = ",".join(shareholder)
 
         db.session.commit()
         flash("Corporation Updated Successfully")
@@ -419,6 +419,15 @@ def corp_del(id):
         'corp_edit.html',
         corp = my_data,
         title='Edit_Corporation')
+
+@app.route('/individual')
+def individual():
+    my_data = Individual.query.all()
+    return render_template(
+        'individual.html',
+        indiv = my_data,
+        title='Individual'
+    )
 
 @app.route('/individual_add', methods=['GET', 'POST'])
 def individual_add():
@@ -462,6 +471,7 @@ def individual_add():
         parent = utility.get_id_from_name(name, 11, 4)
         child = utility.get_id_from_name(name, 15, 4)
         timestamp = datetime.utcnow()
+
         if (max_id == None):
             max_id = 1
         else:
@@ -471,51 +481,203 @@ def individual_add():
         if contact_corp == []:
             contact_corp = ""
         else:
-            utility.indiv_to_corp_contact(contact_corp, max_id)
+            utility.indiv_to_corp_contact(contact_corp, max_id, 0, "")
             contact_corp = ",".join(contact_corp)
         # director
         if director_corp == []:
             director_corp = ""
         else:
-            utility.indiv_to_corp_director(director_corp, max_id)
+            utility.indiv_to_corp_director(director_corp, max_id, 0, "")
             director_corp = ",".join(director_corp)
         # shareholder
         if sharehold_corp == []:
             sharehold_corp = ""
         else:
-            utility.indiv_to_corp_shareholder(sharehold_corp, max_id)
+            utility.indiv_to_corp_shareholder(sharehold_corp, max_id, 0, "")
             sharehold_corp = ",".join(sharehold_corp)
         
         # spouse
         if spouse == []:
             spouse = ""
         else:
-            utility.indiv_to_spouse(spouse, max_id)
+            utility.indiv_to_spouse(spouse, max_id, 0, "")
             spouse = ",".join(spouse)
         # parents
         if parent == []:
             parent = ""
         else:
-            utility.indiv_to_parent(parent, max_id)
+            utility.parent_to_child(parent, max_id, 0, "")
             parent = ",".join(parent)
         # child
         if child == []:
             child = ""
         else:
-            utility.indiv_to_child(child, max_id)
+            utility.child_to_parent(child, max_id, 0, "")
             child = ",".join(child)
         
         my_data = Individual(sin,prefix,last_name,first_name,other_name,email,phone1,phone2,address1,address2,mail_address,wechat,cra_sole_proprietor,cra_hst_report,cra_payroll,cra_withhold_tax,cra_wsib,cra_other,oversea_asset_t1135,
         oversea_corp_t1134,tslip,tax_personal_info,specific_info,engage_account,engage_leading,note,contact_corp,director_corp,sharehold_corp,spouse,parent,child,timestamp)
         db.session.add(my_data)
         db.session.commit()
-        flash("Corporation add Successfully")
+        flash("Individual add Successfully")
+        return redirect(url_for('individual'))
 
     return render_template(
         'individual_add.html',
         title='Add_new_Individual',
         corp_data = corp,
         indiv_data = indiv
+    )
+
+@app.route('/individual_edit', methods=['GET', 'POST'])
+@app.route('/individual_edit/<int:id>', methods=['GET', 'POST'])
+def individual_edit(id):
+    my_data = Individual.query.get(id)
+    corp_dropdown = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp2, Corporation.corp1)
+    indiv_dropdown = Individual.query.with_entities(Individual.indiv_id, Individual.sin, Individual.prefix, Individual.last_name, Individual.first_name)
+    
+    value0_corp = []
+    value0_corp.append(my_data.contact_corp)
+    value0_corp.append(my_data.director_corp)
+    value0_corp.append(my_data.sharehold_corp)
+    corp_list = utility.get_index_index('Individual', value0_corp, corp_dropdown)
+    
+    value0_indiv = []
+    value0_indiv.append(my_data.spouse)
+    value0_indiv.append(my_data.parent)
+    value0_indiv.append(my_data.child)
+    indiv_relation_list = utility.get_index_index('Corporation', value0_indiv, indiv_dropdown)
+
+    if request.method == 'POST':
+        my_data.sin = request.form['indiv1']
+        my_data.prefix = request.form['indiv2']
+        my_data.last_name = request.form['indiv3']
+        my_data.first_name = request.form['indiv4']
+        my_data.other_name = request.form['indiv5']
+        my_data.email = request.form['indiv6']
+        my_data.phone1 = request.form['indiv7']
+        my_data.phone2 = request.form['indiv8']
+        my_data.address1 = request.form['indiv9']
+        my_data.address2 = request.form['indiv10']
+        my_data.mail_address = request.form['indiv11']
+        my_data.wechat = request.form['indiv12']
+        my_data.cra_sole_proprietor = request.form['indiv13']
+        my_data.cra_hst_report = request.form['indiv14']
+        my_data.cra_payroll = request.form['indiv15']
+        my_data.cra_withhold_tax = request.form['indiv16']
+        my_data.cra_wsib = request.form['indiv17']
+        my_data.cra_other = request.form['indiv18']
+        my_data.oversea_asset_t1135 = request.form['indiv19']
+        my_data.oversea_corp_t1134 = request.form['indiv20']
+        my_data.tslip = request.form['indiv21']
+        my_data.tax_personal_info = request.form['indiv22']
+        my_data.specific_info = request.form['indiv23']
+        my_data.engage_account = request.form['indiv24']
+        my_data.engage_leading = request.form['indiv25']
+        my_data.note = request.form['indiv26']
+        my_data.timestamp = datetime.utcnow()
+
+        name = []
+        for x in range(19):
+            name.append(request.form['indiv' + str(x+27)])
+        contact_corp = utility.get_id_from_name(name, 0, 3)
+        director_corp = utility.get_id_from_name(name, 3, 3)
+        sharehold_corp = utility.get_id_from_name(name, 6, 3)
+        spouse = utility.get_id_from_name(name, 9, 2)
+        parent = utility.get_id_from_name(name, 11, 4)
+        child = utility.get_id_from_name(name, 15, 4)
+
+        print('phone1 ', my_data.phone1)
+        print('phone2 ', my_data.phone2)
+        print('corp_list ',corp_list)
+        print('indiv_relation_list ',indiv_relation_list)
+        print('value0_indiv ', value0_indiv)
+        print('value0_corp ', value0_corp)
+
+        # contact
+        if contact_corp == []:
+            my_data.contact_corp = ""
+        else:
+            utility.indiv_to_corp_contact(contact_corp, id, 1, value0_corp[0])
+            my_data.contact_corp = ",".join(contact_corp)
+        # director
+        if director_corp == []:
+            my_data.director_corp = ""
+        else:
+            utility.indiv_to_corp_director(director_corp, id, 1, value0_corp[1] )
+            my_data.director_corp = ",".join(director_corp)
+        # shareholder
+        if sharehold_corp == []:
+            my_data.sharehold_corp = ""
+        else:
+            utility.indiv_to_corp_shareholder(sharehold_corp, id, 1, value0_corp[2])
+            my_data.sharehold_corp = ",".join(sharehold_corp)
+        
+        # spouse
+        if spouse == []:
+            my_data.spouse = ""
+        else:
+            utility.indiv_to_spouse(spouse, id, 1, value0_indiv[0])
+            my_data.spouse = ",".join(spouse)
+        # parents
+        if parent == []:
+            my_data.parent = ""
+        else:
+            utility.parent_to_child(parent, id, 1, value0_indiv[1])
+            my_data.parent = ",".join(parent)
+        # child
+        if child == []:
+            my_data.child = ""
+        else:
+            utility.child_to_parent(child, id, 1, value0_indiv[2])
+            my_data.child = ",".join(child)
+
+        db.session.commit()
+        return redirect(url_for('individual'))
+
+    return render_template(
+        'individual_edit.html',
+        title='Edit_Individual',
+        indiv_data = my_data,
+        corp_dropdown = corp_dropdown,
+        indiv_dropdown = indiv_dropdown,
+        corp_list = corp_list,
+        indiv_relation_list = indiv_relation_list
+    )
+
+@app.route('/individual_del', methods=['GET', 'POST'])
+@app.route('/individual_del/<int:id>', methods=['GET', 'POST'])
+def individual_del(id):
+    my_data = Individual.query.get(id)
+    if request.method == 'POST':
+        # contact
+        if len(my_data.contact_corp) > 0:
+            utility.indiv_to_corp_contact('', id, 2, my_data.contact_corp)
+        # director
+        if len(my_data.director_corp) > 0:
+            utility.indiv_to_corp_director('', id, 2, my_data.director_corp)
+        # shareholder
+        if len(my_data.sharehold_corp) > 0:
+            utility.indiv_to_corp_shareholder('', id, 2, my_data.sharehold_corp)
+        # spouse
+        if len(my_data.spouse) > 0:
+            utility.indiv_to_spouse('', id, 2, my_data.spouse)
+        # parents
+        if len(my_data.parent) > 0:
+            utility.parent_to_child('', id, 2, my_data.parent)
+        # child
+        if len(my_data.child) > 0:
+            utility.child_to_parent('', id, 2, my_data.child)
+
+        db.session.delete(my_data)
+        db.session.commit()
+        flash("Corporation Deleted Successfully")
+        return redirect(url_for('individual'))
+
+    return render_template(
+        'individual_edit.html',
+        indiv_data = my_data,
+        title='Edit_Individual'
     )
 
 @app.route('/task')

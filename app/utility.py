@@ -455,17 +455,20 @@ def child_to_parent(value1, corpid, oper, value0): # 子里父改，父里子改
                         db.session.commit()
     flash("Child Updated Successfully")
 
-# get Individual detail info
-def get_indiv_index(corp_list, indiv_list): # 通过公司中联系人{}数组，获取每个联系人详细信息，连成字串返回
-    print(corp_list)
+# get Index array
+def get_index_index(type, id_list, dropdown_list): # 由ID字串获取下拉菜单index字串
     index_list = []
     tmp0 = []
-    for x in indiv_list:
-        tmp0.append(str(x.indiv_id))
-    print(tmp0)
-    for x in corp_list:
+    for x in dropdown_list:
+        if type == 'Corporation':
+            tmp0.append(str(x.indiv_id))
+        elif type == 'Individual':
+            tmp0.append(str(x.corp_id))
+
+    for x in id_list:
         tmp1 = []
         if (len(x)>0):
+            x = x.split(',')
             for y in x:
                 if len(y)>0:
                     if tmp0.count(y)>0:

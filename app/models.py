@@ -36,6 +36,8 @@ class Post(db.Model):
         return '<Post {}>'.format(self.body)
 
 class Data_table(db.Model):
+    ''' learning pratice data table'''
+    __tablename__ = 'learning_data_table'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(100))
@@ -46,12 +48,16 @@ class Data_table(db.Model):
         self.phone = phone
 
 class activity_code(db.Model):
+    ''' activity_code detail information'''
+    __tablename__ = 'tbl_activity_code'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     def __init__(self, name):
         self.name = name
 
 class Timesheet(db.Model):
+    ''' Timesheet information'''
+    __tablename__ = 'tbl_Timesheet'
     id = db.Column(db.Integer, primary_key=True)
     startdate = db.Column(db.String(10))
     calhour = db.Column(db.String(10))
@@ -99,42 +105,68 @@ class Timesheet(db.Model):
         self.serialno = serialno
 
 class Task(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    client = db.Column(db.String(100))
-    jobtype = db.Column(db.String(20))
-    periodend = db.Column(db.String(10))
-    details = db.Column(db.String(100))
-    nextstartdate = db.Column(db.String(10))
-    nextenddate = db.Column(db.String(10))
-    status = db.Column(db.String(12))
-    priority = db.Column(db.String(10))
+    ''' Task detail information'''
+    __tablename__ = 'tbl_Task'
+    task_id = db.Column(db.Integer, primary_key=True)
+    client_corp_id = db.Column(db.String(10))
+    client_corp_name = db.Column(db.String(150))
+    client_indiv_id = db.Column(db.String(10))
+    client_indiv_name = db.Column(db.String(100))
+    jobtype_id = db.Column(db.String(10))
+    jobtype_code = db.Column(db.String(20))
+    periodend = db.Column(db.String(20))
+    responsible = db.Column(db.String(100))
+    startdate = db.Column(db.String(20))
+    enddate = db.Column(db.String(20))
+    status = db.Column(db.String(10))
+    details = db.Column(db.String(400))
     recurrence = db.Column(db.String(10))
-    jobowner = db.Column(db.String(20))
-    serialno = db.Column(db.Float())
-    worktime = db.Column(db.String(10))
-    renewperiod = db.Column(db.String(10))
-    renewstartdate = db.Column(db.String(10))
-    renewenddate = db.Column(db.String(10))
-    def __init__(self, client, jobtype, periodend, details, nextstartdate, nextenddate, \
-        status, priority, recurrence, jobowner, serialno, worktime, renewperiod, renewstartdate, \
-        renewenddate):
-        self.client = client
-        self.jobtype = jobtype
+    priority = db.Column(db.String(10))
+    worktime = db.Column(db.String(20))
+    renewperiod = db.Column(db.String(20))
+    renewstartdate = db.Column(db.String(20))
+    renewenddate = db.Column(db.String(20))
+    createdate = db.Column(db.String(20))
+    serialno = db.Column(db.String(30))
+    def __init__(self, client_corp_id, client_corp_name, client_indiv_id, client_indiv_name, jobtype_id, jobtype_code, periodend, responsible, startdate, enddate, \
+        status, details, recurrence, priority, worktime, renewperiod, renewstartdate, \
+        renewenddate, createdate, serialno):
+        self.client_corp_id = client_corp_id
+        self.client_corp_name = client_corp_name
+        self.client_indiv_id = client_indiv_id
+        self.client_indiv_name = client_indiv_name
+        self.jobtype_id = jobtype_id
+        self.jobtype_code = jobtype_code
         self.periodend = periodend
-        self.details = details
-        self.nextstartdate = nextstartdate
-        self.nextenddate = nextenddate
+        self.responsible = responsible
+        self.startdate = startdate
+        self.enddate = enddate
         self.status = status
-        self.priority = priority
+        self.details = details
         self.recurrence = recurrence
-        self.jobowner = jobowner
-        self.serialno = serialno
+        self.priority = priority
         self.worktime = worktime
         self.renewperiod = renewperiod
         self.renewstartdate = renewstartdate
         self.renewenddate = renewenddate
+        self.createdate = createdate
+        self.serialno = serialno
+
+class Job_type(db.Model):
+    ''' job type information'''
+    __tablename__ = 'tbl_jobType'
+    job_id = db.Column(db.Integer, primary_key=True)
+    short_code = db.Column(db.String(20))
+    name = db.Column(db.String(100))
+    description = db.Column(db.String(500))
+    def __init__(self, short_code, name, description):
+        self.short_code = short_code
+        self.name = name
+        self.description = description
 
 class Staff(db.Model):
+    ''' Staff detail information'''
+    __tablename__ = 'tbl_Staff'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
     date = db.Column(db.String(15))
@@ -343,7 +375,7 @@ class Individual(db.Model):
     ''' Indivuduals detail information '''
     __tablename__ = 'tbl_Individual'
     indiv_id = db.Column(db.Integer, primary_key=True)
-    sin = db.Column(db.Integer)
+    sin = db.Column(db.String(10))
     prefix = db.Column(db.String(10))
     last_name = db.Column(db.String(80))
     first_name = db.Column(db.String(80))

@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/dataTables.bootstrap.css')}}">
+<style>
+    #success_message{ display: none;}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form action=" " method="post" id="contact_form" style="width: 60%;"> 
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label">First Name</label>
+          <div class="col-md-8 inputGroupContainer">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+              <input name="first_name" placeholder="First Name" class="form-control" type="text">
+            </div>
+          </div>
+        </div>
+        <!-- Date input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label">Date</label>
+            <div class="col-md-8 inputGroupContainer">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input name="date" placeholder="date" class="form-control" type="date">
+              </div>
+            </div>
+          </div>
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="col-md-4 control-label">State</label>
+          <div class="col-md-8 selectContainer">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+              <select name="state" class="form-control selectpicker">
+                <option value=" ">Please select your state</option>
+                <option>Alabama</option>
+                <option>Alaska</option>
+                <option>Arizona</option>
+                <option>Arkansas</option>
+                <option>California</option>
+                <option>Wyoming</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label">Website or domain name</label>
+          <div class="col-md-8 inputGroupContainer">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+              <input name="website" placeholder="Website or domain name" class="form-control" type="text">
+            </div>
+          </div>
+        </div>
+        <!-- radio checks -->
+        <div class="form-group">
+          <label class="col-md-4 control-label">Do you have hosting?</label>
+          <div class="col-md-8">
+            <div class="radio">
+              <label>
+                <input type="radio" name="hosting" value="yes" /> Yes
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="hosting" value="no" /> No
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- Text area -->
+        <div class="form-group">
+          <label class="col-md-4 control-label">Project Description</label>
+          <div class="col-md-8 inputGroupContainer">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+              <textarea class="form-control" name="comment" placeholder="Project Description"></textarea>
+            </div>
+          </div>
+        </div>
+       <!-- Success message -->
+        <div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Thanks for contacting us, we will get back to you shortly.</div>
+
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-12 control-label"></label>
+            <label class="col-md-12 control-label"></label>
+          <label class="col-md-4 control-label"></label>
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-warning">Send <span class="glyphicon glyphicon-send"></span></button>
+          </div>
+        </div>
+    </form>
+</div><!-- /.container -->
+
+{% endblock %}
+{% block scripts %}
+<script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+<script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+<script src="{{url_for('static', filename='js/main.js')}}"></script>
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+<script src="{{url_for('static', filename='js/jquery.dataTables.js')}}"></script>
+<script src="{{url_for('static', filename='js/dataTables.bootstrap.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrapValidator.min.js')}}"></script> 
+
+<script type="text/javascript">
+    // 这个js是关键bootstrapValidator.min.js， 用bootstrapValidator.js不行
+    $(document).ready(function() {
+        $('#contact_form').bootstrapValidator({
+            // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                first_name: {
+                    validators: {
+                            stringLength: {
+                            min: 2,
+                        },
+                            notEmpty: {
+                            message: 'Please supply your first name'
+                        },
+                            regexp: {
+                            regexp: /^[a-d]+$/,
+                            message: 'The username can only consist of a-d'
+                        },
+                            callback: {
+                                message: '自定义函数作为校验规则，return的时候又调用了下面的函数,注意格式',
+                                callback: function(value, validator, $field) {
+                                    console.log(value);
+                                    if (value == 'aabb') {
+                                        message: 'Wrong value';
+                                        return false;
+                                    } else {
+                                        message: 'call function isValidIP';
+                                        return isValidValue(value);
+                                    }
+                                }
+                        },
+                    }
+                },
+                date: {
+                    validators: {
+                        date: {
+                            format: 'YYYY-MM-DD',
+                            message: 'The value is not a valid date'
+                        }
+                    }
+                },
+                state: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please select your state'
+                        }
+                    }
+                },
+                comment: {
+                    validators: {
+                        stringLength: {
+                            min: 10,
+                            max: 200,
+                            message:'Please enter at least 10 characters and no more than 200'
+                        },
+                        notEmpty: {
+                            message: 'Please supply a description of your project'
+                        }
+                    }
+                }
+            }
+        })
+            
+        .on('success.form.bv', function(e) {
+            $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
+                $('#contact_form').data('bootstrapValidator').resetForm();
+
+            // Prevent form submission
+            e.preventDefault();
+
+            // Get the form instance
+            var $form = $(e.target);
+
+            // Get the BootstrapValidator instance
+            var bv = $form.data('bootstrapValidator');
+
+            // Use Ajax to submit form data
+            $.post($form.attr('action'), $form.serialize(), function(result) {
+                console.log(result);
+            }, 'json');
+        });
+    });
+
+    //校验IP地址格式
+    
+    function isValidValue(value) {
+        //var ip = $("input[name ='inputName']").val();
+        var reg = /^(\w{3,6})$/;
+        return  reg.test(value);
+    };
+
+</script>
+
+{%- endblock scripts %}

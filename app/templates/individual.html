@@ -10,54 +10,54 @@
 
 {% block content %}
 <div class="tbl-field"> 
-    <div class="tbl-list">
-        <!-- <input class="form-control mb-4" id="tableSearch" type="text"
-            placeholder="Type something to search list items">
-        <br/> -->
-        <table id="corp_table" class="table table-bordered table-striped table-hover" style="font-size: 13px;">
-            <thead>
-              <tr>
-                <th class="th-sm">ID.</th>
-                <th class="th-sm">Name</th>
-                <th class="th-sm">SIN</th>
-                <th class="th-sm">Phone</th>
-                <th class="th-sm">Email</th>
-                <th class="th-sm">Sole_propprietor</th>
-                <th class="th-sm">Oversea T1135</th>
-                <th class="th-sm">Engage</th>
-                <th class="th-sm">Group</th>
-              </tr>
-            </thead>
-            <tbody id="myTable">
-            {% for row in indiv %}
-              <tr class="table-row" data-href="{{url_for('individual_edit')}}/{{row.indiv_id}}">
-                <td class="col-1">{{row.indiv_id}}</td>
-                <td class="col-1">{{row.prefix}} {{row.last_name}}, {{row.first_name}}</td>
-                <td class="col-1">{{row.sin}}</td>
-                <td class="col-1">{{row.phone1}}</td>
-                <td class="col-1">{{row.email}}</td>
-                <td class="col-1">{{row.cra_sole_proprietor}}</td>
-                <td class="col-2">{{row.oversea_asset_t1135}}, {{row.corp18}}</td>
-                <td class="col-2">{{row.engage_account}}</td>
-                <td class="col-1">{{row.task}}</td>
-              </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+  <div class="tbl-list">
+    <!-- <input class="form-control mb-4" id="tableSearch" type="text"
+      placeholder="Type something to search list items">
+    <br/> -->
+    <table id="corp_table" class="table table-bordered table-striped table-hover" style="font-size: 13px;">
+      <thead>
+        <tr>
+          <th class="th-sm">ID.</th>
+          <th class="th-sm">Name</th>
+          <th class="th-sm">SIN</th>
+          <th class="th-sm">Phone</th>
+          <th class="th-sm">Email</th>
+          <th class="th-sm">Sole_propprietor</th>
+          <th class="th-sm">Oversea T1135</th>
+          <th class="th-sm">Engage</th>
+          <th class="th-sm">Group</th>
+        </tr>
+      </thead>
+      <tbody id="myTable">
+      {% for row in indiv %}
+        <tr class="table-row" data-href="{{url_for('individual_edit')}}/{{row.indiv_id}}">
+          <td class="col-1">{{row.indiv_id}}</td>
+          <td class="col-1">{{row.prefix}} {{row.last_name}}, {{row.first_name}}</td>
+          <td class="col-1">{{row.sin}}</td>
+          <td class="col-1">{{row.phone1}}</td>
+          <td class="col-1">{{row.email}}</td>
+          <td class="col-1">{{row.cra_sole_proprietor}}</td>
+          <td class="col-2">{{row.oversea_asset_t1135}}, {{row.corp18}}</td>
+          <td class="col-2">{{row.engage_account}}</td>
+          <td class="col-1">{{row.task}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock content%}
 {% block scripts %}
-    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
-    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
-    <script src="{{url_for('static', filename='js/main.js')}}"></script>
-    <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
-    <script src="{{url_for('static', filename='js/jquery.dataTables.js')}}"></script>
-    <script src="{{url_for('static', filename='js/dataTables.bootstrap.js')}}"></script>
+  <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+  <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+  <script src="{{url_for('static', filename='js/main.js')}}"></script>
+  <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+  <script src="{{url_for('static', filename='js/jquery.dataTables.js')}}"></script>
+  <script src="{{url_for('static', filename='js/dataTables.bootstrap.js')}}"></script>
 
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $('#corp_table').DataTable();
-      });
-    </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#corp_table').DataTable();
+    });
+  </script>
 {%- endblock scripts %}

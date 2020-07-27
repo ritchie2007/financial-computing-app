@@ -3,6 +3,7 @@
 from random import random
 #from time import strftime, strptime, localtime
 from datetime import timedelta, datetime #, date
+from pytz import timezone
 from dateutil.relativedelta import relativedelta
 from werkzeug.urls import url_parse
 from sqlalchemy import desc, asc, func # for table.order_by(Task.enddate).all()
@@ -12,7 +13,7 @@ from flask import render_template, flash, redirect, request, url_for, session, m
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
 from app.models import User, Data_table, activity_code, CorprationReport, Staff, Task, \
-    Timesheet, Corporation, Individual, Mulform, TimesheetTempData
+    Timesheet, Corporation, Individual, Job_type, Mulform, TimesheetTempData
 #from app import dateCalculate
 from app import utility
 
@@ -682,85 +683,91 @@ def individual_del(id):
 
 @app.route('/task')
 def task():
-    all_data = Task.query.order_by(Task.periodend.asc()).all()
+    tasks = Task.query.order_by(Task.periodend.asc()).all()
     return render_template(
         'task.html',
-        tasks=all_data,
+        tasks = tasks,
         title='Task'
         )
 
-@app.route('/taskinsertion', methods=['GET', 'POST'])
-def taskinsertion():
+@app.route('/task_add', methods=['GET', 'POST'])
+def task_add():
+    corp_dropdown = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2)
+    indiv_dropdown = Individual.query.with_entities(Individual.indiv_id, Individual.prefix, Individual.last_name, Individual.first_name, Individual.sin)
+    jobtype_dropdown = Job_type.query.with_entities(Job_type.job_id, Job_type.short_code, Job_type.name)
     if request.method == 'POST':
-        client = request.form['taskedit-1']
-        jobtype = request.form['taskedit-2']
-        details = request.form['taskedit-4']
-        status = request.form['taskedit-7']
-        priority = request.form['taskedit-8']
-        recurrence = request.form['taskedit-9']
-        jobowner = request.form['taskedit-10']
+        tmp = request.form['taskedit1']
+        tmp = tmp.split(' | ')
+        client_corp_id = tmp[0]
+        client_corp_name = tmp[2]
+        tmp = request.form['taskedit2']
+        tmp = tmp.split(' | ')
+        client_indiv_id = tmp[0]
+        client_indiv_name = tmp[1]
+        tmp = request.form['taskedit6']
+        tmp = tmp.split(' | ')
+        jobtype_id = tmp[0]
+        jobtype_code = tmp[1]
+        periodend = request.form['taskedit3']
+        responsible = request.form['taskedit7']
+        startdate = request.form['taskedit4']
+        enddate = request.form['taskedit5']
+        status = request.form['taskedit9']
+        details = request.form['taskedit8']
+        recurrence = request.form['taskedit11']
+        priority = request.form['taskedit10']
+        worktime = request.form['taskedit12']
+        renewperiod = ""
+        renewstartdate = ""
+        renewenddate = ""
+        # fmt = "%Y-%m-%d %H:%M:%S %Z%z"
+        fmt = "%Y-%m-%d"
+        now_time = datetime.now(timezone('America/Toronto'))
+        createdate = now_time.strftime(fmt)
         serialno = random()
-        worktime = request.form['taskedit-11']
-        periodend = request.form['taskedit-31']
-        nextstartdate = request.form['taskedit-51']
-        nextenddate = request.form['taskedit-61']
 
-        if periodend == '':
-            num_mon = 0
-            if recurrence == 'y' or recurrence == 'Y':
-                num_mon = 12
-            elif recurrence == 'q' or recurrence == 'Q':
-                num_mon = 3
-            elif recurrence == 'm' or recurrence == 'M':
-                num_mon = 1
-            periodend = datetime.strptime(request.form['taskedit-3'], '%Y-%m-%d') + relativedelta(months=num_mon)
-            nextstartdate = datetime.strptime(request.form['taskedit-5'], '%Y-%m-%d') + relativedelta(months=num_mon)
-            nextenddate = datetime.strptime(request.form['taskedit-6'], '%Y-%m-%d') + relativedelta(months=num_mon)
-            renewperiod = (periodend + relativedelta(months=num_mon)).strftime("%Y-%m-%d")
-            renewstartdate = (nextstartdate + relativedelta(months=num_mon)).strftime("%Y-%m-%d")
-            renewenddate = (nextenddate + relativedelta(months=num_mon)).strftime("%Y-%m-%d")
-            periodend = periodend.strftime("%Y-%m-%d")
-            nextstartdate = nextstartdate.strftime("%Y-%m-%d")
-            nextenddate = nextenddate.strftime("%Y-%m-%d")
+        if recurrence == 'Annually':
+            num_mon = 12
+        elif recurrence == 'Quarterly':
+            num_mon = 3
+        elif recurrence == 'Monthly':
+            num_mon = 1
+        renewperiod = datetime.strptime(request.form['taskedit3'], '%Y-%m-%d') + relativedelta(months=num_mon)
+        renewstartdate = datetime.strptime(request.form['taskedit4'], '%Y-%m-%d') + relativedelta(months=num_mon)
+        renewenddate = datetime.strptime(request.form['taskedit5'], '%Y-%m-%d') + relativedelta(months=num_mon)
+        renewperiod = renewperiod.strftime("%Y-%m-%d")
+        renewstartdate = renewstartdate.strftime("%Y-%m-%d")
+        renewenddate = renewenddate.strftime("%Y-%m-%d")
 
-        my_data = Task(
-            client,
-            jobtype,
-            periodend,
-            details,
-            nextstartdate,
-            nextenddate,
-            status,
-            priority,
-            recurrence,
-            jobowner,
-            serialno,
-            worktime,
-            renewperiod,
-            renewstartdate,
-            renewenddate
-        )
+        my_data = Task(client_corp_id, client_corp_name, client_indiv_id, client_indiv_name, jobtype_id,jobtype_code, periodend, responsible, startdate, enddate, status, details, recurrence, priority, worktime, renewperiod, renewstartdate, renewenddate, createdate, serialno)
         db.session.add(my_data)
         db.session.commit()
         flash("Task Renew Successfully")
-    return redirect(url_for('task'))
+        return redirect(url_for('task'))
+    return render_template(
+        'task_add.html',
+        corp_dropdown = corp_dropdown,
+        indiv_dropdown = indiv_dropdown,
+        jobtype_dropdown = jobtype_dropdown,
+        title = 'Add new task'
+    )
 
 @app.route('/taskupdate', methods=['POST'])
 def taskupdate():
     if request.method == 'POST':
         my_data = Task.query.get(request.form.get('id'))
-        my_data.client = request.form['taskedit-1']
-        my_data.jobtype = request.form['taskedit-2']
-        my_data.periodend = request.form['taskedit-3']
-        my_data.details = request.form['taskedit-4']
-        my_data.nextstartdate = request.form['taskedit-5']
-        my_data.nextenddate = request.form['taskedit-6']
-        my_data.status = request.form['taskedit-7']
-        my_data.priority = request.form['taskedit-8']
-        my_data.recurrence = request.form['taskedit-9']
-        my_data.jobowner = request.form['taskedit-10']
+        my_data.client = request.form['taskedit1']
+        my_data.jobtype = request.form['taskedit2']
+        my_data.periodend = request.form['taskedit3']
+        my_data.details = request.form['taskedit4']
+        my_data.nextstartdate = request.form['taskedit5']
+        my_data.nextenddate = request.form['taskedit6']
+        my_data.status = request.form['taskedit7']
+        my_data.priority = request.form['taskedit8']
+        my_data.recurrence = request.form['taskedit9']
+        my_data.jobowner = request.form['taskedit10']
         my_data.serialno = random()
-        my_data.worktime = request.form['taskedit-11']
+        my_data.worktime = request.form['taskedit11']
         
         db.session.commit()
         flash("Task Updated Successfully")
@@ -1044,6 +1051,11 @@ def multipleForms():
         title='multipleForms'
     )
 
+@app.route('/input_validation')
+def input_validation():
+    return render_template(
+        'learning_input_validation.html'
+    )
 # **** following is to try Data table CRUD functions ******
 # This is the data_table root on all our employee data
 @app.route('/data_crud')

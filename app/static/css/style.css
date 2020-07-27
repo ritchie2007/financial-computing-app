@@ -171,7 +171,8 @@ form .form-row .form-group, form .form-row .form-group input.form-control {
 .modal-backdrop.in {
     z-index: 25;
 }
-.modal .modal-body {
+a.modal .modal-body {
+    margin-top: 30px;
     padding: 5px;
 }
 .modal button {
@@ -182,11 +183,11 @@ form .form-row .form-group, form .form-row .form-group input.form-control {
     font-size: 12px; 
     font-weight: 500 !important; /*default  700*/
 }
-.modal .form-group label {
+a.modal .form-group label {
     font-weight: 400;
     margin: 0px;
 }
-.modal .form-control {
+a.modal .form-control {
     margin: 0px;
     height: 25px;
     font-size: 12px;

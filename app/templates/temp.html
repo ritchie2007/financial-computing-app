@@ -36,3 +36,206 @@
 </script>
 {% endblock content %}
 
+<div id="modaledit{{row.id}}" class="modal" role="dialog" aria-hidden="true" style="z-index: 300;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Update Information</h3>
+      </div>
+      <div class="modal-body">
+        <form action="{{url_for('taskupdate')}}" method="POST">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="form-group col-sm-12">
+                <label for="taskedit1">Client</label>
+                <input type="hidden" name="id" value="{{row.id}}">
+                <select class="form-control browser-default custom-select" name="taskedit1">
+                  <option value="" >Please select</option>
+                  {% for row in corp_dropdown %}
+                  <option >{{row.corp_id}} | {{row.corp1}}</option>
+                  {% endfor %}
+                </select>
+                <!-- <input type="text" class="form-control" name="taskedit1" value="{{row.client}}"> -->
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="taskedit3">PeriodEnd</label>
+                <input type="date" id="birthday" class="form-control" name="taskedit3" value="{{row.periodend}}">
+                <!-- <input type="text" class="form-control" name="taskedit3" value="{{row.periodend}}"> -->
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="taskedit5">NextStart</label>
+                <input type="text" class="form-control" name="taskedit5" value="{{row.nextstartdate}}">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="taskedit6">NextEnd</label>
+                <input type="text" class="form-control" name="taskedit6" value="{{row.nextenddate}}">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="taskedit2">jobtype</label>
+                <input type="text" class="form-control" name="taskedit2" value="{{row.jobtype}}">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="taskedit10">jobowner</label>
+                <input type="text" class="form-control" name="taskedit10" value="{{row.jobowner}}">
+              </div>
+              <div class="form-group col-sm-12">
+                <label for="taskedit4">details</label>
+                <input type="text" class="form-control" name="taskedit4" value="{{row.details}}">
+              </div>
+              <div class="form-group  col-sm-3">
+                <label for="taskedit7">status</label>
+                <input type="text" class="form-control" name="taskedit7" value="{{row.status}}">
+              </div>
+              <div class="form-group  col-sm-3">
+                <label for="taskedit8">priority</label>
+                <input type="text" class="form-control" name="taskedit8" value="{{row.priority}}">
+              </div>
+              <div class="form-group  col-sm-3">
+                <label for="taskedit9">recurrence</label>
+                <input type="text" class="form-control" name="taskedit9" value="{{row.recurrence}}">
+              </div>
+              <div class="form-group  col-sm-3">
+                <label for="taskedit11">worktime</label>
+                <input type="text" class="form-control" name="taskedit11" value="{{row.worktime}}">
+              </div>
+              <div class="form-group" style="text-align: right;">
+                <button class="btn btn-primary" type="submit"
+                  style="margin-top: 10px; margin-right: 15px;">Update</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!--class="modal-body"-->
+      <div class="modal-footer">
+        <!-- <button type="button" id="generate" class="btn btn-info">Generate Recurrence Task</button>
+                        <button type="button" id="checked" class="btn btn-info">Checked, Yes</button> -->
+        <button type="button" id="close" class="btn btn-light" data-dismiss="modal"
+          style="padding: 3px 18px 3px 18px; margin-right: 5px;">Close</button>
+      </div>
+    </div>
+    <!--class="modal-content"-->
+  </div>
+</div>
+<!-- Add renew  -->
+<div id="modalrenew{{row.id}}" class="modal" role="dialog" aria-hidden="true" style="z-index: 300;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Update Information</h4>
+      </div>
+      <div class="modal-body">
+        <form action="{{url_for('taskinsertion')}}" method="POST">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="form-group col-sm-12">
+                <label for="taskedit1">Client</label>
+                <input type="hidden" name="id" value="{{row.id}}">
+                <input type="text" class="form-control" name="taskedit1" value="{{row.client}}">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="taskedit3">PeriodEnd</label>
+                <input type="text" class="form-control" name="taskedit3" value="{{row.periodend}}">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="taskedit5">NextStart</label>
+                <input type="text" class="form-control" name="taskedit5" value="{{row.nextstartdate}}">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="taskedit6">NextEnd</label>
+                <input type="text" class="form-control" name="taskedit6" value="{{row.nextenddate}}">
+              </div>
+              <div class="form-group renew col-sm-4" style="color: darkblue;">
+                <label>Renew</label>
+                <input type="text" class="form-control" name="taskedit31" value="">
+              </div>
+              <div class="form-group renew col-sm-4" style="color: darkblue;">
+                <label>Renew</label>
+                <input type="text" class="form-control" name="taskedit51" value="">
+              </div>
+              <div class="form-group renew col-sm-4" style="color: darkblue;">
+                <label>Renew</label>
+                <input type="text" class="form-control" name="taskedit61" value="">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="taskedit2">jobtype</label>
+                <input type="text" class="form-control" name="taskedit2" value="{{row.jobtype}}">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="taskedit10">jobowner</label>
+                <input type="text" class="form-control" name="taskedit10" value="{{row.jobowner}}">
+              </div>
+              <div class="form-group col-sm-12">
+                <label for="taskedit4">details</label>
+                <input type="text" class="form-control" name="taskedit4" value="{{row.details}}">
+              </div>
+              <div class="form-group  col-sm-3">
+                <label for="taskedit7">status</label>
+                <input type="text" class="form-control" name="taskedit7" value="{{row.status}}">
+              </div>
+              <div class="form-group  col-sm-3">
+                <label for="taskedit8">priority</label>
+                <input type="text" class="form-control" name="taskedit8" value="{{row.priority}}">
+              </div>
+              <div class="form-group  col-sm-3">
+                <label for="taskedit9">recurrence</label>
+                <input type="text" class="form-control" name="taskedit9" value="{{row.recurrence}}">
+              </div>
+              <div class="form-group  col-sm-3">
+                <label for="taskedit11">worktime</label>
+                <input type="text" class="form-control" name="taskedit11" value="{{row.worktime}}">
+              </div>
+              <div class="form-group" style="text-align: right;">
+                <button class="btn btn-primary" type="submit"
+                  style="margin-top: 10px; margin-right: 15px;">Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!--class="modal-body"-->
+      <div class="modal-footer">
+        <button type="button" id="close" class="btn btn-light" data-dismiss="modal"
+          style="padding: 3px 18px 3px 18px; margin-right: 5px;">Close</button>
+      </div>
+    </div>
+    <!--class="modal-content"-->
+  </div>
+</div>
+
+INSERT INTO tbl_Task (task_id, client_corp, client_indiv, jobtype, periodend, responsible, startdate, enddate, status, details, recurrence, priority, worktime, renewperiod, renewstartdate, renewenddate, createdate, serialno)
+VALUES ("Corpration company 01", "GST", "2020-02-29", "Ms. Sumart", "2020-03-01", "2020-03-25", "A", "prepare GST form", "m", "normal", "62.37", "“,”“,”“,”“,”0.65011864"), 
+("Corpration 02", "HSTs", "2019-12-31", "Ms. copr2", "2020-01-01", "2020-12-31", "A", "filling HST form", "y", "normal", "42.03", "“,”“,”“,”“,”0.90487503"), 
+("Corpration company 02", "HST", "2021-12-31", "Ms. copr2", "2022-01-01", "2022-12-31", "A", "filling HST form", "y", "normal", "60.09", "“,”“,”“,”“,”0.37234043"), 
+("Corpration company 03", "PST", "2020-03-31", "Mr. copr3", "2020-04-01", "2020-06-30", "Done", "filling PST decsription", "q", "high", "58.07", "“,”“,”“,”“,”0.35312989"), 
+("Corpration company 01", "GST", "2020-05-31", "Ms. Sumart", "2020-06-01", "2020-06-30", "A", "prepare GST form", "m", "normal", "56.64", "“,”“,”“,”“,”0.39156281"), 
+("Corpration company 03", "PST", "2020-06-30", "Mr. copr3", "2020-07-01", "2020-10-31", "to do", "filling PST decsription", "q", "normal", "47.55", "“,”“,”“,”“,”0.90996344"), 
+("Corpration company 01", "GST", "2020-10-31", "Ms. Sumart", "2020-11-01", "2020-11-30", "A", "prepare GST form", "m", "normal", "0", "“,”“,”“,”“,”0.29747986"), 
+("Corpration 02", "HSTs", "2020-12-31", "Ms. copr2", "2021-01-01", "2021-12-31", "A", "filling HST form", "y", "normal", "81.36", "2021-12-31", "2022-01-01", "2022-12-31", "“,”0.49164207"), 
+("Corpration company 01", "GST", "2020-03-29", "Ms. Sumart", "2020-04-01", "2020-04-25", "A", "prepare GST form", "m", "normal", "77.41", "2020-04-29", "2020-05-01", "2020-05-25", "“,”0.30110901"), 
+("Corpration company 01", "GST", "2020-04-29", "Ms. Sumart", "2020-05-01", "2020-05-25", "A", "prepare GST form", "m", "normal", "0", "2020-05-29", "2020-06-01", "2020-06-25", "“,”0.28644173"), 
+("Corpration company 03", "PST", "2020-06-30", "Mr. copr3", "2020-07-01", "2020-09-30", "Done", "filling PST decsription", "q", "high", "77.48", "2020-09-30", "2020-10-01", "2020-12-30", "“,”0.45293206"), 
+("Corpration company 01", "GST", "2020-05-29", "Ms. Sumart", "2020-06-01", "2020-06-25", "A", "prepare GST form", "m", "normal", "87.36", "2020-06-29", "2020-07-01", "2020-07-25", "“,”0.09838818"), 
+("Corpration company 01", "GST", "2020-06-29", "Ms. Sumart", "2020-07-01", "2020-07-25", "A", "prepare GST form", "m", "normal", "0", "2020-07-29", "2020-08-01", "2020-08-25", "“,”0.20160286"), 
+("Corpration company 04", "TAX", "2020-03-29", "Ms. Sumart", "2020-04-01", "2020-04-25", "A", "prepare GST form", "m", "normal", "0", "2020-04-29", "2020-05-01", "2020-05-25", "“,”0.20208304"), 
+("Corpration company 04", "TAX", "2020-04-29", "Ms. Sumart", "2020-05-01", "2020-05-25", "A", "prepare GST form", "m", "normal", "0", "2020-05-29", "2020-06-01", "2020-06-25", "“,”0.17101974"), 
+("Corpration company 04", "TAX", "2020-05-29", "Ms. Sumart", "2020-06-01", "2020-06-25", "A", "prepare GST form", "m", "normal", "0", "2020-06-29", "2020-07-01", "2020-07-25", "“,”0.13727884"), 
+("Corpration 02", "HSTs", "2020-12-31", "Ms. copr2", "2021-01-01", "2021-12-31", "A", "filling HST form", "y", "normal", "35.49", "2021-12-31", "2022-01-01", "2022-12-31", "“,”0.99324109")
+
+if periodend == '':
+num_mon = 0
+if recurrence == 'y' or recurrence == 'Y':
+    num_mon = 12
+elif recurrence == 'q' or recurrence == 'Q':
+    num_mon = 3
+elif recurrence == 'm' or recurrence == 'M':
+    num_mon = 1
+periodend = datetime.strptime(request.form['taskedit3'], '%Y-%m-%d') + relativedelta(months=num_mon)
+nextstartdate = datetime.strptime(request.form['taskedit5'], '%Y-%m-%d') + relativedelta(months=num_mon)
+nextenddate = datetime.strptime(request.form['taskedit6'], '%Y-%m-%d') + relativedelta(months=num_mon)
+renewperiod = (periodend + relativedelta(months=num_mon)).strftime("%Y-%m-%d")
+renewstartdate = (nextstartdate + relativedelta(months=num_mon)).strftime("%Y-%m-%d")
+renewenddate = (nextenddate + relativedelta(months=num_mon)).strftime("%Y-%m-%d")
+periodend = periodend.strftime("%Y-%m-%d")
+nextstartdate = nextstartdate.strftime("%Y-%m-%d")
+nextenddate = nextenddate.strftime("%Y-%m-%d")

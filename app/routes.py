@@ -12,8 +12,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from flask import render_template, flash, redirect, request, url_for, session, make_response, json
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
-from app.models import User, Data_table, activity_code, CorprationReport, Staff, Task, \
-    Timesheet, Corporation, Individual, Job_type, Mulform, TimesheetTempData
+from app.models import User, Data_table, activity_code, CorprationReport, Staff, Task, Timesheet, Corporation, Individual, Job_type, Mulform, TimesheetTempData
 #from app import dateCalculate
 from app import utility
 
@@ -71,8 +70,8 @@ def login():
         else:
             return render_template(
                 'login.html',
-                title='Login',
-                form=form
+                title ='Login',
+                form = form
             )
 
 @app.route('/logout')
@@ -259,7 +258,7 @@ def corp_add():
             utility.corp_shareholder_to_indiv(shareholder, max_id, 0, "")
             shareholder = ",".join(shareholder)
 
-        my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task,recent_update, contact_position, shareholder_info, timestamp)
+        my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, timestamp)
         db.session.add(my_data)
         db.session.commit()
         flash("Corporation add Successfully")
@@ -588,13 +587,6 @@ def individual_edit(id):
         parent = utility.get_id_from_name(name, 11, 4)
         child = utility.get_id_from_name(name, 15, 4)
 
-        print('phone1 ', my_data.phone1)
-        print('phone2 ', my_data.phone2)
-        print('corp_list ',corp_list)
-        print('indiv_relation_list ',indiv_relation_list)
-        print('value0_indiv ', value0_indiv)
-        print('value0_corp ', value0_corp)
-
         # contact
         if contact_corp == []:
             my_data.contact_corp = ""
@@ -698,15 +690,17 @@ def task_add():
     if request.method == 'POST':
         tmp = request.form['taskedit1']
         tmp = tmp.split(' | ')
-        client_corp_id = tmp[0]
+        client_corp_id = utility.convert_to_int(tmp[0])
         client_corp_name = tmp[2]
+        client_corp_bussi_no = tmp[1]
         tmp = request.form['taskedit2']
         tmp = tmp.split(' | ')
-        client_indiv_id = tmp[0]
+        client_indiv_id = utility.convert_to_int(tmp[0])
         client_indiv_name = tmp[1]
+        client_indiv_sin = tmp[2]
         tmp = request.form['taskedit6']
         tmp = tmp.split(' | ')
-        jobtype_id = tmp[0]
+        jobtype_id = utility.convert_to_int(tmp[0])
         jobtype_code = tmp[1]
         periodend = request.form['taskedit3']
         responsible = request.form['taskedit7']
@@ -716,7 +710,7 @@ def task_add():
         details = request.form['taskedit8']
         recurrence = request.form['taskedit11']
         priority = request.form['taskedit10']
-        worktime = request.form['taskedit12']
+        worktime = round(float(request.form['taskedit12']), 2)
         renewperiod = ""
         renewstartdate = ""
         renewenddate = ""
@@ -739,11 +733,12 @@ def task_add():
         renewstartdate = renewstartdate.strftime("%Y-%m-%d")
         renewenddate = renewenddate.strftime("%Y-%m-%d")
 
-        my_data = Task(client_corp_id, client_corp_name, client_indiv_id, client_indiv_name, jobtype_id,jobtype_code, periodend, responsible, startdate, enddate, status, details, recurrence, priority, worktime, renewperiod, renewstartdate, renewenddate, createdate, serialno)
+        my_data = Task(client_corp_id, client_corp_name, client_corp_bussi_no, client_indiv_id, client_indiv_name, client_indiv_sin, jobtype_id, jobtype_code, periodend, responsible, startdate, enddate, status, details, recurrence, priority, worktime, renewperiod, renewstartdate, renewenddate, createdate, serialno)
         db.session.add(my_data)
         db.session.commit()
-        flash("Task Renew Successfully")
+        flash("Add task Successfully")
         return redirect(url_for('task'))
+
     return render_template(
         'task_add.html',
         corp_dropdown = corp_dropdown,
@@ -752,26 +747,283 @@ def task_add():
         title = 'Add new task'
     )
 
-@app.route('/taskupdate', methods=['POST'])
-def taskupdate():
+@app.route('/task_renew', methods=['GET', 'POST'])
+@app.route('/task_renew/<int:id>', methods=['GET', 'POST'])
+def task_renew(id):
+    corp_dropdown = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2)
+    indiv_dropdown = Individual.query.with_entities(Individual.indiv_id, Individual.prefix, Individual.last_name, Individual.first_name, Individual.sin)
+    jobtype_dropdown = Job_type.query.with_entities(Job_type.job_id, Job_type.short_code, Job_type.name)
+    my_data = Task.query.get(id)   
+    corp_idx = db.session.query(Corporation).with_entities(func.count(Corporation.corp_id)).filter(Corporation.corp_id <= my_data.client_corp_id).scalar()
+    max = db.session.query(Corporation).with_entities(func.max(Corporation.corp_id)).scalar()
+    if max < corp_idx:
+        corp_idx = 0
+    indiv_idx = db.session.query(Individual).with_entities(func.count(Individual.indiv_id)).filter(Individual.indiv_id <= my_data.client_indiv_id).scalar()
+    max = db.session.query(Individual).with_entities(func.max(Individual.indiv_id)).scalar()
+    if max < indiv_idx:
+        indiv_idx = 0
+    type_idx = db.session.query(Job_type).with_entities(func.count(Job_type.job_id)).filter(Job_type.job_id <= my_data.jobtype_id).scalar()
+    max = db.session.query(Job_type).with_entities(func.max(Job_type.job_id)).scalar()
+    if max < type_idx:
+        type_idx = 0
+    
     if request.method == 'POST':
-        my_data = Task.query.get(request.form.get('id'))
-        my_data.client = request.form['taskedit1']
-        my_data.jobtype = request.form['taskedit2']
-        my_data.periodend = request.form['taskedit3']
-        my_data.details = request.form['taskedit4']
-        my_data.nextstartdate = request.form['taskedit5']
-        my_data.nextenddate = request.form['taskedit6']
-        my_data.status = request.form['taskedit7']
-        my_data.priority = request.form['taskedit8']
-        my_data.recurrence = request.form['taskedit9']
-        my_data.jobowner = request.form['taskedit10']
-        my_data.serialno = random()
-        my_data.worktime = request.form['taskedit11']
-        
+        tmp = request.form['taskedit1']
+        tmp = tmp.split(' | ')
+        client_corp_id = utility.convert_to_int(tmp[0])
+        client_corp_name = tmp[2]
+        client_corp_bussi_no = tmp[1]
+        tmp = request.form['taskedit2']
+        tmp = tmp.split(' | ')
+        client_indiv_id = utility.convert_to_int(tmp[0])
+        client_indiv_name = tmp[1]
+        client_indiv_sin = tmp[2]
+        tmp = request.form['taskedit6']
+        tmp = tmp.split(' | ')
+        jobtype_id = utility.convert_to_int(tmp[0])
+        jobtype_code = tmp[1]
+        periodend = request.form['taskedit3']
+        responsible = request.form['taskedit7']
+        startdate = request.form['taskedit4']
+        enddate = request.form['taskedit5']
+        status = request.form['taskedit9']
+        details = request.form['taskedit8']
+        recurrence = request.form['taskedit11']
+        priority = request.form['taskedit10']
+        worktime = round(float(request.form['taskedit12']), 2)
+        renewperiod = ""
+        renewstartdate = ""
+        renewenddate = ""
+        # fmt = "%Y-%m-%d %H:%M:%S %Z%z"
+        fmt = "%Y-%m-%d"
+        now_time = datetime.now(timezone('America/Toronto'))
+        createdate = now_time.strftime(fmt)
+        serialno = random()
+
+        if recurrence == 'Annually':
+            num_mon = 12
+        elif recurrence == 'Quarterly':
+            num_mon = 3
+        elif recurrence == 'Monthly':
+            num_mon = 1
+        renewperiod = datetime.strptime(request.form['taskedit3'], '%Y-%m-%d') + relativedelta(months=num_mon)
+        renewstartdate = datetime.strptime(request.form['taskedit4'], '%Y-%m-%d') + relativedelta(months=num_mon)
+        renewenddate = datetime.strptime(request.form['taskedit5'], '%Y-%m-%d') + relativedelta(months=num_mon)
+        renewperiod = renewperiod.strftime("%Y-%m-%d")
+        renewstartdate = renewstartdate.strftime("%Y-%m-%d")
+        renewenddate = renewenddate.strftime("%Y-%m-%d")
+
+        my_data = Task(client_corp_id, client_corp_name, client_corp_bussi_no, client_indiv_id, client_indiv_name, client_indiv_sin, jobtype_id,jobtype_code, periodend, responsible, startdate, enddate, status, details, recurrence, priority, worktime, renewperiod, renewstartdate, renewenddate, createdate, serialno)
+        db.session.add(my_data)
         db.session.commit()
-        flash("Task Updated Successfully")
+        # flash("Task Renewed Successfully")
         return redirect(url_for('task'))
+
+    return render_template(
+        'task_renew.html',
+        corp_dropdown = corp_dropdown,
+        indiv_dropdown = indiv_dropdown,
+        jobtype_dropdown = jobtype_dropdown,
+        task_data = my_data,
+        corp_idx = corp_idx,
+        indiv_idx = indiv_idx,
+        type_idx = type_idx,
+        title = 'Renew task'
+    )
+
+@app.route('/task_edit', methods=['GET', 'POST'])
+@app.route('/task_edit/<int:id>', methods=['GET', 'POST'])
+def task_edit(id):
+    corp_dropdown = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2)
+    indiv_dropdown = Individual.query.with_entities(Individual.indiv_id, Individual.prefix, Individual.last_name, Individual.first_name, Individual.sin)
+    jobtype_dropdown = Job_type.query.with_entities(Job_type.job_id, Job_type.short_code, Job_type.name)
+    my_data = Task.query.get(id)
+    corp_idx = db.session.query(Corporation).with_entities(func.count(Corporation.corp_id)).filter(Corporation.corp_id <= my_data.client_corp_id).scalar()
+    max = db.session.query(Corporation).with_entities(func.max(Corporation.corp_id)).scalar()
+    if max < corp_idx:
+        corp_idx = 0
+    indiv_idx = db.session.query(Individual).with_entities(func.count(Individual.indiv_id)).filter(Individual.indiv_id <= my_data.client_indiv_id).scalar()
+    max = db.session.query(Individual).with_entities(func.max(Individual.indiv_id)).scalar()
+    if max < indiv_idx:
+        indiv_idx = 0
+    type_idx = db.session.query(Job_type).with_entities(func.count(Job_type.job_id)).filter(Job_type.job_id <= my_data.jobtype_id).scalar()
+    max = db.session.query(Job_type).with_entities(func.max(Job_type.job_id)).scalar()
+    if max < type_idx:
+        type_idx = 0
+    if request.method == 'POST':
+        tmp = request.form['taskedit1']
+        tmp = tmp.split(' | ')
+        my_data.client_corp_id = utility.convert_to_int(tmp[0])
+        my_data.client_corp_name = tmp[2]
+        my_data.client_corp_bussi_no = tmp[1]
+        tmp = request.form['taskedit2']
+        tmp = tmp.split(' | ')
+        my_data.client_indiv_id = utility.convert_to_int(tmp[0])
+        my_data.client_indiv_name = tmp[1]
+        my_data.client_indiv_sin = tmp[2]
+        tmp = request.form['taskedit6']
+        tmp = tmp.split(' | ')
+        my_data.jobtype_id = utility.convert_to_int(tmp[0])
+        my_data.jobtype_code = tmp[1]
+        my_data.periodend = request.form['taskedit3']
+        my_data.responsible = request.form['taskedit7']
+        my_data.startdate = request.form['taskedit4']
+        my_data.enddate = request.form['taskedit5']
+        my_data.status = request.form['taskedit9']
+        my_data.details = request.form['taskedit8']
+        my_data.recurrence = request.form['taskedit11']
+        my_data.priority = request.form['taskedit10']
+        my_data.worktime = round(float(request.form['taskedit12']), 2)
+        renewperiod = ""
+        renewstartdate = ""
+        renewenddate = ""
+        # fmt = "%Y-%m-%d %H:%M:%S %Z%z"
+        fmt = "%Y-%m-%d"
+        now_time = datetime.now(timezone('America/Toronto'))
+        my_data.createdate = now_time.strftime(fmt)
+        my_data.serialno = random()
+
+        if request.form['taskedit11'] == 'Annually':
+            num_mon = 12
+        elif request.form['taskedit11'] == 'Quarterly':
+            num_mon = 3
+        elif request.form['taskedit11'] == 'Monthly':
+            num_mon = 1
+        renewperiod = datetime.strptime(request.form['taskedit3'], '%Y-%m-%d') + relativedelta(months=num_mon)
+        renewstartdate = datetime.strptime(request.form['taskedit4'], '%Y-%m-%d') + relativedelta(months=num_mon)
+        renewenddate = datetime.strptime(request.form['taskedit5'], '%Y-%m-%d') + relativedelta(months=num_mon)
+        my_data.renewperiod = renewperiod.strftime("%Y-%m-%d")
+        my_data.renewstartdate = renewstartdate.strftime("%Y-%m-%d")
+        my_data.renewenddate = renewenddate.strftime("%Y-%m-%d")
+        db.session.commit()
+        flash("Task Update Successfully")
+        return redirect(url_for('task'))
+
+    return render_template(
+        'task_edit.html',
+        corp_dropdown = corp_dropdown,
+        indiv_dropdown = indiv_dropdown,
+        jobtype_dropdown = jobtype_dropdown,
+        task_data = my_data,
+        corp_idx = corp_idx,
+        indiv_idx = indiv_idx,
+        type_idx = type_idx,
+        title = 'Update task'
+    )
+
+@app.route('/task_del', methods=['GET', 'POST'])
+@app.route('/task_del/<int:id>', methods=['GET', 'POST'])
+def task_del(id):
+    tasks = Task.query.order_by(Task.periodend.asc()).all()
+    my_data = Task.query.get(id)
+    print(' **** before post')
+    if request.method == 'POST':
+        print(' **** in delete post')
+        db.session.delete(my_data)
+        db.session.commit()
+        flash("Task Deleted Successfully")
+        return redirect(url_for('task'))
+
+    return render_template(
+        'task.html',
+        tasks = tasks,
+        title='Task'
+        )
+
+@app.route('/dailyentry', methods=['GET', 'POST'])
+def dailyentry():
+    '''display timesheet'''
+    list_data = Timesheet.query.all()
+    # tasklist = Task.query.all()
+    datefilter = db.session.query(Timesheet.startdate).distinct().order_by(Timesheet.startdate.desc()).all()
+    userfilter = db.session.query(Timesheet.staff).distinct().order_by(Timesheet.staff.asc()).all()
+
+    if request.method == "POST":
+        status = 1
+        dateselect = (request.form['dateselect']).replace(" ", "")
+        userselect = (request.form['userselect']).replace(" ", "")
+        if dateselect != "" and userselect != "":
+            list_data = Timesheet.query.filter(Timesheet.startdate == dateselect, Timesheet.staff == userselect).all()
+        elif dateselect != "" and userselect == "":
+            list_data = Timesheet.query.filter(Timesheet.startdate == dateselect).all()
+        elif dateselect == "" and userselect != "":
+            list_data = Timesheet.query.filter(Timesheet.staff == userselect).all()
+    print(len(list_data))
+    return render_template(
+        'dailyentry.html',
+        listdata=list_data,
+        datefilter=datefilter,
+        userfilter=userfilter,
+        title='timesheetlist'
+    )
+
+@app.route('/dailyentry_add', methods=['GET', 'POST'])
+def dailyentry_add():
+    code_types = activity_code.query.all()
+    tasklist = Task.query.all()
+    if request.method == 'POST':
+        data = request.json
+        print("----> " + data[0] + " <---- type(da) is list")
+        # 注意 string[start: end: step] 中end是那位是不包含的，所以('0123')[0:2] ==> '01'
+        startdate = (data[1])[0:10]
+        calhour = data[2]
+        adjhour = data[3]
+        adjmin = data[4]
+        t = (data[5].replace(' ','')).split(':')
+        workhour = round((float(t[0]) + float(t[1])/60), 2)
+        taskname = data[6]
+        taskcontent = data[7]
+        tasktype = data[8]
+        if len(data[9].split(" | ")) == 5:
+            corp1 = (data[9].split(" | "))[4]
+        else:
+            corp1 = ''
+        if len(data[10].split(" | ")) == 5:
+            corp2 = (data[10].split(" | "))[4]
+        else:
+            corp2 = ''
+        if len(data[11].split(" | ")) == 5:
+            corp3 = (data[11].split(" | "))[4]
+        else:
+            corp3 = ''
+        if len(data[12].split(" | ")) == 5:
+            corp4 = (data[12].split(" | "))[4]
+        else:
+            corp4 = ''
+        userstr = ['Susan', 'Dannijo', 'Michael', 'Aser', 'Kidden']
+        userstridx = round(random()*4)
+        staff = userstr[userstridx]
+        # staff = current_user.username
+        timestamp = data[13]
+        avgtime = float(data[14])
+        jobid1 = int(data[15])
+        jobid2 = int(data[16])
+        jobid3 = int(data[17])
+        jobid4 = int(data[18])
+        starttime = (data[1])[11:16]
+        serialno = random()
+        my_data = Timesheet(startdate, calhour, adjhour, adjmin, workhour, taskname, taskcontent, tasktype, corp1, corp2, corp3, corp4, staff, timestamp, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno)
+        db.session.add(my_data)
+        db.session.commit()
+        flash("Dailyentry Inserted Successfully")
+        return redirect(url_for('dailyentry'))
+
+    return render_template(
+        'dailyentry_add.html',
+        code_types = code_types,
+        tasklist = tasklist,
+        title = 'Add new daily sheet'
+    )
+
+@app.route('/dailyentry_edit', methods=['GET', 'POST'])
+def dailyentry_edit():
+    ''' update dailyentry information'''
+    pass
+
+@app.route('/dailyentry_del', methods=['GET', 'POST'])
+def dailyentry_del():
+    ''' delete dailyentry'''
+    pass
 
 @app.route('/timesheet')
 def timesheet():

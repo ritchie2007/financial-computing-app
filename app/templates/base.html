@@ -68,35 +68,32 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                     <li id="Corporate" class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Corporate<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('corporate')}}">List</a></li>
-                            <li><a href="{{ url_for('corp_add')}}">New</a></li>                 
+                            <li><a href="{{ url_for('corporate')}}">Corporate List</a></li>
+                            <li><a href="{{ url_for('corp_add')}}">New Corporate</a></li>                 
                             <li><a href="#">Export</a></li>
                         </ul>
                     </li>
                     <li id="Individual" class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Individual<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('individual') }}">List</a></li>
-                            <li><a href="{{ url_for('individual_add') }}">New</a></li>                 
-                            <li><a href="#">Edit</a></li>
+                            <li><a href="{{ url_for('individual') }}">Individual List</a></li>
+                            <li><a href="{{ url_for('individual_add') }}">New Individual</a></li>                 
                             <li><a href="#">Export</a></li>
                         </ul>
                     </li>
                     <li id="Task" class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Job<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('task') }}">List</a></li>
-                            <li><a href="{{ url_for('task_add') }}">New</a></li>                 
-                            <li><a href="#">Edit</a></li>
+                            <li><a href="{{ url_for('task') }}">Task List</a></li>
+                            <li><a href="{{ url_for('task_add') }}">New Task</a></li>                 
                             <li><a href="#">Export</a></li>
                         </ul>
                     </li>
-                    <li id="Group" class="nav-item dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Group<span class="caret"></span></a>
+                    <li id="timesheet" class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">DailyEntry<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">List</a></li>
-                            <li><a href="#">New</a></li>                 
-                            <li><a href="#">Edit</a></li>
+                            <li><a href="{{ url_for('dailyentry') }}">DailyEntry</a></li>
+                            <li><a href="{{ url_for('dailyentry_add') }}">Add daily sheet</a></li>
                             <li><a href="#">Export</a></li>
                         </ul>
                     </li>
@@ -107,21 +104,15 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                             <li><a href="#">Export</a></li>
                         </ul>
                     </li>
-                    <li id="Task" class="nav-item dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">DailyEntry<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ url_for('timesheet') }}">DailyEntry</a></li>
-                            <li><a href="{{ url_for('timesheetlist') }}">TimeSheet</a></li>                 
-                            <li><a href="#">Edit</a></li>
-                            <li><a href="#">Export</a></li>
-                        </ul>
-                    </li>
                     <li id="CustomerReport" class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">CustomerReport<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{url_for('corpration_report')}}">List</a></li>
                              <li><a href="#">Export</a></li>
                         </ul>
+                    </li>
+                    <li id="Group" class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Group<span class="caret"></span></a>
                     </li>
                     <li id="Administration" class="nav-item"><a href="#">Administration</a></li>
                 </ul>

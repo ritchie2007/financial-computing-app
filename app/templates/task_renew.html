@@ -32,16 +32,16 @@
     {% endwith %}
     
     <!-- Add new job -->
-    <h3 style="margin-left: 50px;">&nbsp Add new job</h3>
+    <h4 style="margin-left: 50px;">&nbsp Job ID: {{task_data.task_id}} &nbsp &nbsp RENEW</h4>
     <div class="row" style="margin: 0% 20% 0% 20%;">    
-        <form id="my_form" action="{{url_for('task_add')}}" method="POST">
-
-            <div class="form-group">
+        <form id="my_form" action="{{url_for('task_renew')}}/{{task_data.task_id}}" method="POST">
+            
+            <div class="form-group" name="Corporation">
               <label class="col-sm-3 control-label" >Coporation Client</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                  <select class="form-control browser-default custom-select" name="taskedit1">
+                  <select class="form-control browser-default custom-select" name="taskedit1" value="{{corp_idx}}">
                     <option value="" >Please select</option>
                     {% for corp in corp_dropdown %}
                     <option >{{corp.corp_id}} | {{corp.corp1}} | {{corp.corp2}} </option>
@@ -51,12 +51,12 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Individual">
               <label class="col-sm-3 control-label" >Individual Client</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                  <select class="form-control browser-default custom-select" name="taskedit2">
+                  <select class="form-control browser-default custom-select" name="taskedit2" value="{{indiv_idx}}">
                     <option value="0 | Please select, this is sample | 000000000" >0 | Please select, this is sample | 000000000</option>
                     {% for indiv in indiv_dropdown %}
                     <option >{{indiv.indiv_id}} | {{indiv.prefix}} {{indiv.last_name}}, {{indiv.first_name}} | {{indiv.sin}}</option>
@@ -65,39 +65,39 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="PeriodEnd">
               <label class="col-sm-3 control-label" >PeriodEnd</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                  <input type="date" class="form-control" name="taskedit3" style="padding: 6px 12px;">
+                  <input type="date" class="form-control" name="taskedit3" value="{{task_data.renewperiod}}" style="padding: 3px 12px;">
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Start">
               <label class="col-sm-3 control-label" >Start date</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                  <input type="date" class="form-control" name="taskedit4" style="padding: 6px 12px;">
+                  <input type="date" class="form-control" name="taskedit4"  value="{{task_data.renewstartdate}}" style="padding: 3px 12px;">
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="End">
               <label class="col-sm-3 control-label" >End date</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                  <input type="date" class="form-control" name="taskedit5" style="padding: 6px 12px;">
+                  <input type="date" class="form-control" name="taskedit5" value="{{task_data.renewenddate}}" style="padding: 3px 12px;">
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="type">
               <label class="col-sm-3 control-label" >Jobtype</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-                  <select class="form-control browser-default custom-select" name="taskedit6">
+                  <select class="form-control browser-default custom-select" name="taskedit6" value='{{type_idx}}'>
                     <option value="" >Please select</option>
                     {% for job in jobtype_dropdown %}
                     <option >{{job.job_id}} | {{job.short_code}} | {{job.name}}</option>
@@ -106,30 +106,30 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Responsible">
               <label class="col-sm-3 control-label" >Job Responsible</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 70%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                  <input type="text" class="form-control" name="taskedit7">
+                  <input type="text" class="form-control" name="taskedit7" value="{{task_data.responsible}}">
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="job_detail">
               <label class="col-sm-3 control-label" >Job details</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 90%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                  <input type="text" class="form-control" name="taskedit8">
+                  <input type="text" class="form-control" name="taskedit8" value="{{task_data.details}}">
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Status">
               <label class="col-sm-3 control-label" >Status</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-tag"></i></span>
-                  <select class="form-control browser-default custom-select" name="taskedit9">
+                  <select class="form-control browser-default custom-select" name="taskedit9"  value="{{task_data.status}}">
                     <option value="" >Please select</option>
                     <option selected>To do</option>
                     <option >In progress</option>
@@ -138,12 +138,12 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Priority">
               <label class="col-sm-3 control-label" >Priority</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-flag"></i></span>
-                  <select class="form-control browser-default custom-select" name="taskedit10">
+                  <select class="form-control browser-default custom-select" name="taskedit10" value="{{task_data.priority}}">
                     <option value="" >Please select</option>
                     <option >Critical</option>
                     <option >High</option>
@@ -153,12 +153,12 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Recurrence">
               <label class="col-sm-3 control-label" >Recurrence</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-repeat"></i></span>
-                  <select class="form-control browser-default custom-select" name="taskedit11">
+                  <select class="form-control browser-default custom-select" name="taskedit11" value="{{task_data.recurrence}}">
                     <option value="" >Please select</option>
                     <option selected>Monthly</option>
                     <option >Quarterly</option>
@@ -167,17 +167,17 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Worktime">
               <label class="col-sm-3 control-label" >Worktime</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 50%;">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                  <input type="number" min="0" value="0" step=".01" class="form-control" name="taskedit12">
+                  <input type="number" min="0" value="0" step=".01" class="form-control" name="taskedit12" value="{{task_data.worktime}}">
                 </div>
               </div>   
             </div>
             <div class="form-group" style="text-align: right;">
-                <a href="#"><button type="submit" class="btn btn-success">Submit</button></a>
+                <a href="{{ url_for('task')}}"><button type="submit" class="btn btn-success">Renew</button></a>
                 <a href="{{ url_for('task')}}" type="cancel" class="btn btn-danger" >Cancel</a>
             </div>
             <!-- Success message -->
@@ -188,14 +188,10 @@
 </div>
 {% endblock %}
 {% block scripts %}
-<!-- <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script> -->
 <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
-<!-- <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script> -->
 <script src="{{url_for('static', filename='js/main.js')}}"></script>
-
 <script src="{{url_for('static', filename='js/jquery.dataTables.js')}}"></script>
 <script src="{{url_for('static', filename='js/dataTables.bootstrap.js')}}"></script>
-
 <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/bootstrapValidator.min.js')}}"></script> 
 
@@ -203,6 +199,21 @@
   $(document).ready(function () {
     $('#corp_table').DataTable();
   });
+
+  window.onload = function(event) {
+    var tmp = $('form#my_form [name="taskedit1"]').attr('value')
+    $('form#my_form [name="taskedit1"]').prop('selectedIndex', parseInt(tmp));
+    tmp = $('form#my_form [name="taskedit2"]').attr('value')
+    $('form#my_form [name="taskedit2"]').prop('selectedIndex', parseInt(tmp));
+    tmp = $('form#my_form [name="taskedit6"]').attr('value')
+    $('form#my_form [name="taskedit6"]').prop('selectedIndex', parseInt(tmp));
+    tmp = $('form#my_form [name="taskedit9"]').attr('value')
+    $('form#my_form [name="taskedit9"]').val(tmp);
+    tmp = $('form#my_form [name="taskedit10"]').attr('value')
+    $('form#my_form [name="taskedit10"]').val(tmp);
+    tmp = $('form#my_form [name="taskedit11"]').attr('value')
+    $('form#my_form [name="taskedit11"]').val(tmp);
+  };
 
   $(document).ready(function() {
     $('#my_form').bootstrapValidator({
@@ -310,18 +321,18 @@
     })
 
     // .on('success.form.bv', function(e) {
-    //   $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
-    //       $('#my_form').data('bootstrapValidator').resetForm();
-    //   // Prevent form submission
-    //   e.preventDefault();
-    //   // Get the form instance
-    //   var $form = $(e.target);
-    //   // Get the BootstrapValidator instance
-    //   var bv = $form.data('bootstrapValidator');
-    //   // Use Ajax to submit form data
-    //   $.post($form.attr('action'), $form.serialize(), function(result) {
-    //     console.log(result);
-    //   }, 'json');
+      // $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
+      //     $('#my_form').data('bootstrapValidator').resetForm();
+      // // Prevent form submission
+      // e.preventDefault();
+      // Get the form instance
+      // var $form = $(e.target);
+      // // Get the BootstrapValidator instance
+      // var bv = $form.data('bootstrapValidator');
+      // // Use Ajax to submit form data
+      // $.post($form.attr('action'), $form.serialize(), function(result) {
+      //   console.log(result);
+      // }, 'json');
     // })
   });
 

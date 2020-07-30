@@ -51,18 +51,30 @@
           <td class="col-1">{{row.task_id}}</td>
           <td class="col-1">{{row.periodend}}_{{row.recurrence}}</td>
           <td class="col-1">{{row.client_corp_name}}</td>
-          <td class="col-2">{{row.jobtype_code}}</td>
-          <td class="col-2">{{row.startdate}}</td>
+          <td class="col-1">{{row.jobtype_code}}</td>
+          <td class="col-1">{{row.startdate}}</td>
           <td class="col-1">{{row.status}}</td>
           <td class="col-1">{{row.priority}}</td>
           <td class="col-1">{{row.worktime}}</td>
           <td class="col-1">{{row.createdate}}</td>
+          <td class="col-2">
+            <div style="display: inline-block;">
+              <a href="{{ url_for('task_renew') }}/{{row.task_id}}"class="btn btn-success btn-xs" style="font-size: 11px;">Renew</a>
+              <a href="{{ url_for('task_edit') }}/{{row.task_id}}" class="btn btn-info btn-xs" style="font-size: 11px;">Edit</a>
+            </div>
+            <div style="display: inline-block;">  
+              <form action="{{url_for('task_del')}}/{{row.task_id}}" method="POST">
+              <a href="#"><button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')" style="font-size: 11px;">Del</button></a>
+              </form>
+            </div>
+          </td>
+          <!-- Modal pattern --><!--
           <td class="col-1">
             <a href="#" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalrenew{{row.id}}">Renew</a>
             <a href="#" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
             <a href="/taskdelete/{{row.id}}" class="btn btn-danger btn-xs"
-              onclick="return confirm('Are You Sure To Delete ?')">Del</a>
-          </td>
+              onclick="return confirm('Are You Sure To Delete ?')">Del</a> 
+          </td> -->
         </tr>
         <!-- Add new job -->
         <div id="modal_add" class="modal" role="dialog" aria-hidden="true" style="z-index: 300;">
@@ -184,77 +196,26 @@
   </div>
 </div>
 {% endblock %}
+
 {% block scripts %}
-<script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
-<script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
-<script src="{{url_for('static', filename='js/main.js')}}"></script>
+<!-- <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+<script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script> -->
+<!-- <script src="{{url_for('static', filename='js/main.js')}}"></script>
 <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
 <script src="{{url_for('static', filename='js/jquery.dataTables.js')}}"></script>
 <script src="{{url_for('static', filename='js/dataTables.bootstrap.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrapValidator.min.js')}}"></script>  -->
+
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+<script src="{{url_for('static', filename='js/main.js')}}"></script>
+<script src="{{url_for('static', filename='js/jquery.dataTables.js')}}"></script>
+<script src="{{url_for('static', filename='js/dataTables.bootstrap.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
 <script src="{{url_for('static', filename='js/bootstrapValidator.min.js')}}"></script> 
 
 <script type="text/javascript">
   $(document).ready(function () {
     $('#corp_table').DataTable();
-  });
-
-  $(document).ready(function() {
-    $('#modal_form').bootstrapValidator({
-      // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-      feedbackIcons: {
-        valid: 'glyphicon glyphicon-ok',
-        invalid: 'glyphicon glyphicon-remove',
-        validating: 'glyphicon glyphicon-refresh'
-      },
-      fields: {
-        taskedit7: {
-          validators: {
-            stringLength: {
-                min: 2,
-            },
-            notEmpty: {
-                message: 'Please supply your first name',
-            }
-          }
-        },
-        taskedit3: {
-          validators: {
-            notEmpty: {
-              message: 'Please supply your first name',
-            },
-            regexp: {
-              regexp: /^[\d+]{4}-(\d{2})-[\d]{2}$/,
-              message: 'Date should be in the format of yyyy-mm-dd'
-            },
-            callback: {
-              message: 'should be valid date',
-              callback: function(value, validator, $field) {
-                console.log(value);
-                const parts = value.split('-').map((p) => parseInt(p, 10));
-                parts[1] -= 1;
-                const d = new Date(parts[0], parts[1], parts[2]);
-                return d.getFullYear() === parts[0] && d.getMonth() === parts[1] && d.getDate() === parts[2]
-              }
-            }
-          }
-        }
-      }
-    })
-
-    .on('success.form.bv', function(e) {
-      $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
-          $('#modal_form').data('bootstrapValidator').resetForm();
-      // Prevent form submission
-      e.preventDefault();
-      // Get the form instance
-      var $form = $(e.target);
-      // Get the BootstrapValidator instance
-      var bv = $form.data('bootstrapValidator');
-      // Use Ajax to submit form data
-      $.post($form.attr('action'), $form.serialize(), function(result) {
-        console.log(result);
-      }, 'json');
-    })
   });
 
     //try open modal 

@@ -144,3 +144,6 @@ VALUES ('Corpration company 01', '', 'GST', '2020-02-29', 'Ms. Sumart', '2020-03
 ('Corpration company 04', '', 'TAX', '2020-04-29', 'Ms. Sumart', '2020-05-01', '2020-05-25', 'A', 'prepare GST form', 'm', 'normal', '0', '2020-05-29', '2020-06-01', '2020-06-25', '','0.17101974'), 
 ('Corpration company 04', '', 'TAX', '2020-05-29', 'Ms. Sumart', '2020-06-01', '2020-06-25', 'A', 'prepare GST form', 'm', 'normal', '0', '2020-06-29', '2020-07-01', '2020-07-25', '','0.13727884'), 
 ('Corpration 02', '', 'HSTs', '2020-12-31', 'Ms. copr2', '2021-01-01', '2021-12-31', 'A', 'filling HST form', 'y', 'normal', '35.49', '2021-12-31', '2022-01-01', '2022-12-31', '','0.99324109')
+
+update tbl_Task set client_corp_name = (select client_corp_id from tbl_Task where task_id = 4) where task_id = 4;
+

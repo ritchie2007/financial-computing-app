@@ -58,9 +58,6 @@
                     color: #faf205 !important;
                 }
             </style>
-        <!-- <button type="button" class="btn btn-success timesheetbtn" data-showdiv="Dailyentry" >Daily Entry</button>&nbsp&nbsp&nbsp 
-        <button type="button" class="btn btn-success timesheetbtn" data-showdiv="Sheetlist" >Sheet List</button>
-        <button type="button" style="text-align: right;">Submit</button> -->
         </div>
     </div>
     <!-- Daily entry page -->
@@ -75,7 +72,7 @@
                 <!-- Modal to let user to confirm whether or not keep saved data -->
 
                 <div id="Inputgroup01" class="entryinputgroup">
-                    <form action="{{url_for('timesheet')}}" method="POST">
+                    <form action="{{url_for('dailyentry_add')}}" method="POST">
                         <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 1&nbsp;</button>
@@ -178,7 +175,7 @@
                     </form>
                 </div>
                 <div id="Inputgroup02" class="entryinputgroup">
-                    <form action="{{url_for('timesheet')}}" method="POST">
+                    <form action="{{url_for('dailyentry_add')}}" method="POST">
                         <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 2&nbsp;</button>
@@ -193,10 +190,6 @@
                             <label for="timesheet1-1">Date</label>
                             <input type="text" class="form-control" name="timesheet1-1" readonly>
                         </div>
-                        <!-- <div class="form-group col-md-1">
-                            <label for="timesheet1-2">Staff</label>
-                            <input type="text" class="form-control" name="timesheet1-2" id="timesheet1-2" readonly>
-                        </div> -->
                         <div class="form-group col-md-2">
                             <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
                             <div>
@@ -281,7 +274,7 @@
                     </form>
                 </div>
                 <div id="Inputgroup03" class="entryinputgroup">
-                    <form action="{{url_for('timesheet')}}" method="POST">
+                    <form action="{{url_for('dailyentry_add')}}" method="POST">
                         <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 3&nbsp;</button>
@@ -296,10 +289,7 @@
                             <label for="timesheet1-1">Date</label>
                             <input type="text" class="form-control" name="timesheet1-1" readonly>
                         </div>
-                        <!-- <div class="form-group col-md-1">
-                            <label for="timesheet1-2">Staff</label>
-                            <input type="text" class="form-control" name="timesheet1-2" id="timesheet1-2" readonly>
-                        </div> -->
+
                         <div class="form-group col-md-2">
                             <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
                             <div>
@@ -384,7 +374,7 @@
                     </form>
                 </div>
                 <div id="Inputgroup04" class="entryinputgroup">
-                    <form action="{{url_for('timesheet')}}" method="POST">
+                    <form action="{{url_for('dailyentry_add')}}" method="POST">
                         <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 4&nbsp;</button>
@@ -399,10 +389,6 @@
                             <label for="timesheet1-1">Date</label>
                             <input type="text" class="form-control" name="timesheet1-1" readonly>
                         </div>
-                        <!-- <div class="form-group col-md-1">
-                            <label for="timesheet1-2">Staff</label>
-                            <input type="text" class="form-control" name="timesheet1-2" id="timesheet1-2" readonly>
-                        </div> -->
                         <div class="form-group col-md-2">
                             <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
                             <div>
@@ -487,7 +473,7 @@
                     </form>
                 </div>
                 <div id="Inputgroup05" class="entryinputgroup">
-                    <form action="{{url_for('timesheet')}}" method="POST">
+                    <form action="{{url_for('dailyentry_add')}}" method="POST">
                         <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 5&nbsp;</button>
@@ -502,10 +488,6 @@
                             <label for="timesheet1-1">Date</label>
                             <input type="text" class="form-control" name="timesheet1-1" readonly>
                         </div>
-                        <!-- <div class="form-group col-md-1">
-                            <label for="timesheet1-2">Staff</label>
-                            <input type="text" class="form-control" name="timesheet1-2" id="timesheet1-2" readonly>
-                        </div> -->
                         <div class="form-group col-md-2">
                             <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
                             <div>
@@ -590,7 +572,7 @@
                     </form>
                 </div>
                 <div id="Inputgroup06" class="entryinputgroup">
-                    <form action="{{url_for('timesheet')}}" method="POST">
+                    <form action="{{url_for('dailyentry_add')}}" method="POST">
                         <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 6&nbsp;</button>
@@ -605,10 +587,6 @@
                             <label for="timesheet1-1">Date</label>
                             <input type="text" class="form-control" name="timesheet1-1" readonly>
                         </div>
-                        <!-- <div class="form-group col-md-1">
-                            <label for="timesheet1-2">Staff</label>
-                            <input type="text" class="form-control" name="timesheet1-2" id="timesheet1-2" readonly>
-                        </div> -->
                         <div class="form-group col-md-2">
                             <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
                             <div>
@@ -693,7 +671,7 @@
                     </form>
                 </div>
                 <div id="Inputgroup07" class="entryinputgroup">
-                    <form action="{{url_for('timesheet')}}" method="POST">
+                    <form action="{{url_for('dailyentry_add')}}" method="POST">
                         <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 7&nbsp;</button>
@@ -708,10 +686,6 @@
                             <label for="timesheet1-1">Date</label>
                             <input type="text" class="form-control" name="timesheet1-1" readonly>
                         </div>
-                        <!-- <div class="form-group col-md-1">
-                            <label for="timesheet1-2">Staff</label>
-                            <input type="text" class="form-control" name="timesheet1-2" id="timesheet1-2" readonly>
-                        </div> -->
                         <div class="form-group col-md-2">
                             <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
                             <div>
@@ -788,15 +762,10 @@
                                 {% endfor %} -->
                             </select>
                         </div>
-                        <!-- <div class="form-group col-md-2" >
-                            <br/>
-                            <button type="reset" class="btn btn-primary" style="background-color: darkred; margin-right: 20px;" value="Reset">Reset</button>
-                            <button type="submit" class="btn btn-primary" style="background-color: green;" value="Submit" disabled>Submit</button>
-                        </div> -->
                     </form>
                 </div>
                 <div id="Inputgroup08" class="entryinputgroup">
-                    <form action="{{url_for('timesheet')}}" method="POST">
+                    <form action="{{url_for('dailyentry_add')}}" method="POST">
                         <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 8&nbsp;</button>
@@ -811,10 +780,6 @@
                             <label for="timesheet1-1">Date</label>
                             <input type="text" class="form-control" name="timesheet1-1" readonly>
                         </div>
-                        <!-- <div class="form-group col-md-1">
-                            <label for="timesheet1-2">Staff</label>
-                            <input type="text" class="form-control" name="timesheet1-2" id="timesheet1-2" readonly>
-                        </div> -->
                         <div class="form-group col-md-2">
                             <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
                             <div>
@@ -891,14 +856,8 @@
                                 {% endfor %} -->
                             </select>
                         </div>
-                        <!-- <div class="form-group col-md-2" >
-                            <br/>
-                            <button type="reset" class="btn btn-primary" style="background-color: darkred; margin-right: 20px;" value="Reset">Reset</button>
-                            <button type="submit" class="btn btn-primary" style="background-color: green;" value="Submit" disabled>Submit</button>
-                        </div> -->
                     </form>
                 </div>
-                <!-- /* timesheet selectpicker (select dropdown with search) */ -->
                 <style>
                     .dropdown.bootstrap-select.browser-default.custom-select {
                         width: 100%; 
@@ -934,148 +893,6 @@
                 </style>
             </div>
         </div>
-    </div>
-    <!-- Sheet list page -->
-    <div id="Sheetlist" class="timesheettbl" style="display: none;">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-success alert-dismissable" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                    <span aria-hidden="true">x</span>
-                </button>
-            {{message}}
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
-
-        <input class="form-control mb-4" id="tableSearch" type="text"
-            placeholder="Type something to search list items">
-        <br/>
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-                <tr >
-                    <th class="col-1">ID</th>
-                    <th class="col-1">Date</th>
-                    <th class="col-2">TaskName</th>
-                    <th class="col-1">TaskType</th>
-                    <th class="col-2">Corporation</th>
-                    <th class="col-1">WorkHour</th>
-                    <th class="col-2">Content</th>
-                    <th class="col-1">Staff</th>
-                    <th class="col-1">Action</th>
-                </tr>
-            </thead>
-            <tbody id="myTable">
-                {% for row in list %}
-                    <tr >
-                        <td class="col-1">{{row[1]}}</td>
-                        <td class="col-1">{{row.startdate}}</td>
-                        <td class="col-2">{{row.taskname}}</td>
-                        <td class="col-1">{{row.tasktype}}</td>
-                        <td class="col-2">{{row.corp1}}</td>
-                        <!-- <td class="col-1">{{row[4]}}</td> -->
-                        <td class="col-2">{{row.client}}</td>
-                        <td class="col-1">{{row.workhour}}</td>
-                        <td class="col-2">{{row.taskcontent}}</td>
-                        <td class="col-1">{{row.staff}}</td>
-                        <td class="col-1">
-                            <a href="/timesheetupdate/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
-                            <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
-                        </td>
-                    </tr>
-
-                <!-- Edit & update -->
-                <div id="modaledit{{row.id}}" class="modal" role="dialog" aria-hidden="true" style="z-index: 300;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Update Information</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form action="{{url_for('timesheetupdate')}}" method="POST">
-                                    <div class="form-group">
-                                        <label for="timesheet1-1">Date</label>
-                                        <input type="hidden"  name="id" value="{{row.id}}">
-                                        <input type="text" class="form-control" name="timesheet1-1" value="{{row.startdate}}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-2">Staff</label>
-                                        <input type="text" class="form-control" name="timesheet1-2" value="{{row.staff}}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-3">Start time</label>
-                                        <input type="text" class="form-control" name="timesheet1-3" value="{{row.starttime}}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-4">Calendar hr</label>
-                                        <input type="number" class="form-control" name="timesheet1-4" value="{{row.calhr}}" readonly>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="timesheet1-6">Working hr</label>
-                                        <input type="number" step="any" class="form-control" name="timesheet1-6" value="{{row.workhr}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-15">Comment</label>
-                                        <input type="text" class="form-control fillable" name="timesheet1-15" value="{{row.comment}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-7">Task Name</label>
-                                        <input type="text" class="form-control fillable" name="timesheet1-7" value="{{row.taskname}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-8">Task Type</label>
-                                        <br/>
-                                        <select class="browser-default custom-select" name="timesheet1-8" value="{{row.tasktype}}" style="height: 33px; background-color: #eeeeee;">
-                                            <option selected="">select code</option>
-                                            {% for row in code_types %}
-                                            <option >{{row.name}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-9">Task Code</label>
-                                        <input type="number" class="form-control" name="timesheet1-9" } value="{{row.taskcode}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-10">Corporation 1</label>
-                                        <input type="text" class="form-control fillable" name="timesheet1-10" value="{{row.corp1}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-11">Task Content</label>
-                                        <textarea type="text" class="form-control fillable" rows="6" name="timesheet1-11" value="{{row.taskcontent}}"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-12">Corporation 2</label>
-                                        <input type="text" class="form-control fillable" name="timesheet1-12" value="{{row.corp2}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-13">Corporation 3</label>
-                                        <input type="text" class="form-control fillable" name="timesheet1-13" value="{{row.corp3}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="timesheet1-14">Corporation 4</label>
-                                        <input type="text" class="form-control fillable" name="timesheet1-14" value="{{row.corp4}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-primary" type="submit">Update</button>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
-                {% endfor %}
-            </tbody>
-        </table>
-
-    </div>
-
     </div>
 </div>
 {% endblock %}
@@ -1393,13 +1210,14 @@
                     console.log("Total: " + temp + " flag: " + flag);
                     str[14] =(Math.round(temp/flag/0.60)/100)
                     for (j=15; j<19; j++){
-                        str[j] = parseInt((str[j-6].split(' | '))[4]);
+                        str[j] = parseInt((str[j-6].split(' | '))[0]);
                         str[j] = (Number.isNaN(str[j]))?0:str[j]
                     }
                     // str[14] = String(Math.floor(temp/flag/60)) + ":" + String(Math.floor(temp/flag)%60);
                     console.log(str);
                     $.ajax({
-                        url: "/timesheetInsertion",
+                        // url: "/timesheetInsertion",
+                        url: "/dailyentry_add",
                         type: "POST",
                         dataType: 'JSON',
                         contentType:'application/json; charset=utf-8',

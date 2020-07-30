@@ -475,3 +475,11 @@ def get_index_index(type, id_list, dropdown_list): # 由ID字串获取下拉菜�
                         tmp1.append(tmp0.index(y))
         index_list.append(tmp1)
     return index_list
+
+# convert str to int (index)
+def convert_to_int(data_str):
+    data_int = 0
+    data_str = data_str.replace(' ', '')
+    if data_str.isdigit():
+        data_int = int(data_str)
+    return data_int

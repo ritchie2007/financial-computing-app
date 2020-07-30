@@ -58,12 +58,12 @@ class activity_code(db.Model):
 class Timesheet(db.Model):
     ''' Timesheet information'''
     __tablename__ = 'tbl_Timesheet'
-    id = db.Column(db.Integer, primary_key=True)
+    timesheet_id = db.Column(db.Integer, primary_key=True)
     startdate = db.Column(db.String(10))
     calhour = db.Column(db.String(10))
     adjhour = db.Column(db.String(4))
     adjmin = db.Column(db.String(4))
-    workhour = db.Column(db.String(10))
+    workhour = db.Column(db.Float)
     taskname = db.Column(db.String(80))
     taskcontent = db.Column(db.Text)
     tasktype = db.Column(db.String(80))
@@ -71,17 +71,17 @@ class Timesheet(db.Model):
     corp2 = db.Column(db.String(100))
     corp3 = db.Column(db.String(100))
     corp4 = db.Column(db.String(100))
-    staff = db.Column(db.String(50))
+    staff = db.Column(db.String(80))
     timestamp = db.Column(db.Integer)
-    avgtime = db.Column(db.String(10))
+    avgtime = db.Column(db.Float)
     jobid1 = db.Column(db.Integer)
     jobid2 = db.Column(db.Integer)
     jobid3 = db.Column(db.Integer)
     jobid4 = db.Column(db.Integer)
     starttime = db.Column(db.String(5))
     serialno = db.Column(db.String(20))
-    def __init__(self, startdate, calhour, adjhour, adjmin, workhour, taskname, taskcontent, tasktype, \
-             corp1, corp2, corp3, corp4, staff, timestamp, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno):
+    
+    def __init__(self, startdate, calhour, adjhour, adjmin, workhour, taskname, taskcontent, tasktype, corp1, corp2, corp3, corp4, staff, timestamp, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno):
         self.startdate = startdate
         self.calhour = calhour
         self.adjhour = adjhour
@@ -108,11 +108,13 @@ class Task(db.Model):
     ''' Task detail information'''
     __tablename__ = 'tbl_Task'
     task_id = db.Column(db.Integer, primary_key=True)
-    client_corp_id = db.Column(db.String(10))
+    client_corp_id = db.Column(db.Integer)
     client_corp_name = db.Column(db.String(150))
-    client_indiv_id = db.Column(db.String(10))
+    client_corp_bussi_no = db.Column(db.String(20))
+    client_indiv_id = db.Column(db.Integer)
     client_indiv_name = db.Column(db.String(100))
-    jobtype_id = db.Column(db.String(10))
+    client_indiv_sin = db.Column(db.String(10))
+    jobtype_id = db.Column(db.Integer)
     jobtype_code = db.Column(db.String(20))
     periodend = db.Column(db.String(20))
     responsible = db.Column(db.String(100))
@@ -122,19 +124,21 @@ class Task(db.Model):
     details = db.Column(db.String(400))
     recurrence = db.Column(db.String(10))
     priority = db.Column(db.String(10))
-    worktime = db.Column(db.String(20))
+    worktime = db.Column(db.Float)
     renewperiod = db.Column(db.String(20))
     renewstartdate = db.Column(db.String(20))
     renewenddate = db.Column(db.String(20))
     createdate = db.Column(db.String(20))
     serialno = db.Column(db.String(30))
-    def __init__(self, client_corp_id, client_corp_name, client_indiv_id, client_indiv_name, jobtype_id, jobtype_code, periodend, responsible, startdate, enddate, \
+    def __init__(self, client_corp_id, client_corp_name, client_corp_bussi_no, client_indiv_id, client_indiv_name, client_indiv_sin, jobtype_id, jobtype_code, periodend, responsible, startdate, enddate, \
         status, details, recurrence, priority, worktime, renewperiod, renewstartdate, \
         renewenddate, createdate, serialno):
         self.client_corp_id = client_corp_id
         self.client_corp_name = client_corp_name
+        self.client_corp_bussi_no = client_corp_bussi_no
         self.client_indiv_id = client_indiv_id
         self.client_indiv_name = client_indiv_name
+        self.client_indiv_sin = client_indiv_sin
         self.jobtype_id = jobtype_id
         self.jobtype_code = jobtype_code
         self.periodend = periodend

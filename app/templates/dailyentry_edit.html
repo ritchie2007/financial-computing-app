@@ -1,238 +1,200 @@
 {% extends 'base.html' %}
 
 {% block styles %}
-    {{super()}} 
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/dataTables.bootstrap.css')}}">
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/dataTables.bootstrap.css')}}">
+<style>
+  #success_message{ display: none;}
+  form label.control-label{
+    padding: 0px 13px 0px 0px;
+    text-align-last: right;
+    margin: 5px 0px 0px 0px;
+    font-size: 13px;
+  }
+</style>
 {% endblock %}
 
-
 {% block content %}
-<div class="tbl-field container-fluid">
-    <style>
-        #Sheetlist {
-            font-size: 13px;
-        }
-
-        #timesheettopbar {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            height: 35px;
-        }
-
-        #timesheettopbar input#tableSearch {
-            margin: 0px;
-            height: 30px;
-            vertical-align: middle;
-        }
-
-        #timesheettopbar select {
-            height: 30px;
-        }
-
-        #timesheettopbar button {
-            height: 30px;
-            padding: 5px 15px 15px;
-        }
-
-        .table th {
-            text-align: center;
-        }
-
-        #myTable td {
-            padding: 3px;
-            vertical-align: middle;
-        }
-    </style>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-success alert-dismissable" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="close">
-            <span aria-hidden="true">x</span>
-        </button>
-        {{message}}
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-    <div id="timesheettopbar" class="container-fluid row">
-        <input class="form-group col-sm-4" id="tableSearch" type="text" placeholder="Type something to search list items">
-        <div class="form-group col-sm-8" style="text-align: right;">
-            <form action="" method="POST" autocomplete="off">
-                Filter
-                <select name="dateselect" style="width: 25%;">
-                    <option value="">Please select date</option>
-                    {% for row in datefilter %}
-                    <option>{{row.startdate}}</option>
-                    {% endfor %}
-                </select>
-                <select name="userselect" style="width: 25%;">
-                    <option value="">Please select user</option>
-                    {% for row in userfilter %}
-                    <option>{{row.staff}}</option>
-                    {% endfor %}
-                </select>
-                <!-- <a href="{{url_for('timesheetlist')}}">Go</a> -->
-                <button type="submit" class="btn btn btn-success">Go</button>
-            </form>
-        </div>
-    </div>
-    <table id="corp_table" class="table table-bordered table-striped table-hover" style="font-size: 13px;"></table>
-    <thead>
-        <tr>
-            <th class="col-1">ID</th>
-            <th class="col-1">Date</th>
-            <th class="col-2">TaskName</th>
-            <th class="col-1">TaskType</th>
-            <th class="col-2">Corporation</th>
-            <th class="col-1">WorkHour</th>
-            <th class="col-2">Content</th>
-            <th class="col-1">Staff</th>
-            <th class="col-1">Action</th>
-        </tr>
-    </thead>
-    <tbody id="myTable">
-        {% for row in listdata.items %}
-        <tr>
-            <td class="col-1">{{row.id}}</td>
-            <td class="col-1">{{row.startdate}}</td>
-            <td class="col-2">{{row.taskname}}</td>
-            <td class="col-1">{{row.tasktype}}</td>
-            <td class="col-2">{{row.corp1}}</td>
-            <!-- <td class="col-1">{{row[4]}}</td> -->
-            <!-- <td class="col-2">{{row.client}}</td> -->
-            <td class="col-1" style="text-align: center;">{{row.workhour}}</td>
-            <td class="col-2">{{row.taskcontent}}</td>
-            <td class="col-1">{{row.staff}}</td>
-            <td class="col-1">
-                <div style="display: inline-block;">
-                    <a href="{{ url_for('dailyentry_edit') }}/{{row.timesheet_id}}" class="btn btn-warning btn-xs" style="font-size: 11px;">Edit</a>
-                </div>
-                <div style="display: inline-block;">
-                    <form action="{{url_for('dailyentry_del')}}/{{row.timesheet_id}}" method="POST">
-                        <a href="#"><button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')" style="font-size: 11px;">Del</button></a>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        <!-- Edit & update -->
-        <div id="modaledit{{row.id}}" class="modal" role="dialog" aria-hidden="true" style="z-index: 300;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Update Information</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{url_for('timesheetupdate')}}" method="POST">
-                            <div class="form-group">
-                                <label for="timesheet1-1">Date</label>
-                                <input type="hidden" name="id" value="{{row.id}}">
-                                <input type="text" class="form-control" name="timesheet1-1" value="{{row.startdate}}"
-                                    readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-2">Staff</label>
-                                <input type="text" class="form-control" name="timesheet1-2" value="{{row.staff}}" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-3">Start time</label>
-                                <input type="text" class="form-control" name="timesheet1-3" value="{{row.starttime}}"
-                                    readonly>
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-4">Calendar hr</label>
-                                <input type="number" class="form-control" name="timesheet1-4" value="{{row.calhr}}"
-                                    readonly>
-                            </div>
+<div class="tbl-field" style="height: fit-content;">
     
-                            <div class="form-group">
-                                <label for="timesheet1-6">Working hr</label>
-                                <input type="number" step="any" class="form-control" name="timesheet1-6"
-                                    value="{{row.workhr}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-15">Comment</label>
-                                <input type="text" class="form-control fillable" name="timesheet1-15"
-                                    value="{{row.comment}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-7">Task Name</label>
-                                <input type="text" class="form-control fillable" name="timesheet1-7"
-                                    value="{{row.taskname}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-8">Task Type</label>
-                                <br />
-                                <select class="browser-default custom-select" name="timesheet1-8" value="{{row.tasktype}}"
-                                    style="height: 33px; background-color: #eeeeee;">
-                                    <option selected="">select code</option>
-                                    {% for row in code_types %}
-                                    <option>{{row.name}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-9">Task Code</label>
-                                <input type="number" class="form-control" name="timesheet1-9" } value="{{row.taskcode}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-10">Corporation 1</label>
-                                <input type="text" class="form-control fillable" name="timesheet1-10" value="{{row.corp1}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-11">Task Content</label>
-                                <textarea type="text" class="form-control fillable" rows="6" name="timesheet1-11"
-                                    value="{{row.taskcontent}}"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-12">Corporation 2</label>
-                                <input type="text" class="form-control fillable" name="timesheet1-12" value="{{row.corp2}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-13">Corporation 3</label>
-                                <input type="text" class="form-control fillable" name="timesheet1-13" value="{{row.corp3}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="timesheet1-14">Corporation 4</label>
-                                <input type="text" class="form-control fillable" name="timesheet1-14" value="{{row.corp4}}">
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-primary" type="submit">Update</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <h4 style="margin-left: 50px;">&nbsp Timesheet ID: {{timesheet.timesheet_id}} &nbsp &nbsp Update</h4>
+    <div class="row" style="margin: 0% 20% 0% 20%;">    
+        <form id="my_form" action="{{url_for('dailyentry_edit')}}/{{timesheet.timesheet_id}}" method="POST">
+            
+            <div class="form-group" name="Startdate">
+                <label class="col-sm-3 control-label">Start date</label>
+                <div class="col-sm-9 inputGroupContainer" style="padding: 0px;">
+                    <div class="input-group" style="width: 50%;">
+                        <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span> -->
+                        <input type="date" class="form-control" name="timesheetedit1" value="{{timesheet.startdate}}" style="padding: 3px 12px;">
                     </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}
-    </tbody>
-    </table>
-    <!-- <nav aria-label="Page navigation"> -->
-    <div>
-        {% from "render_pagination.html" import render_pagination %}
-        {{render_pagination(listdata, 'timesheetlist')}}
+            <div class="form-group" name="Calendarhour">
+                <label class="col-sm-3 control-label">Calendar hour(h:m)</label>
+                <div class="col-sm-9 inputGroupContainer" style="padding: 0px;">
+                    <div class="input-group" style="width: 30%;">
+                        <input type="text" class="form-control" name="timesheetedit2" value="{{timesheet.calhour}}" readonly style="background-color: #fff;">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" name="Adjusthour">
+                <label class="col-sm-3 control-label">Adjust hour(hh:mm)</label>
+                <div class="col-sm-9 inputGroupContainer" style="padding: 0px;">
+                    <div class="input-group" style="width: 100%;">
+                        <input type="text" class="form-control" name="timesheetedit3" value="{{timesheet.adjhour}} : {{timesheet.adjmin}}" onfocusout="cal_workhour()" style="width: 30%;">
+                        <input type="text" class="form-control" value="(please input (-)hh:mm)" style="width: 30%;  border: none; background-color: #eaece9;;" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" name="workhour">
+                <label class="col-sm-3 control-label">Work hour(hr)</label>
+                <div class="col-sm-9 inputGroupContainer" style="padding: 0px;">
+                    <div class="input-group" style="width: 30%;">
+                        <input type="number" step=".01" class="form-control" name="timesheetedit4" value="{{timesheet.workhour}}" >
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" name="entryname">
+                <label class="col-sm-3 control-label">Task Name</label>
+                <div class="col-sm-9 inputGroupContainer" style="padding: 0px;">
+                    <div class="input-group" style="width: 80%;">
+                        <input type="text" class="form-control" name="timesheetedit5" value="{{timesheet.entryname}}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" name="entrycontent">
+                <label class="col-sm-3 control-label">Task Content</label>
+                <div class="col-sm-9 inputGroupContainer" style="padding: 0px;">
+                    <div class="input-group" style="width: 100%;">
+                        <input type="text" class="form-control" name="timesheetedit6" value="{{timesheet.entrycontent}}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" name="activitytype">
+              <label class="col-sm-3 control-label" >Task Type</label>
+              <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
+                <div class="input-group">
+                    <select class="form-control browser-default custom-select" name="timesheetedit7" value="{{timesheet.activitytype}}">
+                        <option value="" >Please select</option>
+                        {% for row in code_types %}
+                        <option >{{row.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>   
+            </div>
+            <div class="form-group" name="corp1">
+                <label class="col-sm-3 control-label" >Corporation 01</label>
+                <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
+                  <div class="input-group">
+                        <select class="form-control browser-default custom-select" name="timesheetedit8" value="{{idx[0]}}">
+                            <option value="" >Please select</option>
+                            {% for row in tasklist %}
+                            <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
+                            {% endfor %} 
+                        </select>
+                  </div>
+                </div>   
+            </div>
+            <div class="form-group" name="corp2">
+                <label class="col-sm-3 control-label" >Corporation 02</label>
+                <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
+                  <div class="input-group">
+                        <select class="form-control browser-default custom-select" name="timesheetedit9" value="{{idx[1]}}">
+                            <option value="" >Please select</option>
+                            {% for row in tasklist %}
+                            <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
+                            {% endfor %} 
+                        </select>
+                  </div>
+                </div>   
+            </div>
+            <div class="form-group" name="corp3">
+                <label class="col-sm-3 control-label" >Corporation 03</label>
+                <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
+                  <div class="input-group">
+                        <select class="form-control browser-default custom-select" name="timesheetedit10" value="{{idx[2]}}">
+                            <option value="" >Please select</option>
+                            {% for row in tasklist %}
+                            <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
+                            {% endfor %} 
+                        </select>
+                  </div>
+                </div>   
+            </div>
+            <div class="form-group" name="corp4">
+                <label class="col-sm-3 control-label" >Corporation 04</label>
+                <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
+                  <div class="input-group">
+                        <select class="form-control browser-default custom-select" name="timesheetedit11" value="{{idx[3]}}">
+                            <option value="" >Please select</option>
+                            {% for row in tasklist %}
+                            <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
+                            {% endfor %} 
+                        </select>
+                  </div>
+                </div>   
+            </div>
+            <div class="form-group" name="staff">
+                <label class="col-sm-3 control-label">Staff</label>
+                <div class="col-sm-9 inputGroupContainer" style="padding: 0px;">
+                    <div class="input-group" style="width: 50%;">
+                        <input type="text" class="form-control" name="timesheetedit12" value="{{timesheet.staff}}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" style="text-align: right;">
+                <a href="#"><button type="submit" class="btn btn-success">Update</button></a>
+                <a href="{{ url_for('dailyentry')}}" type="cancel" class="btn btn-danger" >Cancel</a>
+            </div>
+            <!-- Success message -->
+            <div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Make sure above data is valid.
+            </div>
+        </form>
     </div>
-    </div>
-    </div>
+</div>
 {% endblock %}
-
 {% block scripts %}
-    <script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
-    <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{url_for('static', filename='js/bootstrap-select.min.js')}}"></script>
-    <script src="{{url_for('static', filename='js/main.js')}}"></script>
-    
-    <!-- <script type="module" src="{{url_for('static', filename='js/popper.js')}}"></script> -->
-    <!-- <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script> -->
-    <!-- <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script> -->
-    
-    <script type="text/javascript">
-    // filter table
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+<script src="{{url_for('static', filename='js/main.js')}}"></script>
+<script src="{{url_for('static', filename='js/jquery.dataTables.js')}}"></script>
+<script src="{{url_for('static', filename='js/dataTables.bootstrap.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrapValidator.min.js')}}"></script> 
 
-    </script>
+<script type="text/javascript">
+
+  window.onload = function(event) {
+    var tmp = $('form#my_form [name="timesheetedit8"]').attr('value');
+    $('form#my_form [name="timesheetedit8"]').prop('selectedIndex', parseInt(tmp));
+    tmp = $('form#my_form [name="timesheetedit9"]').attr('value');
+    $('form#my_form [name="timesheetedit9"]').prop('selectedIndex', parseInt(tmp));
+    tmp = $('form#my_form [name="timesheetedit10"]').attr('value');
+    $('form#my_form [name="timesheetedit10"]').prop('selectedIndex', parseInt(tmp));
+    tmp = $('form#my_form [name="timesheetedit11"]').attr('value');
+    $('form#my_form [name="timesheetedit11"]').prop('selectedIndex', parseInt(tmp));
+    tmp = $('form#my_form [name="timesheetedit7"]').attr('value');
+    $('form#my_form [name="timesheetedit7"]').val(tmp);
+  };
+
+  function cal_workhour() {
+    var cal = (($('form#my_form [name="timesheetedit2"]').val()).replace(/ /g,'')).split(':');
+    var adj = (($('form#my_form [name="timesheetedit3"]').val()).replace(/ /g,'')).split(':');
+    var opr = 1;
+    cal = parseInt(cal[0])*60 + parseInt(cal[1]);
+    if (adj[0].startsWith('-', 0)){var opr = -1};
+    adj = parseInt(adj[0])*60*opr + parseInt(adj[1]);
+    var time = (cal + adj*opr);
+    if (time <= 0) {
+        time = 0;
+    } else {
+        time = parseFloat((time/60).toFixed(2));
+    }
+    $('form#my_form [name="timesheetedit4"]').val(time);
+  }
+
+</script>
 {%- endblock scripts %}

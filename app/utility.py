@@ -483,3 +483,38 @@ def convert_to_int(data_str):
     if data_str.isdigit():
         data_int = int(data_str)
     return data_int
+
+# dailyentry to report
+def dailyentry_to_report(value1, corpid, oper, value0): # 公司里人改，人里公司改
+    print(' --- director ---')
+    print(value1)
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Individual.query.get(x)
+                    tmp = (my_data.director_corp)
+                    if len(tmp) > 0:
+                        tmp = (my_data.director_corp).split(',')
+                        if str(corpid) in tmp:
+                            tmp.remove(str(corpid))
+                            my_data.director_corp = ",".join(tmp)
+                            db.session.commit()
+
+        for x in value1:
+            my_data = Individual.query.get(x)
+            if my_data.director_corp == "":
+                my_data.director_corp = str(corpid)
+            else:
+                print(" -- my_data -- " + my_data.director_corp)
+                tmp = (my_data.director_corp).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.director_corp = ",".join(tmp)
+            print(my_data.director_corp)
+            db.session.commit()

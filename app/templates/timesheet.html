@@ -958,8 +958,8 @@
                 <tr >
                     <th class="col-1">ID</th>
                     <th class="col-1">Date</th>
-                    <th class="col-2">TaskName</th>
-                    <th class="col-1">TaskType</th>
+                    <th class="col-2">entryname</th>
+                    <th class="col-1">activitytype</th>
                     <th class="col-2">Corporation</th>
                     <th class="col-1">WorkHour</th>
                     <th class="col-2">Content</th>
@@ -972,13 +972,13 @@
                     <tr >
                         <td class="col-1">{{row[1]}}</td>
                         <td class="col-1">{{row.startdate}}</td>
-                        <td class="col-2">{{row.taskname}}</td>
-                        <td class="col-1">{{row.tasktype}}</td>
+                        <td class="col-2">{{row.entryname}}</td>
+                        <td class="col-1">{{row.activitytype}}</td>
                         <td class="col-2">{{row.corp1}}</td>
                         <!-- <td class="col-1">{{row[4]}}</td> -->
                         <td class="col-2">{{row.client}}</td>
                         <td class="col-1">{{row.workhour}}</td>
-                        <td class="col-2">{{row.taskcontent}}</td>
+                        <td class="col-2">{{row.entrycontent}}</td>
                         <td class="col-1">{{row.staff}}</td>
                         <td class="col-1">
                             <a href="/timesheetupdate/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
@@ -1023,12 +1023,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="timesheet1-7">Task Name</label>
-                                        <input type="text" class="form-control fillable" name="timesheet1-7" value="{{row.taskname}}">
+                                        <input type="text" class="form-control fillable" name="timesheet1-7" value="{{row.entryname}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="timesheet1-8">Task Type</label>
                                         <br/>
-                                        <select class="browser-default custom-select" name="timesheet1-8" value="{{row.tasktype}}" style="height: 33px; background-color: #eeeeee;">
+                                        <select class="browser-default custom-select" name="timesheet1-8" value="{{row.activitytype}}" style="height: 33px; background-color: #eeeeee;">
                                             <option selected="">select code</option>
                                             {% for row in code_types %}
                                             <option >{{row.name}}</option>
@@ -1045,7 +1045,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="timesheet1-11">Task Content</label>
-                                        <textarea type="text" class="form-control fillable" rows="6" name="timesheet1-11" value="{{row.taskcontent}}"></textarea>
+                                        <textarea type="text" class="form-control fillable" rows="6" name="timesheet1-11" value="{{row.entrycontent}}"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="timesheet1-12">Corporation 2</label>
@@ -1237,7 +1237,6 @@
         
         //sub-save data to Local
         function saveSub (root, runningCode, accomTime) {
-
             var str = new Array(16);
             str[0] = root;
             str[1] = $("#"+root+" .form-group [name='timesheet1-1']").val();
@@ -1495,7 +1494,7 @@
                 var adj1=$("#"+root+" .form-group [name='timesheet1-41']").val(t(h2));
                 var adj2=$("#"+root+" .form-group [name='timesheet1-42']").val(t(m2));
                 $("#"+root+" .form-group [name='timesheet1-5']").val(h1+h2+Math.floor((m1+m2)/60)+" : "+(m1+m2)%60);
-                $("#"+root+" .form-group [name='timesheet1-6']").val("TaskName No. "+i+" on ");//+d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
+                $("#"+root+" .form-group [name='timesheet1-6']").val("entryname No. "+i+" on ");//+d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
                 $("#"+root+" .form-group [name='timesheet1-7']").val("text_Content No. "+i+" on ");//+d.getFullYear()+"."+(d.getMonth()+1)+"."+d.getDate());
                 document.querySelector("#"+root+" .form-group [name='timesheet1-8']").selectedIndex = Math.floor(Math.random()*40);
                 $("#"+root+" .form-group [name='timesheet1-9']").get(0).selectedIndex = Math.floor(Math.random()*3+1);

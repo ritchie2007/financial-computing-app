@@ -1,6 +1,6 @@
 --create table staff_daily_sum (id integer primary key, name varchar(80), date varchar(12), hour varchar(5));
 --insert into staff_daily_sum (name, date, hour) values (
---select name, date, max(work_hour) from staff group by date, name order by name asc, date desc)
+--select name, date, max(workhour) from staff group by date, name order by name asc, date desc)
 --where date in (SELECT DISTINCT [date] FROM [staff] ORDER  BY [date] desc);
 
 --select * from administrator
@@ -146,4 +146,23 @@ VALUES ('Corpration company 01', '', 'GST', '2020-02-29', 'Ms. Sumart', '2020-03
 ('Corpration 02', '', 'HSTs', '2020-12-31', 'Ms. copr2', '2021-01-01', '2021-12-31', 'A', 'filling HST form', 'y', 'normal', '35.49', '2021-12-31', '2022-01-01', '2022-12-31', '','0.99324109')
 
 update tbl_Task set client_corp_name = (select client_corp_id from tbl_Task where task_id = 4) where task_id = 4;
+
+cursor = db.execute("SELECT ...")
+if cursor.empty:
+    db.execute("INSERT ...")
+else:
+    db.execute("UPDATE ...")
+
+CREATE TABLE tbl_Timesheet (timesheet_id Integer primary key, startdate VARCHAR(10), calhour VARCHAR(10), adjhour VARCHAR(4), 
+    adjmin VARCHAR(4), workhour Float, entryname VARCHAR(80), entrycontent Text, activitytype VARCHAR(80), 
+    corp1 VARCHAR(100), corp2 VARCHAR(100), corp3 VARCHAR(100), corp4 VARCHAR(100), staff VARCHAR(80), 
+    timemark Integer, avgtime Float, jobid1 Integer, jobid2 Integer, jobid3 Integer, jobid4 Integer,
+    starttime VARCHAR(5), serialno VARCHAR(20))
+
+CREATE TABLE tbl_Corporation_report (corp_report_id Integer primary key, corp VARCHAR(100), startdate VARCHAR(20),
+    entryname VARCHAR(80), activitytype VARCHAR(80), entrycontent Text, workhour Float, timemark Integer,
+    jobid Integer, serialno VARCHAR(20))
+
+CREATE TABLE tbl_Staff (staff_id Integer primary key, name VARCHAR(80), startdate VARCHAR(15), job VARCHAR(80),
+    calendarhour VARCHAR(10), adjhour VARCHAR(5), adjmin VARCHAR(5), workhour Float,timemark Integer, serialno VARCHAR(20))
 

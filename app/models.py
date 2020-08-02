@@ -64,15 +64,15 @@ class Timesheet(db.Model):
     adjhour = db.Column(db.String(4))
     adjmin = db.Column(db.String(4))
     workhour = db.Column(db.Float)
-    taskname = db.Column(db.String(80))
-    taskcontent = db.Column(db.Text)
-    tasktype = db.Column(db.String(80))
+    entryname = db.Column(db.String(80))
+    entrycontent = db.Column(db.Text)
+    activitytype = db.Column(db.String(80))
     corp1 = db.Column(db.String(100))
     corp2 = db.Column(db.String(100))
     corp3 = db.Column(db.String(100))
     corp4 = db.Column(db.String(100))
     staff = db.Column(db.String(80))
-    timestamp = db.Column(db.Integer)
+    timemark = db.Column(db.Integer)
     avgtime = db.Column(db.Float)
     jobid1 = db.Column(db.Integer)
     jobid2 = db.Column(db.Integer)
@@ -81,21 +81,21 @@ class Timesheet(db.Model):
     starttime = db.Column(db.String(5))
     serialno = db.Column(db.String(20))
     
-    def __init__(self, startdate, calhour, adjhour, adjmin, workhour, taskname, taskcontent, tasktype, corp1, corp2, corp3, corp4, staff, timestamp, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno):
+    def __init__(self, startdate, calhour, adjhour, adjmin, workhour, entryname, entrycontent, activitytype, corp1, corp2, corp3, corp4, staff, timemark, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno):
         self.startdate = startdate
         self.calhour = calhour
         self.adjhour = adjhour
         self.adjmin = adjmin
         self.workhour = workhour
-        self.taskname = taskname
-        self.taskcontent = taskcontent
-        self.tasktype = tasktype
+        self.entryname = entryname
+        self.entrycontent = entrycontent
+        self.activitytype = activitytype
         self.corp1 = corp1
         self.corp2 = corp2
         self.corp3 = corp3
         self.corp4 = corp4
         self.staff = staff
-        self.timestamp = timestamp
+        self.timemark = timemark
         self.avgtime = avgtime
         self.jobid1 = jobid1
         self.jobid2 = jobid2
@@ -171,47 +171,47 @@ class Job_type(db.Model):
 class Staff(db.Model):
     ''' Staff detail information'''
     __tablename__ = 'tbl_Staff'
-    id = db.Column(db.Integer, primary_key=True)
+    staff_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
-    date = db.Column(db.String(15))
+    startdate = db.Column(db.String(15))
     job = db.Column(db.String(80))
-    calendar_hour = db.Column(db.String(10))
-    adj_hour = db.Column(db.String(5))
-    adj_min = db.Column(db.String(5))
-    work_hour = db.Column(db.String(12))
-    timestamp = db.Column(db.Integer)
+    calendarhour = db.Column(db.String(10))
+    adjhour = db.Column(db.String(5))
+    adjmin = db.Column(db.String(5))
+    workhour = db.Column(db.Float)
+    timemark = db.Column(db.Integer)
     serialno = db.Column(db.String(20))
-    def __init__(self, name, date, job, calendar_hour, adj_hour, adj_min, work_hour, timestamp, serialno):
+    def __init__(self, name, startdate, job, calendarhour, adjhour, adjmin, workhour, timemark, serialno):
         self.name = name
-        self.date = date
+        self.startdate = startdate
         self.job = job
-        self.calendar_hour = calendar_hour
-        self.adj_hour = adj_hour
-        self.adj_min = adj_min
-        self.work_hour = work_hour
-        self.timestamp = timestamp
+        self.calendarhour = calendarhour
+        self.adjhour = adjhour
+        self.adjmin = adjmin
+        self.workhour = workhour
+        self.timemark = timemark
         self.serialno = serialno
 
 class CorprationReport(db.Model):
-    __tablename__ = "corpration_report"
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = "tbl_Corporation_report"
+    corp_report_id = db.Column(db.Integer, primary_key=True)
     corp = db.Column(db.String(100))
-    date = db.Column(db.String(20))
-    task_name = db.Column(db.String(80))
-    task_type = db.Column(db.String(80))
-    task_content = db.Column(db.Text)
-    work_hour = db.Column(db.String(10))
-    timestamp = db.Column(db.Integer)
+    startdate = db.Column(db.String(20))
+    entryname = db.Column(db.String(80))
+    activitytype = db.Column(db.String(80))
+    entrycontent = db.Column(db.Text)
+    workhour = db.Column(db.Float)
+    timemark = db.Column(db.Integer)
     jobid = db.Column(db.Integer)
     serialno = db.Column(db.String(20))
-    def __init__(self, corp, date, task_name, task_type, task_content, work_hour, timestamp, jobid, serialno):
+    def __init__(self, corp, startdate, entryname, activitytype, entrycontent, workhour, timemark, jobid, serialno):
         self.corp = corp
-        self.date = date
-        self.task_name = task_name
-        self.task_type = task_type
-        self.task_content = task_content
-        self.work_hour = work_hour
-        self.timestamp = timestamp
+        self.startdate = startdate
+        self.entryname = entryname
+        self.activitytype = activitytype
+        self.entrycontent = entrycontent
+        self.workhour = workhour
+        self.timemark = timemark
         self.jobid = jobid
         self.serialno = serialno
 
@@ -306,9 +306,9 @@ class Corporation(db.Model):
     recent_update = db.Column(db.String(50))
     contact_position = db.Column(db.String(200))
     shareholder_info = db.Column(db.String(400))
-    timestamp = db.Column(db.String(26))
+    timemark = db.Column(db.String(26))
 
-    def __init__(self,corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,contact,director,shareholder,task,recent_update,contact_position,shareholder_info,timestamp):
+    def __init__(self,corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,contact,director,shareholder,task,recent_update,contact_position,shareholder_info,timemark):
         self.corp1 = corp1
         self.corp2 = corp2
         self.corp3 = corp3
@@ -373,7 +373,7 @@ class Corporation(db.Model):
         self.recent_update = recent_update
         self.contact_position = contact_position
         self.shareholder_info = shareholder_info
-        self.timestamp = timestamp
+        self.timemark = timemark
 
 class Individual(db.Model):
     ''' Indivuduals detail information '''
@@ -411,11 +411,11 @@ class Individual(db.Model):
     spouse = db.Column(db.String(20))
     parent = db.Column(db.String(40))
     child = db.Column(db.String(40))
-    timestamp = db.Column(db.String(26))
+    timemark = db.Column(db.String(26))
     def __init__(self,sin,prefix,last_name,first_name,other_name,email,phone1,phone2,address1,address2,mail_address,
         wechat,cra_sole_proprietor,cra_hst_report,cra_payroll,cra_withhold_tax,cra_wsib,cra_other,oversea_asset_t1135,
         oversea_corp_t1134,tslip,tax_personal_info,specific_info,engage_account,engage_leading,note,
-        contact_corp,director_corp,sharehold_corp,spouse,parent,child,timestamp):
+        contact_corp,director_corp,sharehold_corp,spouse,parent,child,timemark):
 
         self.sin = sin
         self.prefix = prefix
@@ -449,7 +449,7 @@ class Individual(db.Model):
         self.spouse = spouse
         self.parent = parent
         self.child = child
-        self.timestamp = timestamp
+        self.timemark = timemark
 
 class Directors(db.Model):
     ''' directors linked to corporation'''

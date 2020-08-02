@@ -3,4 +3,27 @@
 # cra_sole_proprietor,cra_hst_report,cra_payroll,cra_withhold_tax,cra_wsib,cra_other,
 # oversea_asset_t1135,
 # oversea_corp_t1134,tslip,tax_personal_info,specific_info,engage_account,engage_leading,note,
-# contact_corp,director_corp,sharehold_corp,spouse,parent,child,timestamp
+# contact_corp,director_corp,sharehold_corp,spouse,parent,child,timemark
+
+timesheet_id Integer, primarykey, 
+    startdate  VARCHAR(10), 
+    calhour  VARCHAR(10), 
+    adjhour  VARCHAR(4), 
+    adjmin  VARCHAR(4), 
+    workhour Float,
+    entryname  VARCHAR(80), 
+    entrycontent Text)
+    activitytype  VARCHAR(80), 
+    corp1  VARCHAR(100), 
+    corp2  VARCHAR(100), 
+    corp3  VARCHAR(100), 
+    corp4  VARCHAR(100), 
+    staff  VARCHAR(80), 
+    timemark Integer,
+    avgtime Float,
+    jobid1 Integer,
+    jobid2 Integer,
+    jobid3 Integer,
+    jobid4 Integer,
+    starttime  VARCHAR(5), 
+    serialno  VARCHAR(20))

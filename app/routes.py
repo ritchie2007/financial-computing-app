@@ -1,6 +1,7 @@
 1 # pylint: disable=no-member
 
 from random import random
+import copy
 #from time import strftime, strptime, localtime
 from datetime import timedelta, datetime #, date
 from pytz import timezone
@@ -215,7 +216,7 @@ def corp_add():
         corp58 = request.form['corp58']
         task = 0
         recent_update = ""
-        timestamp = datetime.utcnow()
+        timemark = datetime.utcnow()
         contact_position = ""
         contact_position += ((request.form['corp'+str(59)])+','+(request.form['corp'+str(61)])+',')
         contact_position += ((request.form['corp'+str(63)])+','+(request.form['corp'+str(65)]))
@@ -258,7 +259,7 @@ def corp_add():
             utility.corp_shareholder_to_indiv(shareholder, max_id, 0, "")
             shareholder = ",".join(shareholder)
 
-        my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, timestamp)
+        my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, timemark)
         db.session.add(my_data)
         db.session.commit()
         flash("Corporation add Successfully")
@@ -340,7 +341,7 @@ def corp_edit(id):
         my_data.corp58 = request.form['corp58']
         my_data.task = 0
         my_data.recent_update = ""
-        my_data.timestamp = datetime.utcnow()
+        my_data.timemark = datetime.utcnow()
         
         contact_position = ""
         contact_position += ((request.form['corp'+str(59)])+','+(request.form['corp'+str(61)])+',')
@@ -470,7 +471,7 @@ def individual_add():
         spouse = utility.get_id_from_name(name, 9, 2)
         parent = utility.get_id_from_name(name, 11, 4)
         child = utility.get_id_from_name(name, 15, 4)
-        timestamp = datetime.utcnow()
+        timemark = datetime.utcnow()
 
         if (max_id == None):
             max_id = 1
@@ -516,7 +517,7 @@ def individual_add():
             child = ",".join(child)
         
         my_data = Individual(sin,prefix,last_name,first_name,other_name,email,phone1,phone2,address1,address2,mail_address,wechat,cra_sole_proprietor,cra_hst_report,cra_payroll,cra_withhold_tax,cra_wsib,cra_other,oversea_asset_t1135,
-        oversea_corp_t1134,tslip,tax_personal_info,specific_info,engage_account,engage_leading,note,contact_corp,director_corp,sharehold_corp,spouse,parent,child,timestamp)
+        oversea_corp_t1134,tslip,tax_personal_info,specific_info,engage_account,engage_leading,note,contact_corp,director_corp,sharehold_corp,spouse,parent,child,timemark)
         db.session.add(my_data)
         db.session.commit()
         flash("Individual add Successfully")
@@ -575,7 +576,7 @@ def individual_edit(id):
         my_data.engage_account = request.form['indiv24']
         my_data.engage_leading = request.form['indiv25']
         my_data.note = request.form['indiv26']
-        my_data.timestamp = datetime.utcnow()
+        my_data.timemark = datetime.utcnow()
 
         name = []
         for x in range(19):
@@ -948,7 +949,6 @@ def dailyentry():
             list_data = Timesheet.query.filter(Timesheet.startdate == dateselect).all()
         elif dateselect == "" and userselect != "":
             list_data = Timesheet.query.filter(Timesheet.staff == userselect).all()
-    print(len(list_data))
     return render_template(
         'dailyentry.html',
         listdata=list_data,
@@ -971,30 +971,18 @@ def dailyentry_add():
         adjmin = data[4]
         t = (data[5].replace(' ','')).split(':')
         workhour = round((float(t[0]) + float(t[1])/60), 2)
-        taskname = data[6]
-        taskcontent = data[7]
-        tasktype = data[8]
-        if len(data[9].split(" | ")) == 5:
-            corp1 = (data[9].split(" | "))[4]
-        else:
-            corp1 = ''
-        if len(data[10].split(" | ")) == 5:
-            corp2 = (data[10].split(" | "))[4]
-        else:
-            corp2 = ''
-        if len(data[11].split(" | ")) == 5:
-            corp3 = (data[11].split(" | "))[4]
-        else:
-            corp3 = ''
-        if len(data[12].split(" | ")) == 5:
-            corp4 = (data[12].split(" | "))[4]
-        else:
-            corp4 = ''
+        entryname = data[6]
+        entrycontent = data[7]
+        activitytype = data[8]
+        corp1 = ((data[9].split(" | "))[4]) if (len(data[9].split(" | ")) == 5) else ''
+        corp2 = ((data[10].split(" | "))[4]) if (len(data[10].split(" | ")) == 5) else ''
+        corp3 = ((data[11].split(" | "))[4]) if (len(data[11].split(" | ")) == 5) else ''
+        corp4 = ((data[12].split(" | "))[4]) if (len(data[12].split(" | ")) == 5) else ''
         userstr = ['Susan', 'Dannijo', 'Michael', 'Aser', 'Kidden']
         userstridx = round(random()*4)
         staff = userstr[userstridx]
         # staff = current_user.username
-        timestamp = data[13]
+        timemark = data[13]
         avgtime = float(data[14])
         jobid1 = int(data[15])
         jobid2 = int(data[16])
@@ -1002,7 +990,8 @@ def dailyentry_add():
         jobid4 = int(data[18])
         starttime = (data[1])[11:16]
         serialno = random()
-        my_data = Timesheet(startdate, calhour, adjhour, adjmin, workhour, taskname, taskcontent, tasktype, corp1, corp2, corp3, corp4, staff, timestamp, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno)
+        
+        my_data = Timesheet(startdate, calhour, adjhour, adjmin, workhour, entryname, entrycontent, activitytype, corp1, corp2, corp3, corp4, staff, timemark, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno)
         db.session.add(my_data)
         db.session.commit()
         flash("Dailyentry Inserted Successfully")
@@ -1016,9 +1005,51 @@ def dailyentry_add():
     )
 
 @app.route('/dailyentry_edit', methods=['GET', 'POST'])
-def dailyentry_edit():
+@app.route('/dailyentry_edit/<int:id>', methods=['GET', 'POST'])
+def dailyentry_edit(id):
     ''' update dailyentry information'''
-    pass
+    tasklist = Task.query.with_entities(Task.task_id, Task.periodend, Task.recurrence, Task.jobtype_code, Task.client_corp_name)
+    code_types = activity_code.query.all()
+    my_data = Timesheet.query.get(id)
+    time0 = my_data.workhour
+    t = []
+    idx = []
+    max = db.session.query(Task).with_entities(func.max(Task.task_id)).scalar()
+    for i in [1, 2, 3, 4]:
+        exec('t.append(my_data.jobid{})'.format(i))
+        corp = db.session.query(Task).with_entities(func.count(Task.task_id)).filter(Task.task_id <= t[i-1]).scalar()
+        (idx.append(0)) if max < corp else (idx.append(corp))
+    if request.method == 'POST':
+        my_data.startdate = request.form['timesheetedit1']
+        my_data.calhour = request.form['timesheetedit2']
+        my_data.adjhour = (request.form['timesheetedit3'].replace(' ','').split(':'))[0]
+        my_data.adjmin = (request.form['timesheetedit3'].replace(' ','').split(':'))[1]
+        my_data.workhour  = float(request.form['timesheetedit4'])
+        my_data.entryname = request.form['timesheetedit5']
+        my_data.entrycontent = request.form['timesheetedit6']
+        my_data.activitytype = request.form['timesheetedit7']
+        my_data.corp1 = request.form['timesheetedit8']
+        my_data.corp2 = request.form['timesheetedit9']
+        my_data.corp3 = request.form['timesheetedit10']
+        my_data.corp4 = request.form['timesheetedit11']
+        my_data.staff = request.form['timesheetedit12']
+        # t_new = []
+        # for i in [8,9,10,11]:
+        #     t_new.append((request.form['timesheetedit' + i].split(' | '))[0])
+        
+        # db.session.commit()
+        # flash("Task Update Successfully")
+        # return redirect(url_for('task'))
+        # {{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}
+    return render_template(
+        'dailyentry_edit.html',
+        tasklist = tasklist,
+        code_types = code_types,
+        timesheet = my_data,
+        idx = idx,
+        title = 'Update timesheet'
+    )
+
 
 @app.route('/dailyentry_del', methods=['GET', 'POST'])
 def dailyentry_del():
@@ -1028,9 +1059,9 @@ def dailyentry_del():
 @app.route('/timesheet')
 def timesheet():
     all_data = activity_code.query.all()
-    # list_data = Timesheet.query.join(Task, Timesheet.id == Task.id).add_columns(Timesheet.id, Timesheet.taskname, Timesheet.corp1, Task.id, Task.client)
+    # list_data = Timesheet.query.join(Task, Timesheet.id == Task.id).add_columns(Timesheet.id, Timesheet.entryname, Timesheet.corp1, Task.id, Task.client)
     # list_data = Timesheet.query.join(Task, Timesheet.id == Task.id).all()
-    # list_data = db.session.query(Timesheet.id, Timesheet.taskname, Timesheet.corp1, Task.id, Task.client).filter(Timesheet.id == Task.id).all()
+    # list_data = db.session.query(Timesheet.id, Timesheet.entryname, Timesheet.corp1, Task.id, Task.client).filter(Timesheet.id == Task.id).all()
     # print(list_data[0])
     # print(list_data[1])
     list_data = Timesheet.query.all()
@@ -1053,9 +1084,9 @@ def timesheetInsertion():
         adjhour = data[3]
         adjmin = data[4]
         workhour = data[5]
-        taskname = data[6]
-        taskcontent = data[7]
-        tasktype = data[8]
+        entryname = data[6]
+        entrycontent = data[7]
+        activitytype = data[8]
         corp1 = (data[9].split(" | "))[3]
         corp2 = (data[10].split(" | "))[3]
         corp3 = (data[11].split(" | "))[3]
@@ -1064,7 +1095,7 @@ def timesheetInsertion():
         userstridx = round(random()*4)
         staff = userstr[userstridx]
         # staff = "Susan" #current_user.username
-        timestamp = data[13]
+        timemark = data[13]
         avgtime = float(data[14])
         jobid1 = int(data[15])
         jobid2 = int(data[16])
@@ -1079,15 +1110,15 @@ def timesheetInsertion():
             adjhour,
             adjmin,
             workhour,
-            taskname,
-            taskcontent,
-            tasktype,
+            entryname,
+            entrycontent,
+            activitytype,
             corp1,
             corp2,
             corp3,
             corp4,
             staff,
-            timestamp,
+            timemark,
             avgtime,
             jobid1,
             jobid2,
@@ -1171,7 +1202,7 @@ def staff(page):
     page = page
     pages = 10
     # list_data = Staff.query.paginate(page, per_page=pages, error_out=True)
-    list_data = db.session.query(Staff.name, Staff.date, Staff.work_hour).distinct(Staff.name, Staff.date).order_by(Staff.name.asc(), Staff.date.desc()).all()
+    list_data = db.session.query(Staff.name, Staff.date, Staff.workhour).distinct(Staff.name, Staff.date).order_by(Staff.name.asc(), Staff.date.desc()).all()
     print(list_data)
     tasklist = Task.query.all()
     datefilter = db.session.query(Staff.date).distinct().order_by(Staff.date.desc()).all()
@@ -1239,14 +1270,14 @@ def timesheetupdate():
         updatedata.calhr = request.form['timesheet1-4']
         updatedata.workhr = request.form['timesheet1-6']
         updatedata.comment = request.form['timesheet1-15']
-        updatedata.taskname = request.form['timesheet1-7']
-        updatedata.tasktype = request.form['timesheet1-8']
+        updatedata.entryname = request.form['timesheet1-7']
+        updatedata.activitytype = request.form['timesheet1-8']
         updatedata.taskcode = request.form['timesheet1-9']
         updatedata.corp1 = request.form['timesheet1-10']
         updatedata.corp2 = request.form['timesheet1-12']
         updatedata.corp3 = request.form['timesheet1-13']
         updatedata.corp4 = request.form['timesheet1-14']
-        updatedata.taskcontent = request.form['timesheet1-11']
+        updatedata.entrycontent = request.form['timesheet1-11']
         db.session.commit()
         flash("Employee Updated Successfully")
     return redirect(url_for('timesheet'))

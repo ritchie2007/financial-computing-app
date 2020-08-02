@@ -85,8 +85,8 @@
                     <th class="col-1">ID</th>
                     <th class="col-1">Corpation</th>
                     <th class="col-2">Date</th>
-                    <th class="col-1">TaskName</th>
-                    <th class="col-2">TaskType</th>
+                    <th class="col-1">DailyEntry Name</th>
+                    <th class="col-2">Activity Type</th>
                     <th class="col-1">WorkHour</th>
                     <th class="col-2">JobType</th>
                     <th class="col-1">JobId</th>
@@ -99,9 +99,9 @@
                         <td class="col-1">{{row.id}}</td>
                         <td class="col-1">{{row.corp}}</td>
                         <td class="col-1">{{row.date}}</td>
-                        <td class="col-2">{{row.task_name}}</td>
-                        <td class="col-1">{{row.task_type}}</td>
-                        <td class="col-1" style="text-align: center;">{{row.work_hour}}</td>
+                        <td class="col-2">{{row.entryname}}</td>
+                        <td class="col-1">{{row.activitytype}}</td>
+                        <td class="col-1" style="text-align: center;">{{row.workhour}}</td>
                         <!-- <td class="col-1">{{row[4]}}</td> -->
                         <!-- <td class="col-2">{{row.client}}</td> -->
                         <td class="col-1" ></td>
@@ -148,12 +148,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="timesheet1-7">Task Name</label>
-                                        <input type="text" class="form-control fillable" name="timesheet1-7" value="{{row.taskname}}">
+                                        <input type="text" class="form-control fillable" name="timesheet1-7" value="{{row.entryname}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="timesheet1-8">Task Type</label>
                                         <br/>
-                                        <select class="browser-default custom-select" name="timesheet1-8" value="{{row.tasktype}}" style="height: 33px; background-color: #eeeeee;">
+                                        <select class="browser-default custom-select" name="timesheet1-8" value="{{row.activitytype}}" style="height: 33px; background-color: #eeeeee;">
                                             <option selected="">select code</option>
                                             {% for row in code_types %}
                                             <option >{{row.name}}</option>
@@ -170,7 +170,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="timesheet1-11">Task Content</label>
-                                        <textarea type="text" class="form-control fillable" rows="6" name="timesheet1-11" value="{{row.taskcontent}}"></textarea>
+                                        <textarea type="text" class="form-control fillable" rows="6" name="timesheet1-11" value="{{row.entrycontent}}"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="timesheet1-12">Corporation 2</label>

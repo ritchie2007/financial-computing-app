@@ -64,6 +64,69 @@ INSERT INTO "tbl_Corporation_report"
   VALUES ([new].[corp4], [new].[startdate], [new].[entryname], [new].[activitytype], [new].[entrycontent], [new].[avgtime], [new].[timemark], [new].[jobid4], [new].[serialno]);
 
 
+-- name: trig_delete_staff_after_timesheetdel
+DELETE FROM
+  [tbl_Staff]
+WHERE
+  ([timemark] = [old].[timemark]
+  AND EXISTS (SELECT 1
+FROM   [tbl_Staff]
+WHERE  ([timemark] = [old].[timemark])));
+
+-- name: trig_delete_corp_report_after_timesheetdelete
+DELETE FROM
+  [tbl_Corporation_report]
+WHERE
+  ([timemark] = [old].[timemark]
+  AND [jobid] = [old].[jobid1]
+  AND EXISTS (SELECT 1
+FROM   [tbl_Corporation_report]
+WHERE  ([timemark] = [old].[timemark]
+         AND [jobid] = [old].[jobid1])));
+DELETE FROM
+  [tbl_Corporation_report]
+WHERE
+  ([timemark] = [old].[timemark]
+  AND [jobid] = [old].[jobid2]
+  AND EXISTS (SELECT 1
+FROM   [tbl_Corporation_report]
+WHERE  ([timemark] = [old].[timemark]
+         AND [jobid] = [old].[jobid2])));
+DELETE FROM
+  [tbl_Corporation_report]
+WHERE
+  ([timemark] = [old].[timemark]
+  AND [jobid] = [old].[jobid3]
+  AND EXISTS (SELECT 1
+FROM   [tbl_Corporation_report]
+WHERE  ([timemark] = [old].[timemark]
+         AND [jobid] = [old].[jobid3])));
+DELETE FROM
+  [tbl_Corporation_report]
+WHERE
+  ([timemark] = [old].[timemark]
+  AND [jobid] = [old].[jobid4]
+  AND EXISTS (SELECT 1
+FROM   [tbl_Corporation_report]
+WHERE  ([timemark] = [old].[timemark]
+         AND [jobid] = [old].[jobid4])));
+
+
+-- name: trig_update_staff_after_timesheetedit
+UPDATE
+  "tbl_Staff"
+SET
+  [name] = [new].[staff], 
+  [startdate] = [new].[startdate], 
+  [job] = [new].[entryname], 
+  [calendarhour] = [new].[calhour], 
+  [adjhour] = [new].[adjhour], 
+  [adjmin] = [new].[adjmin], 
+  [workhour] = [new].[workhour], 
+  [serialno] = [new].[serialno]
+WHERE
+  [timemark] = [old].[timemark];
+
 -- name: trig_staff_insert AFTER INSERT
 INSERT INTO "tbl_Staff"
   (
@@ -102,5 +165,8 @@ SET
   [worktime] = ROUND (([worktime] + [new].[workhour]), 2)
 WHERE
   [task_id] = [new].[jobid];
-
-
+-- del empty row
+DELETE FROM
+  [tbl_Corporation_report]
+WHERE
+  [corp] = '';

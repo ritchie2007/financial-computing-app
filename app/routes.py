@@ -917,12 +917,10 @@ def task_edit(id):
 def task_del(id):
     tasks = Task.query.order_by(Task.periodend.asc()).all()
     my_data = Task.query.get(id)
-    print(' **** before post')
     if request.method == 'POST':
-        print(' **** in delete post')
         db.session.delete(my_data)
         db.session.commit()
-        flash("Task Deleted Successfully")
+        # flash("Task Deleted Successfully")
         return redirect(url_for('task'))
 
     return render_template(
@@ -983,18 +981,44 @@ def dailyentry_add():
         staff = userstr[userstridx]
         # staff = current_user.username
         timemark = data[13]
-        avgtime = float(data[14])
-        jobid1 = int(data[15])
-        jobid2 = int(data[16])
-        jobid3 = int(data[17])
-        jobid4 = int(data[18])
+        # avgtime = float(data[14])
+        jobid = []
+        count = 0
+        for i in [15, 16, 17, 18]:
+            if int(data[i]) in jobid:
+                jobid.append(0)
+            else:
+                jobid.append(int(data[i]))
+
+        jobid1 = jobid[0]
+        if jobid1 == 0:
+            corp1 = ''
+        else:
+            count += 1
+        jobid2 = jobid[1]
+        if jobid2 == 0:
+            corp2 = ''
+        else:
+            count += 1
+        jobid3 = jobid[2]
+        if jobid3 == 0:
+            corp3 = ''
+        else:
+            count += 1
+        jobid4 = jobid[3]
+        if jobid4 == 0:
+            corp4 = ''
+        else:
+            count += 1 
+
+        avgtime = 0 if count == 0 else round(workhour/count, 2)
         starttime = (data[1])[11:16]
         serialno = random()
-        
+
         my_data = Timesheet(startdate, calhour, adjhour, adjmin, workhour, entryname, entrycontent, activitytype, corp1, corp2, corp3, corp4, staff, timemark, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno)
         db.session.add(my_data)
         db.session.commit()
-        flash("Dailyentry Inserted Successfully")
+        # flash("Dailyentry Inserted Successfully")
         return redirect(url_for('dailyentry'))
 
     return render_template(
@@ -1028,19 +1052,77 @@ def dailyentry_edit(id):
         my_data.entryname = request.form['timesheetedit5']
         my_data.entrycontent = request.form['timesheetedit6']
         my_data.activitytype = request.form['timesheetedit7']
-        my_data.corp1 = request.form['timesheetedit8']
-        my_data.corp2 = request.form['timesheetedit9']
-        my_data.corp3 = request.form['timesheetedit10']
-        my_data.corp4 = request.form['timesheetedit11']
         my_data.staff = request.form['timesheetedit12']
-        # t_new = []
-        # for i in [8,9,10,11]:
-        #     t_new.append((request.form['timesheetedit' + i].split(' | '))[0])
+        my_data.serialno = random()
+        t_new = []
+        corp = []
+        corp_count = 0
+        for i in [8,9,10,11]:
+            tmp = request.form['timesheetedit' + str(i)].split(' | ')
+            if (tmp[0] == '' or (int(tmp[0]) in t_new)):
+                t_new.append(0)
+                corp.append('')
+            else:
+                t_new.append(int(tmp[0]))
+                corp_count += 1
+                corp.append(tmp[4]) if len(tmp)==5 else corp.append('')
         
-        # db.session.commit()
-        # flash("Task Update Successfully")
-        # return redirect(url_for('task'))
-        # {{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}
+        my_data.avgtime = round(float(my_data.workhour)/corp_count, 2) if corp_count > 0 else 0
+        my_data.jobid1 = t_new[0]
+        my_data.jobid2 = t_new[1]
+        my_data.jobid3 = t_new[2]
+        my_data.jobid4 = t_new[3]
+        my_data.corp1 = corp[0]
+        my_data.corp2 = corp[1]
+        my_data.corp3 = corp[2]
+        my_data.corp4 = corp[3]
+        for i in t:
+            if i not in t_new:
+                print('CorprationReport ID: ', i, ' not in new')
+                id = db.session.query(CorprationReport).with_entities(CorprationReport.corp_report_id).filter(CorprationReport.jobid == i, CorprationReport.timemark==my_data.timemark).scalar()
+                if id is not None and id!=0:
+                    report_data = CorprationReport.query.get(id)
+                    db.session.delete(report_data)
+                    db.session.commit()
+                    print('CorprationReport ID: ', i, ' deleted.')
+        # update & insert
+        for i in range(4):
+            if t_new[i] in t and t_new[i]!=0: # update
+                id = db.session.query(CorprationReport).with_entities(CorprationReport.corp_report_id).filter(CorprationReport.jobid == t_new[i], CorprationReport.timemark==my_data.timemark).scalar()
+                if id is not None and id!=0:
+                    report_data = CorprationReport.query.get(id)
+                    report_data.corp = corp[i]
+                    report_data.startdate = my_data.startdate
+                    report_data.entryname = my_data.entryname
+                    report_data.activitytype = my_data.activitytype
+                    report_data.entrycontent = my_data.entrycontent
+                    report_data.workhour = my_data.avgtime
+                    report_data.timemark = my_data.timemark
+                    report_data.jobid = t_new[i]
+                    report_data.serialno = random()
+                    db.session.commit()
+                    print('update:  ', report_data.corp, report_data.workhour, report_data.jobid )
+            elif t_new[i] not in t and t_new[i]!=0: # insert
+                if id is not None and id!=0:
+                    new_corp = corp[i]
+                    new_startdate = my_data.startdate
+                    new_entryname = my_data.entryname
+                    new_activitytype = my_data.activitytype
+                    new_entrycontent = my_data.entrycontent
+                    new_workhour = my_data.avgtime
+                    new_timemark = my_data.timemark
+                    new_jobid = t_new[i]
+                    new_serialno = random()
+                    new_data = CorprationReport(new_corp, new_startdate, new_entryname, new_activitytype, new_entrycontent, new_workhour, new_timemark, new_jobid, new_serialno)
+                    db.session.add(new_data)
+                    db.session.commit()
+                    print('insert:  ', new_corp, new_workhour, new_jobid )    
+
+        print('new ', t_new, '  old ', t)
+        db.session.commit()
+        # flash("Dailyentry Update Successfully")
+        return redirect(url_for('dailyentry'))
+
     return render_template(
         'dailyentry_edit.html',
         tasklist = tasklist,
@@ -1050,11 +1132,28 @@ def dailyentry_edit(id):
         title = 'Update timesheet'
     )
 
-
 @app.route('/dailyentry_del', methods=['GET', 'POST'])
-def dailyentry_del():
+@app.route('/dailyentry_del/<int:id>', methods=['GET', 'POST'])
+def dailyentry_del(id):
     ''' delete dailyentry'''
-    pass
+    list_data = Timesheet.query.all()
+    # tasklist = Task.query.all()
+    datefilter = db.session.query(Timesheet.startdate).distinct().order_by(Timesheet.startdate.desc()).all()
+    userfilter = db.session.query(Timesheet.staff).distinct().order_by(Timesheet.staff.asc()).all()
+    my_data = Timesheet.query.get(id)
+    if request.method == 'POST':
+        db.session.delete(my_data)
+        db.session.commit()
+        # flash("Task Deleted Successfully")
+        return redirect(url_for('dailyentry'))
+
+    return render_template(
+        'dailyentry.html',
+        listdata=list_data,
+        datefilter=datefilter,
+        userfilter=userfilter,
+        title='timesheetlist'
+    )
 
 @app.route('/timesheet')
 def timesheet():

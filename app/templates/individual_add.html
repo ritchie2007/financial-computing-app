@@ -75,11 +75,11 @@
           </div>
           <div class="form-group col-md-1">
             <label>Phone1</label>
-            <input type="text" class="form-control" name="indiv7">
+            <input type="text" class="form-control" name="indiv7" onfocusout="phone_format1()">
           </div>
           <div class="form-group col-md-1">
             <label>Phone2</label>
-            <input type="text" class="form-control" name="indiv8">
+            <input type="text" class="form-control" name="indiv8" onfocusout="phone_format2()">
           </div>
 
           <div class="form-group col-md-3">
@@ -455,6 +455,45 @@
 
           localStorage.setItem('serialnum', (parseInt(b)+1));
         }
+      
+      function phone_format1() {
+        var num = $('.form-group [name="indiv7"]').val();
+        console.log(num);
+        num = num.replace(/ /g, '').replace(/-/g, '');
+        if (isNaN(num) || num.length < 6) {
+          alert('Wrong phone number, please check');
+        } else {
+          var len = num.length;
+          var str = '';
+          str = num.substring(len-7, len-4) + '-' + num.substring(len-4);
+          if (len > 10) {
+            str = num.substring(0, len-10) + '-' + num.substring(len-10, len-7) + '-' + str;
+          } else if (len > 7) {
+            str = num.substring(0, len-7) + '-' + str;
+          };
+        };
+        console.log(str);
+        $('.form-group [name="indiv7"]').val(str);
+      };
+      function phone_format2() {
+        var num = $('.form-group [name="indiv8"]').val();
+        console.log(num);
+        num = num.replace(/ /g, '').replace(/-/g, '');
+        if (isNaN(num) || num.length < 6) {
+          alert('Wrong phone number, please check');
+        } else {
+          var len = num.length;
+          var str = '';
+          str = num.substring(len-7, len-4) + '-' + num.substring(len-4);
+          if (len > 10) {
+            str = num.substring(0, len-10) + '-' + num.substring(len-10, len-7) + '-' + str;
+          } else if (len > 7) {
+            str = num.substring(0, len-7) + '-' + str;
+          };
+        };
+        console.log(str);
+        $('.form-group [name="indiv8"]').val(str);
+      };
 
         //改变窗口大小后，自动刷新，如想清楚cache则需要location.reload(true);，这是配合上面的动态CSS使用的
         //$(document).ready(function () 所以页面都生效

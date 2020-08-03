@@ -262,6 +262,8 @@ class Corporation(db.Model):
     corp19 = db.Column(db.String(100))
     corp20 = db.Column(db.String(20))
     corp21 = db.Column(db.String(20))
+    corp201 = db.Column(db.String(20))
+    corp211 = db.Column(db.String(20))
     corp22 = db.Column(db.String(100))
     corp23 = db.Column(db.String(200))
     corp24 = db.Column(db.String(150))
@@ -308,7 +310,7 @@ class Corporation(db.Model):
     shareholder_info = db.Column(db.String(400))
     timemark = db.Column(db.String(26))
 
-    def __init__(self,corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,contact,director,shareholder,task,recent_update,contact_position,shareholder_info,timemark):
+    def __init__(self,corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp201,corp211,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,contact,director,shareholder,task,recent_update,contact_position,shareholder_info,timemark):
         self.corp1 = corp1
         self.corp2 = corp2
         self.corp3 = corp3
@@ -330,6 +332,8 @@ class Corporation(db.Model):
         self.corp19 = corp19
         self.corp20 = corp20
         self.corp21 = corp21
+        self.corp201 = corp201
+        self.corp211 = corp211
         self.corp22 = corp22
         self.corp23 = corp23
         self.corp24 = corp24
@@ -387,6 +391,8 @@ class Individual(db.Model):
     email = db.Column(db.String(80))
     phone1 = db.Column(db.String(15))
     phone2 = db.Column(db.String(15))
+    phone1digit = db.Column(db.String(15))
+    phone2digit = db.Column(db.String(15))
     address1 = db.Column(db.String(150))
     address2 = db.Column(db.String(150))
     mail_address = db.Column(db.String(150))
@@ -412,10 +418,10 @@ class Individual(db.Model):
     parent = db.Column(db.String(40))
     child = db.Column(db.String(40))
     timemark = db.Column(db.String(26))
-    def __init__(self,sin,prefix,last_name,first_name,other_name,email,phone1,phone2,address1,address2,mail_address,
-        wechat,cra_sole_proprietor,cra_hst_report,cra_payroll,cra_withhold_tax,cra_wsib,cra_other,oversea_asset_t1135,
-        oversea_corp_t1134,tslip,tax_personal_info,specific_info,engage_account,engage_leading,note,
-        contact_corp,director_corp,sharehold_corp,spouse,parent,child,timemark):
+    def __init__(self, sin, prefix, last_name, first_name, other_name, email, phone1, phone2, phone1digit, phone2digit, address1, address2, mail_address, 
+        wechat, cra_sole_proprietor, cra_hst_report, cra_payroll, cra_withhold_tax, cra_wsib, cra_other, oversea_asset_t1135, 
+        oversea_corp_t1134, tslip, tax_personal_info, specific_info, engage_account, engage_leading, note, 
+        contact_corp, director_corp, sharehold_corp, spouse, parent, child, timemark):
 
         self.sin = sin
         self.prefix = prefix
@@ -425,6 +431,8 @@ class Individual(db.Model):
         self.email = email
         self.phone1 = phone1
         self.phone2 = phone2
+        self.phone1digit = phone1digit
+        self.phone2digit = phone2digit
         self.address1 = address1
         self.address2 = address2
         self.mail_address = mail_address

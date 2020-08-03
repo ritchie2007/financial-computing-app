@@ -31,10 +31,9 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
             <div class="logo col-sm-5">
                 <a href="{{ url_for('index') }}">HongXing Accounting</a>
             </div>
-            <div class="col-sm-4" style="height: 75px;">
-                <div class="search" style="height: 25px; vertical-align:middle; display:inline-block">
-                    Search <input id="search-phone-number" placeholder="Please phone number"/>
-                    <button type="button" onclick="goUrl()">Submit</button>
+            <div class="col-sm-2 col-sm-offset-2" style="height: 75px;">
+                <div class="search" style="height: 30px; vertical-align:middle; display:inline-block">
+                    <a href="{{ url_for('search') }}" class="btn btn-success btn-xs" style="font-size: 11px; width: 120px;">Search</a>
                 </div>
                 <div style="height: 100%; vertical-align:middle; display: inline-block;"> 
                     &nbsp;

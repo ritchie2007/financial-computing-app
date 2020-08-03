@@ -214,6 +214,10 @@ def corp_add():
         corp56 = request.form['corp56']
         corp57 = request.form['corp57']
         corp58 = request.form['corp58']
+
+        corp201 = corp20.replace('-','')
+        corp211 = corp21.replace('-','')
+
         task = 0
         recent_update = ""
         timemark = datetime.utcnow()
@@ -259,7 +263,7 @@ def corp_add():
             utility.corp_shareholder_to_indiv(shareholder, max_id, 0, "")
             shareholder = ",".join(shareholder)
 
-        my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, timemark)
+        my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp201, corp211, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, timemark)
         db.session.add(my_data)
         db.session.commit()
         flash("Corporation add Successfully")
@@ -339,6 +343,10 @@ def corp_edit(id):
         my_data.corp56 = request.form['corp56']
         my_data.corp57 = request.form['corp57']
         my_data.corp58 = request.form['corp58']
+        
+        my_data.corp201 = (request.form['corp20']).replace('-','')
+        my_data.corp211 = (request.form['corp21']).replace('-','')
+
         my_data.task = 0
         my_data.recent_update = ""
         my_data.timemark = datetime.utcnow()
@@ -385,7 +393,7 @@ def corp_edit(id):
             my_data.shareholder = ",".join(shareholder)
 
         db.session.commit()
-        flash("Corporation Updated Successfully")
+        # flash("Corporation Updated Successfully")
         return redirect(url_for('corporate'))
 
     return render_template(
@@ -424,6 +432,8 @@ def corp_del(id):
 @app.route('/individual')
 def individual():
     my_data = Individual.query.all()
+    num = random()
+    print(num)
     return render_template(
         'individual.html',
         indiv = my_data,
@@ -444,6 +454,8 @@ def individual_add():
         email = request.form['indiv6']
         phone1 = request.form['indiv7']
         phone2 = request.form['indiv8']
+        phone1digit = phone1.replace('-','')
+        phone2digit = phone2.replace('-','')
         address1 = request.form['indiv9']
         address2 = request.form['indiv10']
         mail_address = request.form['indiv11']
@@ -516,15 +528,15 @@ def individual_add():
             utility.child_to_parent(child, max_id, 0, "")
             child = ",".join(child)
         
-        my_data = Individual(sin,prefix,last_name,first_name,other_name,email,phone1,phone2,address1,address2,mail_address,wechat,cra_sole_proprietor,cra_hst_report,cra_payroll,cra_withhold_tax,cra_wsib,cra_other,oversea_asset_t1135,
-        oversea_corp_t1134,tslip,tax_personal_info,specific_info,engage_account,engage_leading,note,contact_corp,director_corp,sharehold_corp,spouse,parent,child,timemark)
+        my_data = Individual(sin, prefix, last_name, first_name, other_name, email, phone1, phone2, phone1digit, phone2digit, address1, address2, mail_address, wechat, cra_sole_proprietor, cra_hst_report, cra_payroll, cra_withhold_tax, cra_wsib, cra_other, oversea_asset_t1135, 
+        oversea_corp_t1134, tslip, tax_personal_info, specific_info, engage_account, engage_leading, note, contact_corp, director_corp, sharehold_corp, spouse, parent, child, timemark)
         db.session.add(my_data)
         db.session.commit()
         flash("Individual add Successfully")
         return redirect(url_for('individual'))
 
     return render_template(
-        'individual_add.html',
+        'individual_add.html', 
         title='Add_new_Individual',
         corp_data = corp,
         indiv_data = indiv
@@ -577,6 +589,8 @@ def individual_edit(id):
         my_data.engage_leading = request.form['indiv25']
         my_data.note = request.form['indiv26']
         my_data.timemark = datetime.utcnow()
+        my_data.phone1digit = (request.form['indiv7']).replace('-','')
+        my_data.phone2digit = (request.form['indiv8']).replace('-','')
 
         name = []
         for x in range(19):
@@ -940,7 +954,7 @@ def dailyentry():
     if request.method == "POST":
         dateselectfrom = (request.form['dateselectfrom']).replace(' ', '')
         dateselectto = (request.form['dateselectto']).replace(' ', '')
-        userselect = (request.form['userselect']).replace(' ', '')
+        userselect = (request.form['userselect'])
         if dateselectfrom != '' and dateselectto == '' and userselect == '':
             list_data = Timesheet.query.filter(Timesheet.startdate >= dateselectfrom).all()
         elif dateselectfrom != '' and dateselectto != '' and userselect == '':
@@ -1183,7 +1197,7 @@ def staff():
     if request.method == "POST":
         dateselectfrom = (request.form['dateselectfrom']).replace(' ', '')
         dateselectto = (request.form['dateselectto']).replace(' ', '')
-        userselect = (request.form['userselect']).replace(' ', '')
+        userselect = (request.form['userselect'])
         if dateselectfrom != '' and dateselectto == '' and userselect == '':
             list_data = Staff.query.filter(Staff.startdate >= dateselectfrom).all()
         elif dateselectfrom != '' and dateselectto != '' and userselect == '':
@@ -1226,7 +1240,7 @@ def corporation_report():
     if request.method == "POST":
         dateselectfrom = (request.form['dateselectfrom']).replace(' ', '')
         dateselectto = (request.form['dateselectto']).replace(' ', '')
-        userselect = (request.form['userselect']).replace(' ', '')
+        userselect = (request.form['userselect'])
         if dateselectfrom != '' and dateselectto == '' and userselect == '':
             list_data = CorporationReport.query.filter(CorporationReport.startdate >= dateselectfrom).all()
         elif dateselectfrom != '' and dateselectto != '' and userselect == '':
@@ -1260,6 +1274,24 @@ def corporation_report():
         title='CorporationReport'
     )
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        searchnum = (request.form['searchnumber']).replace(' ', '').replace('-', '')
+        list_indiv = Individual.query.with_entities(Individual.prefix, Individual.last_name, Individual.first_name, Individual.phone1, Individual.phone2).filter(Individual.phone1digit == searchnum or Individual.phone2digit == searchnum)
+        list_corp = Corporation.query.with_entities(Corporation.corp1, Corporation.corp2, Corporation.corp20, Corporation.corp21).filter(Corporation.corp201 == searchnum or Corporation.corp211 == searchnum)
+        return render_template(
+            'search.html',
+            list_indiv = list_indiv,
+            list_corp = list_corp,
+            title = 'Search'
+        )
+        
+    return render_template(
+        'search.html',
+        title = 'Search'
+    )
+
 @app.route('/timesheet')
 def timesheet():
     all_data = activity_code.query.all()
@@ -1275,7 +1307,7 @@ def timesheet():
         code_types=all_data,
         list=list_data,
         tasklist = tasklist,
-        title='timesheet',
+        title='timesheet'
     )
 
 @app.route('/timesheetInsertion', methods=['POST'])
@@ -1382,9 +1414,9 @@ def timesheetlist(page):
         title='timesheetlist'
     )
 
-@app.route('/corpration_report_old', methods=['GET','POST'], defaults={"page":1})
-@app.route('/corpration_report_old/<int:page>', methods=['GET','POST'])
-def corpration_report_old(page):
+@app.route('/Corp_report_old', methods=['GET','POST'], defaults={"page":1})
+@app.route('/Corp_report_old/<int:page>', methods=['GET','POST'])
+def Corp_report_old(page):
     page = page
     pages = 10
     list_data = CorporationReport.query.paginate(page, per_page=pages, error_out=True)
@@ -1392,7 +1424,7 @@ def corpration_report_old(page):
     datefilter = db.session.query(CorporationReport.date).distinct().order_by(CorporationReport.date.desc()).all()
     corpfilter = db.session.query(CorporationReport.corp).distinct().order_by(CorporationReport.corp.asc()).all()
     return render_template(
-        'corpration_report.html',
+        'Corp_report.html',
         listdata=list_data,
         tasklist=tasklist,
         datefilter=datefilter,

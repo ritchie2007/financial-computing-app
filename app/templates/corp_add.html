@@ -161,11 +161,11 @@
             </div>
             <div class="form-group col-md-2">
               <label>CRA Contact Phone</label>
-              <input type="text" class="form-control" name="corp20">
+              <input type="text" class="form-control" name="corp20" onfocusout="phone_format1()">
             </div>
             <div class="form-group col-md-2">
               <label>Office Fax</label>
-              <input type="text" class="form-control" name="corp21">
+              <input type="text" class="form-control" name="corp21" onfocusout="phone_format2()">
             </div>
             <div class="form-group col-md-3">
               <label>Other Provincial Number</label>
@@ -708,6 +708,45 @@
         };
       };
 
+      function phone_format1() {
+        var num = $('.form-group [name="corp20"]').val();
+        console.log(num);
+        num = num.replace(/ /g, '').replace(/-/g, '');
+        if (isNaN(num) || num.length < 6) {
+          alert('Wrong phone number, please check');
+        } else {
+          var len = num.length;
+          var str = '';
+          str = num.substring(len-7, len-4) + '-' + num.substring(len-4);
+          if (len > 10) {
+            str = num.substring(0, len-10) + '-' + num.substring(len-10, len-7) + '-' + str;
+          } else if (len > 7) {
+            str = num.substring(0, len-7) + '-' + str;
+          };
+        };
+        console.log(str);
+        $('.form-group [name="corp20"]').val(str);
+      };
+      function phone_format2() {
+        var num = $('.form-group [name="corp21"]').val();
+        console.log(num);
+        num = num.replace(/ /g, '').replace(/-/g, '');
+        if (isNaN(num) || num.length < 6) {
+          alert('Wrong phone number, please check');
+        } else {
+          var len = num.length;
+          var str = '';
+          str = num.substring(len-7, len-4) + '-' + num.substring(len-4);
+          if (len > 10) {
+            str = num.substring(0, len-10) + '-' + num.substring(len-10, len-7) + '-' + str;
+          } else if (len > 7) {
+            str = num.substring(0, len-7) + '-' + str;
+          };
+        };
+        console.log(str);
+        $('.form-group [name="corp21"]').val(str);
+      };
+
       function testinput(){
         for (i=1; i<82; i++) {
           var a="";
@@ -716,6 +755,8 @@
             a = 'yyyy-mm-dd';
           } else if (i == 8 || i==27) {
             a = $('form [name="corp' + i + '"]').val();
+          } else if (i==20 || i==21) {
+            a = Math.floor(Math.random()*(9876543210-1234567890)+1234567890);
           } else if (i < 59 ) {
             a = $('form [name="corp' + i + '"]').parent('div').find('label').text();
             a = b + a;

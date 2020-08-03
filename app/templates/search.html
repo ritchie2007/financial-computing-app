@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/dataTables.bootstrap.css')}}">
+<style>
+    #success_message {
+        display: none;
+    }
+
+    #Sheetlist {
+        font-size: 13px;
+    }
+
+    #timesheettopbar {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 35px;
+    }
+
+    #timesheettopbar input#tableSearch {
+        margin: 0px;
+        height: 30px;
+        vertical-align: middle;
+    }
+
+    #timesheettopbar select {
+        height: 30px;
+    }
+
+    #timesheettopbar button {
+        height: 30px;
+        padding: 5px 15px 15px;
+    }
+
+    .table th {
+        text-align: center;
+    }
+
+    #myTable td {
+        padding: 3px;
+        vertical-align: middle;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="tbl-field">
+    <div id="search" class="container-fluid row" style="margin: 20px 25% 0px 25%;">
+        <div class="container-fluid">
+            <div class="form-group col-sm-12" style="text-align: right;">
+                <form action="" method="POST" autocomplete="off">
+                    Phone number
+                    <input name="searchnumber" style="width: 25%;">
+                    <button type="submit" class="btn btn btn-success" style="width: 10%;">Search</button>
+                </form>
+            </div>
+        </div>
+        <table id="corp_table" class="table table-bordered table-striped">
+            <h5>Phone number in Individual: </h5>
+            <thead>
+                <tr>
+                    <th class="col-2">Name</th>
+                    <th class="col-2">Phone 1</th>
+                    <th class="col-1">Phone 2</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                {% for row in list_indiv %}
+                <tr>
+                    <td class="col-6">{{row.prefix}} {{row.last_name}}, {{row.first_name}}</td>
+                    <td class="col-3">{{row.phone1}}</td>
+                    <td class="col-3">{{row.phone2}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br><br>
+        <table id="corp_table" class="table table-bordered table-striped">
+            <h5>Phone number in Corporation CRA contact: </h5>
+            <thead>
+                <tr>
+                    <th class="col-2">Business No.</th>
+                    <th class="col-4">Corporation Name</th>
+                    <th class="col-3">Contact Phone</th>
+                    <th class="col-3">Contact Fax</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                {% for row in list_corp %}
+                <tr>
+                    <td class="col-1">{{row.corp1}}</td>
+                    <td class="col-1">{{row.corp2}}</td>
+                    <td class="col-1">{{row.corp20}}</td>
+                    <td class="col-1">{{row.corp21}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+<script src="{{url_for('static', filename='js/main.js')}}"></script>
+<script src="{{url_for('static', filename='js/jquery.dataTables.js')}}"></script>
+<script src="{{url_for('static', filename='js/dataTables.bootstrap.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrapValidator.min.js')}}"></script> 
+
+<script type="text/javascript">
+
+</script>
+{%- endblock scripts %}

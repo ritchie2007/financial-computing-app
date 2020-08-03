@@ -13,7 +13,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from flask import render_template, flash, redirect, request, url_for, session, make_response, json
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
-from app.models import User, Data_table, activity_code, CorprationReport, Staff, Task, Timesheet, Corporation, Individual, Job_type, Mulform, TimesheetTempData
+from app.models import User, Data_table, activity_code, CorporationReport, Staff, Task, Timesheet, Corporation, Individual, Job_type, Mulform, TimesheetTempData
 #from app import dateCalculate
 from app import utility
 
@@ -938,15 +938,34 @@ def dailyentry():
     userfilter = db.session.query(Timesheet.staff).distinct().order_by(Timesheet.staff.asc()).all()
 
     if request.method == "POST":
-        status = 1
-        dateselect = (request.form['dateselect']).replace(" ", "")
-        userselect = (request.form['userselect']).replace(" ", "")
-        if dateselect != "" and userselect != "":
-            list_data = Timesheet.query.filter(Timesheet.startdate == dateselect, Timesheet.staff == userselect).all()
-        elif dateselect != "" and userselect == "":
-            list_data = Timesheet.query.filter(Timesheet.startdate == dateselect).all()
-        elif dateselect == "" and userselect != "":
+        dateselectfrom = (request.form['dateselectfrom']).replace(' ', '')
+        dateselectto = (request.form['dateselectto']).replace(' ', '')
+        userselect = (request.form['userselect']).replace(' ', '')
+        if dateselectfrom != '' and dateselectto == '' and userselect == '':
+            list_data = Timesheet.query.filter(Timesheet.startdate >= dateselectfrom).all()
+        elif dateselectfrom != '' and dateselectto != '' and userselect == '':
+            list_data = Timesheet.query.filter(Timesheet.startdate >= dateselectfrom, Timesheet.startdate <= dateselectto).all()
+        elif dateselectfrom != '' and dateselectto == '' and userselect != '':
+            list_data = Timesheet.query.filter(Timesheet.startdate >= dateselectfrom, Timesheet.staff == userselect).all()
+        elif dateselectfrom != '' and dateselectto != '' and userselect != '':
+            list_data = Timesheet.query.filter(Timesheet.startdate >= dateselectfrom, Timesheet.startdate <= dateselectto, Timesheet.staff == userselect).all()
+        elif dateselectfrom == '' and dateselectto != '' and userselect == '':
+            list_data = Timesheet.query.filter(Timesheet.startdate <= dateselectto).all()
+        elif dateselectfrom == '' and dateselectto != '' and userselect != '':
+            list_data = Timesheet.query.filter(Timesheet.startdate <= dateselectto, Timesheet.staff == userselect).all()
+        elif dateselectfrom == '' and dateselectto == '' and userselect != '':
             list_data = Timesheet.query.filter(Timesheet.staff == userselect).all()
+        return render_template(
+            'dailyentry.html',
+            listdata=list_data,
+            datefilter=datefilter,
+            userfilter=userfilter,
+            dateselectfrom = dateselectfrom,
+            dateselectto = dateselectto,
+            userselect = userselect,
+            title='timesheetlist'
+        )
+
     return render_template(
         'dailyentry.html',
         listdata=list_data,
@@ -1078,19 +1097,19 @@ def dailyentry_edit(id):
         my_data.corp4 = corp[3]
         for i in t:
             if i not in t_new:
-                print('CorprationReport ID: ', i, ' not in new')
-                id = db.session.query(CorprationReport).with_entities(CorprationReport.corp_report_id).filter(CorprationReport.jobid == i, CorprationReport.timemark==my_data.timemark).scalar()
+                print('CorporationReport ID: ', i, ' not in new')
+                id = db.session.query(CorporationReport).with_entities(CorporationReport.corp_report_id).filter(CorporationReport.jobid == i, CorporationReport.timemark==my_data.timemark).scalar()
                 if id is not None and id!=0:
-                    report_data = CorprationReport.query.get(id)
+                    report_data = CorporationReport.query.get(id)
                     db.session.delete(report_data)
                     db.session.commit()
-                    print('CorprationReport ID: ', i, ' deleted.')
+                    print('CorporationReport ID: ', i, ' deleted.')
         # update & insert
         for i in range(4):
             if t_new[i] in t and t_new[i]!=0: # update
-                id = db.session.query(CorprationReport).with_entities(CorprationReport.corp_report_id).filter(CorprationReport.jobid == t_new[i], CorprationReport.timemark==my_data.timemark).scalar()
+                id = db.session.query(CorporationReport).with_entities(CorporationReport.corp_report_id).filter(CorporationReport.jobid == t_new[i], CorporationReport.timemark==my_data.timemark).scalar()
                 if id is not None and id!=0:
-                    report_data = CorprationReport.query.get(id)
+                    report_data = CorporationReport.query.get(id)
                     report_data.corp = corp[i]
                     report_data.startdate = my_data.startdate
                     report_data.entryname = my_data.entryname
@@ -1113,7 +1132,7 @@ def dailyentry_edit(id):
                     new_timemark = my_data.timemark
                     new_jobid = t_new[i]
                     new_serialno = random()
-                    new_data = CorprationReport(new_corp, new_startdate, new_entryname, new_activitytype, new_entrycontent, new_workhour, new_timemark, new_jobid, new_serialno)
+                    new_data = CorporationReport(new_corp, new_startdate, new_entryname, new_activitytype, new_entrycontent, new_workhour, new_timemark, new_jobid, new_serialno)
                     db.session.add(new_data)
                     db.session.commit()
                     print('insert:  ', new_corp, new_workhour, new_jobid )    
@@ -1153,6 +1172,92 @@ def dailyentry_del(id):
         datefilter=datefilter,
         userfilter=userfilter,
         title='timesheetlist'
+    )
+
+@app.route('/staff', methods=['GET', 'POST'])
+def staff():
+    '''display staff'''
+    list_data = Staff.query.all()
+    datefilter = db.session.query(Staff.startdate).distinct().order_by(Staff.startdate.desc()).all()
+    userfilter = db.session.query(Staff.name).distinct().order_by(Staff.name.asc()).all()
+    if request.method == "POST":
+        dateselectfrom = (request.form['dateselectfrom']).replace(' ', '')
+        dateselectto = (request.form['dateselectto']).replace(' ', '')
+        userselect = (request.form['userselect']).replace(' ', '')
+        if dateselectfrom != '' and dateselectto == '' and userselect == '':
+            list_data = Staff.query.filter(Staff.startdate >= dateselectfrom).all()
+        elif dateselectfrom != '' and dateselectto != '' and userselect == '':
+            list_data = Staff.query.filter(Staff.startdate >= dateselectfrom, Staff.startdate <= dateselectto).all()
+        elif dateselectfrom != '' and dateselectto == '' and userselect != '':
+            list_data = Staff.query.filter(Staff.startdate >= dateselectfrom, Staff.name == userselect).all()
+        elif dateselectfrom != '' and dateselectto != '' and userselect != '':
+            list_data = Staff.query.filter(Staff.startdate >= dateselectfrom, Staff.startdate <= dateselectto, Staff.name == userselect).all()
+        elif dateselectfrom == '' and dateselectto != '' and userselect == '':
+            list_data = Staff.query.filter(Staff.startdate <= dateselectto).all()
+        elif dateselectfrom == '' and dateselectto != '' and userselect != '':
+            list_data = Staff.query.filter(Staff.startdate <= dateselectto, Staff.name == userselect).all()
+        elif dateselectfrom == '' and dateselectto == '' and userselect != '':
+            list_data = Staff.query.filter(Staff.name == userselect).all()
+        return render_template(
+            'staff.html',
+            listdata=list_data,
+            datefilter=datefilter,
+            userfilter=userfilter,
+            dateselectfrom = dateselectfrom,
+            dateselectto = dateselectto,
+            userselect = userselect,
+            title='Staff'
+        )
+
+    return render_template(
+        'staff.html',
+        listdata=list_data,
+        datefilter=datefilter,
+        userfilter=userfilter,
+        title='Staff'
+    )
+
+@app.route('/corporation_report', methods=['GET', 'POST'])
+def corporation_report():
+    '''display corporation_report'''
+    list_data = CorporationReport.query.all()
+    datefilter = db.session.query(CorporationReport.startdate).distinct().order_by(CorporationReport.startdate.desc()).all()
+    userfilter = db.session.query(CorporationReport.corp).distinct().order_by(CorporationReport.corp.asc()).all()
+    if request.method == "POST":
+        dateselectfrom = (request.form['dateselectfrom']).replace(' ', '')
+        dateselectto = (request.form['dateselectto']).replace(' ', '')
+        userselect = (request.form['userselect']).replace(' ', '')
+        if dateselectfrom != '' and dateselectto == '' and userselect == '':
+            list_data = CorporationReport.query.filter(CorporationReport.startdate >= dateselectfrom).all()
+        elif dateselectfrom != '' and dateselectto != '' and userselect == '':
+            list_data = CorporationReport.query.filter(CorporationReport.startdate >= dateselectfrom, CorporationReport.startdate <= dateselectto).all()
+        elif dateselectfrom != '' and dateselectto == '' and userselect != '':
+            list_data = CorporationReport.query.filter(CorporationReport.startdate >= dateselectfrom, CorporationReport.corp == userselect).all()
+        elif dateselectfrom != '' and dateselectto != '' and userselect != '':
+            list_data = CorporationReport.query.filter(CorporationReport.startdate >= dateselectfrom, CorporationReport.startdate <= dateselectto, CorporationReport.corp == userselect).all()
+        elif dateselectfrom == '' and dateselectto != '' and userselect == '':
+            list_data = CorporationReport.query.filter(CorporationReport.startdate <= dateselectto).all()
+        elif dateselectfrom == '' and dateselectto != '' and userselect != '':
+            list_data = CorporationReport.query.filter(CorporationReport.startdate <= dateselectto, CorporationReport.corp == userselect).all()
+        elif dateselectfrom == '' and dateselectto == '' and userselect != '':
+            list_data = CorporationReport.query.filter(CorporationReport.corp == userselect).all()
+        return render_template(
+            'corporation_report.html',
+            listdata=list_data,
+            datefilter=datefilter,
+            userfilter=userfilter,
+            dateselectfrom = dateselectfrom,
+            dateselectto = dateselectto,
+            userselect = userselect,
+            title='CorporationReport'
+        )
+
+    return render_template(
+        'corporation_report.html',
+        listdata=list_data,
+        datefilter=datefilter,
+        userfilter=userfilter,
+        title='CorporationReport'
     )
 
 @app.route('/timesheet')
@@ -1277,27 +1382,27 @@ def timesheetlist(page):
         title='timesheetlist'
     )
 
-@app.route('/corpration_report', methods=['GET','POST'], defaults={"page":1})
-@app.route('/corpration_report/<int:page>', methods=['GET','POST'])
-def corpration_report(page):
+@app.route('/corpration_report_old', methods=['GET','POST'], defaults={"page":1})
+@app.route('/corpration_report_old/<int:page>', methods=['GET','POST'])
+def corpration_report_old(page):
     page = page
     pages = 10
-    list_data = CorprationReport.query.paginate(page, per_page=pages, error_out=True)
+    list_data = CorporationReport.query.paginate(page, per_page=pages, error_out=True)
     tasklist = Task.query.all()
-    datefilter = db.session.query(CorprationReport.date).distinct().order_by(CorprationReport.date.desc()).all()
-    corpfilter = db.session.query(CorprationReport.corp).distinct().order_by(CorprationReport.corp.asc()).all()
+    datefilter = db.session.query(CorporationReport.date).distinct().order_by(CorporationReport.date.desc()).all()
+    corpfilter = db.session.query(CorporationReport.corp).distinct().order_by(CorporationReport.corp.asc()).all()
     return render_template(
         'corpration_report.html',
         listdata=list_data,
         tasklist=tasklist,
         datefilter=datefilter,
         corpfilter=corpfilter,
-        title='CorprationReport'
+        title='CorporationReport'
     )
 
-@app.route('/staff', methods=['GET','POST'], defaults={"page":1})
-@app.route('/staff/<int:page>', methods=['GET','POST'])
-def staff(page):
+@app.route('/staff_old', methods=['GET','POST'], defaults={"page":1})
+@app.route('/staff_old/<int:page>', methods=['GET','POST'])
+def staff_old(page):
     page = page
     pages = 10
     # list_data = Staff.query.paginate(page, per_page=pages, error_out=True)

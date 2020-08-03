@@ -68,9 +68,9 @@
                         {% endfor %}
                     </select>
                     <select name="userselect" style="width: 25%;">
-                        <option value="" >Please select Corpration</option>
-                        {% for row in corpfilter %}
-                        <option >{{row.corp}}</option>
+                        <option value="" >Please select Staff</option>
+                        {% for row in stafffilter %}
+                        <option >{{row.name}}</option>
                         {% endfor %}
                     </select>
                     <!-- <a href="{{url_for('timesheetlist')}}">Go</a> -->
@@ -82,30 +82,26 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr >
-                    <th class="col-1">ID</th>
-                    <th class="col-1">Corpation</th>
+                    <!-- <th class="col-1">ID</th> -->
+                    <th class="col-1">Name</th>
                     <th class="col-2">Date</th>
-                    <th class="col-1">DailyEntry Name</th>
-                    <th class="col-2">Activity Type</th>
+                    <!-- <th class="col-1">Job</th>
+                    <th class="col-2">calendarhour</th> -->
                     <th class="col-1">WorkHour</th>
-                    <th class="col-2">JobType</th>
-                    <th class="col-1">JobId</th>
                     <th class="col-1">Action</th>
                 </tr>
             </thead>
             <tbody id="myTable">
-                {% for row in listdata.items %}
+                {% for row in listdata %}
                     <tr >
-                        <td class="col-1">{{row.id}}</td>
-                        <td class="col-1">{{row.corp}}</td>
-                        <td class="col-1">{{row.date}}</td>
-                        <td class="col-2">{{row.entryname}}</td>
-                        <td class="col-1">{{row.activitytype}}</td>
-                        <td class="col-1" style="text-align: center;">{{row.workhour}}</td>
+                        <!-- <td class="col-1">{{row.id}}</td> -->
+                        <td class="col-1">{{row[0]}}</td>
+                        <td class="col-1">{{row[1]}}</td>
+                        <!-- <td class="col-2">{{row.job}}</td> -->
+                        <!-- <td class="col-1">{{row.calendarhour}}</td> -->
+                        <td class="col-1" style="text-align: center;">{{row[2]}}</td>
                         <!-- <td class="col-1">{{row[4]}}</td> -->
                         <!-- <td class="col-2">{{row.client}}</td> -->
-                        <td class="col-1" ></td>
-                        <td class="col-2">{{row.jobid}}</td>
                         <td class="col-1">
                             <a href="/timesheetupdate/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
                             <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
@@ -198,11 +194,6 @@
                 {% endfor %}
             </tbody>
         </table>
-        <!-- <nav aria-label="Page navigation"> -->
-        <div>
-            {% from "render_pagination.html" import render_pagination %}
-            {{render_pagination(listdata, 'corporation_report')}}
-        </div>
     </div>
 </div>
 {% endblock %}

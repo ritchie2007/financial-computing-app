@@ -7,7 +7,7 @@ from flask import render_template, flash, redirect, request, url_for, session, m
 from sqlalchemy import desc, asc # for table.order_by(Task.enddate).all()
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
-from app.models import User, Data_table, activity_code, CorprationReport, Staff, Task, \
+from app.models import User, Data_table, activity_code, CorporationReport, Staff, Task, \
     Timesheet, Corporation, Individual, Mulform, TimesheetTempData
 
 def month_offset(start_date, number_of_month):

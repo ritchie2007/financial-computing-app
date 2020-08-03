@@ -192,7 +192,7 @@ class Staff(db.Model):
         self.timemark = timemark
         self.serialno = serialno
 
-class CorprationReport(db.Model):
+class CorporationReport(db.Model):
     __tablename__ = "tbl_Corporation_report"
     corp_report_id = db.Column(db.Integer, primary_key=True)
     corp = db.Column(db.String(100))

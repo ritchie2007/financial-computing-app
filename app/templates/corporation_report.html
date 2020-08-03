@@ -48,8 +48,8 @@
 
 {% block content %}
 <div class="tbl-field">
-  <div id="stafflist" class="container-fluid" style="margin: 20px 60px 0px 60px;">
-    <div id="timesheettopbar" class="container-fluid row">
+  <div id="corporation_report_list" class="container-fluid" style="margin: 20px 60px 0px 60px;">
+    <div id="corporation_report_topbar" class="container-fluid row">
         <div class="form-group col-sm-7 col-sm-offset-5" style="text-align: right;">
             <form action="" method="POST" autocomplete="off">
                 From
@@ -68,7 +68,7 @@
                 <select name="userselect" value="{{userselect}}" style="width: 25%;">
                     <option value="">Please select user</option>
                     {% for row in userfilter %}
-                    <option>{{row.name}}</option>
+                    <option>{{row.corp}}</option>
                     {% endfor %}
                 </select>
                 <!-- <a href="{{url_for('timesheetlist')}}">Go</a> -->
@@ -76,29 +76,28 @@
             </form>
         </div>
     </div>    
-    <table id="staff_table" class="table table-bordered table-striped table-hover" style="font-size: 13px;">
+    <table id="corporation_report_table" class="table table-bordered table-striped table-hover" style="font-size: 13px;">
         <thead>
             <tr>
                 <th class="col-1">ID</th>
                 <th class="col-2">Name</th>
                 <th class="col-1">Date</th>
-                <th class="col-1">Daily Entry</th>
-                <th class="col-2">Calendar hour</th>
-                <th class="col-1">Adjust hour</th>
+                <th class="col-1">Activity</th>
+                <th class="col-2">Content</th>
                 <th class="col-1">Work hour</th>
+                <th class="col-1">Note</th>
             </tr>
         </thead>
         <tbody id="myTable">
             {% for row in listdata %}
             <tr>
-                <td class="col-1">{{row.staff_id}}</td>
-                <td class="col-1">{{row.name}}</td>
+                <td class="col-1">{{row.corp_report_id}}</td>
+                <td class="col-1">{{row.corp}}</td>
                 <td class="col-2">{{row.startdate}}</td>
-                <td class="col-1">{{row.job}}</td>
-                <td class="col-2">{{row.calendarhour}}</td>
+                <td class="col-1">{{row.activitytype}}</td>
+                <td class="col-2">{{row.entrycontent}}</td>
                 <td class="col-1">{{row.workhour}}</td>
-                <td class="col-2">{{row.adjhour}} : {{row.adjmin}}</td>
-                <td class="col-1">{{row.workhour}}</td>
+                <td class="col-1"></td>
             </tr>
             {% endfor %}
         </tbody>

@@ -62,16 +62,22 @@
     {% endif %}
     {% endwith %}
     <div id="timesheettopbar" class="container-fluid row">
-        <div class="form-group col-sm-8 col-sm-offset-4" style="text-align: right;">
+        <div class="form-group col-sm-7 col-sm-offset-5" style="text-align: right;">
             <form action="" method="POST" autocomplete="off">
-                Filter
-                <select name="dateselect" style="width: 25%;">
+                From
+                <select name="dateselectfrom" value="{{dateselectfrom}}" style="width: 25%;">
+                    <option value="">Please select date</option>
+                    {% for row in datefilter %}
+                    <option>{{row.startdate}}</option>
+                    {% endfor %}
+                </select>To
+                <select name="dateselectto" value="{{dateselectto}}" style="width: 25%;">
                     <option value="">Please select date</option>
                     {% for row in datefilter %}
                     <option>{{row.startdate}}</option>
                     {% endfor %}
                 </select>
-                <select name="userselect" style="width: 25%;">
+                <select name="userselect" value="{{userselect}}" style="width: 25%;">
                     <option value="">Please select user</option>
                     {% for row in userfilter %}
                     <option>{{row.staff}}</option>
@@ -137,5 +143,13 @@
   $(document).ready(function () {
     $('#dailyentry_table').DataTable();
   });
+
+  window.onload = function(event) {
+    $('form [name="dateselectfrom"]').val($('form [name="dateselectfrom"]').attr('value'));
+    $('form [name="dateselectto"]').val($('form [name="dateselectto"]').attr('value'));
+    $('form [name="userselect"]').val($('form [name="userselect"]').attr('value'));
+  }
+
+
 </script>
 {%- endblock scripts %}

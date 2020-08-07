@@ -63,7 +63,7 @@
     {% endwith %}
     <div id="timesheettopbar" class="container-fluid row">
         <div class="form-group col-sm-7 col-sm-offset-5" style="text-align: right;">
-            <form action="" method="POST" autocomplete="off">
+            <form action="{{url_for('dailyentry')}}" method="POST" autocomplete="off">
                 From
                 <select name="dateselectfrom" value="{{dateselectfrom}}" style="width: 25%;">
                     <option value="">Please select date</option>

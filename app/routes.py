@@ -7,7 +7,7 @@ from datetime import timedelta, datetime #, date
 from pytz import timezone
 from dateutil.relativedelta import relativedelta
 from werkzeug.urls import url_parse
-from sqlalchemy import desc, asc, func # for table.order_by(Task.enddate).all()
+from sqlalchemy import desc, asc, func, or_ # for table.order_by(Task.enddate).all()
 
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import render_template, flash, redirect, request, url_for, session, make_response, json
@@ -688,14 +688,15 @@ def individual_del(id):
         title='Edit_Individual'
     )
 
-@app.route('/task')
+@app.route('/task', methods=['GET', 'POST'])
 def task():
+    ''' task/job information'''
     tasks = Task.query.order_by(Task.periodend.asc()).all()
     return render_template(
         'task.html',
         tasks = tasks,
         title='Task'
-        )
+    )
 
 @app.route('/task_add', methods=['GET', 'POST'])
 def task_add():
@@ -947,28 +948,18 @@ def task_del(id):
 def dailyentry():
     '''display timesheet'''
     list_data = Timesheet.query.all()
-    # tasklist = Task.query.all()
     datefilter = db.session.query(Timesheet.startdate).distinct().order_by(Timesheet.startdate.desc()).all()
     userfilter = db.session.query(Timesheet.staff).distinct().order_by(Timesheet.staff.asc()).all()
-
     if request.method == "POST":
         dateselectfrom = (request.form['dateselectfrom']).replace(' ', '')
         dateselectto = (request.form['dateselectto']).replace(' ', '')
         userselect = (request.form['userselect'])
-        if dateselectfrom != '' and dateselectto == '' and userselect == '':
-            list_data = Timesheet.query.filter(Timesheet.startdate >= dateselectfrom).all()
-        elif dateselectfrom != '' and dateselectto != '' and userselect == '':
-            list_data = Timesheet.query.filter(Timesheet.startdate >= dateselectfrom, Timesheet.startdate <= dateselectto).all()
-        elif dateselectfrom != '' and dateselectto == '' and userselect != '':
-            list_data = Timesheet.query.filter(Timesheet.startdate >= dateselectfrom, Timesheet.staff == userselect).all()
-        elif dateselectfrom != '' and dateselectto != '' and userselect != '':
-            list_data = Timesheet.query.filter(Timesheet.startdate >= dateselectfrom, Timesheet.startdate <= dateselectto, Timesheet.staff == userselect).all()
-        elif dateselectfrom == '' and dateselectto != '' and userselect == '':
-            list_data = Timesheet.query.filter(Timesheet.startdate <= dateselectto).all()
-        elif dateselectfrom == '' and dateselectto != '' and userselect != '':
-            list_data = Timesheet.query.filter(Timesheet.startdate <= dateselectto, Timesheet.staff == userselect).all()
-        elif dateselectfrom == '' and dateselectto == '' and userselect != '':
-            list_data = Timesheet.query.filter(Timesheet.staff == userselect).all()
+        attribute = '' if dateselectfrom == '' else 'Timesheet.startdate >= dateselectfrom'
+        attribute = attribute if dateselectto == '' else attribute + ', Timesheet.startdate <= dateselectto'
+        attribute = attribute if userselect == '' else attribute + ', Timesheet.staff == userselect'
+        att = []
+        exec('att.append(db.session.query(Timesheet).filter({}).order_by(Timesheet.startdate.desc()).all())'.format(attribute.lstrip(', ')))
+        list_data = att[0]
         return render_template(
             'dailyentry.html',
             listdata=list_data,
@@ -979,7 +970,7 @@ def dailyentry():
             userselect = userselect,
             title='timesheetlist'
         )
-
+    
     return render_template(
         'dailyentry.html',
         listdata=list_data,
@@ -1198,20 +1189,12 @@ def staff():
         dateselectfrom = (request.form['dateselectfrom']).replace(' ', '')
         dateselectto = (request.form['dateselectto']).replace(' ', '')
         userselect = (request.form['userselect'])
-        if dateselectfrom != '' and dateselectto == '' and userselect == '':
-            list_data = Staff.query.filter(Staff.startdate >= dateselectfrom).all()
-        elif dateselectfrom != '' and dateselectto != '' and userselect == '':
-            list_data = Staff.query.filter(Staff.startdate >= dateselectfrom, Staff.startdate <= dateselectto).all()
-        elif dateselectfrom != '' and dateselectto == '' and userselect != '':
-            list_data = Staff.query.filter(Staff.startdate >= dateselectfrom, Staff.name == userselect).all()
-        elif dateselectfrom != '' and dateselectto != '' and userselect != '':
-            list_data = Staff.query.filter(Staff.startdate >= dateselectfrom, Staff.startdate <= dateselectto, Staff.name == userselect).all()
-        elif dateselectfrom == '' and dateselectto != '' and userselect == '':
-            list_data = Staff.query.filter(Staff.startdate <= dateselectto).all()
-        elif dateselectfrom == '' and dateselectto != '' and userselect != '':
-            list_data = Staff.query.filter(Staff.startdate <= dateselectto, Staff.name == userselect).all()
-        elif dateselectfrom == '' and dateselectto == '' and userselect != '':
-            list_data = Staff.query.filter(Staff.name == userselect).all()
+        attribute = '' if dateselectfrom == '' else 'Staff.startdate >= dateselectfrom'
+        attribute = attribute if dateselectto == '' else attribute + ', Staff.startdate <= dateselectto'
+        attribute = attribute if userselect == '' else attribute + ', Staff.name == userselect'
+        att = []
+        exec('att.append(db.session.query(Staff).filter({}).order_by(Staff.startdate.desc()).all())'.format(attribute.lstrip(', ')))
+        list_data = att[0]
         return render_template(
             'staff.html',
             listdata=list_data,
@@ -1222,7 +1205,6 @@ def staff():
             userselect = userselect,
             title='Staff'
         )
-
     return render_template(
         'staff.html',
         listdata=list_data,
@@ -1241,20 +1223,12 @@ def corporation_report():
         dateselectfrom = (request.form['dateselectfrom']).replace(' ', '')
         dateselectto = (request.form['dateselectto']).replace(' ', '')
         userselect = (request.form['userselect'])
-        if dateselectfrom != '' and dateselectto == '' and userselect == '':
-            list_data = CorporationReport.query.filter(CorporationReport.startdate >= dateselectfrom).all()
-        elif dateselectfrom != '' and dateselectto != '' and userselect == '':
-            list_data = CorporationReport.query.filter(CorporationReport.startdate >= dateselectfrom, CorporationReport.startdate <= dateselectto).all()
-        elif dateselectfrom != '' and dateselectto == '' and userselect != '':
-            list_data = CorporationReport.query.filter(CorporationReport.startdate >= dateselectfrom, CorporationReport.corp == userselect).all()
-        elif dateselectfrom != '' and dateselectto != '' and userselect != '':
-            list_data = CorporationReport.query.filter(CorporationReport.startdate >= dateselectfrom, CorporationReport.startdate <= dateselectto, CorporationReport.corp == userselect).all()
-        elif dateselectfrom == '' and dateselectto != '' and userselect == '':
-            list_data = CorporationReport.query.filter(CorporationReport.startdate <= dateselectto).all()
-        elif dateselectfrom == '' and dateselectto != '' and userselect != '':
-            list_data = CorporationReport.query.filter(CorporationReport.startdate <= dateselectto, CorporationReport.corp == userselect).all()
-        elif dateselectfrom == '' and dateselectto == '' and userselect != '':
-            list_data = CorporationReport.query.filter(CorporationReport.corp == userselect).all()
+        attribute = '' if dateselectfrom == '' else 'CorporationReport.startdate >= dateselectfrom'
+        attribute = attribute if dateselectto == '' else attribute + ', CorporationReport.startdate <= dateselectto'
+        attribute = attribute if userselect == '' else attribute + ', CorporationReport.corp == userselect'
+        att = []
+        exec('att.append(db.session.query(CorporationReport).filter({}).order_by(CorporationReport.startdate.desc()).all())'.format(attribute.lstrip(', ')))
+        list_data = att[0]
         return render_template(
             'corporation_report.html',
             listdata=list_data,
@@ -1265,7 +1239,6 @@ def corporation_report():
             userselect = userselect,
             title='CorporationReport'
         )
-
     return render_template(
         'corporation_report.html',
         listdata=list_data,
@@ -1275,22 +1248,83 @@ def corporation_report():
     )
 
 @app.route('/search', methods=['GET', 'POST'])
-def search():
+def search(): # sample 1181,8805,318805
     if request.method == 'POST':
-        searchnum = (request.form['searchnumber']).replace(' ', '').replace('-', '')
-        list_indiv = Individual.query.with_entities(Individual.prefix, Individual.last_name, Individual.first_name, Individual.phone1, Individual.phone2).filter(Individual.phone1digit == searchnum or Individual.phone2digit == searchnum)
-        list_corp = Corporation.query.with_entities(Corporation.corp1, Corporation.corp2, Corporation.corp20, Corporation.corp21).filter(Corporation.corp201 == searchnum or Corporation.corp211 == searchnum)
+        tag = (request.form['searchnumber']).replace(' ', '').replace('-', '')
+        search = "%{}%".format(tag)
+        list_indiv = db.session.query(Individual).with_entities(Individual.prefix, Individual.last_name, Individual.first_name, Individual.phone1, Individual.phone2).filter(or_(Individual.phone1digit.like(search), Individual.phone2digit.like(search)))
+        list_corp = Corporation.query.with_entities(Corporation.corp1, Corporation.corp2, Corporation.corp20, Corporation.corp21).filter(or_(Corporation.corp201.like(search), Corporation.corp211.like(search)))
         return render_template(
             'search.html',
             list_indiv = list_indiv,
             list_corp = list_corp,
             title = 'Search'
         )
-        
+    utility.excel_export()    
     return render_template(
         'search.html',
         title = 'Search'
     )
+
+@app.route('/download', methods=['GET', 'POST'])
+def download(): 
+    
+    formid = request.args.get('formid', 1, type=int)
+    if request.method == 'POST' and formid == 1:
+        category = request.form['category']
+        category = 'Corporation' if category == '' else category
+        data = utility.download_munu(category)
+        filtertxt = data[0]
+        filterdata = data[1]
+        filterselect = ['','','']
+        return render_template(
+            'download.html',
+            category = category,
+            filtertxt = filtertxt,
+            filterdata = filterdata,
+            filterselect = filterselect,
+            message = '',
+            title = 'Download'
+        )
+
+    elif request.method == 'POST' and formid == 2:
+        print('---- formid = 2 -----')
+        filterselect = ['','','']
+        category = request.form['filter0']
+        data = utility.download_munu(category)
+        filtertxt = data[0]
+        filterdata = data[1]
+        filterselect[0] = request.form['filter1']
+        filterselect[1] = request.form['filter2']
+        filterselect[2] = request.form['filter3']
+        da = (datetime.now(timezone('America/Toronto'))).strftime("%Y-%m-%d")
+        filename = category + '-' + da + '.xlsx'
+        message = ''
+        if category != '':
+            utility.excel_export(category, filterselect, filename)
+            message = 'Download "' + filename + '" successfully.'
+        return render_template(
+            'download.html',
+            category = category,
+            filtertxt = filtertxt,
+            filterdata = filterdata,
+            filterselect = filterselect,
+            message = message,
+            title = 'Download'
+        )
+    else:
+        filtertxt = ['','','']
+        filterdata = ['','','']
+        filterselect = ['','','']
+        return render_template(
+            'download.html',
+            category = '',
+            filtertxt = filtertxt,
+            filterdata = filterdata,
+            filterselect = filterselect,
+            message = '',
+            title = 'Download'
+        )
 
 @app.route('/timesheet')
 def timesheet():

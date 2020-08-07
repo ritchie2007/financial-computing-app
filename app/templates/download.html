@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/dataTables.bootstrap.css')}}">
+<style>
+    #success_message {
+        display: none;
+    }
+
+    #Sheetlist {
+        font-size: 13px;
+    }
+
+    #timesheettopbar {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 35px;
+    }
+
+    #timesheettopbar input#tableSearch {
+        margin: 0px;
+        height: 30px;
+        vertical-align: middle;
+    }
+
+    #timesheettopbar select {
+        height: 30px;
+    }
+
+    #timesheettopbar button {
+        height: 30px;
+        padding: 5px 15px 15px;
+    }
+
+    .table th {
+        text-align: center;
+    }
+
+    #myTable td {
+        padding: 3px;
+        vertical-align: middle;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="tbl-field">
+    <div id="download" class="container-fluid row" style="margin: 15px 25% 0px 25%;">
+        <form id="category" action="{{url_for('download', formid=1)}}" method="POST">
+            <div class="form-group col-sm-8" style="padding: 0px; margin: 5px 0px;" >
+                <h4>Category</h4>
+            </div>
+            <div class="form-group col-sm-8" name="category" style="padding: 15px 50px 20px 20px ; height: fit-content; border:#cacbc9 solid 1px; border-radius: 10px;">
+                <label class="control-label">Select Download Category</label>
+                <div class="input-group">
+                    <select type="text" class="form-control" name="category" value="{{category}}">
+                        <option value="">Please select</option>
+                        <option>Corporation</option>
+                        <option>Individual</option>
+                        <option>Task</option>
+                        <option>Timesheet</option>
+                        <option>Staff</option>
+                        <option>Corporation report</option>
+                    </select>
+                    <span class="input-group-addon">
+                        <button type="submit" class="btn btn-success" style="padding: 0px 10px 0px 10px; ">Select</button>
+                    </span>
+                </div>
+            </div>
+            <!-- <div class="form-group col-sm-8" style="padding: 0px; margin: 5px 0px; text-align: right;">
+                <button id="c1" type="submit" class="btn btn btn-success" style="display: none;">Download</button>
+            </div> -->
+        </form>
+        <form id="filter" action="{{url_for('download', formid=2)}}" method="POST" autocomplete="off">
+            <div class="form-group col-sm-8" style="padding: 0px; margin: 5px 0px;">
+                <h4>Filters</h4>
+            </div>
+            <div class="form-group col-sm-8" style="padding: 10px 50px 10px 10px ; height: fit-content; border:#cacbc9 solid 1px; border-radius: 10px;">
+                <p><h6 >- Currently there is no filter for Corporation and Individual. <br></h6></p>
+                <div class="form-group col-sm-12">
+                    <input type="text" name="filter0" value="{{category}}" style="display: none;">
+                </div>
+                <div class="form-group col-sm-12" name="filter1">
+                    <label class="control-label">Filter 1: {{filtertxt[0]}}</label>
+                    <select id="filter1" type="text" class="form-control" name="filter1" value="{{filterselect[0]}}">
+                        <option value="">Please select</option>
+                        {% for row in filterdata[0] %}
+                        <option>{{row.startdate}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-sm-12" name="filter2">
+                    <label class="control-label">Filter 2: {{filtertxt[1]}}</label>
+                    <select id="filter2" type="text" class="form-control" name="filter2" value="{{filterselect[1]}}">
+                        <option value="">Please select</option>
+                        {% for row in filterdata[1] %}
+                        <option>{{row.startdate}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-sm-12" name="filter3">
+                    <label class="control-label">Filter 3: {{filtertxt[2]}}</label>
+                    <select id="filter3" type="text" class="form-control" name="filter3" value="{{filterselect[2]}}">
+                        <option value="">Please select</option>
+                        {% for row in filterdata[2] %}
+                        <option>{{row.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-sm-6">
+                <p style="font-size: 12px; color: rgb(10, 187, 54);">{{message}}</p>
+            </div>
+            <div class="form-group col-sm-2" style="padding: 0px; margin: 5px 0px; text-align: right;">
+                <button type="submit" class="btn btn btn-success">Download</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('static', filename='js/jquery-3.5.1.js')}}"></script>
+<script src="{{url_for('static', filename='js/main.js')}}"></script>
+<script src="{{url_for('static', filename='js/jquery.dataTables.js')}}"></script>
+<script src="{{url_for('static', filename='js/dataTables.bootstrap.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/bootstrapValidator.min.js')}}"></script> 
+
+<script type="text/javascript">
+    window.onload = function(event) {
+        $('select[name="category"]').val($('select[name="category"]').attr('value'));
+        $('select[name="filter1"]').val($('select[name="filter1"]').attr('value'));
+        $('select[name="filter2"]').val($('select[name="filter2"]').attr('value'));
+        $('select[name="filter3"]').val($('select[name="filter3"]').attr('value'));
+    }
+</script>
+{%- endblock scripts %}

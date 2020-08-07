@@ -51,7 +51,7 @@
   <div id="stafflist" class="container-fluid" style="margin: 20px 60px 0px 60px;">
     <div id="timesheettopbar" class="container-fluid row">
         <div class="form-group col-sm-7 col-sm-offset-5" style="text-align: right;">
-            <form action="" method="POST" autocomplete="off">
+            <form action="{{url_for('staff')}}" method="POST" autocomplete="off">
                 From
                 <select name="dateselectfrom" value="{{dateselectfrom}}" style="width: 25%;">
                     <option value="">Please select date</option>
@@ -96,7 +96,6 @@
                 <td class="col-2">{{row.startdate}}</td>
                 <td class="col-1">{{row.job}}</td>
                 <td class="col-2">{{row.calendarhour}}</td>
-                <td class="col-1">{{row.workhour}}</td>
                 <td class="col-2">{{row.adjhour}} : {{row.adjmin}}</td>
                 <td class="col-1">{{row.workhour}}</td>
             </tr>

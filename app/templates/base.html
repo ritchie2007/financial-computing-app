@@ -61,7 +61,6 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
- 
                     <li id="home" class="nav-item">
                         <a href="{{ url_for('index') }}" name='topbar'>Home</a>
                     </li>
@@ -86,7 +85,11 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                         <ul class="dropdown-menu">
                             <li><a href="{{ url_for('task') }}">Task List</a></li>
                             <li><a href="{{ url_for('task_add') }}">New Task</a></li>                 
-                            <li><a href="#">Export</a></li>
+                            <!-- <li>
+                                <form action="{{ url_for('task', formid = 2)}}" method="POST">
+                                    <button type="submit" class="btn btn btn-success" style="background: none; border: none; color: #333; font-size: 14px; padding-left: 18px;">Export</button>
+                                </form>
+                            </li> -->
                         </ul>
                     </li>
                     <li id="timesheet" class="nav-item dropdown">
@@ -94,28 +97,28 @@ http://pythonhosted.org/Flask-Bootstrap/basic-usage.html#available-blocks for an
                         <ul class="dropdown-menu">
                             <li><a href="{{ url_for('dailyentry') }}">DailyEntry</a></li>
                             <li><a href="{{ url_for('dailyentry_add') }}">Add daily sheet</a></li>
-                            <li><a href="#">Export</a></li>
                         </ul>
                     </li>
                     <li id="Staff" class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" name='topbar'>Staff<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ url_for('staff') }}">List</a></li>
-                            <li><a href="#">Export</a></li>
                         </ul>
                     </li>
                     <li id="CustomerReport" class="nav-item dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" name='topbar'>CustomerReport<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{url_for('corporation_report')}}">List</a></li>
-                             <li><a href="#">Export</a></li>
                         </ul>
                     </li>
                     <li id="Group" class="nav-item dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" name='topbar'>Group<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" name='topbar'>Feedback<span class="caret"></span></a>
                     </li>
                     <li id="Administration" class="nav-item dropdown">
-                        <a href="#" name='topbar'>Administration</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" name='topbar'>Administration<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('download') }}">Download Data</a></li>
+                        </ul>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

@@ -1260,7 +1260,6 @@ def search(): # sample 1181,8805,318805
             list_corp = list_corp,
             title = 'Search'
         )
-    utility.excel_export()    
     return render_template(
         'search.html',
         title = 'Search'

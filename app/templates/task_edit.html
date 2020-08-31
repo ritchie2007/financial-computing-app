@@ -42,7 +42,7 @@
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   <select class="form-control browser-default custom-select" name="taskedit1" value="{{corp_idx}}">
-                    <option value="" >Please select</option>
+                    <option value="0 | 000000000 | Coporation null" >0 | 000000000 | Coporation null |</option>
                     {% for corp in corp_dropdown %}
                     <option >{{corp.corp_id}} | {{corp.corp1}} | {{corp.corp2}} </option>
                     {% endfor %}
@@ -57,7 +57,7 @@
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   <select class="form-control browser-default custom-select" name="taskedit2" value="{{indiv_idx}}">
-                    <option value="0 | Please select, this is sample | 000000000" >0 | Please select, this is sample | 000000000</option>
+                    <option value="0 | Individual null | 000000000" >0 | Individual null | 000000000</option>
                     {% for indiv in indiv_dropdown %}
                     <option >{{indiv.indiv_id}} | {{indiv.prefix}} {{indiv.last_name}}, {{indiv.first_name}} | {{indiv.sin}}</option>
                     {% endfor %}

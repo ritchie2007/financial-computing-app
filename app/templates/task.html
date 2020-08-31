@@ -30,13 +30,14 @@
     <!-- <input class="form-control mb-4" id="tableSearch" type="text"
             placeholder="Type something to search list items">
         <br/> -->
-    <table id="corp_table" class="table table-bordered table-striped table-hover" style="font-size: 13px;">
+    <table id="corp_table" class="table table-bordered table-striped table-hover" style="font-size: 12px;">
       <thead>
         <tr>
           <th class="col-1">ID</th>
           <th class="col-1">PeriodEnd</th>
-          <th class="col-2">Client</th>
-          <th class="col-1">Job type</th>
+          <th class="col-2">Corporation Client</th>
+          <th class="col-2">Individual Client</th>
+          <th class="col-1">JobType</th>
           <th class="col-1">Start date</th>
           <th class="col-1">Status</th>
           <th class="col-2">Priority</th>
@@ -51,6 +52,7 @@
           <td class="col-1">{{row.task_id}}</td>
           <td class="col-1">{{row.periodend}}_{{row.recurrence}}</td>
           <td class="col-1">{{row.client_corp_name}}</td>
+          <td class="col-1">{{row.client_indiv_name}}</td>
           <td class="col-1">{{row.jobtype_code}}</td>
           <td class="col-1">{{row.startdate}}</td>
           <td class="col-1">{{row.status}}</td>

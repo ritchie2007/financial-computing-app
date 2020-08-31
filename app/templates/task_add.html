@@ -36,13 +36,13 @@
     <div class="row" style="margin: 0% 20% 0% 20%;">    
         <form id="my_form" action="{{url_for('task_add')}}" method="POST">
 
-            <div class="form-group">
+          <div class="form-group" name="Corporation">
               <label class="col-sm-3 control-label" >Coporation Client</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   <select class="form-control browser-default custom-select" name="taskedit1">
-                    <option value="" >Please select</option>
+                    <option value="0 | 000000000 | Coporation null" >0 | 000000000 | Coporation null |</option>
                     {% for corp in corp_dropdown %}
                     <option >{{corp.corp_id}} | {{corp.corp1}} | {{corp.corp2}} </option>
                     {% endfor %}
@@ -51,13 +51,13 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Individual">
               <label class="col-sm-3 control-label" >Individual Client</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                   <select class="form-control browser-default custom-select" name="taskedit2">
-                    <option value="0 | Please select, this is sample | 000000000" >0 | Please select, this is sample | 000000000</option>
+                    <option value="0 | Individual null | 000000000" >0 | Individual null | 000000000</option>
                     {% for indiv in indiv_dropdown %}
                     <option >{{indiv.indiv_id}} | {{indiv.prefix}} {{indiv.last_name}}, {{indiv.first_name}} | {{indiv.sin}}</option>
                     {% endfor %}
@@ -65,7 +65,7 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="PeriodEnd">
               <label class="col-sm-3 control-label" >PeriodEnd</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
@@ -74,7 +74,7 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Start">
               <label class="col-sm-3 control-label" >Start date</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
@@ -83,7 +83,7 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="End">
               <label class="col-sm-3 control-label" >End date</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
@@ -92,7 +92,7 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="type">
               <label class="col-sm-3 control-label" >Jobtype</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
@@ -106,7 +106,7 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Responsible">
               <label class="col-sm-3 control-label" >Job Responsible</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 70%;">
@@ -115,7 +115,7 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="job_detail">
               <label class="col-sm-3 control-label" >Job details</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 90%;">
@@ -124,7 +124,7 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Status">
               <label class="col-sm-3 control-label" >Status</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
@@ -138,7 +138,7 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Priority">
               <label class="col-sm-3 control-label" >Priority</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
@@ -153,7 +153,7 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Recurrence">
               <label class="col-sm-3 control-label" >Recurrence</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 60%;">
@@ -167,7 +167,7 @@
                 </div>
               </div>   
             </div>
-            <div class="form-group">
+            <div class="form-group" name="Worktime">
               <label class="col-sm-3 control-label" >Worktime</label>
               <div class="col-sm-9 inputGroupContainer"  style="padding: 0px;">
                 <div class="input-group" style="width: 50%;">

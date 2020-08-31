@@ -832,7 +832,7 @@ def task_renew(id):
         my_data = Task(client_corp_id, client_corp_name, client_corp_bussi_no, client_indiv_id, client_indiv_name, client_indiv_sin, jobtype_id,jobtype_code, periodend, responsible, startdate, enddate, status, details, recurrence, priority, worktime, renewperiod, renewstartdate, renewenddate, createdate, serialno)
         db.session.add(my_data)
         db.session.commit()
-        # flash("Task Renewed Successfully")
+        flash("Task Renewed Successfully, An New Task Inserted!")
         return redirect(url_for('task'))
 
     return render_template(

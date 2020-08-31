@@ -45,6 +45,13 @@ $(document).ready(function(){
     
   });
 });
+
+$(document).ready(function(){
+  $('a[name="topbar"]').click(function(){
+    $('a[name="topbar"]').css("color", "#777");
+    $(this).css("color", "red");
+  });
+});
 //TimeSheet.html ** Stopwatch function: start & stop
 // $(document).ready(function() {
 //     $("button.inputgroupStart").click(function(){

@@ -76,7 +76,7 @@
             </form>
         </div>
     </div>    
-    <table id="staff_table" class="table table-bordered table-striped table-hover" style="font-size: 13px;">
+    <table id="staff_table" class="table table-bordered table-striped table-hover" style="font-size: 12px;">
         <thead>
             <tr>
                 <th class="col-1">ID</th>
@@ -116,13 +116,20 @@
 
 <script type="text/javascript">
   $(document).ready(function () {
-    $('#dailyentry_table').DataTable();
+    $('#staff_table').DataTable();
   });
 
   window.onload = function(event) {
     $('form [name="dateselectfrom"]').val($('form [name="dateselectfrom"]').attr('value'));
     $('form [name="dateselectto"]').val($('form [name="dateselectto"]').attr('value'));
     $('form [name="userselect"]').val($('form [name="userselect"]').attr('value'));
+
+    pagetitle = document.title;
+    console.log(pagetitle);
+    $('#navbar-topmenu li a[name="topbar"]').css("font-weight", "500");
+    $('#navbar-topmenu li a[name="topbar"]').css("border-bottom", "none");
+    $('li#Staff a[name="topbar"]').css("font-weight", "550");
+    $('li#Staff a[name="topbar"]').css("border-bottom", "5px solid #b505ee");
   }
 
 

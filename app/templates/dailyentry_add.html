@@ -14,13 +14,13 @@
     <div id="select-btn" class="timesheet-top-btn select-btn">
         <div class="container-fluid row">
             <div class="form-group col-md-2" >
-                <label>Time Sheet</label>
+                <label>Time Sheet Entry</label>
             </div>
             <div  class="form-group col-md-1">
                 <button type="button" class="btn btn-success timesheetbtn" data-showdiv="Dailyentry">Daily Entry</button> 
             </div>
             <div  class="form-group col-md-1">
-                <button type="button" class="btn btn-success timesheetbtn" data-showdiv="Sheetlist">Sheet List</button> 
+                <a href="{{ url_for('dailyentry') }}" class="btn btn-success timesheetbtn" role="button" >Sheet list</a></li>
             </div>
             <div  class="form-group col-md-6">
                 <p></p>
@@ -48,7 +48,7 @@
                     margin: 0px;
                     padding: 0px;
                 }
-                .timesheet-top-btn .form-group button {
+                .timesheet-top-btn .form-group button, .timesheet-top-btn .form-group a {
                     padding: 3px;
                     font-size: 13px;
                 }
@@ -58,6 +58,7 @@
                     color: #faf205 !important;
                 }
             </style>
+
         </div>
     </div>
     <!-- Daily entry page -->
@@ -273,591 +274,7 @@
                         </div> -->
                     </form>
                 </div>
-                <div id="Inputgroup03" class="entryinputgroup">
-                    <form action="{{url_for('dailyentry_add')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
-                            <label style="color: #000; font-size: 12px;">
-                                <button type="button" class="creat_new_entry">&nbsp;No. 3&nbsp;</button>
-                                <button hidden>&#x1f512 </button>
-                                <button class="inputgroupStart" disabled style="color: green; margin-left: 5px;">&#x23f5</button>
-                                <button class="inputgroupStop" disabled style="color: red;">&#x23f9</button>
-                                <button class="inputgroupData" type="button" style="color: blue; margin-left: 0px; float: right;">Copy</button>
-                                <button type="reset" class="inputgroupReset" style="color: red; margin-left: 0px; float: right;">Reset</button>
-                            </label>
-                        </div>
-                        <div class="form-group col-md-1">
-                            <label for="timesheet1-1">Date</label>
-                            <input type="text" class="form-control" name="timesheet1-1" readonly>
-                        </div>
-
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
-                            <div>
-                                <input type="text" class="form-control col-sm-1 " name="timesheet1-3" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <input class="form-control col-sm-1 timecal" value="+" style="width: 8%; font-weight: 700; padding: 0px; text-align: center; border: none;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-41" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="8" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-41" onblur="timevalidation01('Inputgroup01')" style="width: 13%; text-align: right; border-right: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value=":" style="width: 4%; border: 0px; border-left: 0px; border-right: 0px; border-radius: 0px;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-42" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="59" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-42" onblur="timevalidation02('Inputgroup01')" style="width: 15%; text-align: left; border-left: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value="=" style="width: 6%; border: none; background-color: #eaece9;" disabled>
-                                <input type="text" class="form-control col-sm-1" name="timesheet1-5" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <div class="invalid-feedback" hidden>
-                                    Name is a required field
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-6">Task Name</label>
-                            <input type="text" class="form-control fillable" name="timesheet1-6" placeholder="input task name" disabled>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="timesheet1-7">Content</label>
-                            <input type="text" class="form-control" name="timesheet1-7" disabled>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-8">Task Type</label>
-                            <br/>
-                            <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" >Please select</option>
-                                {% for row in code_types %}
-                                <option >{{row.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <!-- dropdown style -->
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-9">Corporation 1</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-10">Corporation 2</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-11">Corporation 3</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-12">Corporation 4</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <!-- <div class="form-group col-md-2" >
-                            <br/>
-                            <button type="reset" class="btn btn-primary" style="background-color: darkred; margin-right: 20px;" value="Reset">Reset</button>
-                            <button type="submit" class="btn btn-primary" style="background-color: green;" value="Submit" disabled>Submit</button>
-                        </div> -->
-                    </form>
-                </div>
-                <div id="Inputgroup04" class="entryinputgroup">
-                    <form action="{{url_for('dailyentry_add')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
-                            <label style="color: #000; font-size: 12px;">
-                                <button type="button" class="creat_new_entry">&nbsp;No. 4&nbsp;</button>
-                                <button hidden>&#x1f512 </button>
-                                <button class="inputgroupStart" disabled style="color: green; margin-left: 5px;">&#x23f5</button>
-                                <button class="inputgroupStop" disabled style="color: red;">&#x23f9</button>
-                                <button class="inputgroupData" type="button" style="color: blue; margin-left: 0px; float: right;">Copy</button>
-                                <button type="reset" class="inputgroupReset" style="color: red; margin-left: 0px; float: right;">Reset</button>
-                            </label>
-                        </div>
-                        <div class="form-group col-md-1">
-                            <label for="timesheet1-1">Date</label>
-                            <input type="text" class="form-control" name="timesheet1-1" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
-                            <div>
-                                <input type="text" class="form-control col-sm-1 " name="timesheet1-3" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <input class="form-control col-sm-1 timecal" value="+" style="width: 8%; font-weight: 700; padding: 0px; text-align: center; border: none;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-41" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="8" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-41" onblur="timevalidation01('Inputgroup01')" style="width: 13%; text-align: right; border-right: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value=":" style="width: 4%; border: 0px; border-left: 0px; border-right: 0px; border-radius: 0px;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-42" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="59" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-42" onblur="timevalidation02('Inputgroup01')" style="width: 15%; text-align: left; border-left: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value="=" style="width: 6%; border: none; background-color: #eaece9;" disabled>
-                                <input type="text" class="form-control col-sm-1" name="timesheet1-5" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <div class="invalid-feedback" hidden>
-                                    Name is a required field
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-6">Task Name</label>
-                            <input type="text" class="form-control fillable" name="timesheet1-6" placeholder="input task name" disabled>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="timesheet1-7">Content</label>
-                            <input type="text" class="form-control" name="timesheet1-7" disabled>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-8">Task Type</label>
-                            <br/>
-                            <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" >Please select</option>
-                                {% for row in code_types %}
-                                <option >{{row.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <!-- dropdown style -->
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-9">Corporation 1</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-10">Corporation 2</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-11">Corporation 3</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-12">Corporation 4</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <!-- <div class="form-group col-md-2" >
-                            <br/>
-                            <button type="reset" class="btn btn-primary" style="background-color: darkred; margin-right: 20px;" value="Reset">Reset</button>
-                            <button type="submit" class="btn btn-primary" style="background-color: green;" value="Submit" disabled>Submit</button>
-                        </div> -->
-                    </form>
-                </div>
-                <div id="Inputgroup05" class="entryinputgroup">
-                    <form action="{{url_for('dailyentry_add')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
-                            <label style="color: #000; font-size: 12px;">
-                                <button type="button" class="creat_new_entry">&nbsp;No. 5&nbsp;</button>
-                                <button hidden>&#x1f512 </button>
-                                <button class="inputgroupStart" disabled style="color: green; margin-left: 5px;">&#x23f5</button>
-                                <button class="inputgroupStop" disabled style="color: red;">&#x23f9</button>
-                                <button class="inputgroupData" type="button" style="color: blue; margin-left: 0px; float: right;">Copy</button>
-                                <button type="reset" class="inputgroupReset" style="color: red; margin-left: 0px; float: right;">Reset</button>
-                            </label>
-                        </div>
-                        <div class="form-group col-md-1">
-                            <label for="timesheet1-1">Date</label>
-                            <input type="text" class="form-control" name="timesheet1-1" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
-                            <div>
-                                <input type="text" class="form-control col-sm-1 " name="timesheet1-3" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <input class="form-control col-sm-1 timecal" value="+" style="width: 8%; font-weight: 700; padding: 0px; text-align: center; border: none;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-41" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="8" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-41" onblur="timevalidation01('Inputgroup01')" style="width: 13%; text-align: right; border-right: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value=":" style="width: 4%; border: 0px; border-left: 0px; border-right: 0px; border-radius: 0px;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-42" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="59" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-42" onblur="timevalidation02('Inputgroup01')" style="width: 15%; text-align: left; border-left: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value="=" style="width: 6%; border: none; background-color: #eaece9;" disabled>
-                                <input type="text" class="form-control col-sm-1" name="timesheet1-5" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <div class="invalid-feedback" hidden>
-                                    Name is a required field
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-6">Task Name</label>
-                            <input type="text" class="form-control fillable" name="timesheet1-6" placeholder="input task name" disabled>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="timesheet1-7">Content</label>
-                            <input type="text" class="form-control" name="timesheet1-7" disabled>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-8">Task Type</label>
-                            <br/>
-                            <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" >Please select</option>
-                                {% for row in code_types %}
-                                <option >{{row.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <!-- dropdown style -->
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-9">Corporation 1</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-10">Corporation 2</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-11">Corporation 3</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-12">Corporation 4</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <!-- <div class="form-group col-md-2" >
-                            <br/>
-                            <button type="reset" class="btn btn-primary" style="background-color: darkred; margin-right: 20px;" value="Reset">Reset</button>
-                            <button type="submit" class="btn btn-primary" style="background-color: green;" value="Submit" disabled>Submit</button>
-                        </div> -->
-                    </form>
-                </div>
-                <div id="Inputgroup06" class="entryinputgroup">
-                    <form action="{{url_for('dailyentry_add')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
-                            <label style="color: #000; font-size: 12px;">
-                                <button type="button" class="creat_new_entry">&nbsp;No. 6&nbsp;</button>
-                                <button hidden>&#x1f512 </button>
-                                <button class="inputgroupStart" disabled style="color: green; margin-left: 5px;">&#x23f5</button>
-                                <button class="inputgroupStop" disabled style="color: red;">&#x23f9</button>
-                                <button class="inputgroupData" type="button" style="color: blue; margin-left: 0px; float: right;">Copy</button>
-                                <button type="reset" class="inputgroupReset" style="color: red; margin-left: 0px; float: right;">Reset</button>
-                            </label>
-                        </div>
-                        <div class="form-group col-md-1">
-                            <label for="timesheet1-1">Date</label>
-                            <input type="text" class="form-control" name="timesheet1-1" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
-                            <div>
-                                <input type="text" class="form-control col-sm-1 " name="timesheet1-3" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <input class="form-control col-sm-1 timecal" value="+" style="width: 8%; font-weight: 700; padding: 0px; text-align: center; border: none;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-41" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="8" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-41" onblur="timevalidation01('Inputgroup01')" style="width: 13%; text-align: right; border-right: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value=":" style="width: 4%; border: 0px; border-left: 0px; border-right: 0px; border-radius: 0px;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-42" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="59" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-42" onblur="timevalidation02('Inputgroup01')" style="width: 15%; text-align: left; border-left: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value="=" style="width: 6%; border: none; background-color: #eaece9;" disabled>
-                                <input type="text" class="form-control col-sm-1" name="timesheet1-5" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <div class="invalid-feedback" hidden>
-                                    Name is a required field
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-6">Task Name</label>
-                            <input type="text" class="form-control fillable" name="timesheet1-6" placeholder="input task name" disabled>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="timesheet1-7">Content</label>
-                            <input type="text" class="form-control" name="timesheet1-7" disabled>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-8">Task Type</label>
-                            <br/>
-                            <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" >Please select</option>
-                                {% for row in code_types %}
-                                <option >{{row.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <!-- dropdown style -->
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-9">Corporation 1</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-10">Corporation 2</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-11">Corporation 3</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-12">Corporation 4</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <!-- <div class="form-group col-md-2" >
-                            <br/>
-                            <button type="reset" class="btn btn-primary" style="background-color: darkred; margin-right: 20px;" value="Reset">Reset</button>
-                            <button type="submit" class="btn btn-primary" style="background-color: green;" value="Submit" disabled>Submit</button>
-                        </div> -->
-                    </form>
-                </div>
-                <div id="Inputgroup07" class="entryinputgroup">
-                    <form action="{{url_for('dailyentry_add')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
-                            <label style="color: #000; font-size: 12px;">
-                                <button type="button" class="creat_new_entry">&nbsp;No. 7&nbsp;</button>
-                                <button hidden>&#x1f512 </button>
-                                <button class="inputgroupStart" disabled style="color: green; margin-left: 5px;">&#x23f5</button>
-                                <button class="inputgroupStop" disabled style="color: red;">&#x23f9</button>
-                                <button class="inputgroupData" type="button" style="color: blue; margin-left: 0px; float: right;">Copy</button>
-                                <button type="reset" class="inputgroupReset" style="color: red; margin-left: 0px; float: right;">Reset</button>
-                            </label>
-                        </div>
-                        <div class="form-group col-md-1">
-                            <label for="timesheet1-1">Date</label>
-                            <input type="text" class="form-control" name="timesheet1-1" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
-                            <div>
-                                <input type="text" class="form-control col-sm-1 " name="timesheet1-3" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <input class="form-control col-sm-1 timecal" value="+" style="width: 8%; font-weight: 700; padding: 0px; text-align: center; border: none;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-41" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="8" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-41" onblur="timevalidation01('Inputgroup01')" style="width: 13%; text-align: right; border-right: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value=":" style="width: 4%; border: 0px; border-left: 0px; border-right: 0px; border-radius: 0px;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-42" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="59" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-42" onblur="timevalidation02('Inputgroup01')" style="width: 15%; text-align: left; border-left: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value="=" style="width: 6%; border: none; background-color: #eaece9;" disabled>
-                                <input type="text" class="form-control col-sm-1" name="timesheet1-5" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <div class="invalid-feedback" hidden>
-                                    Name is a required field
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-6">Task Name</label>
-                            <input type="text" class="form-control fillable" name="timesheet1-6" placeholder="input task name" disabled>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="timesheet1-7">Content</label>
-                            <input type="text" class="form-control" name="timesheet1-7" disabled>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-8">Task Type</label>
-                            <br/>
-                            <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" >Please select</option>
-                                {% for row in code_types %}
-                                <option >{{row.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <!-- dropdown style -->
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-9">Corporation 1</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-10">Corporation 2</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-11">Corporation 3</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-12">Corporation 4</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div id="Inputgroup08" class="entryinputgroup">
-                    <form action="{{url_for('dailyentry_add')}}" method="POST">
-                        <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
-                            <label style="color: #000; font-size: 12px;">
-                                <button type="button" class="creat_new_entry">&nbsp;No. 8&nbsp;</button>
-                                <button hidden>&#x1f512 </button>
-                                <button class="inputgroupStart" disabled style="color: green; margin-left: 5px;">&#x23f5</button>
-                                <button class="inputgroupStop" disabled style="color: red;">&#x23f9</button>
-                                <button class="inputgroupData" type="button" style="color: blue; margin-left: 0px; float: right;">Copy</button>
-                                <button type="reset" class="inputgroupReset" style="color: red; margin-left: 0px; float: right;">Reset</button>
-                            </label>
-                        </div>
-                        <div class="form-group col-md-1">
-                            <label for="timesheet1-1">Date</label>
-                            <input type="text" class="form-control" name="timesheet1-1" readonly>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-3">CalendarHour + Adj = WorkHour</label>
-                            <div>
-                                <input type="text" class="form-control col-sm-1 " name="timesheet1-3" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <input class="form-control col-sm-1 timecal" value="+" style="width: 8%; font-weight: 700; padding: 0px; text-align: center; border: none;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-41" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="8" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-41" onblur="timevalidation01('Inputgroup01')" style="width: 13%; text-align: right; border-right: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value=":" style="width: 4%; border: 0px; border-left: 0px; border-right: 0px; border-radius: 0px;" readonly>
-                                <input type="number" class="form-control col-sm-1 timeselect" name="timesheet1-42" style="width: 14%; padding: 0%; text-align: center;" onmousewheel="true" min="0" max="59" step="1" value="00" disabled>
-                                <!-- <input type="text" class="form-control col-sm-1" name="timesheet1-42" onblur="timevalidation02('Inputgroup01')" style="width: 15%; text-align: left; border-left: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;" value="00" disabled> -->
-                                <input type="text" class="form-control col-sm-1" value="=" style="width: 6%; border: none; background-color: #eaece9;" disabled>
-                                <input type="text" class="form-control col-sm-1" name="timesheet1-5" style="width: 25%; text-align: center;" value="00 : 00" readonly>
-                                <div class="invalid-feedback" hidden>
-                                    Name is a required field
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-6">Task Name</label>
-                            <input type="text" class="form-control fillable" name="timesheet1-6" placeholder="input task name" disabled>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="timesheet1-7">Content</label>
-                            <input type="text" class="form-control" name="timesheet1-7" disabled>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-8">Task Type</label>
-                            <br/>
-                            <select class="browser-default custom-select" name="timesheet1-8" style="width: 100%; height: 32px; border-color: #d5d6d5; background-color: #eeeeee;">
-                                <option value="" >Please select</option>
-                                {% for row in code_types %}
-                                <option >{{row.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <!-- dropdown style -->
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-9">Corporation 1</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-9" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="timesheet1-10">Corporation 2</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-10" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-11">Corporation 3</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-11" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="timesheet1-12">Corporation 4</label>
-                            <br/>
-                            <select class="browser-default custom-select selectpicker" name="timesheet1-12" data-live-search="true" >
-                                <option value="" >Please select</option>
-                                {% for row in tasklist %}
-                                    <option >{{row.task_id}} | {{row.periodend}} | {{row.recurrence}} | {{row.jobtype_code}} | {{row.client_corp_name}}</option>
-                                {% endfor %} -->
-                            </select>
-                        </div>
-                    </form>
-                </div>
+                <!-- deleted 03 - 08 on 2020-08-31 -->
                 <style>
                     .dropdown.bootstrap-select.browser-default.custom-select {
                         width: 100%; 
@@ -892,8 +309,74 @@
                     }
                 </style>
             </div>
+            <div class="timesheet-list-seperation">
+                <div class="container-fluid row" style="border-bottom: 1px solid #cac5c5;">
+                    <br>
+                    <div class="form-group col-md-2" >
+                        <label>Time Sheet List</label>
+                    </div>
+                    <div class="form-group col-md-10" >
+                        <p>Total &nbsp<strong style="color: red;"> <u> {{rowcount}} </u> </strong>&nbsp entries were created <strong> today</strong>. </p>
+                    </div>
+                </div>
+            </div>
+            <style>
+                .timesheet-list-seperation .row {
+                    margin: 0px 0px 15px 0px;
+                    padding: 0px;
+                    border-bottom: darkgray solid 1px;
+                }
+                .timesheet-list-seperation label {
+                    margin: 0px;
+                    padding: 0px 0px 0px 10px;
+                    font-size: 15px;
+                }
+                .timesheet-list-seperation p {
+                    margin: 0px;
+                    padding: 0px 0px 0px 10px;
+                    font-size: 13px;
+                }
+                .timesheet-list-seperation .form-group {
+                    margin: 0px;
+                    padding: 0px;
+                }
+                
+            </style>
+
+            <div style="height: 300px; overflow: scroll;">
+                <table id="staff_table" class="table table-bordered table-striped table-hover" style="font-size: 12px;">
+                    <thead>
+                        <tr>
+                            <th class="col-1">ID</th>
+                            <th class="col-1">Date</th>
+                            <th class="col-2">Name</th>
+                            <th class="col-1">Activity Type</th>
+                            <th class="col-2">Corporation</th>
+                            <th class="col-1">WorkHour</th>
+                            <th class="col-2">Content</th>
+                            <th class="col-1">Staff</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        {% for row in listdata %}
+                        <tr>
+                            <td class="col-1">{{row.timesheet_id}}</td>
+                            <td class="col-1">{{row.startdate}}</td>
+                            <td class="col-2">{{row.entryname}}</td>
+                            <td class="col-1">{{row.activitytype}}</td>
+                            <td class="col-3">{{row.corp1}}</td>
+                            <td class="col-1" style="text-align: center;">{{row.workhour}}</td>
+                            <td class="col-2">{{row.entrycontent}}</td>
+                            <td class="col-1">{{row.staff}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+
 </div>
 {% endblock %}
 {% block scripts %}
@@ -1122,7 +605,7 @@
             var runningCode = 0;
             var accomTime = 0;
 
-            for (ileave=1; ileave<9; ileave++) {
+            for (ileave=1; ileave<3; ileave++) {
                 console.log("Root - Saving... "+ileave);
                 if ($('#Inputgroup0' + ileave +' [name="timesheet1-1"]').val() == "") {
                     console.log("StartTime timesheet1-1 empty.");
@@ -1148,7 +631,7 @@
             // $("#myModal").modal('show');
             var root = "";
             var str = "";
-            for (iload=1; iload<9; iload++) {
+            for (iload=1; iload<3; iload++) {
                 root = 'Inputgroup0' + iload;
                 str = loadData(root);
 
@@ -1177,6 +660,13 @@
                     }
                 };
             };
+
+            pagetitle = document.title;
+            console.log(pagetitle);
+            $('#navbar-topmenu li a[name="topbar"]').css("font-weight", "500");
+            $('#navbar-topmenu li a[name="topbar"]').css("border-bottom", "none");
+            $('li#timesheet a[name="topbar"]').css("font-weight", "550");
+            $('li#timesheet a[name="topbar"]').css("border-bottom", "5px solid #b505ee");
         };
 
         // submit
@@ -1187,7 +677,7 @@
             var avg = '';
             var flag = 0;
             var temp = 0;
-            for (isub=1; isub<9; isub++) {
+            for (isub=1; isub<3; isub++) {
                 root = 'Inputgroup0' + isub;
                 if ($("#"+root+" .form-group [name='timesheet1-1']").val() == "") {
                     console.log("No. " + isub + " is empty and not to be submited.");
@@ -1195,6 +685,10 @@
                     document.querySelector('#Inputgroup0' + isub + ' .inputgroupStop').click();
                     str[0] = root;
                     str[1] = $("#"+root+" .form-group [name='timesheet1-1']").val();
+                    if (!((/^[\d+]{4}-[\d+]{2}-[\d+]{2} [\d+]{2}:[\d+]{2}$/).test(str[1]))) {
+                        alert('The format of "Date" is incorrect! \n The correct format is "yyyy-mm-dd hh:mm", no extra space allowed!');
+                        return;
+                    }
                     str[2] = $("#"+root+" .form-group [name='timesheet1-3']").val();
                     str[3] = $("#"+root+" .form-group [name='timesheet1-41']").val();
                     str[4] = $("#"+root+" .form-group [name='timesheet1-42']").val();
@@ -1205,6 +699,15 @@
                     avg = (str[5].replace(' ','')).split(":");
                     if (avg==NaN) {avg =['0','0']};
                     temp = parseInt(avg[0])*60 + parseInt(avg[1]);
+                    if (temp == 0) {
+                        if ((window.confirm('Your workhour is 0, do you want to continue to submit?')) == false) {
+                            return;
+                        }
+                    } else if (temp < 10) {
+                        if ((window.confirm('Your workhour < 10 minutes, do you want to continue to submit?')) == false) {
+                            return;
+                        }
+                    }
                     flag = [str[9], str[10], str[11], str[12]].filter(String).length;
                     flag = (flag ==0)?1:flag;
                     console.log("Total: " + temp + " flag: " + flag);
@@ -1229,7 +732,7 @@
                 };
             }
 
-            for (i=1; i<9; i++) {
+            for (i=1; i<3; i++) {
                 $('#Inputgroup0'+i+' .inputgroupReset').click()
             }
             localStorage.clear();
@@ -1255,7 +758,7 @@
         });
         // clearAll
         $("button#timesheetclearall").click(function(){
-            for (i=1; i<9; i++) {
+            for (i=1; i<3; i++) {
                 $('#Inputgroup0'+i+' .inputgroupReset').click()
             }
             localStorage.clear();
@@ -1292,7 +795,7 @@
             var min = 0;
             var tf= new formattime(60000);
             function t(i) { return (i<10?"0":"")+i };
-            for (i=1; i<9; i++) {
+            for (i=1; i<3; i++) {
                 root = "Inputgroup0" + i;
                 $("#"+root+" button.creat_new_entry").prop('disabled',true);
                 $("#"+root+" button.inputgroupStart").prop('disabled',false);

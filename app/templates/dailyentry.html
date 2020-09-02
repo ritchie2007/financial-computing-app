@@ -148,6 +148,13 @@
     $('form [name="dateselectfrom"]').val($('form [name="dateselectfrom"]').attr('value'));
     $('form [name="dateselectto"]').val($('form [name="dateselectto"]').attr('value'));
     $('form [name="userselect"]').val($('form [name="userselect"]').attr('value'));
+
+    pagetitle = document.title;
+    console.log(pagetitle);
+    $('#navbar-topmenu li a[name="topbar"]').css("font-weight", "500");
+    $('#navbar-topmenu li a[name="topbar"]').css("border-bottom", "none");
+    $('li#timesheet a[name="topbar"]').css("font-weight", "550");
+    $('li#timesheet a[name="topbar"]').css("border-bottom", "5px solid #b505ee");
   }
 
 

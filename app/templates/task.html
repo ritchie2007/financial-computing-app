@@ -12,7 +12,7 @@
 
 {% block content %}
 <div class="tbl-field">
-  <div id="tasklist" class="container-fluid" style="margin: 20px 60px 0px 60px;">
+  <div id="tasklist" class="container-fluid" style="margin: 20px 20px 0px 20px;">
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for message in messages %}
@@ -220,6 +220,14 @@
     $('#corp_table').DataTable();
   });
 
+  window.onload = function(event) {
+    pagetitle = document.title;
+    console.log(pagetitle);
+    $('#navbar-topmenu li a[name="topbar"]').css("font-weight", "500");
+    $('#navbar-topmenu li a[name="topbar"]').css("border-bottom", "none");
+    $('li#Task a[name="topbar"]').css("font-weight", "550");
+    $('li#Task a[name="topbar"]').css("border-bottom", "5px solid #b505ee");
+  }
     //try open modal 
     // $("#renew").on("click", function(event){
         //     //location.reload();

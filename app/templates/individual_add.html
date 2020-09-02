@@ -456,26 +456,26 @@
           localStorage.setItem('serialnum', (parseInt(b)+1));
         }
       
-      function phone_format1() {
-        var num = $('.form-group [name="indiv7"]').val();
-        console.log(num);
-        num = num.replace(/ /g, '').replace(/-/g, '');
-        if (isNaN(num) || num.length < 6) {
-          alert('Wrong phone number, please check');
-        } else {
-          var len = num.length;
-          var str = '';
-          str = num.substring(len-7, len-4) + '-' + num.substring(len-4);
-          if (len > 10) {
-            str = num.substring(0, len-10) + '-' + num.substring(len-10, len-7) + '-' + str;
-          } else if (len > 7) {
-            str = num.substring(0, len-7) + '-' + str;
+        function phone_format1() {
+          var num = $('.form-group [name="indiv7"]').val();
+          console.log(num);
+          num = num.replace(/ /g, '').replace(/-/g, '');
+          if (isNaN(num) || num.length < 6) {
+            alert('Wrong phone number, please check');
+          } else {
+            var len = num.length;
+            var str = '';
+            str = num.substring(len-7, len-4) + '-' + num.substring(len-4);
+            if (len > 10) {
+              str = num.substring(0, len-10) + '-' + num.substring(len-10, len-7) + '-' + str;
+            } else if (len > 7) {
+              str = num.substring(0, len-7) + '-' + str;
+            };
           };
+          console.log(str);
+          $('.form-group [name="indiv7"]').val(str);
         };
-        console.log(str);
-        $('.form-group [name="indiv7"]').val(str);
-      };
-      function phone_format2() {
+        function phone_format2() {
         var num = $('.form-group [name="indiv8"]').val();
         console.log(num);
         num = num.replace(/ /g, '').replace(/-/g, '');
@@ -500,5 +500,12 @@
         $(window).bind('resize', function() {
         location.reload();
         });
+
+        window.onload = function(event) {
+          $('#navbar-topmenu li a[name="topbar"]').css("font-weight", "500");
+          $('#navbar-topmenu li a[name="topbar"]').css("border-bottom", "none");
+          $('li#Individual a[name="topbar"]').css("font-weight", "550");
+          $('li#Individual a[name="topbar"]').css("border-bottom", "5px solid #b505ee");
+        }
     </script>
 {%- endblock scripts %}

@@ -52,6 +52,8 @@ $(document).ready(function(){
     $(this).css("color", "red");
   });
 });
+
+
 //TimeSheet.html ** Stopwatch function: start & stop
 // $(document).ready(function() {
 //     $("button.inputgroupStart").click(function(){

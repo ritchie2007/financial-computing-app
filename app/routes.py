@@ -140,6 +140,7 @@ def edit_profile():
     )
 
 @app.route('/corporate')
+@login_required
 def corporate():
     corp = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2, Corporation.corp8, Corporation.corp9, Corporation.corp10, Corporation.corp25, Corporation.corp18, Corporation.corp19, Corporation.corp20, Corporation.task)
     # ID, 1-Business No., 2-Corporation name, 8-type, 9,10-anniversary date 'from + to', 25-CRA tax year end, 18,19-CRA contact 'first + last name', 20-phone, 62-task
@@ -151,6 +152,7 @@ def corporate():
     )
 
 @app.route('/corp_add', methods=['GET', 'POST'])
+@login_required
 def corp_add():
     indiv = Individual.query.with_entities(Individual.indiv_id, Individual.sin, Individual.prefix, Individual.last_name, Individual.first_name, Individual.address1, Individual.phone1, Individual.email, Individual.wechat)
     max_id = db.session.query(func.max(Corporation.corp_id)).scalar()
@@ -266,7 +268,9 @@ def corp_add():
         my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp201, corp211, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, timemark)
         db.session.add(my_data)
         db.session.commit()
-        flash("Corporation add Successfully")
+        flash("A Corporation Added Successfully")
+        return redirect(url_for('corporate'))
+        
     return render_template(
         'corp_add.html',
         indiv_data = indiv,
@@ -275,6 +279,7 @@ def corp_add():
 
 @app.route('/corp_edit', methods=['GET', 'POST'])
 @app.route('/corp_edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def corp_edit(id):
     my_data = Corporation.query.get(id)
     indiv_data = Individual.query.with_entities(Individual.indiv_id, Individual.sin, Individual.prefix, Individual.last_name, Individual.first_name, Individual.phone1, Individual.wechat, Individual.email)
@@ -393,7 +398,7 @@ def corp_edit(id):
             my_data.shareholder = ",".join(shareholder)
 
         db.session.commit()
-        # flash("Corporation Updated Successfully")
+        flash("Corporation Updated Successfully")
         return redirect(url_for('corporate'))
 
     return render_template(
@@ -430,6 +435,7 @@ def corp_del(id):
         title='Edit_Corporation')
 
 @app.route('/individual')
+@login_required
 def individual():
     my_data = Individual.query.all()
     num = random()
@@ -441,6 +447,7 @@ def individual():
     )
 
 @app.route('/individual_add', methods=['GET', 'POST'])
+@login_required
 def individual_add():
     corp = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2)
     indiv = Individual.query.with_entities(Individual.indiv_id, Individual.sin, Individual.prefix, Individual.last_name, Individual.first_name)
@@ -544,6 +551,7 @@ def individual_add():
 
 @app.route('/individual_edit', methods=['GET', 'POST'])
 @app.route('/individual_edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def individual_edit(id):
     my_data = Individual.query.get(id)
     corp_dropdown = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp2, Corporation.corp1)
@@ -641,6 +649,7 @@ def individual_edit(id):
             my_data.child = ",".join(child)
 
         db.session.commit()
+        flash("Individual Updated Successfully")
         return redirect(url_for('individual'))
 
     return render_template(
@@ -679,7 +688,7 @@ def individual_del(id):
 
         db.session.delete(my_data)
         db.session.commit()
-        flash("Corporation Deleted Successfully")
+        flash("Individual Deleted Successfully")
         return redirect(url_for('individual'))
 
     return render_template(
@@ -689,6 +698,7 @@ def individual_del(id):
     )
 
 @app.route('/task', methods=['GET', 'POST'])
+@login_required
 def task():
     ''' task/job information'''
     tasks = Task.query.order_by(Task.periodend.asc()).all()
@@ -699,6 +709,7 @@ def task():
     )
 
 @app.route('/task_add', methods=['GET', 'POST'])
+@login_required
 def task_add():
     corp_dropdown = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2)
     indiv_dropdown = Individual.query.with_entities(Individual.indiv_id, Individual.prefix, Individual.last_name, Individual.first_name, Individual.sin)
@@ -760,11 +771,12 @@ def task_add():
         corp_dropdown = corp_dropdown,
         indiv_dropdown = indiv_dropdown,
         jobtype_dropdown = jobtype_dropdown,
-        title = 'Add new task'
+        title = 'Add_new_task'
     )
 
 @app.route('/task_renew', methods=['GET', 'POST'])
 @app.route('/task_renew/<int:id>', methods=['GET', 'POST'])
+@login_required
 def task_renew(id):
     corp_dropdown = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2)
     indiv_dropdown = Individual.query.with_entities(Individual.indiv_id, Individual.prefix, Individual.last_name, Individual.first_name, Individual.sin)
@@ -844,11 +856,12 @@ def task_renew(id):
         corp_idx = corp_idx,
         indiv_idx = indiv_idx,
         type_idx = type_idx,
-        title = 'Renew task'
+        title = 'Renew_task'
     )
 
 @app.route('/task_edit', methods=['GET', 'POST'])
 @app.route('/task_edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def task_edit(id):
     corp_dropdown = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2)
     indiv_dropdown = Individual.query.with_entities(Individual.indiv_id, Individual.prefix, Individual.last_name, Individual.first_name, Individual.sin)
@@ -924,7 +937,7 @@ def task_edit(id):
         corp_idx = corp_idx,
         indiv_idx = indiv_idx,
         type_idx = type_idx,
-        title = 'Update task'
+        title = 'Update_task'
     )
 
 @app.route('/task_del', methods=['GET', 'POST'])
@@ -935,7 +948,7 @@ def task_del(id):
     if request.method == 'POST':
         db.session.delete(my_data)
         db.session.commit()
-        # flash("Task Deleted Successfully")
+        flash("Task Deleted Successfully")
         return redirect(url_for('task'))
 
     return render_template(
@@ -945,6 +958,7 @@ def task_del(id):
         )
 
 @app.route('/dailyentry', methods=['GET', 'POST'])
+@login_required
 def dailyentry():
     '''display timesheet'''
     list_data = Timesheet.query.all()
@@ -980,9 +994,19 @@ def dailyentry():
     )
 
 @app.route('/dailyentry_add', methods=['GET', 'POST'])
+@login_required
 def dailyentry_add():
     code_types = activity_code.query.all()
     tasklist = Task.query.all()
+    
+    # userstr = ['Susan', 'Dannijo', 'Michael', 'Aser', 'Kidden']
+    # userstridx = round(random()*4)
+    # staff = userstr[userstridx]
+    staff = current_user.username
+    da = (datetime.now(timezone('America/Toronto'))).strftime("%Y-%m-%d")
+    listdata = db.session.query(Timesheet).filter(Timesheet.startdate == da, Timesheet.staff == staff).order_by(Timesheet.timemark.desc()).all()
+    rowcount = len(listdata)
+
     if request.method == 'POST':
         data = request.json
         print("----> " + data[0] + " <---- type(da) is list")
@@ -1000,10 +1024,10 @@ def dailyentry_add():
         corp2 = ((data[10].split(" | "))[4]) if (len(data[10].split(" | ")) == 5) else ''
         corp3 = ((data[11].split(" | "))[4]) if (len(data[11].split(" | ")) == 5) else ''
         corp4 = ((data[12].split(" | "))[4]) if (len(data[12].split(" | ")) == 5) else ''
-        userstr = ['Susan', 'Dannijo', 'Michael', 'Aser', 'Kidden']
-        userstridx = round(random()*4)
-        staff = userstr[userstridx]
-        # staff = current_user.username
+        # userstr = ['Susan', 'Dannijo', 'Michael', 'Aser', 'Kidden']
+        # userstridx = round(random()*4)
+        # staff = userstr[userstridx]
+        # # staff = current_user.username
         timemark = data[13]
         # avgtime = float(data[14])
         jobid = []
@@ -1042,18 +1066,21 @@ def dailyentry_add():
         my_data = Timesheet(startdate, calhour, adjhour, adjmin, workhour, entryname, entrycontent, activitytype, corp1, corp2, corp3, corp4, staff, timemark, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno)
         db.session.add(my_data)
         db.session.commit()
-        # flash("Dailyentry Inserted Successfully")
+        flash("Dailyentry Inserted Successfully")
         return redirect(url_for('dailyentry'))
 
     return render_template(
         'dailyentry_add.html',
         code_types = code_types,
         tasklist = tasklist,
-        title = 'Add new daily sheet'
+        listdata = listdata,
+        rowcount = rowcount,
+        title = 'Add_new_daily_sheet'
     )
 
 @app.route('/dailyentry_edit', methods=['GET', 'POST'])
 @app.route('/dailyentry_edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def dailyentry_edit(id):
     ''' update dailyentry information'''
     tasklist = Task.query.with_entities(Task.task_id, Task.periodend, Task.recurrence, Task.jobtype_code, Task.client_corp_name)
@@ -1144,7 +1171,7 @@ def dailyentry_edit(id):
 
         print('new ', t_new, '  old ', t)
         db.session.commit()
-        # flash("Dailyentry Update Successfully")
+        flash("Dailyentry Update Successfully")
         return redirect(url_for('dailyentry'))
 
     return render_template(
@@ -1153,7 +1180,7 @@ def dailyentry_edit(id):
         code_types = code_types,
         timesheet = my_data,
         idx = idx,
-        title = 'Update timesheet'
+        title = 'Update_timesheet'
     )
 
 @app.route('/dailyentry_del', methods=['GET', 'POST'])
@@ -1168,7 +1195,7 @@ def dailyentry_del(id):
     if request.method == 'POST':
         db.session.delete(my_data)
         db.session.commit()
-        # flash("Task Deleted Successfully")
+        flash("Dailyentry Deleted Successfully")
         return redirect(url_for('dailyentry'))
 
     return render_template(
@@ -1180,6 +1207,7 @@ def dailyentry_del(id):
     )
 
 @app.route('/staff', methods=['GET', 'POST'])
+@login_required
 def staff():
     '''display staff'''
     list_data = Staff.query.all()
@@ -1214,6 +1242,7 @@ def staff():
     )
 
 @app.route('/corporation_report', methods=['GET', 'POST'])
+@login_required
 def corporation_report():
     '''display corporation_report'''
     list_data = CorporationReport.query.all()
@@ -1266,6 +1295,7 @@ def search(): # sample 1181,8805,318805
     )
 
 @app.route('/download', methods=['GET', 'POST'])
+@login_required
 def download(): 
     
     formid = request.args.get('formid', 1, type=int)
@@ -1326,6 +1356,7 @@ def download():
         )
 
 @app.route('/timesheet')
+@login_required
 def timesheet():
     all_data = activity_code.query.all()
     # list_data = Timesheet.query.join(Task, Timesheet.id == Task.id).add_columns(Timesheet.id, Timesheet.entryname, Timesheet.corp1, Task.id, Task.client)
@@ -1344,6 +1375,7 @@ def timesheet():
     )
 
 @app.route('/timesheetInsertion', methods=['POST'])
+@login_required
 def timesheetInsertion():
     if request.method == 'POST':
         data = request.json
@@ -1403,6 +1435,7 @@ def timesheetInsertion():
 
 @app.route('/timesheetlist', methods=['GET','POST'], defaults={"page":1})
 @app.route('/timesheetlist/<int:page>', methods=['GET','POST'])
+@login_required
 def timesheetlist(page):
     '''display timesheet'''
     page = page

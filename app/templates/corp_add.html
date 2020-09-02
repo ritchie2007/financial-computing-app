@@ -23,7 +23,6 @@
 
 {% block content %}
 <div class="tbl-field" style="height: fit-content;">
-  <h3>&nbsp Corporation Name: Garrett Winters -- add Name parameter here</h3>
   <div class="row">
     <div class="col-sm-2">
       <nav id="scrollmenu" style="overflow: auto;">
@@ -811,5 +810,14 @@
       $(window).bind('resize', function() {
         location.reload();
       });
+      
+      window.onload = function(event) {
+        pagetitle = document.title;
+        console.log(pagetitle);
+        $('#navbar-topmenu li a[name="topbar"]').css("font-weight", "500");
+        $('#navbar-topmenu li a[name="topbar"]').css("border-bottom", "none");
+        $('li#Corporate a[name="topbar"]').css("font-weight", "550");
+        $('li#Corporate a[name="topbar"]').css("border-bottom", "5px solid #b505ee");
+      }
     </script>
 {%- endblock scripts %}

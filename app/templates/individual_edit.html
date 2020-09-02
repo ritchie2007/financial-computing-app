@@ -38,7 +38,7 @@
             <h3>&nbsp Individual ID: {{indiv_data.indiv_id}} &nbsp Name: {{indiv_data.prefix}} {{indiv_data.last_name}}, {{indiv_data.first_name}}</h3>
           </div>
           <div class="form-group col-md-3" style="margin: 20px 0px 0px 0px;">
-            <a href="{{url_for('individual_del')}}/{{indiv_data.indiv_id}}"><button type="submit" class="btn btn-info" style="padding: 3px 12px 3px 12px;">Delete Individual</button></a>
+            <a href="{{url_for('individual_del')}}/{{indiv_data.indiv_id}}"><button type="submit" class="btn btn-info" onclick="return confirm('Are You Sure To Delete ?')" style="padding: 3px 12px 3px 12px;">Delete Individual</button></a>
             <a href="{{ url_for('individual')}}" type="cancel" class="btn btn-info" style="padding: 3px 12px 3px 12px;">Cancel</a>
           </div>
         </form>
@@ -468,6 +468,10 @@
             $('form [name="indiv' + (i+42) + '"]').prop('selectedIndex',parseInt(tmp[i])+1);
             };
 
+          $('#navbar-topmenu li a[name="topbar"]').css("font-weight", "500");
+          $('#navbar-topmenu li a[name="topbar"]').css("border-bottom", "none");
+          $('li#Individual a[name="topbar"]').css("font-weight", "550");
+          $('li#Individual a[name="topbar"]').css("border-bottom", "5px solid #b505ee");
         };
       
       function phone_format1() {

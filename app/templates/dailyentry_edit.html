@@ -178,6 +178,13 @@
     $('form#my_form [name="timesheetedit11"]').prop('selectedIndex', parseInt(tmp));
     tmp = $('form#my_form [name="timesheetedit7"]').attr('value');
     $('form#my_form [name="timesheetedit7"]').val(tmp);
+
+    pagetitle = document.title;
+    console.log(pagetitle);
+    $('#navbar-topmenu li a[name="topbar"]').css("font-weight", "500");
+    $('#navbar-topmenu li a[name="topbar"]').css("border-bottom", "none");
+    $('li#timesheet a[name="topbar"]').css("font-weight", "550");
+    $('li#timesheet a[name="topbar"]').css("border-bottom", "5px solid #b505ee");
   };
 
   function cal_workhour() {

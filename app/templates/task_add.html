@@ -325,5 +325,13 @@
     // })
   });
 
+  window.onload = function(event) {
+    pagetitle = document.title;
+    console.log(pagetitle);
+    $('#navbar-topmenu li a[name="topbar"]').css("font-weight", "500");
+    $('#navbar-topmenu li a[name="topbar"]').css("border-bottom", "none");
+    $('li#Task a[name="topbar"]').css("font-weight", "550");
+    $('li#Task a[name="topbar"]').css("border-bottom", "5px solid #b505ee");
+  };
 </script>
 {%- endblock scripts %}

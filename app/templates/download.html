@@ -136,6 +136,13 @@
         $('select[name="filter1"]').val($('select[name="filter1"]').attr('value'));
         $('select[name="filter2"]').val($('select[name="filter2"]').attr('value'));
         $('select[name="filter3"]').val($('select[name="filter3"]').attr('value'));
+
+        pagetitle = document.title;
+        console.log(pagetitle);
+        $('#navbar-topmenu li a[name="topbar"]').css("font-weight", "500");
+        $('#navbar-topmenu li a[name="topbar"]').css("border-bottom", "none");
+        $('li#Administration a[name="topbar"]').css("font-weight", "550");
+        $('li#Administration a[name="topbar"]').css("border-bottom", "5px solid #b505ee");
     }
 </script>
 {%- endblock scripts %}

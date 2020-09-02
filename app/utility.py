@@ -78,7 +78,7 @@ def indiv_to_corp_contact(value1, corpid, oper, value0): # 人里公司改，公
                         tmp.remove(str(corpid))
                         my_data.contact = ",".join(tmp)
                         db.session.commit()
-        flash("Corp from Individual was updated in Corp table")
+        # flash("Corp from Individual was updated in Corp table")
 
 def corp_contact_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
     print(' --- utility contact ---')
@@ -125,7 +125,7 @@ def corp_contact_to_indiv(value1, corpid, oper, value0): # 公司里人改，人
                         my_data.contact_corp = ",".join(tmp)
                         db.session.commit()
 
-    flash("Contact from Corp was updated in Individual table")
+    # flash("Contact from Corp was updated in Individual table")
 
 # director
 def indiv_to_corp_director(value1, corpid, oper, value0): # 人里公司改，公司里人改
@@ -173,7 +173,7 @@ def indiv_to_corp_director(value1, corpid, oper, value0): # 人里公司改，�
                         tmp.remove(str(corpid))
                         my_data.director = ",".join(tmp)
                         db.session.commit()
-        flash("Director from Individual was updated in Corp table")
+        # flash("Director from Individual was updated in Corp table")
 
 def corp_director_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
     print(' --- director ---')
@@ -221,7 +221,7 @@ def corp_director_to_indiv(value1, corpid, oper, value0): # 公司里人改，�
                         my_data.director_corp = ",".join(tmp)
                         db.session.commit()
 
-    flash("Director from Corp was updated in Individual table")
+    # flash("Director from Corp was updated in Individual table")
 
 # shareholder
 def indiv_to_corp_shareholder(value1, corpid, oper, value0): # 人里公司改，公司里人改
@@ -269,7 +269,7 @@ def indiv_to_corp_shareholder(value1, corpid, oper, value0): # 人里公司改�
                         tmp.remove(str(corpid))
                         my_data.shareholder = ",".join(tmp)
                         db.session.commit()
-    flash("Shareholder from Indiv was updated in Corp table")
+    # flash("Shareholder from Indiv was updated in Corp table")
 
 def corp_shareholder_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
     print(' --- shareholder ---')
@@ -316,7 +316,7 @@ def corp_shareholder_to_indiv(value1, corpid, oper, value0): # 公司里人改�
                         tmp.remove(str(corpid))
                         my_data.sharehold_corp = ",".join(tmp)
                         db.session.commit()
-    flash("Shareholder from Corp was updated in Individual table")
+    # flash("Shareholder from Corp was updated in Individual table")
 
 # spouse
 def indiv_to_spouse(value1, corpid, oper, value0): # 配偶改
@@ -364,7 +364,7 @@ def indiv_to_spouse(value1, corpid, oper, value0): # 配偶改
                         tmp.remove(str(corpid))
                         my_data.spouse = ",".join(tmp)
                         db.session.commit()
-    flash("Spouse Updated Successfully")
+    # flash("Spouse Updated Successfully")
 
 # parents
 def parent_to_child(value1, corpid, oper, value0): # 父里子改，子里父改
@@ -412,7 +412,7 @@ def parent_to_child(value1, corpid, oper, value0): # 父里子改，子里父改
                         tmp.remove(str(corpid))
                         my_data.child = ",".join(tmp)
                         db.session.commit()
-    flash("parents updated")
+    # flash("parents updated")
 
 # child
 def child_to_parent(value1, corpid, oper, value0): # 子里父改，父里子改
@@ -460,7 +460,7 @@ def child_to_parent(value1, corpid, oper, value0): # 子里父改，父里子改
                         tmp.remove(str(corpid))
                         my_data.parent = ",".join(tmp)
                         db.session.commit()
-    flash("Child Updated Successfully")
+    # flash("Child Updated Successfully")
 
 # get Index array
 def get_index_index(type, id_list, dropdown_list): # 由ID字串获取下拉菜单index字串

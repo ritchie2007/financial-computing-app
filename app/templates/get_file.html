@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/common.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/dataTables.bootstrap.css')}}">
+{% endblock %}
+
+{% block content %}
+
+<div class="tbl-field">
+    <h3>Download a file</h3>
+    <a href="{{url_for('get_image')}}/c1.png">Get an image</a>
+    <br>
+    <a href="{{url_for('get_csv')}}/sale_report_2017_feb">Get an CSV file</a>
+    <br>
+    <a href="{{url_for('get_report')}}/2017/feb/sales/sale_report_2017_feb.csv">Get an CSV file by Path</a>
+</div>
+
+{% endblock content %}

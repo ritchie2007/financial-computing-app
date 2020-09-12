@@ -1,7 +1,7 @@
 1 # pylint: disable=no-member
 
 from random import random
-import copy
+import os, copy
 #from time import strftime, strptime, localtime
 from datetime import timedelta, datetime #, date
 from pytz import timezone
@@ -11,6 +11,7 @@ from sqlalchemy import desc, asc, func, or_ # for table.order_by(Task.enddate).a
 
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import render_template, flash, redirect, request, url_for, session, make_response, json
+from flask import send_from_directory, send_file, after_this_request
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
 from app.models import User, Data_table, activity_code, CorporationReport, Staff, Task, Timesheet, Corporation, Individual, Job_type, Mulform, TimesheetTempData
@@ -1006,68 +1007,72 @@ def dailyentry_add():
     da = (datetime.now(timezone('America/Toronto'))).strftime("%Y-%m-%d")
     listdata = db.session.query(Timesheet).filter(Timesheet.startdate == da, Timesheet.staff == staff).order_by(Timesheet.timemark.desc()).all()
     rowcount = len(listdata)
-
+    
     if request.method == 'POST':
-        data = request.json
-        print("----> " + data[0] + " <---- type(da) is list")
-        # 注意 string[start: end: step] 中end是那位是不包含的，所以('0123')[0:2] ==> '01'
-        startdate = (data[1])[0:10]
-        calhour = data[2]
-        adjhour = data[3]
-        adjmin = data[4]
-        t = (data[5].replace(' ','')).split(':')
-        workhour = round((float(t[0]) + float(t[1])/60), 2)
-        entryname = data[6]
-        entrycontent = data[7]
-        activitytype = data[8]
-        corp1 = ((data[9].split(" | "))[4]) if (len(data[9].split(" | ")) == 5) else ''
-        corp2 = ((data[10].split(" | "))[4]) if (len(data[10].split(" | ")) == 5) else ''
-        corp3 = ((data[11].split(" | "))[4]) if (len(data[11].split(" | ")) == 5) else ''
-        corp4 = ((data[12].split(" | "))[4]) if (len(data[12].split(" | ")) == 5) else ''
-        # userstr = ['Susan', 'Dannijo', 'Michael', 'Aser', 'Kidden']
-        # userstridx = round(random()*4)
-        # staff = userstr[userstridx]
-        # # staff = current_user.username
-        timemark = data[13]
-        # avgtime = float(data[14])
-        jobid = []
-        count = 0
-        for i in [15, 16, 17, 18]:
-            if int(data[i]) in jobid:
-                jobid.append(0)
+        data_received = json.loads(request.data)
+        formid = data_received['formid']
+        if formid == 2:
+            # data = request.json
+            data = data_received['formdata']
+            print("----> " + data[0] + " <---- type(da) is list")
+            # 注意 string[start: end: step] 中end是那位是不包含的，所以('0123')[0:2] ==> '01'
+            startdate = (data[1])[0:10]
+            calhour = data[2]
+            adjhour = data[3]
+            adjmin = data[4]
+            t = (data[5].replace(' ','')).split(':')
+            workhour = round((float(t[0]) + float(t[1])/60), 2)
+            entryname = data[6]
+            entrycontent = data[7]
+            activitytype = data[8]
+            corp1 = ((data[9].split(" | "))[4]) if (len(data[9].split(" | ")) == 5) else ''
+            corp2 = ((data[10].split(" | "))[4]) if (len(data[10].split(" | ")) == 5) else ''
+            corp3 = ((data[11].split(" | "))[4]) if (len(data[11].split(" | ")) == 5) else ''
+            corp4 = ((data[12].split(" | "))[4]) if (len(data[12].split(" | ")) == 5) else ''
+            # userstr = ['Susan', 'Dannijo', 'Michael', 'Aser', 'Kidden']
+            # userstridx = round(random()*4)
+            # staff = userstr[userstridx]
+            # # staff = current_user.username
+            timemark = data[13]
+            # avgtime = float(data[14])
+            jobid = []
+            count = 0
+            for i in [15, 16, 17, 18]:
+                if int(data[i]) in jobid:
+                    jobid.append(0)
+                else:
+                    jobid.append(int(data[i]))
+
+            jobid1 = jobid[0]
+            if jobid1 == 0:
+                corp1 = ''
             else:
-                jobid.append(int(data[i]))
+                count += 1
+            jobid2 = jobid[1]
+            if jobid2 == 0:
+                corp2 = ''
+            else:
+                count += 1
+            jobid3 = jobid[2]
+            if jobid3 == 0:
+                corp3 = ''
+            else:
+                count += 1
+            jobid4 = jobid[3]
+            if jobid4 == 0:
+                corp4 = ''
+            else:
+                count += 1 
 
-        jobid1 = jobid[0]
-        if jobid1 == 0:
-            corp1 = ''
-        else:
-            count += 1
-        jobid2 = jobid[1]
-        if jobid2 == 0:
-            corp2 = ''
-        else:
-            count += 1
-        jobid3 = jobid[2]
-        if jobid3 == 0:
-            corp3 = ''
-        else:
-            count += 1
-        jobid4 = jobid[3]
-        if jobid4 == 0:
-            corp4 = ''
-        else:
-            count += 1 
+            avgtime = 0 if count == 0 else round(workhour/count, 2)
+            starttime = (data[1])[11:16]
+            serialno = random()
 
-        avgtime = 0 if count == 0 else round(workhour/count, 2)
-        starttime = (data[1])[11:16]
-        serialno = random()
-
-        my_data = Timesheet(startdate, calhour, adjhour, adjmin, workhour, entryname, entrycontent, activitytype, corp1, corp2, corp3, corp4, staff, timemark, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno)
-        db.session.add(my_data)
-        db.session.commit()
-        flash("Dailyentry Inserted Successfully")
-        return redirect(url_for('dailyentry'))
+            my_data = Timesheet(startdate, calhour, adjhour, adjmin, workhour, entryname, entrycontent, activitytype, corp1, corp2, corp3, corp4, staff, timemark, avgtime, jobid1, jobid2, jobid3, jobid4, starttime, serialno)
+            db.session.add(my_data)
+            db.session.commit()
+            # flash("Dailyentry Inserted Successfully")
+            return redirect(url_for('dailyentry'))
 
     return render_template(
         'dailyentry_add.html',
@@ -1331,16 +1336,26 @@ def download():
         message = ''
         if category != '':
             utility.excel_export(category, filterselect, filename)
-            message = 'Download "' + filename + '" successfully.'
-        return render_template(
-            'download.html',
-            category = category,
-            filtertxt = filtertxt,
-            filterdata = filterdata,
-            filterselect = filterselect,
-            message = message,
-            title = 'Download'
-        )
+            message = 'Download "' + filename + '" successfully.' 
+            path = app.config["CLIENT_CSV"]
+            list = os.listdir(path)
+            for f in list:
+                if (not f == filename):
+                    os.remove(path +'/' + f)
+            try:
+                return send_from_directory(app.config["CLIENT_CSV"], filename=filename, as_attachment=True)
+            except FileNotFoundError:
+                abort(404)
+                
+        # return render_template(
+        #     'download.html',
+        #     category = category,
+        #     filtertxt = filtertxt,
+        #     filterdata = filterdata,
+        #     filterselect = filterselect,
+        #     message = message,
+        #     title = 'Download'
+        # )
     else:
         filtertxt = ['','','']
         filterdata = ['','','']
@@ -1354,6 +1369,43 @@ def download():
             message = '',
             title = 'Download'
         )
+
+@app.route("/get_file")
+def get_file():
+    return render_template('get_file.html')
+
+@app.route("/get_report")
+@app.route("/get_report/<path:path>")
+def get_report(path):
+    try:
+        return send_from_directory(app.config["CLIENT_REPORTS"], filename=path, as_attachment=True)
+    except FileNotFoundError:
+        abort(404)
+
+@app.route("/get_image")
+@app.route("/get_image/<image_name>")
+def get_image(image_name):
+
+    # path = app.config["CLIENT_IMAGES"]
+    # list = os.listdir(path)
+    # print(type(list), list)
+    # print('image_name', image_name)
+    # for f in list:
+    #     if (not f == image_name):
+    #         os.remove(path +'/' + f)
+    try:
+        return send_from_directory(app.config["CLIENT_IMAGES"], filename=image_name, as_attachment=True)
+    except FileNotFoundError:
+        abort(404)
+
+@app.route("/get_csv")
+@app.route("/get_csv/<csv_id>")
+def get_csv(csv_id):
+    filename = f"{csv_id}.csv"
+    try:
+        return send_from_directory(app.config["CLIENT_CSV"], filename=filename, as_attachment=True)
+    except FileNotFoundError:
+        abort(404)
 
 @app.route('/timesheet')
 @login_required

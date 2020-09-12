@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import render_template, flash, redirect, request, url_for, session, make_response, json
+from flask import send_from_directory, send_file, after_this_request
 from sqlalchemy import desc, asc # for table.order_by(Task.enddate).all()
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
@@ -719,6 +720,5 @@ def excel_export(cat, filters, fname):
                 exec('rdata.append(row.{})'.format(pram[1][i]))
             ws.append(rdata)
     print(fname)
-    wb.save(fname)
-
+    wb.save("/Users/Ritchie/Documents/financial-computing-app/app/static/download/" + fname)
     

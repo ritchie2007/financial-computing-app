@@ -73,13 +73,13 @@
                 <!-- Modal to let user to confirm whether or not keep saved data -->
 
                 <div id="Inputgroup01" class="entryinputgroup">
-                    <form action="{{url_for('dailyentry_add')}}" method="POST">
+                    <form action="" method="">
                         <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 1&nbsp;</button>
                                 <button hidden>&#x1f512 </button>
-                                <button class="inputgroupStart" disabled style="color: green; margin-left: 5px;">&#x23f5</button>
-                                <button class="inputgroupStop" disabled style="color: red;">&#x23f9</button>
+                                <button class="inputgroupStart" type="button" disabled style="color: green; margin-left: 5px;">&#x23f5</button>
+                                <button class="inputgroupStop" type="button" disabled style="color: red;">&#x23f9</button>
                                 <button class="inputgroupData" type="button" style="color: blue; margin-left: 0px; float: right;">Copy</button>
                                 <button type="reset" class="inputgroupReset" style="color: red; margin-left: 0px; float: right;">Reset</button>
                             </label>
@@ -176,13 +176,13 @@
                     </form>
                 </div>
                 <div id="Inputgroup02" class="entryinputgroup">
-                    <form action="{{url_for('dailyentry_add')}}" method="POST">
+                    <form action="" method="">
                         <div class="form-group col-md-2" style="margin-top: 7px; opacity: 1;">
                             <label style="color: #000; font-size: 12px;">
                                 <button type="button" class="creat_new_entry">&nbsp;No. 2&nbsp;</button>
                                 <button hidden>&#x1f512 </button>
-                                <button class="inputgroupStart" disabled style="color: green; margin-left: 5px;">&#x23f5</button>
-                                <button class="inputgroupStop" disabled style="color: red;">&#x23f9</button>
+                                <button class="inputgroupStart" type="button" disabled style="color: green; margin-left: 5px;">&#x23f5</button>
+                                <button class="inputgroupStop" type="button" disabled style="color: red;">&#x23f9</button>
                                 <button class="inputgroupData" type="button" style="color: blue; margin-left: 0px; float: right;">Copy</button>
                                 <button type="reset" class="inputgroupReset" style="color: red; margin-left: 0px; float: right;">Reset</button>
                             </label>
@@ -397,20 +397,27 @@
 
         //start button
         $("button.inputgroupStart").click(function(){
-            var root = $(this).parents('div').parents('div').attr("id");
-            $("#"+root+" .form-group input").removeAttr('disabled');
-            $("#"+root+" .form-group input").prop('readonly',false);
-            $(this).prop('disabled', true);
-            $(this).css({opacity: 0.4});
-            $("#"+root+ " button.inputgroupStop").prop('disabled',false);
-            $("#"+root+ " button.inputgroupStop").css({opacity: 1});
-            var index = (parseInt(root.substr(10,2), 10)); //string变成十进制整数
-            startTime[index-1] = new Date();
-            $("#"+root+" .form-group [name='timesheet1-5']").val("run...");
+            var lockstus = localStorage.getItem('lockstus');
+            if (lockstus == 'locked') {
+                alert('You need to stop last entry first, then continue this entry!');
+            } else if (lockstus == 'unlocked') {
+                localStorage.setItem('lockstus', 'locked');
+                var root = $(this).parents('div').parents('div').attr("id");
+                $("#"+root+" .form-group input").removeAttr('disabled');
+                $("#"+root+" .form-group input").prop('readonly',false);
+                $(this).prop('disabled', true);
+                $(this).css({opacity: 0.4});
+                $("#"+root+ " button.inputgroupStop").prop('disabled',false);
+                $("#"+root+ " button.inputgroupStop").css({opacity: 1});
+                var index = (parseInt(root.substr(10,2), 10)); //string变成十进制整数
+                startTime[index-1] = new Date();
+                $("#"+root+" .form-group [name='timesheet1-5']").val("run...");
+            };
         });
 
         //stop button
         $("button.inputgroupStop").click(function(){
+            localStorage.setItem('lockstus', 'unlocked');
             var root = $(this).parents('div').parents('div').attr("id");
             $("#"+root+" .form-group input").prop('readonly',true);
             $("#"+root+" button.inputgroupStart").prop('disabled',false);
@@ -427,6 +434,7 @@
             // save data
             saveSub(root, 0, calHour[index-1]); //root: Inputgroup01, 
         })
+        //time adjustment
         function adjustment(root, index){
             var wt1 = "";
             var wt2 = "";
@@ -470,22 +478,28 @@
         })
         //create new entry button 
         $("button.creat_new_entry").click(function(){
-            var root = $(this).parents('div').parents('div').attr("id");
-            $("#"+root+" .form-group input").removeAttr('disabled');
-            $("#"+root+" .form-group input").prop('readonly',false);
-            var time = timeformat((new Date()), 'yyyy-mm-dd hh:ii');
-            $("#"+root+" .form-group [name='timesheet1-1']").val(time);
-            // $("#"+root+" form #timesheet1-2").val('{{current_user.username}}');//flask模板template 与js问题js须和html在同一文件里.docx
-            // $(this).addClass('disabled'); //这种方式不工作，下面2种都工作
-            $(this).prop('disabled', true); //失活
-            // $(this).attr('disabled', 'disabled'); 
-            var index = (parseInt(root.substr(10,2), 10)); //string变成十进制整数
-            startTime[index-1] = new Date();
-            calHour[index-1] = 0;
-            $("#"+root+" button.inputgroupStart").css({opacity: 0.4});
-            $("#"+root+" button.inputgroupStop").prop('disabled',false);
-            $("#"+root+" button.inputgroupStop").css({opacity: 1});
-            localStorage.setItem((root+'date'), time);
+            var lockstus = localStorage.getItem('lockstus');
+            if (lockstus == 'locked') {
+                alert('You need to stop last entry first, then continue this entry!');
+            } else if (lockstus == 'unlocked' || lockstus == null) {
+                localStorage.setItem('lockstus', 'locked');
+                var root = $(this).parents('div').parents('div').attr("id");
+                $("#"+root+" .form-group input").removeAttr('disabled');
+                $("#"+root+" .form-group input").prop('readonly',false);
+                var time = timeformat((new Date()), 'yyyy-mm-dd hh:ii');
+                $("#"+root+" .form-group [name='timesheet1-1']").val(time);
+                // $("#"+root+" form #timesheet1-2").val('{{current_user.username}}');//flask模板template 与js问题js须和html在同一文件里.docx
+                // $(this).addClass('disabled'); //这种方式不工作，下面2种都工作
+                $(this).prop('disabled', true); //失活
+                // $(this).attr('disabled', 'disabled'); 
+                var index = (parseInt(root.substr(10,2), 10)); //string变成十进制整数
+                startTime[index-1] = new Date();
+                calHour[index-1] = 0;
+                $("#"+root+" button.inputgroupStart").css({opacity: 0.4});
+                $("#"+root+" button.inputgroupStop").prop('disabled',false);
+                $("#"+root+" button.inputgroupStop").css({opacity: 1});
+                localStorage.setItem((root+'date'), time);
+            };
         });
         //Change datatime format, time= new Date(), format="yyyy-mm-dd"
         function timeformat(time, format){
@@ -523,6 +537,15 @@
         //reset action
         $("button.inputgroupReset").click(function(){
             var root = $(this).parents('div').parents('div').attr("id");
+            var lockstus = localStorage.getItem('lockstus');
+            if (lockstus == 'locked') {
+                if ($("#"+root+" button.inputgroupStart").prop('disabled') == true || $("#"+root+" .form-group [name='timesheet1-5']").val() == 'run...') {
+                    localStorage.setItem('lockstus', 'unlocked');
+                } else {
+                    alert('You need to stop last entry first, then continue this entry!');
+                    return false;
+                } 
+            } 
             $("#"+root+" button.creat_new_entry").prop('disabled',false);
             $("#"+root+" button.inputgroupStart").prop('disabled',true);
             $("#"+root+" button.inputgroupStop").prop('disabled',true);
@@ -724,7 +747,7 @@
                         type: "POST",
                         dataType: 'JSON',
                         contentType:'application/json; charset=utf-8',
-                        data: JSON.stringify(str),
+                        data: JSON.stringify({'formdata': str, 'formid': 2}),
                         success: function(e){console.log(e);},
                         error: function(error) {console.log(error);}
                     });
@@ -738,6 +761,7 @@
             localStorage.clear();
             location.reload();
 
+            localStorage.setItem('lockstus', 'unlocked');
             //submit a array to backend
             // $.ajax({
             //     url:"/postmethod02",
@@ -763,6 +787,7 @@
             }
             localStorage.clear();
             location.reload();
+            localStorage.setItem('lockstus', 'unlocked');
         });
         //automatic fill the first 3 boxes when mouse click
         // $('.entryinputgroup  form input.form-control').mousedown(function(event) {
@@ -786,6 +811,7 @@
 
         // test input fake data to timesheet
         $("button#timesheettest").click(function(){
+            localStorage.setItem('lockstus', 'unlocked');
             var root = "";
             var d = new Date();
             var rnum = 0;

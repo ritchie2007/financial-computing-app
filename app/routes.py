@@ -48,6 +48,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # need to limit login times
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     else:

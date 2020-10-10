@@ -55,7 +55,6 @@ def login():
         form = LoginForm()
         if form.validate_on_submit():
             user = User.query.filter_by(username=form.username.data).first()
-
             if user is None:
                 flash('Username does not exist')
                 return redirect(url_for('login'))
@@ -73,7 +72,7 @@ def login():
         else:
             return render_template(
                 'login.html',
-                title ='Login',
+                title = 'Login',
                 form = form
             )
 
@@ -1344,7 +1343,7 @@ def download():
                 if (not f == filename):
                     os.remove(path +'/' + f)
             try:
-                return send_from_directory(app.config["CLIENT_CSV"], filename=filename, as_attachment=True)
+                return send_from_directory(path, filename=filename, as_attachment=True)
             except FileNotFoundError:
                 abort(404)
                 

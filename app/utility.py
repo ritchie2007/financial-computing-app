@@ -1,15 +1,17 @@
 from random import random
+import time
 from time import strftime, localtime
-from datetime import datetime, timedelta, date
+from datetime import timedelta, datetime #, date
+from pytz import timezone
 from dateutil.relativedelta import relativedelta
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import render_template, flash, redirect, request, url_for, session, make_response, json
 from flask import send_from_directory, send_file, after_this_request
-from sqlalchemy import desc, asc # for table.order_by(Task.enddate).all()
+from sqlalchemy import desc, asc, func, or_ # for table.order_by(Task.enddate).all()
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
 from app.models import User, Data_table, activity_code, CorporationReport, Staff, Task, \
-    Timesheet, Corporation, Individual, Mulform, TimesheetTempData
+    Timesheet, Corporation, Individual, Userlog, Mulform, TimesheetTempData
 
 import os # 目录及文件操作
 import openpyxl
@@ -721,4 +723,55 @@ def excel_export(cat, filters, fname):
             ws.append(rdata)
     print(fname)
     wb.save("/Users/Ritchie/Documents/financial-computing-app/app/static/download/" + fname)
-    
+
+# user records
+def userrecrods(user, field):
+    '''records of user'''
+    username = user
+    email = ''
+    password = ''
+    ip = ''
+    datadate = datetime.now(timezone('America/Toronto')).strftime("%Y-%m-%d %H:%M:%S")
+    datatime = int(time.time())
+    badfield = field
+    if field == '':
+        status = 'True'
+        hourlock = 0
+        daylock = 0
+    else:
+        status = 'False'
+        count = db.session.query(Userlog).with_entities(func.count(Userlog.log_id)).filter(Userlog.datatime >= (datatime - 3600), Userlog.username == user, status == 'False').scalar()
+        print('hourlock count', count)
+        hourlock = datatime if count > 1 else 0
+        count = db.session.query(Userlog).with_entities(func.count(Userlog.log_id)).filter(Userlog.datatime >= (datatime - 10800), Userlog.username == user, status == 'False').scalar()
+        print('daylock count', count)
+        daylock = datatime if count > 5 else 0
+    attemptafterlock = 0
+    my_data = Userlog(username, email, password, ip, datadate, datatime, badfield, hourlock, daylock, status, attemptafterlock)
+    db.session.add(my_data)
+    db.session.commit()
+    return status
+
+# authentication
+def authentication(user):
+    authentication = False
+    log_id = db.session.query(func.max(Userlog.log_id)).filter(Userlog.username == user).scalar()
+    my_data = Userlog.query.get(log_id)
+    print('log_id :', log_id)
+    if my_data is None:
+        print('new user ...')
+        authentication = True
+        return authentication
+    else:
+        currenttime = int(time.time())
+        print('currenttime : ', currenttime, '  hourlock = ', my_data.hourlock, '  daylock = ', my_data.daylock)
+        if (my_data.hourlock == 0 and my_data.daylock == 0):
+            authentication = True
+        elif (currenttime > (my_data.hourlock + 3600)) and (currenttime > (my_data.daylock + 86400)):
+            authentication = True
+            print('----reset lock-----')
+            my_data.hourlock = 0
+            my_data.daylock = 0
+        my_data.attemptafterlock += 1
+        db.session.commit()
+        return authentication

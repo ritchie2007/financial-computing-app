@@ -2,7 +2,8 @@
 
 from random import random
 import os, copy
-#from time import strftime, strptime, localtime
+import time
+from time import strftime, localtime
 from datetime import timedelta, datetime #, date
 from pytz import timezone
 from dateutil.relativedelta import relativedelta
@@ -14,9 +15,13 @@ from flask import render_template, flash, redirect, request, url_for, session, m
 from flask import send_from_directory, send_file, after_this_request
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
-from app.models import User, Data_table, activity_code, CorporationReport, Staff, Task, Timesheet, Corporation, Individual, Job_type, Mulform, TimesheetTempData
+from app.models import User, Data_table, activity_code, CorporationReport, Staff, Task, Timesheet, Corporation, Individual, Job_type, Userlog, Mulform, TimesheetTempData
 #from app import dateCalculate
 from app import utility
+from app.utility import userrecrods, authentication
+
+from tkinter import messagebox
+from tkinter import *
 
 @app.before_request
 def before_request():
@@ -54,21 +59,49 @@ def login():
     else:
         form = LoginForm()
         if form.validate_on_submit():
-            user = User.query.filter_by(username=form.username.data).first()
-            if user is None:
-                flash('Username does not exist')
-                return redirect(url_for('login'))
-            elif user.check_password(form.password.data) is False:
-                flash('Invalid password')
-                return redirect(url_for('login'))
-            else:
-                login_user(user, remember=form.remember_me.data)
-                next_page = request.args.get('next')
-
-                if not next_page or url_parse(next_page).netloc != '':
-                    return redirect(url_for('index'))
+            typein = form.username.data
+            print('typein: ', typein)
+            authenticated = authentication(typein)
+            if authenticated:
+                print('authentication: ', authenticated)
+                user = User.query.filter_by(username=typein).first()
+                if user is None:
+                    flash('Invalid username or password')
+                    userrecrods(typein, 'username')
+                    return redirect(url_for('login'))
+                elif user.check_password(form.password.data) is False:
+                    flash('Invalid username or password')
+                    userrecrods(typein, 'password')
+                    return redirect(url_for('login'))
                 else:
-                    return redirect(next_page)
+                    login_user(user, remember=form.remember_me.data)
+                    next_page = request.args.get('next')
+                    print('----- login ------')
+                    if not next_page or url_parse(next_page).netloc != '':
+                        userrecrods(typein, '')
+                        return redirect(url_for('index'))
+                    else:
+                        return redirect(next_page)
+            else:
+                # This code is to hide the main tkinter window
+                print('authentication: ', authenticated)
+                root = Tk()
+                root.title('Login error')
+                root.attributes("-topmost", True)
+                w = 400     # popup window width
+                h = 200     # popup window height
+                sw = root.winfo_screenwidth()
+                sh = root.winfo_screenheight()
+                x = (sw - w)/2
+                y = (sh - h)/2
+                root.geometry('%dx%d+%d+%d' % (w, h, x, y))
+                m = 'Attmepted Login too many times! \n if attmepts > 3 times, you have to try one hour later; \n if attempts > 6 times, you have to try 24 hours later.'
+                w = Label(root, text=m, width=120, height=10)
+                w.pack()
+                b = Button(root, text="OK", command=root.destroy, width=10)
+                b.pack()
+                mainloop()
+                return redirect(url_for('index'))
         else:
             return render_template(
                 'login.html',

@@ -475,7 +475,7 @@ class Directors(db.Model):
 class Shareholders(db.Model):
     ''' shareholders linked to corporation'''
     __tablename__ = 'tbl_Shareholders'
-    shareholder_id = db.Column(db.String(15), primary_key=True)
+    shareholder_id = db.Column(db.Integer, primary_key=True)
     corp_no = db.Column(db.String(20))
     corp_share_no = db.Column(db.Integer)
     shares = db.Column(db.String(80))
@@ -486,3 +486,32 @@ class Shareholders(db.Model):
     address = db.Column(db.String(150))
     phone = db.Column(db.String(20))
     email = db.Column(db.String(100))
+
+class Userlog(db.Model):
+    ''' userlog linked to userlogedin'''
+    __tablename__ = 'tbl_log'
+    log_id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50))
+    email = db.Column(db.String(50))
+    password = db.Column(db.String(50))
+    ip = db.Column(db.String(20))
+    datadate = db.Column(db.String(30))
+    datatime = db.Column(db.Integer)
+    badfield = db.Column(db.String(10))
+    hourlock = db.Column(db.Integer)
+    daylock = db.Column(db.Integer)
+    status = db.Column(db.String(10))
+    attemptafterlock = db.Column(db.Integer)
+
+    def __init__(self, username, email, password, ip, datadate, datatime, badfield, hourlock, daylock, status, attemptafterlock):
+        self.username = username
+        self.email = email
+        self.password = password
+        self.ip = ip
+        self.datadate = datadate
+        self.datatime = datatime
+        self.badfield = badfield
+        self.hourlock = hourlock
+        self.daylock = daylock
+        self.status = status
+        self.attemptafterlock = attemptafterlock

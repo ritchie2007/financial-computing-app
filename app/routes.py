@@ -19,9 +19,8 @@ from app.models import User, Data_table, activity_code, CorporationReport, Staff
 #from app import dateCalculate
 from app import utility
 from app.utility import userrecrods, authentication
-
-from tkinter import messagebox
-from tkinter import *
+# from tkinter import messagebox
+# from tkinter import *
 
 @app.before_request
 def before_request():
@@ -60,10 +59,8 @@ def login():
         form = LoginForm()
         if form.validate_on_submit():
             typein = form.username.data
-            print('typein: ', typein)
             authenticated = authentication(typein)
             if authenticated:
-                print('authentication: ', authenticated)
                 user = User.query.filter_by(username=typein).first()
                 if user is None:
                     flash('Invalid username or password')
@@ -76,7 +73,6 @@ def login():
                 else:
                     login_user(user, remember=form.remember_me.data)
                     next_page = request.args.get('next')
-                    print('----- login ------')
                     if not next_page or url_parse(next_page).netloc != '':
                         userrecrods(typein, '')
                         return redirect(url_for('index'))
@@ -85,23 +81,25 @@ def login():
             else:
                 # This code is to hide the main tkinter window
                 print('authentication: ', authenticated)
-                root = Tk()
-                root.title('Login error')
-                root.attributes("-topmost", True)
-                w = 400     # popup window width
-                h = 200     # popup window height
-                sw = root.winfo_screenwidth()
-                sh = root.winfo_screenheight()
-                x = (sw - w)/2
-                y = (sh - h)/2
-                root.geometry('%dx%d+%d+%d' % (w, h, x, y))
-                m = 'Attmepted Login too many times! \n if attmepts > 3 times, you have to try one hour later; \n if attempts > 6 times, you have to try 24 hours later.'
-                w = Label(root, text=m, width=120, height=10)
-                w.pack()
-                b = Button(root, text="OK", command=root.destroy, width=10)
-                b.pack()
-                mainloop()
+                flash('You are redirected to Homepage as you attmepted "Login" too many times! \n (if attmepts > 3 times, you have to try one hour later; \n if attempts > 6 times, you have to try 24 hours later.)')
                 return redirect(url_for('index'))
+                # root = Tk()
+                # root.title('Login error')
+                # root.attributes("-topmost", True)
+                # w = 400     # popup window width
+                # h = 200     # popup window height
+                # sw = root.winfo_screenwidth()
+                # sh = root.winfo_screenheight()
+                # x = (sw - w)/2
+                # y = (sh - h)/2
+                # root.geometry('%dx%d+%d+%d' % (w, h, x, y))
+                # m = 'Attmepted Login too many times! \n if attmepts > 3 times, you have to try one hour later; \n if attempts > 6 times, you have to try 24 hours later.'
+                # w = Label(root, text=m, width=120, height=10)
+                # w.pack()
+                # b = Button(root, text="OK", command=root.destroy, width=10)
+                # b.pack()
+                # mainloop()
+                # return redirect(url_for('index'))
         else:
             return render_template(
                 'login.html',
@@ -123,8 +121,9 @@ def register():
         form = RegistrationForm()
 
         if form.validate_on_submit():
-            user = User(username=form.username.data, email=form.email.data)
+            user = User(username=form.username.data, email=form.email.data, authorization=int(time.time())+31536000)
             user.set_password(form.password.data)
+            print(type(user), user.password_hash)
             db.session.add(user)
             db.session.commit()
             flash('Congratulations, you have registered successfully!')

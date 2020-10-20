@@ -2,8 +2,20 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block content %}
-    {% block centerfield %}
-    <div class="wrapper"> 
+    <div class="wrapper">
+        {% block centerfield %}
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissable" role="alert" style="color: white; background-color: #4d9c2c; margin: 50px 80px;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">x</span>
+            </button>
+            {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         <div id="caption1" class="row">
             <div class="col-md-10 col-md-offset-1">Let's help you with your finance.</div>
         </div>
@@ -80,6 +92,4 @@
             </div>
         </div>
     </div>
-
-
 {% endblock %}

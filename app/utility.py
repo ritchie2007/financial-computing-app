@@ -722,7 +722,7 @@ def excel_export(cat, filters, fname):
                 exec('rdata.append(row.{})'.format(pram[1][i]))
             ws.append(rdata)
     print(fname)
-    wb.save("/Users/Ritchie/Documents/financial-computing-app/app/static/download/" + fname)
+    wb.save("/home/ritchie/Documents/financial-computing-app/app/static/download/" + fname)
 
 # user records
 def userrecrods(user, field):
@@ -757,21 +757,21 @@ def authentication(user):
     authentication = False
     log_id = db.session.query(func.max(Userlog.log_id)).filter(Userlog.username == user).scalar()
     my_data = Userlog.query.get(log_id)
-    print('log_id :', log_id)
     if my_data is None:
-        print('new user ...')
         authentication = True
         return authentication
     else:
         currenttime = int(time.time())
-        print('currenttime : ', currenttime, '  hourlock = ', my_data.hourlock, '  daylock = ', my_data.daylock)
-        if (my_data.hourlock == 0 and my_data.daylock == 0):
+        au = db.session.query(User).filter(User.username == user).scalar()
+        if currenttime > au.authorization:
+            pass
+        elif (my_data.hourlock == 0 and my_data.daylock == 0):
             authentication = True
         elif (currenttime > (my_data.hourlock + 3600)) and (currenttime > (my_data.daylock + 86400)):
             authentication = True
-            print('----reset lock-----')
             my_data.hourlock = 0
             my_data.daylock = 0
         my_data.attemptafterlock += 1
         db.session.commit()
+        print(authentication)
         return authentication

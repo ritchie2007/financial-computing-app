@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-{% block app_content %}
-    <div class="tbl-field"> 
-        <div class="row">
-            <br><br><br><br><br><br>
-            <h1 class="col-sm-8 col-sm-offset-3 ml-auto" >Register<br><br></h1>
-            <div class="col-sm-3 col-sm-offset-4 ml-auto" >
-                {{ wtf.quick_form(form) }}
-            </div>
+{% block content %}
+<div class="tbl-field"> 
+    <div class="row">
+        <br><br><br><br><br><br>
+        <h1 class="col-sm-8 col-sm-offset-3 ml-auto" >Register<br><br></h1>
+        <div class="col-sm-3 col-sm-offset-4 ml-auto" >
+            {{ wtf.quick_form(form) }}
         </div>
     </div>
+</div>
 {% endblock %}

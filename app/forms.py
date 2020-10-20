@@ -10,9 +10,13 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 class RegistrationForm(FlaskForm):
+    ''' add new user '''
     username = StringField(
-        'Username',
-        validators=[DataRequired()]
+        'Username', 
+        validators=[
+            Length(min=3,max=20,message='length 3-20'), 
+            DataRequired(message='can not be empty')
+        ]
     )
     email = StringField(
         'Email',

@@ -722,7 +722,7 @@ def excel_export(cat, filters, fname):
                 exec('rdata.append(row.{})'.format(pram[1][i]))
             ws.append(rdata)
     print(fname)
-    wb.save("/home/ritchie/Documents/financial-computing-app/app/static/download/" + fname)
+    wb.save(app.config["CLIENT_CSV"] + fname)
 
 # user records
 def userrecrods(user, field):

@@ -388,7 +388,6 @@ def corp_edit(id):
         my_data.task = 0
         my_data.recent_update = ""
         my_data.timemark = datetime.utcnow()
-        
         contact_position = ""
         contact_position += ((request.form['corp'+str(59)])+','+(request.form['corp'+str(61)])+',')
         contact_position += ((request.form['corp'+str(63)])+','+(request.form['corp'+str(65)]))
@@ -524,7 +523,6 @@ def individual_add():
         parent = utility.get_id_from_name(name, 11, 4)
         child = utility.get_id_from_name(name, 15, 4)
         timemark = datetime.utcnow()
-
         if (max_id == None):
             max_id = 1
         else:
@@ -1369,11 +1367,10 @@ def download():
         if category != '':
             utility.excel_export(category, filterselect, filename)
             message = 'Download "' + filename + '" successfully.' 
-            path = app.config["CLIENT_CSV"]
             list = os.listdir(path)
             for f in list:
                 if (not f == filename):
-                    os.remove(path +'/' + f)
+                    os.remove(app.config["CLIENT_CSV"] + f)
             try:
                 return send_from_directory(path, filename=filename, as_attachment=True)
             except FileNotFoundError:

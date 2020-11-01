@@ -738,15 +738,17 @@ def userrecrods(user, field):
         status = 'True'
         hourlock = 0
         daylock = 0
+        attemptafterlock = 0
     else:
         status = 'False'
-        count = db.session.query(Userlog).with_entities(func.count(Userlog.log_id)).filter(Userlog.datatime >= (datatime - 3600), Userlog.username == user, status == 'False').scalar()
+        count = db.session.query(Userlog).with_entities(func.count(Userlog.log_id)).filter(Userlog.datatime >= (datatime - 3600), Userlog.username == user, Userlog.status == 'False').scalar()
         print('hourlock count', count)
         hourlock = datatime if count > 1 else 0
-        count = db.session.query(Userlog).with_entities(func.count(Userlog.log_id)).filter(Userlog.datatime >= (datatime - 10800), Userlog.username == user, status == 'False').scalar()
+        count = db.session.query(Userlog).with_entities(func.count(Userlog.log_id)).filter(Userlog.datatime >= (datatime - 10800), Userlog.username == user, Userlog.status == 'False').scalar()
         print('daylock count', count)
-        daylock = datatime if count > 5 else 0
-    attemptafterlock = 0
+        daylock = datatime if count > 4 else 0
+        attemptafterlock = count + 1
+    # attemptafterlock = 0
     my_data = Userlog(username, email, password, ip, datadate, datatime, badfield, hourlock, daylock, status, attemptafterlock)
     db.session.add(my_data)
     db.session.commit()
@@ -756,22 +758,33 @@ def userrecrods(user, field):
 def authentication(user):
     authentication = False
     log_id = db.session.query(func.max(Userlog.log_id)).filter(Userlog.username == user).scalar()
-    my_data = Userlog.query.get(log_id)
-    if my_data is None:
+    if log_id is None:
+        print('log_id: is None')
         authentication = True
         return authentication
     else:
+        my_data = Userlog.query.get(log_id)
+        print('log_id: ', log_id, ' mydata: ', my_data)
         currenttime = int(time.time())
         au = db.session.query(User).filter(User.username == user).scalar()
-        if currenttime > au.authorization:
+        print('au: ', au, '  currenttime: ', currenttime)
+        if au is None:
+            print(' ---- name not in User table ---')
+            authentication = True
+        elif au.authorization is None or au.authorization == '' or au.authorization == 0:
+            print(' ---- User table authorization --- ', au.authorization)
+            authentication = True
+        elif currenttime > int(au.authorization):
+            print('--- > authorization ---')
             pass
         elif (my_data.hourlock == 0 and my_data.daylock == 0):
+            print('---my_data.hourlock == 0 and my_data.daylock == 0---')
             authentication = True
         elif (currenttime > (my_data.hourlock + 3600)) and (currenttime > (my_data.daylock + 86400)):
             authentication = True
             my_data.hourlock = 0
             my_data.daylock = 0
-        my_data.attemptafterlock += 1
+            print('---- over the limit time -------')
+        db.session.add(my_data)
         db.session.commit()
-        print(authentication)
         return authentication

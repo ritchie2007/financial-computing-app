@@ -58,46 +58,36 @@ def login():
     else:
         form = LoginForm()
         if form.validate_on_submit():
-            user = User.query.filter_by(username=form.username.data).first()
-
-            if user is None:
-                flash('Username does not exist')
-                return redirect(url_for('login'))
-            elif user.check_password(form.password.data) is False:
-                flash('Invalid password')
-                return redirect(url_for('login'))
-            else:
-                login_user(user, remember=form.remember_me.data)
-                next_page = request.args.get('next')
-                if not next_page or url_parse(next_page).netloc != '':
-                    return redirect(url_for('index'))
+            typein = form.username.data
+            print('typein: ', typein)
+            authenticated = authentication(typein)
+            if authenticated:
+                user = User.query.filter_by(username=typein).first()
+                print('after authenticated, user: ', user)
+                if user is None:
+                    print('---- user is none ----')
+                    flash('Invalid username or password')
+                    userrecrods(typein, 'username')
+                    return redirect(url_for('login'))
+                elif user.check_password(form.password.data) is False:
+                    print('---- password wrong ----')
+                    flash('Invalid username or password')
+                    userrecrods(typein, 'password')
+                    return redirect(url_for('login'))
                 else:
-                    return redirect(next_page)
-            # typein = form.username.data
-            # authenticated = authentication(typein)
-            # if authenticated:
-            #     user = User.query.filter_by(username=typein).first()
-            #     if user is None:
-            #         flash('Invalid username or password')
-            #         userrecrods(typein, 'username')
-            #         return redirect(url_for('login'))
-            #     elif user.check_password(form.password.data) is False:
-            #         flash('Invalid username or password')
-            #         userrecrods(typein, 'password')
-            #         return redirect(url_for('login'))
-            #     else:
-            #         login_user(user, remember=form.remember_me.data)
-            #         next_page = request.args.get('next')
-            #         if not next_page or url_parse(next_page).netloc != '':
-            #             userrecrods(typein, '')
-            #             return redirect(url_for('index'))
-            #         else:
-            #             return redirect(next_page)
-            # else:
-            #     # This code is to hide the main tkinter window
-            #     print('authentication: ', authenticated)
-            #     flash('You are redirected to Homepage as you attmepted "Login" too many times! \n (if attmepts > 3 times, you have to try one hour later; \n if attempts > 6 times, you have to try 24 hours later.)')
-            #     return redirect(url_for('index'))
+                    login_user(user, remember=form.remember_me.data)
+                    next_page = request.args.get('next')
+                    if not next_page or url_parse(next_page).netloc != '':
+                        userrecrods(typein, '')
+                        return redirect(url_for('index'))
+                    else:
+                        return redirect(next_page)
+            else:
+                # This code is to hide the main tkinter window
+                print('authentication: ', authenticated)
+                userrecrods(typein, 'lock')
+                flash('You are redirected to Homepage as you attmepted "Login" too many times! \n (if attmepts > 3 times, you have to try one hour later; \n if attempts > 6 times, you have to try 24 hours later.)')
+                return redirect(url_for('index'))
                 # root = Tk()
                 # root.title('Login error')
                 # root.attributes("-topmost", True)

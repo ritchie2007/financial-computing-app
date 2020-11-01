@@ -757,34 +757,38 @@ def userrecrods(user, field):
 # authentication
 def authentication(user):
     authentication = False
+    au = db.session.query(User).filter(User.username == user).scalar()
+    currenttime = int(time.time())
+    print('au: ', au, '  currenttime: ', currenttime)
+    if au:
+        print(' ---- registered user ---')
+        if au.authorization is None or au.authorization == '' or au.authorization == 0:
+            print(' ---- authorization: None, empty or 0 --- ', au.authorization)
+            authentication = True
+        elif currenttime > int(au.authorization):
+            print('--- > authorization false---')
+            return authentication
+        else:
+            authentication = True
+    
     log_id = db.session.query(func.max(Userlog.log_id)).filter(Userlog.username == user).scalar()
     if log_id is None:
-        print('log_id: is None')
+        print('log_id: ', log_id)
         authentication = True
-        return authentication
     else:
         my_data = Userlog.query.get(log_id)
         print('log_id: ', log_id, ' mydata: ', my_data)
-        currenttime = int(time.time())
-        au = db.session.query(User).filter(User.username == user).scalar()
-        print('au: ', au, '  currenttime: ', currenttime)
-        if au is None:
-            print(' ---- name not in User table ---')
-            authentication = True
-        elif au.authorization is None or au.authorization == '' or au.authorization == 0:
-            print(' ---- User table authorization --- ', au.authorization)
-            authentication = True
-        elif currenttime > int(au.authorization):
-            print('--- > authorization ---')
-            pass
-        elif (my_data.hourlock == 0 and my_data.daylock == 0):
+        if (my_data.hourlock == 0 and my_data.daylock == 0):
             print('---my_data.hourlock == 0 and my_data.daylock == 0---')
             authentication = True
         elif (currenttime > (my_data.hourlock + 3600)) and (currenttime > (my_data.daylock + 86400)):
             authentication = True
             my_data.hourlock = 0
             my_data.daylock = 0
+            db.session.add(my_data)
+            db.session.commit()
             print('---- over the limit time -------')
-        db.session.add(my_data)
-        db.session.commit()
-        return authentication
+        else:
+            authentication = False
+
+    return authentication

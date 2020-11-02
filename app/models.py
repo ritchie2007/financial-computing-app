@@ -309,9 +309,12 @@ class Corporation(db.Model):
     recent_update = db.Column(db.String(50))
     contact_position = db.Column(db.String(200))
     shareholder_info = db.Column(db.String(400))
+    shareholder_corp = db.Column(db.String(40))
+    shareholder_corp_info = db.Column(db.String(400))
+    corp_as_shareholder = db.Column(db.String(40))
     timemark = db.Column(db.String(26))
 
-    def __init__(self,corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp201,corp211,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,contact,director,shareholder,task,recent_update,contact_position,shareholder_info,timemark):
+    def __init__(self,corp1,corp2,corp3,corp4,corp5,corp6,corp7,corp8,corp9,corp10,corp11,corp12,corp13,corp14,corp15,corp16,corp17,corp18,corp19,corp20,corp21,corp201,corp211,corp22,corp23,corp24,corp25,corp26,corp27,corp28,corp29,corp30,corp31,corp32,corp33,corp34,corp35,corp36,corp37,corp38,corp39,corp40,corp41,corp42,corp43,corp44,corp45,corp46,corp47,corp48,corp49,corp50,corp51,corp52,corp53,corp54,corp55,corp56,corp57,corp58,contact,director,shareholder,task,recent_update,contact_position,shareholder_info,shareholder_corp,shareholder_corp_info,corp_as_shareholder,timemark):
         self.corp1 = corp1
         self.corp2 = corp2
         self.corp3 = corp3
@@ -378,6 +381,9 @@ class Corporation(db.Model):
         self.recent_update = recent_update
         self.contact_position = contact_position
         self.shareholder_info = shareholder_info
+        self.shareholder_corp = shareholder_corp
+        self.shareholder_corp_info = shareholder_corp_info
+        self.corp_as_shareholder = corp_as_shareholder
         self.timemark = timemark
 
 class Individual(db.Model):

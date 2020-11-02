@@ -192,7 +192,8 @@ def corporate():
 @app.route('/corp_add', methods=['GET', 'POST'])
 @login_required
 def corp_add():
-    indiv = Individual.query.with_entities(Individual.indiv_id, Individual.sin, Individual.prefix, Individual.last_name, Individual.first_name, Individual.address1, Individual.phone1, Individual.email, Individual.wechat)
+    indivlist = Individual.query.with_entities(Individual.indiv_id, Individual.sin, Individual.prefix, Individual.last_name, Individual.first_name, Individual.address1, Individual.phone1, Individual.email, Individual.wechat)
+    corplist = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2)
     max_id = db.session.query(func.max(Corporation.corp_id)).scalar()
 
     if request.method == 'POST':
@@ -271,14 +272,25 @@ def corp_add():
         shareholder_info += (request.form['corp'+str(77)]+','+request.form['corp'+str(78)]+',')
         shareholder_info += (request.form['corp'+str(80)]+','+request.form['corp'+str(81)])
 
+        shareholder_corp_info = ""
+        shareholder_corp_info += (request.form['corp'+str(83)]+','+request.form['corp'+str(84)]+',')
+        shareholder_corp_info += (request.form['corp'+str(86)]+','+request.form['corp'+str(87)]+',')
+        shareholder_corp_info += (request.form['corp'+str(89)]+','+request.form['corp'+str(90)]+',')
+        shareholder_corp_info += (request.form['corp'+str(92)]+','+request.form['corp'+str(93)])
+
+        corp_as_shareholder = ""
+
         name = []
-        for x in [60, 62, 64, 66, 67, 68, 69, 70, 73, 76, 79, 82]:
+        for x in [60, 62, 64, 66, 67, 68, 69, 70, 73, 76, 79, 82, 85, 88, 91, 94, 95, 96, 97, 98]:
             a = (request.form['corp' + str(x)])
             name.append(request.form['corp' + str(x)])
         contact = utility.get_id_from_name(name, 0, 4)
         director = utility.get_id_from_name(name, 4, 4)
         shareholder = utility.get_id_from_name(name, 8, 4)
-        
+        shareholder_corp = utility.get_id_from_name(name, 12, 4)
+        # corp_as_shareholder = utility.get_id_from_name(name, 16, 4)
+        corp_as_shareholder = ''
+
         if (max_id == None):
             max_id = 1
         else:
@@ -302,8 +314,17 @@ def corp_add():
         else:
             utility.corp_shareholder_to_indiv(shareholder, max_id, 0, "")
             shareholder = ",".join(shareholder)
+        # shareholder_corp
+        if shareholder_corp == []:
+            shareholder_corp = ""
+        else:
+            utility.corp_shareholder_to_corp(shareholder_corp, max_id, 0, "")
+            shareholder_corp = ",".join(shareholder_corp)
+        # corp_as_shareholder
+        # 不能添加 目前的公司 （corp, as shareholder for) 作为其他公司的shareholder，因为你并不知道是作为那个公司
+        # 的第几个shareholder
 
-        my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp201, corp211, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, timemark)
+        my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp201, corp211, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, shareholder_corp, shareholder_corp_info, corp_as_shareholder, timemark)
         db.session.add(my_data)
         db.session.commit()
         flash("A Corporation Added Successfully")
@@ -311,7 +332,8 @@ def corp_add():
         
     return render_template(
         'corp_add.html',
-        indiv_data = indiv,
+        indiv_data = indivlist,
+        corp_data = corplist,
         title='Add_new_Corporation'
     )
 
@@ -321,12 +343,26 @@ def corp_add():
 def corp_edit(id):
     my_data = Corporation.query.get(id)
     indiv_data = Individual.query.with_entities(Individual.indiv_id, Individual.sin, Individual.prefix, Individual.last_name, Individual.first_name, Individual.phone1, Individual.wechat, Individual.email)
+    corps = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2)
     value0 = []
     value0.append(my_data.contact)
     value0.append(my_data.director)
     value0.append(my_data.shareholder)
     indiv_list = utility.get_index_index('Corporation', value0, indiv_data)
-
+    value0_corp = []
+    value0_corp.append(my_data.shareholder_corp)
+    corp_list = utility.get_index_index('Individual', value0_corp, corps)
+    corp_as_shareholder = my_data.corp_as_shareholder
+    corp_as_shareholder_list = []
+    if corp_as_shareholder:
+        if len(corp_as_shareholder)>0:
+            corp_as_shareholder = corp_as_shareholder.split(',')
+            for x in corp_as_shareholder:
+                da = Corporation.query.get(int(x))
+                corp_as_shareholder_list.append(str(da.corp_id)+' | '+str(da.corp1)+' | '+str(da.corp2))
+    for x in range(len(corp_as_shareholder_list), 4):
+        corp_as_shareholder_list.append("")
+    print('as as: ', corp_as_shareholder_list)
     if request.method == 'POST':
         my_data.corp1 = request.form['corp1']
         my_data.corp2 = request.form['corp2']
@@ -401,17 +437,26 @@ def corp_edit(id):
         shareholder_info += (request.form['corp'+str(74)]+','+request.form['corp'+str(75)]+',')
         shareholder_info += (request.form['corp'+str(77)]+','+request.form['corp'+str(78)]+',')
         shareholder_info += (request.form['corp'+str(80)]+','+request.form['corp'+str(81)])
+        shareholder_corp_info = ""
+        shareholder_corp_info += (request.form['corp'+str(83)]+','+request.form['corp'+str(84)]+',')
+        shareholder_corp_info += (request.form['corp'+str(86)]+','+request.form['corp'+str(87)]+',')
+        shareholder_corp_info += (request.form['corp'+str(89)]+','+request.form['corp'+str(90)]+',')
+        shareholder_corp_info += (request.form['corp'+str(92)]+','+request.form['corp'+str(93)])
         my_data.contact_position = contact_position
         my_data.shareholder_info = shareholder_info
+        my_data.shareholder_corp_info = shareholder_corp_info
+        #my_data.corp_as_shareholder
 
         name = []
-        for x in [60, 62, 64, 66, 67, 68, 69, 70, 73, 76, 79, 82]:
+        for x in [60, 62, 64, 66, 67, 68, 69, 70, 73, 76, 79, 82, 85, 88, 91, 94, 95, 96, 97, 98]:
             a = (request.form['corp' + str(x)])
             name.append(request.form['corp' + str(x)])
         contact = utility.get_id_from_name(name, 0, 4)
         director = utility.get_id_from_name(name, 4, 4)
         shareholder = utility.get_id_from_name(name, 8, 4)
-        
+        shareholder_corp = utility.get_id_from_name(name, 12, 4)
+        # corp_as_shareholder = utility.get_id_from_name(name, 16, 4)
+       
         max_id = id
         print("-- new contact id array --", contact, director, shareholder)
 
@@ -433,6 +478,12 @@ def corp_edit(id):
         else:
             utility.corp_shareholder_to_indiv(shareholder, max_id, 1, value0[2])
             my_data.shareholder = ",".join(shareholder)
+        # shareholder_corp
+        if shareholder_corp == []:
+            my_data.shareholder_corp = ""
+        else:
+            utility.corp_shareholder_to_corp(shareholder_corp, max_id, 1, value0_corp[0])
+            my_data.shareholder_corp = ",".join(shareholder_corp)
 
         db.session.commit()
         flash("Corporation Updated Successfully")
@@ -442,7 +493,10 @@ def corp_edit(id):
         'corp_edit.html',
         corp = my_data,
         indiv_data = indiv_data,
+        corp_data = corps,
         indiv_list = indiv_list,
+        corp_list = corp_list,
+        as_shareholder = corp_as_shareholder_list,
         title='Edit_Corporation'
     )
 
@@ -450,16 +504,32 @@ def corp_edit(id):
 @app.route('/corp_del/<int:id>', methods=['GET', 'POST'])
 def corp_del(id):
     my_data = Corporation.query.get(id)
+    print(my_data)
     if request.method == 'POST':
         # contact
-        if len(my_data.contact) > 0:
-            utility.corp_contact_to_indiv('', id, 2, my_data.contact)
+        if my_data.contact:
+            if len(my_data.contact) > 0:
+                utility.corp_contact_to_indiv('', id, 2, my_data.contact)
         # director
-        if len(my_data.director) > 0:
-            utility.corp_director_to_indiv('', id, 2, my_data.director)
+        if my_data.director:
+            if len(my_data.director) > 0:
+                utility.corp_director_to_indiv('', id, 2, my_data.director)
         # shareholder
-        if len(my_data.shareholder) > 0:
-            utility.corp_shareholder_to_indiv('', id, 2, my_data.shareholder)
+        if my_data.shareholder:
+            if len(my_data.shareholder) > 0:
+                utility.corp_shareholder_to_indiv('', id, 2, my_data.shareholder)
+        # shareholder_corp
+        if my_data.shareholder_corp:
+            if my_data.shareholder_corp != '(null)':
+                print('shareholder_corp : ', my_data.shareholder_corp, id, len(my_data.shareholder_corp))
+                if len(my_data.shareholder_corp) > 0:
+                    utility.corp_shareholder_to_corp('', id, 2, my_data.shareholder_corp)
+        # corp_as_shareholder
+        if my_data.corp_as_shareholder:
+            if my_data.corp_as_shareholder != '(null)':
+                print('corp_as_shareholder : ', my_data.corp_as_shareholder, id)
+                if len(my_data.corp_as_shareholder) > 0:
+                    utility.corp_to_corp_shareholder('', id, 2, my_data.corp_as_shareholder)
 
         db.session.delete(my_data)
         db.session.commit()
@@ -1404,10 +1474,14 @@ def download():
             title = 'Download'
         )
 
-@app.route("/get_file")
-def get_file():
-    return render_template('get_file.html')
-
+@app.route('/importdata', methods=['GET', 'POST'])
+@login_required
+def importdata():
+    utility.import_excel()
+    return render_template(
+        'index.html',
+        title='Home'
+    )
 @app.route("/get_report")
 @app.route("/get_report/<path:path>")
 def get_report(path):

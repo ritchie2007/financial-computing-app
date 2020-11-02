@@ -87,6 +87,7 @@
     <div class="col-sm-10">
       <form action="{{url_for('corp_edit')}}/{{corp.corp_id}}" method="POST">
         <!-- <div id="corpedit" class="scroll overflow-auto" style="height: 600px; overflow-y: auto;"> -->
+        <!-- General Info -->
         <div id="item1" class="item"> 
           <br/>
           <div class="form-row">
@@ -562,78 +563,179 @@
         <!-- SHAREHOLDER INFORMATION -->
         <div id="item13" class="item">
 
-            <br/>
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <label><h4 style="color: #337ab7;">SHAREHOLDERS</h4></label>
-                <input type="text" name="corp710" value='  [serial no: ]' style="height: 40%; font-size: 9px; border: none; background-color: #eaece9;">
-              </div>
-            <br/>
-              <div class="form-group col-md-6">
-                <label>1st ShareHolder ( Share Class and Shares | Share Percentage )<br></label>
-                <div>
-                  <input type="text" class="form-control col-sm-1" name="corp71" value="{{corp.shareholder_info}}" style="width: 85%;">
-                  <input type="text" class="form-control col-sm-1" name="corp72" value="{{corp.corp72}}" style="width: 15%;">
-                </div>
-              </div>
-              <div class="form-group col-md-12">
-                <label>1st ShareHolder ( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
-                <select class="browser-default custom-select form-control" name="corp73" value="{{indiv_list[2]}}" style="width: 90%;">
-                  <option value="" >Please select</option>
-                  {% for row in indiv_data %}
-                  <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <label>2nd ShareHolder ( Share Class and Shares | Share Percentage )<br></label>
-                <div>
-                  <input type="text" class="form-control col-sm-1" name="corp74" value="{{corp.corp74}}" style="width: 85%;">
-                  <input type="text" class="form-control col-sm-1" name="corp75" value="{{corp.corp75}}" style="width: 15%;">
-                </div>
-              </div>
-              <div class="form-group col-md-12">
-                <label>2nd ShareHolder ( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
-                <select class="browser-default custom-select form-control" name="corp76" value="{{corp.corp76}}" style="width: 90%;">
-                  <option value="" >Please select</option>
-                  {% for row in indiv_data %}
-                  <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <label>3rd ShareHolder ( Share Class and Shares | Share Percentage )<br></label>
-                <div>
-                  <input type="text" class="form-control col-sm-1" name="corp77" value="{{corp.corp77}}" style="width: 85%;">
-                  <input type="text" class="form-control col-sm-1" name="corp78" value="{{corp.corp78}}" style="width: 15%;">
-                </div>
-              </div>
-              <div class="form-group col-md-12">
-                <label>3rd ShareHolder ( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
-                <select class="browser-default custom-select form-control" name="corp79" value="{{corp.corp79}}" style="width: 90%;">
-                  <option value="" >Please select</option>
-                  {% for row in indiv_data %}
-                  <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <label>4th ShareHolder ( Share Class and Shares | Share Percentage )<br></label>
-                <div>
-                  <input type="text" class="form-control col-sm-1" name="corp80" value="{{corp.corp80}}" style="width: 85%;">
-                  <input type="text" class="form-control col-sm-1" name="corp81" value="{{corp.corp81}}" style="width: 15%;">
-                </div>
-              </div>
-              <div class="form-group col-md-12">
-                <label>4th ShareHolder ( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
-                <select class="browser-default custom-select form-control" name="corp82" value="{{corp.corp82}}" style="width: 90%;">
-                  <option value="" >Please select</option>
-                  {% for row in indiv_data %}
-                  <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
-                  {% endfor %}
-                </select>
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">SHAREHOLDERS</h4></label>
+              <input type="text" name="corp710" value='  [serial no: ]' style="height: 40%; font-size: 9px; border: none; background-color: #eaece9;">
+            </div>
+          <br/>
+            <!--Individual ShareHolder-->
+            <div class="form-group col-md-12">
+              <label><h5 style="color: #337ab7;">Individual ShareHolder</h5></label>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Individual 01 ( Share Class and Shares | Share Percentage )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp71" value="{{corp.shareholder_info}}" style="width: 80%;">
+                <input type="text" class="form-control col-sm-1" name="corp72" value="{{corp.corp72}}" style="width: 15%;">
               </div>
             </div>
+            <div class="form-group col-md-6">
+              <label>Individual 02 ( Share Class and Shares | Share Percentage )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp74" value="{{corp.corp74}}" style="width: 80%;">
+                <input type="text" class="form-control col-sm-1" name="corp75" value="{{corp.corp75}}" style="width: 15%;">
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label>( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
+              <select class="browser-default custom-select form-control" name="corp73" value="{{indiv_list[2]}}" style="width: 95%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label>( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
+              <select class="browser-default custom-select form-control" value="" name="corp76" style="width: 95%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>Individual 03 ( Share Class and Shares | Share Percentage )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp77" value="{{corp.corp77}}" style="width: 80%;">
+                <input type="text" class="form-control col-sm-1" name="corp78" value="{{corp.corp78}}" style="width: 15%;">
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Individual 04 ( Share Class and Shares | Share Percentage )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp80" placeholder="share class and shares" style="width: 80%;">
+                <input type="text" class="form-control col-sm-1" name="corp81" placeholder="share (%)" style="width: 15%;">
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label>( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
+              <select class="browser-default custom-select form-control" value="" name="corp79" style="width: 95%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label>( SIN | Prefix Last name, First name | address | phone number | email )<br></label>
+              <select class="browser-default custom-select form-control" value="" name="corp82" style="width: 95%;">
+                <option value="" >Please select</option>
+                {% for row in indiv_data %}
+                <option >{{row.indiv_id}} | {{row.sin}} | {{row.prefix}} {{row.last_name}}, {{row.first_name}} | {{row.phone1}} | {{row.email}} | {{row.address1}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <!--Corporation ShareHolder -->
+            <div class="form-group col-md-12">
+              <label><h5 style="color: #337ab7;">Corporation ShareHolder</h5></label>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Corporation 01 ( Share Class and Shares | Share Percentage )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp83" value="{{corp.shareholder_corp_info}}" style="width: 80%;">
+                <input type="text" class="form-control col-sm-1" name="corp84" placeholder="share (%)" style="width: 15%;">
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Corporation 02 ( Share Class and Shares | Share Percentage )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp86" placeholder="share class and shares" style="width: 80%;">
+                <input type="text" class="form-control col-sm-1" name="corp87" placeholder="share (%)" style="width: 15%;">
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label>( Corporation Name | Buss No. )<br></label>
+              <select class="browser-default custom-select form-control" name="corp85" value="{{corp_list[0]}}" style="width: 95%;">
+                <option value="" >Please select</option>
+                {% for row in corp_data %}
+                <option >{{row.corp_id}} | {{row.corp1}} | {{row.corp2}} </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label>( Corporation Name | Buss No. )<br></label>
+              <select class="browser-default custom-select form-control" value="" name="corp88" style="width: 95%;">
+                <option value="" >Please select</option>
+                {% for row in corp_data %}
+                <option >{{row.corp_id}} | {{row.corp1}} | {{row.corp2}}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>Corporation 03 ( Share Class and Shares | Share Percentage )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp89" placeholder="share class and shares" style="width: 80%;">
+                <input type="text" class="form-control col-sm-1" name="corp90" placeholder="share (%)" style="width: 15%;">
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Corporation 04 ( Share Class and Shares | Share Percentage )<br></label>
+              <div>
+                <input type="text" class="form-control col-sm-1" name="corp92" placeholder="share class and shares" style="width: 80%;">
+                <input type="text" class="form-control col-sm-1" name="corp93" placeholder="share (%)" style="width: 15%;">
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label>( Corporation Name | Buss No. )<br></label>
+              <select class="browser-default custom-select form-control" value="" name="corp91" style="width: 95%;">
+                <option value="" >Please select</option>
+                {% for row in corp_data %}
+                <option >{{row.corp_id}} | {{row.corp1}} | {{row.corp2}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label>( Corporation Name | Buss No. )<br></label>
+              <select class="browser-default custom-select form-control" value="" name="corp94" style="width: 95%;">
+                <option value="" >Please select</option>
+                {% for row in corp_data %}
+                <option >{{row.corp_id}} | {{row.corp1}} | {{row.corp2}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- Corporation, as SHAREHOLDER -->
+        <div id="item131" class="item">
+          <br/>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label><h4 style="color: #337ab7;">Corporation, as SHAREHOLDER for</h4></label>
+              <input type="text" name="corp710" value='  [serial no: ]' style="height: 40%; font-size: 9px; border: none; background-color: #eaece9;">
+            </div>
+          <br/>
+            <div class="form-group col-md-6">
+              <label>Corporation 01 ( Corporation Name | Buss. No. )<br></label>
+              <input type="text" class="form-control col-sm-1" name="corp95" value="{{as_shareholder[0]}}" style="width: 95%;" readonly>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Corporation 02 ( Corporation Name | Buss. No. )<br></label>
+              <input type="text" class="form-control col-sm-1" name="corp96" value="{{as_shareholder[1]}}" style="width: 95%;" readonly>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Corporation 03 ( Corporation Name | Buss. No. )<br></label>
+              <input type="text" class="form-control col-sm-1" name="corp97" value="{{as_shareholder[2]}}" style="width: 95%;" readonly>
+            </div>
+            <div class="form-group col-md-6">
+              <label>Corporation 04 ( Corporation Name | Buss. No. )<br></label>
+              <input type="text" class="form-control col-sm-1" name="corp98" value="{{as_shareholder[3]}}" style="width: 95%;" readonly>
+            </div>
+          </div>
         </div>
         <!-- Task Information -->
         <div id="item14" class="item">
@@ -741,6 +843,17 @@
         };
         if ($('form [name="corp27"]').attr('value') == "Quick") {
           $('form [name="corp27"]').prop('selectedIndex',1);
+        };
+
+        var tmp = ($('form [name="corp83"]').attr('value')).split(',');
+        for (i=0; i<4; i++) {
+          $('form [name="corp' + (i*3+83) + '"]').val(tmp[i*2]);
+          $('form [name="corp' + (i*3+84) + '"]').val(tmp[i*2+1]);
+        };
+        console.log($('form [name="corp85"]').attr('value'))
+        var tmp = ($('form [name="corp85"]').attr('value').replace('[','').replace(']','').replace(' ','')).split(',');
+        for (i=0; i<tmp.length; i++) {
+          $('form [name="corp' + (i*3+85) + '"]').prop('selectedIndex',parseInt(tmp[i])+1);
         };
 
         pagetitle = document.title;

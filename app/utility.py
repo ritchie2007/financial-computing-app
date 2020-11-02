@@ -36,6 +36,7 @@ def get_id_from_name(name, start, count):
     return(id_list)
 
 # contact
+# 在个人里添加(修改删除)公司后，引起公司表发生相应动作
 def indiv_to_corp_contact(value1, corpid, oper, value0): # 人里公司改，公司里人改
     print(' --- contact ---')
     print(value1)
@@ -82,7 +83,7 @@ def indiv_to_corp_contact(value1, corpid, oper, value0): # 人里公司改，公
                         my_data.contact = ",".join(tmp)
                         db.session.commit()
         # flash("Corp from Individual was updated in Corp table")
-
+# 在公司里添加(修改删除)个人后，引起个人表发生相应动作
 def corp_contact_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
     print(' --- utility contact ---')
     if value0 == "":
@@ -131,6 +132,7 @@ def corp_contact_to_indiv(value1, corpid, oper, value0): # 公司里人改，人
     # flash("Contact from Corp was updated in Individual table")
 
 # director
+# 在个人里添加(修改删除)公司后，引起公司表发生相应动作
 def indiv_to_corp_director(value1, corpid, oper, value0): # 人里公司改，公司里人改
     print(' --- director ---')
     print(value1)
@@ -177,7 +179,7 @@ def indiv_to_corp_director(value1, corpid, oper, value0): # 人里公司改，�
                         my_data.director = ",".join(tmp)
                         db.session.commit()
         # flash("Director from Individual was updated in Corp table")
-
+# 在公司里添加(修改删除)个人后，引起个人表发生相应动作
 def corp_director_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
     print(' --- director ---')
     print(value1)
@@ -226,7 +228,8 @@ def corp_director_to_indiv(value1, corpid, oper, value0): # 公司里人改，�
 
     # flash("Director from Corp was updated in Individual table")
 
-# shareholder
+# shareholder(个人作为shareholder)
+# 在个人里添加(修改删除)公司后，引起公司表发生相应动作
 def indiv_to_corp_shareholder(value1, corpid, oper, value0): # 人里公司改，公司里人改
     print(' --- shareholder ---')
     print(value1)
@@ -273,8 +276,11 @@ def indiv_to_corp_shareholder(value1, corpid, oper, value0): # 人里公司改�
                         my_data.shareholder = ",".join(tmp)
                         db.session.commit()
     # flash("Shareholder from Indiv was updated in Corp table")
-
+# 在公司里添加(修改删除)个人后，引起个人表发生相应动作
+# corp_shareholder_to_indiv在公司里添加(修改删除)个人作为shareholder后，引起indiv表发生相应动作
 def corp_shareholder_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
+    # value1是从前台获取的要添加的个人信息，corpid是即将生成的公司的id，oper中0表示添加，1表示修改，2表示删除
+    # value0是原来的信息(比如原来shareholder中个人id)，因为是插入所以value0=''
     print(' --- shareholder ---')
     print(value1)
     if value0 == "":
@@ -283,32 +289,32 @@ def corp_shareholder_to_indiv(value1, corpid, oper, value0): # 公司里人改�
         value0 = value0.split(',')
 
     if oper < 2:
-        if len(value0) > 0:
+        if len(value0) > 0: # 如果原来shareholder有值，比如说有2个sharehold，就是说有2个个人的id
             for x in value0:
-                if x not in value1:
-                    my_data = Individual.query.get(x)
-                    tmp = (my_data.sharehold_corp)
-                    if len(tmp) > 0:
-                        tmp = (my_data.sharehold_corp).split(',')
-                        if str(corpid) in tmp:
+                if x not in value1: # 如果原来shareholder个人id不在新的名单里，表示原来的id被删除了
+                    my_data = Individual.query.get(x) # 从个人表里 获取信息
+                    tmp = (my_data.sharehold_corp) # 获取该个人里面的 sharehold公司信息
+                    if len(tmp) > 0: # 如果有
+                        tmp = (my_data.sharehold_corp).split(',') # 形成数组
+                        if str(corpid) in tmp: # 找到对应的公司，予以删除
                             tmp.remove(str(corpid))
                             my_data.sharehold_corp = ",".join(tmp)
                             db.session.commit()
 
-        for x in value1:
-            my_data = Individual.query.get(x)
-            if my_data.sharehold_corp == "":
+        for x in value1: # 新的sharehold信息
+            my_data = Individual.query.get(x) # 找到对应的个人记录
+            if my_data.sharehold_corp == "":# 如果个人记录中 sharehold部分没有内容，则直接添加
                 my_data.sharehold_corp = str(corpid)
             else:
                 print(" -- my_data -- " + my_data.sharehold_corp)
-                tmp = (my_data.sharehold_corp).split(',')
+                tmp = (my_data.sharehold_corp).split(',') # 如果个人记录中 sharehold有内容，则只添加新的
                 if (str(corpid) not in tmp):
                     tmp.append(str(corpid))
                     my_data.sharehold_corp = ",".join(tmp)
             print(my_data.sharehold_corp)
             db.session.commit()
 
-    elif oper == 2:
+    elif oper == 2: # 删除，找到个人记录，逐个删除sharehold部分 对应的 该公司 内容
         if len(value0) > 0:
             for x in value0:
                 my_data = Individual.query.get(x)
@@ -320,6 +326,106 @@ def corp_shareholder_to_indiv(value1, corpid, oper, value0): # 公司里人改�
                         my_data.sharehold_corp = ",".join(tmp)
                         db.session.commit()
     # flash("Shareholder from Corp was updated in Individual table")
+
+# shareholder(公司作为shareholder)
+# 在公司里添加(修改删除)作为shareholders的公司后，引起作为sharehold的相应公司表发生相应动作
+# 不能添加 目前的公司 （corp, as shareholder for) 作为其他公司的shareholder，因为你并不知道是作为那个公司
+# 的第几个shareholder
+# 公司里shareholder_corp变，引起对应公司里面corp_as_shareholder改变
+def corp_shareholder_to_corp(value1, corpid, oper, value0): # 公司里sharehold公司改，相应sharehold公司里公司改
+    print(' --- shareholder ---')
+    print(value1)
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Corporation.query.get(x)
+                    tmp = (my_data.corp_as_shareholder)
+                    if tmp:
+                        if len(tmp) > 0:
+                            tmp = (my_data.corp_as_shareholder).split(',')
+                            if str(corpid) in tmp:
+                                tmp.remove(str(corpid))
+                                my_data.corp_as_shareholder = ",".join(tmp)
+                                db.session.commit()
+
+        for x in value1:
+            my_data = Corporation.query.get(x)
+            if my_data.corp_as_shareholder is None:
+                my_data.corp_as_shareholder = str(corpid)
+            elif my_data.corp_as_shareholder == "":
+                my_data.corp_as_shareholder = str(corpid)
+            else:
+                tmp = (my_data.corp_as_shareholder).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.corp_as_shareholder = ",".join(tmp)
+            db.session.commit()
+
+    elif oper == 2:
+        if len(value0) > 0:
+            for x in value0:
+                my_data = Corporation.query.get(x)
+                if my_data.corp_as_shareholder is not None:
+                    tmp = (my_data.corp_as_shareholder)
+                if len(tmp) >0:
+                    tmp = (my_data.corp_as_shareholder).split(',')
+                    if str(corpid) in tmp:
+                        tmp.remove(str(corpid))
+                        my_data.corp_as_shareholder = ",".join(tmp)
+                        db.session.commit()
+    # flash("updated in Corp table")
+# corp_as_shareholder改变（比如删除该公司了），引起对应的公司里shareholder_corp变
+def corp_to_corp_shareholder(value1, corpid, oper, value0): 
+    if value0 == "":
+        value0 = []
+    else:
+        value0 = value0.split(',')
+
+    if oper < 2:
+        if len(value0) > 0:
+            for x in value0:
+                if x not in value1:
+                    my_data = Corporation.query.get(x)
+                    tmp = (my_data.shareholder_corp)
+                    if tmp:
+                        if len(tmp) > 0:
+                            tmp = (my_data.shareholder_corp).split(',')
+                            if str(corpid) in tmp:
+                                tmp.remove(str(corpid))
+                                my_data.shareholder_corp = ",".join(tmp)
+                                db.session.commit()
+
+        for x in value1:
+            my_data = Corporation.query.get(x)
+            if my_data.shareholder_corp is None:
+                my_data.shareholder_corp = str(corpid)
+            elif my_data.shareholder_corp == "":
+                my_data.shareholder_corp = str(corpid)
+            else:
+                tmp = (my_data.shareholder_corp).split(',')
+                if (str(corpid) not in tmp):
+                    tmp.append(str(corpid))
+                    my_data.shareholder_corp = ",".join(tmp)
+            db.session.commit()
+
+    elif oper == 2:
+        if len(value0) > 0:
+            for x in value0:
+                my_data = Corporation.query.get(x)
+                if my_data.shareholder_corp is not None:
+                    tmp = (my_data.shareholder_corp)
+                if len(tmp) >0:
+                    tmp = (my_data.shareholder_corp).split(',')
+                    if str(corpid) in tmp:
+                        tmp.remove(str(corpid))
+                        my_data.shareholder_corp = ",".join(tmp)
+                        db.session.commit()
 
 # spouse
 def indiv_to_spouse(value1, corpid, oper, value0): # 配偶改
@@ -477,12 +583,14 @@ def get_index_index(type, id_list, dropdown_list): # 由ID字串获取下拉菜�
 
     for x in id_list:
         tmp1 = []
-        if (len(x)>0):
-            x = x.split(',')
-            for y in x:
-                if len(y)>0:
-                    if tmp0.count(y)>0:
-                        tmp1.append(tmp0.index(y))
+        if x:
+            if (len(x)>0):
+                x = x.split(',')
+                for y in x:
+                    if y:
+                        if len(y)>0:
+                            if tmp0.count(y)>0:
+                                tmp1.append(tmp0.index(y))
         index_list.append(tmp1)
     return index_list
 
@@ -756,6 +864,12 @@ def userrecrods(user, field):
 
 # authentication
 def authentication(user):
+    '''
+    Login Input --> Registered User? --> Y, expired? --Y--> authentication False return()
+                                                        No --> check log
+                    Not user --> check log 
+                    check log: --locked--> authentication False
+    '''
     authentication = False
     au = db.session.query(User).filter(User.username == user).scalar()
     currenttime = int(time.time())
@@ -792,3 +906,110 @@ def authentication(user):
             authentication = False
 
     return authentication
+
+# import excel file
+def import_excel():
+    workbook = openpyxl.load_workbook("/Users/Ritchie/Downloads/export from CCH_20201029_Updated.xlsx")
+    worksheet = workbook.get_sheet_by_name('corporation2')
+    # row3=[item.value for item in list(worksheet.rows)[2]] # print('-- entire 3rd row data --',row3)
+    # col3=[item.value for item in list(worksheet.columns)[2]]  # print('-- entire 3rd column data --',col3)
+    # cell_2_3 = worksheet.cell(row = 2,column = 3).value
+    # print('------',cell_2_3)
+    # cell_2_3 = worksheet.cell(row = 312,column = 4).value
+    # print('------',cell_2_3)
+    # max_row = worksheet.max_row
+    # print('max ',max_row)
+    for i in range(2, 312):
+        corp1 = worksheet.cell(row = i,column = 2).value
+        corp2 = worksheet.cell(row = i,column = 1).value
+        corp3 = worksheet.cell(row = i,column = 3).value
+        corp4 = worksheet.cell(row = i,column = 5).value
+        corp5 = worksheet.cell(row = i,column = 6).value
+        corp6 = worksheet.cell(row = i,column = 7).value
+        corp7 = worksheet.cell(row = i,column = 8).value
+        corp8 = worksheet.cell(row = i,column = 9).value
+        anniv = worksheet.cell(row = i,column = 10).value
+        if anniv:
+            anniv = anniv.lower().replace('to','').replace(' ','').replace('-','')
+            corp9 = anniv[0:2] + '/' + anniv[2:4]
+            corp10 = anniv[4:6] + '/' + anniv[6:8]
+        else:
+            corp9 = ''
+            corp10 = ''
+        corp11 = worksheet.cell(row = i,column = 11).value
+        corp12 = worksheet.cell(row = i,column = 4).value
+        corp13 = worksheet.cell(row = i,column = 12).value
+        corp14 = worksheet.cell(row = i,column = 13).value
+        corp15 = ''
+        if worksheet.cell(row = i,column = 14).value:
+            corp16 = 'Contact Group: ' + worksheet.cell(row = i,column = 14).value
+        corp17 = ''
+        for x in range(15,21):
+            if worksheet.cell(row = i,column = x).value:
+               corp17 = corp17  + ' ' + worksheet.cell(row = i,column = x).value
+
+        corp18 = ''
+        corp19 = worksheet.cell(row = i,column = 24).value
+        corp20 = worksheet.cell(row = i,column = 25).value
+        corp21 = ''
+        corp22 = worksheet.cell(row = i,column = 22).value
+        corp23 = ''
+        corp24 = ''
+        corp25 = worksheet.cell(row = i,column = 23).value
+        corp26 = worksheet.cell(row = i,column = 33).value
+        corp27 = worksheet.cell(row = i,column = 32).value
+        corp28 = ''
+        corp29 = ''
+        corp30 = ''
+        corp31 = ''
+        corp32 = ''
+        corp33 = ''
+        corp34 = ''
+        corp35 = ''
+        corp36 = ''
+        corp37 = ''
+        corp38 = ''
+        corp39 = ''
+        corp40 = ''
+        corp41 = ''
+        corp42 = ''
+        corp43 = ''
+        corp44 = ''
+        corp45 = ''
+        corp46 = ''
+        corp47 = worksheet.cell(row = i,column = 28).value
+        corp48 = worksheet.cell(row = i,column = 29).value
+        corp49 = ''
+        corp50 = ''
+        corp51 = ''
+        corp52 = worksheet.cell(row = i,column = 26).value
+        corp53 = ''
+        corp54 = ''
+        corp55 = ''
+        worksheet.cell(row = i,column = 27).value
+        corp57 = ''
+        corp58 = ''
+
+        if corp20:
+            corp201 = corp20.replace('-','')
+        if corp21:
+            corp211 = corp21.replace('-','')
+
+        task = 0
+        recent_update = ""
+        timemark = datetime.utcnow()
+        contact_position = ""
+        shareholder_info = ""
+        shareholder_corp_info = ""
+        corp_as_shareholder = ""
+        contact = ""
+        director = ""
+        shareholder = ""
+        shareholder_corp = ""
+        # print(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp201, corp211, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, shareholder_corp, shareholder_corp_info, corp_as_shareholder, timemark)
+        # my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp201, corp211, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, shareholder_corp, shareholder_corp_info, corp_as_shareholder, timemark)
+        # db.session.add(my_data)
+        # db.session.commit()
+    flash("Import Successfully")
+    msg = 'successful'
+    return msg

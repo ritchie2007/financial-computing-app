@@ -13,7 +13,7 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
 from app.models import User, Data_table, activity_code, CorporationReport, Staff, Task, \
     Timesheet, Corporation, Individual, Userlog, Mulform, TimesheetTempData
 
-import os # 目录及文件操作
+import os 
 import openpyxl
 from openpyxl import Workbook, load_workbook # pip install openpyxl 
 from openpyxl.styles import Font, Color, colors, PatternFill, Border, borders, fills, Fill, alignment, Alignment
@@ -22,7 +22,7 @@ from openpyxl.chart import BarChart, Reference, Series, LineChart, ScatterChart
 
 def month_offset(start_date, number_of_month):
     return datetime.strptime(start_date, '%Y-%m-%d') + relativedelta(months=number_of_month)
-# print(get_today_month(-3))
+# printmonth(-3))
 print(month_offset('2019-01-31', 1))
 
 def get_id_from_name(name, start, count):
@@ -31,13 +31,10 @@ def get_id_from_name(name, start, count):
         item = ((name[i+start].split(" | "))[0].lstrip(' ').lstrip('0'))
         if item not in id_list and item != "" :
             id_list.append(item)
-    # for i in range(count - len(id_list)):
-    #     id_list.append("")
+    # for i in ran len(id_list)):
+    #     id_lisend("")
     return(id_list)
-
-# contact
-# 在个人里添加(修改删除)公司后，引起公司表发生相应动作
-def indiv_to_corp_contact(value1, corpid, oper, value0): # 人里公司改，公司里人改
+def indiv_to_corp_contact(value1, corpid, oper, value0): 
     print(' --- contact ---')
     print(value1)
     if value0 == "":
@@ -82,9 +79,8 @@ def indiv_to_corp_contact(value1, corpid, oper, value0): # 人里公司改，公
                         tmp.remove(str(corpid))
                         my_data.contact = ",".join(tmp)
                         db.session.commit()
-        # flash("Corp from Individual was updated in Corp table")
-# 在公司里添加(修改删除)个人后，引起个人表发生相应动作
-def corp_contact_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
+        
+def corp_contact_to_indiv(value1, corpid, oper, value0): 
     print(' --- utility contact ---')
     if value0 == "":
         value0 = []
@@ -130,10 +126,7 @@ def corp_contact_to_indiv(value1, corpid, oper, value0): # 公司里人改，人
                         db.session.commit()
 
     # flash("Contact from Corp was updated in Individual table")
-
-# director
-# 在个人里添加(修改删除)公司后，引起公司表发生相应动作
-def indiv_to_corp_director(value1, corpid, oper, value0): # 人里公司改，公司里人改
+def indiv_to_corp_director(value1, corpid, oper, value0): 
     print(' --- director ---')
     print(value1)
     if value0 == "":
@@ -179,8 +172,8 @@ def indiv_to_corp_director(value1, corpid, oper, value0): # 人里公司改，�
                         my_data.director = ",".join(tmp)
                         db.session.commit()
         # flash("Director from Individual was updated in Corp table")
-# 在公司里添加(修改删除)个人后，引起个人表发生相应动作
-def corp_director_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
+
+def corp_director_to_indiv(value1, corpid, oper, value0): 
     print(' --- director ---')
     print(value1)
     if value0 == "":
@@ -227,10 +220,7 @@ def corp_director_to_indiv(value1, corpid, oper, value0): # 公司里人改，�
                         db.session.commit()
 
     # flash("Director from Corp was updated in Individual table")
-
-# shareholder(个人作为shareholder)
-# 在个人里添加(修改删除)公司后，引起公司表发生相应动作
-def indiv_to_corp_shareholder(value1, corpid, oper, value0): # 人里公司改，公司里人改
+def indiv_to_corp_shareholder(value1, corpid, oper, value0): 
     print(' --- shareholder ---')
     print(value1)
     if value0 == "":
@@ -276,45 +266,39 @@ def indiv_to_corp_shareholder(value1, corpid, oper, value0): # 人里公司改�
                         my_data.shareholder = ",".join(tmp)
                         db.session.commit()
     # flash("Shareholder from Indiv was updated in Corp table")
-# 在公司里添加(修改删除)个人后，引起个人表发生相应动作
-# corp_shareholder_to_indiv在公司里添加(修改删除)个人作为shareholder后，引起indiv表发生相应动作
-def corp_shareholder_to_indiv(value1, corpid, oper, value0): # 公司里人改，人里公司改
-    # value1是从前台获取的要添加的个人信息，corpid是即将生成的公司的id，oper中0表示添加，1表示修改，2表示删除
-    # value0是原来的信息(比如原来shareholder中个人id)，因为是插入所以value0=''
-    print(' --- shareholder ---')
-    print(value1)
+def corp_shareholder_to_indiv(value1, corpid, oper, value0): 
     if value0 == "":
         value0 = []
     else:
         value0 = value0.split(',')
 
     if oper < 2:
-        if len(value0) > 0: # 如果原来shareholder有值，比如说有2个sharehold，就是说有2个个人的id
+        if len(value0) > 0: 
             for x in value0:
-                if x not in value1: # 如果原来shareholder个人id不在新的名单里，表示原来的id被删除了
-                    my_data = Individual.query.get(x) # 从个人表里 获取信息
-                    tmp = (my_data.sharehold_corp) # 获取该个人里面的 sharehold公司信息
-                    if len(tmp) > 0: # 如果有
-                        tmp = (my_data.sharehold_corp).split(',') # 形成数组
-                        if str(corpid) in tmp: # 找到对应的公司，予以删除
+                if x not in value1: 
+                    my_data = Individual.query.get(x) 
+                    tmp = (my_data.sharehold_corp) 
+                    if len(tmp) > 0: 
+                        tmp = (my_data.sharehold_corp).split(',') 
+                        if str(corpid) in tmp: 
                             tmp.remove(str(corpid))
                             my_data.sharehold_corp = ",".join(tmp)
                             db.session.commit()
 
-        for x in value1: # 新的sharehold信息
-            my_data = Individual.query.get(x) # 找到对应的个人记录
-            if my_data.sharehold_corp == "":# 如果个人记录中 sharehold部分没有内容，则直接添加
+        for x in value1: 
+            my_data = Individual.query.get(x) 
+            if my_data.sharehold_corp == "":
                 my_data.sharehold_corp = str(corpid)
             else:
                 print(" -- my_data -- " + my_data.sharehold_corp)
-                tmp = (my_data.sharehold_corp).split(',') # 如果个人记录中 sharehold有内容，则只添加新的
+                tmp = (my_data.sharehold_corp).split(',') 
                 if (str(corpid) not in tmp):
                     tmp.append(str(corpid))
                     my_data.sharehold_corp = ",".join(tmp)
             print(my_data.sharehold_corp)
             db.session.commit()
 
-    elif oper == 2: # 删除，找到个人记录，逐个删除sharehold部分 对应的 该公司 内容
+    elif oper == 2: 
         if len(value0) > 0:
             for x in value0:
                 my_data = Individual.query.get(x)
@@ -327,12 +311,7 @@ def corp_shareholder_to_indiv(value1, corpid, oper, value0): # 公司里人改�
                         db.session.commit()
     # flash("Shareholder from Corp was updated in Individual table")
 
-# shareholder(公司作为shareholder)
-# 在公司里添加(修改删除)作为shareholders的公司后，引起作为sharehold的相应公司表发生相应动作
-# 不能添加 目前的公司 （corp, as shareholder for) 作为其他公司的shareholder，因为你并不知道是作为那个公司
-# 的第几个shareholder
-# 公司里shareholder_corp变，引起对应公司里面corp_as_shareholder改变
-def corp_shareholder_to_corp(value1, corpid, oper, value0): # 公司里sharehold公司改，相应sharehold公司里公司改
+def corp_shareholder_to_corp(value1, corpid, oper, value0): 
     print(' --- shareholder ---')
     print(value1)
     if value0 == "":
@@ -380,7 +359,6 @@ def corp_shareholder_to_corp(value1, corpid, oper, value0): # 公司里sharehold
                         my_data.corp_as_shareholder = ",".join(tmp)
                         db.session.commit()
     # flash("updated in Corp table")
-# corp_as_shareholder改变（比如删除该公司了），引起对应的公司里shareholder_corp变
 def corp_to_corp_shareholder(value1, corpid, oper, value0): 
     if value0 == "":
         value0 = []
@@ -427,8 +405,8 @@ def corp_to_corp_shareholder(value1, corpid, oper, value0):
                         my_data.shareholder_corp = ",".join(tmp)
                         db.session.commit()
 
-# spouse
-def indiv_to_spouse(value1, corpid, oper, value0): # 配偶改
+
+def indiv_to_spouse(value1, corpid, oper, value0): 
     print(' --- spouse ---')
     print(value1)
     if value0 == "":
@@ -474,9 +452,7 @@ def indiv_to_spouse(value1, corpid, oper, value0): # 配偶改
                         my_data.spouse = ",".join(tmp)
                         db.session.commit()
     # flash("Spouse Updated Successfully")
-
-# parents
-def parent_to_child(value1, corpid, oper, value0): # 父里子改，子里父改
+def parent_to_child(value1, corpid, oper, value0): 
     print(' --- parents ---')
     print(value1)
     if value0 == "":
@@ -523,8 +499,8 @@ def parent_to_child(value1, corpid, oper, value0): # 父里子改，子里父改
                         db.session.commit()
     # flash("parents updated")
 
-# child
-def child_to_parent(value1, corpid, oper, value0): # 子里父改，父里子改
+
+def child_to_parent(value1, corpid, oper, value0): 
     print(' --- child ---')
     print(value1)
     if value0 == "":
@@ -571,8 +547,7 @@ def child_to_parent(value1, corpid, oper, value0): # 子里父改，父里子改
                         db.session.commit()
     # flash("Child Updated Successfully")
 
-# get Index array
-def get_index_index(type, id_list, dropdown_list): # 由ID字串获取下拉菜单index字串
+def get_index_index(type, id_list, dropdown_list): 
     index_list = []
     tmp0 = []
     for x in dropdown_list:
@@ -594,7 +569,7 @@ def get_index_index(type, id_list, dropdown_list): # 由ID字串获取下拉菜�
         index_list.append(tmp1)
     return index_list
 
-# convert str to int (index)
+
 def convert_to_int(data_str):
     data_int = 0
     data_str = data_str.replace(' ', '')
@@ -602,8 +577,7 @@ def convert_to_int(data_str):
         data_int = int(data_str)
     return data_int
 
-# dailyentry to report
-def dailyentry_to_report(value1, corpid, oper, value0): # 公司里人改，人里公司改
+def dailyentry_to_report(value1, corpid, oper, value0): 
     if value0 == "":
         value0 = []
     else:
@@ -633,8 +607,6 @@ def dailyentry_to_report(value1, corpid, oper, value0): # 公司里人改，人�
                     my_data.director_corp = ",".join(tmp)
             db.session.commit()
 
-# excel report
-# download forntend
 def download_munu(category):
     filtertxt = ['','','']
     filterdata = ['','','']
@@ -749,7 +721,7 @@ def get_data(idx, filters):
 def excel_export(cat, filters, fname):
     fname = fname
     idx = ['Corporation','Individual','Task','Timesheet','Staff','Corporation report'].index(cat)
-    print(idx)
+    # print(idx)
     pram = table_header(idx)
     wb = Workbook()
     ws = wb.active
@@ -830,9 +802,7 @@ def excel_export(cat, filters, fname):
                 exec('rdata.append(row.{})'.format(pram[1][i]))
             ws.append(rdata)
     print(fname)
-    wb.save(app.config["CLIENT_CSV"] + fname)
-
-# user records
+    wb.save("/var/www/html/app/static/download/" + fname)
 def userrecrods(user, field):
     '''records of user'''
     username = user
@@ -861,8 +831,6 @@ def userrecrods(user, field):
     db.session.add(my_data)
     db.session.commit()
     return status
-
-# authentication
 def authentication(user):
     '''
     Login Input --> Registered User? --> Y, expired? --Y--> authentication False return()
@@ -907,206 +875,88 @@ def authentication(user):
 
     return authentication
 
-# import excel file
-def import_excel_corp():
-    workbook = openpyxl.load_workbook("/Users/Ritchie/Downloads/export from CCH_20201029_Updated.xlsx")
-    worksheet = workbook.get_sheet_by_name('corporation2')
-    # row3=[item.value for item in list(worksheet.rows)[2]] # print('-- entire 3rd row data --',row3)
-    # col3=[item.value for item in list(worksheet.columns)[2]]  # print('-- entire 3rd column data --',col3)
-    # cell_2_3 = worksheet.cell(row = 2,column = 3).value
-    # print('------',cell_2_3)
-    # cell_2_3 = worksheet.cell(row = 312,column = 4).value
-    # print('------',cell_2_3)
-    # max_row = worksheet.max_row
-    # print('max ',max_row)
-    for i in range(3, 312):
-        r = []
-        for x in range (1,37):
-            da = worksheet.cell(row = i, column = x).value
-            if da:
-                r.append(da)
-            else:
-                r.append('')
-        print(r)
-        corp1 = r[1]
-        corp2 = r[0]
-        corp3 = r[2]
-        corp4 = r[4]
-        corp5 = r[5]
-        corp6 = r[6]
-        corp7 = r[7]
-        corp8 = r[8]
-        anniv = r[9]
-        if anniv:
-            anniv = anniv.lower().replace('to','').replace(' ','').replace('-','')
-            corp9 = anniv[0:2] + '/' + anniv[2:4]
-            corp10 = anniv[4:6] + '/' + anniv[6:8]
-        else:
-            corp9 = ''
-            corp10 = ''
-        corp11 = r[10]
-        corp12 = r[3]
-        corp13 = r[11]
-        corp14 = r[12]
-        corp15 = ''
-        if r[13]:
-            corp16 = 'Contact Group: ' + r[13]
-        corp17 = ''
-        for x in range(15,21):
-            if r[x-1]:
-               corp17 = corp17  + ' ' + r[x-1]
-
-        corp18 = ''
-        corp19 = r[23]
-        corp20 = r[24]
-        corp21 = ''
-        corp22 = r[21]
-        corp23 = ''
-        corp24 = ''
-        corp25 = r[22]
-        corp26 = r[32]
-        corp27 = r[31]
-        corp28 = ''
-        corp29 = ''
-        corp30 = ''
-        corp31 = ''
-        corp32 = ''
-        corp33 = ''
-        corp34 = ''
-        corp35 = ''
-        corp36 = ''
-        corp37 = ''
-        corp38 = ''
-        corp39 = ''
-        corp40 = ''
-        corp41 = ''
-        corp42 = ''
-        corp43 = ''
-        corp44 = ''
-        corp45 = ''
-        corp46 = ''
-        corp47 = r[27]
-        corp48 = r[28]
-        corp49 = ''
-        corp50 = ''
-        corp51 = ''
-        corp52 = r[25]
-        corp53 = ''
-        corp54 = ''
-        corp55 = ''
-        corp56 = r[26]
-        corp57 = ''
-        corp58 = ''
-
-        if corp20:
-            corp201 = corp20.replace('-','')
-        else:
-            corp201 = ''
-            
-        if corp21:
-            corp211 = corp21.replace('-','')
-        else:
-            corp211 = ''
-
-        task = 0
-        recent_update = ""
-        timemark = datetime.utcnow()
-        contact_position = ""
-        shareholder_info = ""
-        shareholder_corp_info = ""
-        corp_as_shareholder = ""
-        contact = ""
-        director = ""
-        shareholder = ""
-        shareholder_corp = ""
-        # print(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp201, corp211, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, shareholder_corp, shareholder_corp_info, corp_as_shareholder, timemark)
-        my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp201, corp211, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, shareholder_corp, shareholder_corp_info, corp_as_shareholder, timemark)
-        db.session.add(my_data)
-        db.session.commit()
-    flash("Import Successfully")
-    msg = 'successful'
-    return msg
-
-# import excel file
-def import_excel_indiv():
-    workbook = openpyxl.load_workbook("/Users/Ritchie/Downloads/export from CCH_20201029_Updated.xlsx")
-    worksheet = workbook.get_sheet_by_name('individual')
-    # row3=[item.value for item in list(worksheet.rows)[2]] # print('-- entire 3rd row data --',row3)
-    # col3=[item.value for item in list(worksheet.columns)[2]]  # print('-- entire 3rd column data --',col3)
-    # cell_2_3 = worksheet.cell(row = 2,column = 3).value
-    # print('------',cell_2_3)
-    # cell_2_3 = worksheet.cell(row = 312,column = 4).value
-    # print('------',cell_2_3)
-    # max_row = worksheet.max_row
-    # print('max ',max_row)
-    for i in range(3, 372):
-        r = []
-        for x in range (1,16):
-            da = worksheet.cell(row = i, column = x).value
-            if da:
-                r.append(da)
-            else:
-                r.append('')
-        print(r)
-        sin = r[13]
-        prefix = ''
-        last_name = r[2]
-        first_name = r[1]
-        other_name = ''
-        email = r[5]
-        phone1 = '(h)' + r[3] + '(w)' + r[14]
-        phone2 = r[4]
-        if phone1:
-            phone1digit = phone1.replace('-','')
-        else:
-            phone1digit = ''
-        if phone2:
-            phone2digit = phone2.replace('-','')
-        else:
-            phone2digit = ''
-        address1 = r[6] + '-' + r[7] + ' ' + r[8] + ', ' + r[9] + ', ' + r[10] + ' ' + r[11] + ', ' + r[12]
-        address2 = ''
-        mail_address = '' 
-        wechat = ''
-        cra_sole_proprietor = ''
-        cra_hst_report = ''
-        cra_payroll = ''
-        cra_withhold_tax = ''
-        cra_wsib = ''
-        cra_other = ''
-        oversea_asset_t1135 = ''
-        oversea_corp_t1134 = ''
-        tslip = ''
-        tax_personal_info = ''
-        specific_info = ''
-        engage_account = ''
-        engage_leading = ''
-        note = ''
-        timemark = datetime.utcnow()
-        contact_corp = ""
-        director_corp = ""
-        sharehold_corp = ""
-        spouse = ""
-        parent = ""
-        child = ""
-        
-        my_data = Individual(sin, prefix, last_name, first_name, other_name, email, phone1, phone2, phone1digit, phone2digit, address1, address2, mail_address, wechat, cra_sole_proprietor, cra_hst_report, cra_payroll, cra_withhold_tax, cra_wsib, cra_other, oversea_asset_t1135, 
-        oversea_corp_t1134, tslip, tax_personal_info, specific_info, engage_account, engage_leading, note, contact_corp, director_corp, sharehold_corp, spouse, parent, child, timemark)
-        db.session.add(my_data)
-        db.session.commit()
-    flash("Import Successfully")
-    msg = 'successful'
-    return msg
+def fix_data_missing(da, num):
+    da = da.replace('| |', '|  |')
+    if da.startswith('|'):
+        da = (' ' + da)
+    if da.endswith('|'):
+        da = (da + ' ')
+    arr = da.split(' | ')
+    if len(arr) >= num:
+        return arr
+    else:
+        for i in range(len(arr), num):
+            arr.append(' ')
+        return arr
 
 # Fix Indiv address data - remove '-'
 def fix_address():
+    # update address
+    # for i in range (1, 370):
+    #     my_data = Individual.query.get(i)
+    #     da_old = str(my_data.address1)
+    #     da_new = da_old.strip('-').replace(' , ,  , ', '')
+    #     my_data.address1 = da_new
+    #     #print('add: ',da_old, '  new  ', da_new)
+    #     db.session.commit()
+    # update last name
     for i in range (1, 370):
         my_data = Individual.query.get(i)
-        da_old = str(my_data.address1)
-        da_new = da_old.strip('-').replace(' , ,  , ', '')
-        my_data.address1 = da_new
-        print('add: ',da_old, '  new  ', da_new)
+        da_old = str(my_data.last_name)
+        da_new = da_old.upper()
+        my_data.last_name = da_new
+        #print('add: ',da_old, '  new  ', da_new)
         db.session.commit()
-    
     msg = 'successful'
     return msg
+
+def get_corp_name(arr):
+    if len(arr)>0: # 这里是一个组，包含3个串[contact(' '), direct(' '), shareholder(' ')] >>> ['12,6', '13,7', '14']
+        corp_name = []
+        type = ['Contact: ', 'Director: ', 'Shareholder: ']
+        idx = 0
+        for s in arr: # >>> '12,6'
+            if s:
+                if len(s)>0 and s!=',':
+                    arr = s.split(',') # >>> ['12','6']
+                    arr1 = []
+                    for ic in arr:
+                        ic = ic.replace(' ','')
+                        if len(ic)>0:
+                            ic = int(ic)
+                            per_data = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2).filter(Corporation.corp_id==ic)
+                            # per_data = Corporation.query.get(ic) # 获得第1个公司信息
+                            arr1.append([int(per_data[0].corp_id), (type[idx] + per_data[0].corp2)])
+                corp_name.append(arr1)
+            idx += 1
+    return corp_name
+    # [[5, 'CAI, Zhiyuan'], [6, 'CHAOLEI, YI']]
+    # [
+    #     [第5人
+    #         [ CONTACT
+    #             [6, '11328816 Canada Corporation_Ying Ming_701659310RC0001'], 
+    #             [12, '2434967 ONTARIO INC._Coffee Shop Zhang Zebin_836333591RC0001']
+    #         ],
+    #         [ DIRECTOR
+    #             [7, '11448587 Canada Inc._Herry Zheng xianjin_789840675RC0001'], 
+    #             [13, '2437939 ONTARIO INC. Gateway Newstand_Zheng, Yanyan_828840983RC0001']
+    #         ], 
+    #         [ SHAREHOLDER
+    #             [14, '2458703 ONTARIO INC _XianJack wife_810222190RC0001']
+    #         ]
+    #     ], 
+
+    #     [第6人
+    #         [ CONTACT
+    #             [6, '11328816 Canada Corporation_Ying Ming_701659310RC0001'], 
+    #             [314, '1106_Corporation Name']
+    #         ], 
+    #         [ DIRECTOR
+    #             [7, '11448587 Canada Inc._Herry Zheng xianjin_789840675RC0001'], 
+    #             [13, '2437939 ONTARIO INC. Gateway Newstand_Zheng, Yanyan_828840983RC0001']
+    #         ], 
+    #         [ SHAREHOLDER
+    #             [14, '2458703 ONTARIO INC _XianJack wife_810222190RC0001']
+    #         ]
+    #     ]
+    # ]

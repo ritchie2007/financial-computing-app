@@ -32,11 +32,10 @@
           <th class="th-sm">ID.</th>
           <th class="th-sm">Name</th>
           <th class="th-sm">SIN</th>
-          <th class="th-sm">Phone</th>
+          <th class="th-sm">Cell Phone</th>
+          <th class="th-sm">Home/Work phone</th>
           <th class="th-sm">Email</th>
-          <th class="th-sm">Sole_propprietor</th>
-          <th class="th-sm">Oversea T1135</th>
-          <th class="th-sm">Engage</th>
+          <th class="th-sm">Mail Address</th>
           <th class="th-sm">Group</th>
         </tr>
       </thead>
@@ -46,11 +45,10 @@
           <td class="col-1">{{row.indiv_id}}</td>
           <td class="col-1">{{row.prefix}} {{row.last_name}}, {{row.first_name}}</td>
           <td class="col-1">{{row.sin}}</td>
+          <td class="col-1">{{row.phone2}}</td>
           <td class="col-1">{{row.phone1}}</td>
           <td class="col-1">{{row.email}}</td>
-          <td class="col-1">{{row.cra_sole_proprietor}}</td>
-          <td class="col-2">{{row.oversea_asset_t1135}}, {{row.corp18}}</td>
-          <td class="col-2">{{row.engage_account}}</td>
+          <td class="col-1">{{row.address1}}</td>
           <td class="col-1">{{row.task}}</td>
         </tr>
       {% endfor %}

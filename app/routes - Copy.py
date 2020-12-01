@@ -8,7 +8,7 @@ from datetime import timedelta, datetime #, date
 from pytz import timezone
 from dateutil.relativedelta import relativedelta
 from werkzeug.urls import url_parse
-from sqlalchemy import desc, asc, func, or_ # for table.order_by(Task.enddate).all()
+from sqlalchemy import desc, asc, func, or_ 
 
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import render_template, flash, redirect, request, url_for, session, make_response, json
@@ -18,7 +18,7 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, WebNavForm
 from app.models import User, Data_table, activity_code, CorporationReport, Staff, Task, Timesheet, Corporation, Individual, Job_type, Userlog, Mulform, TimesheetTempData
 #from app import dateCalculate
 from app import utility
-from app.utility import userrecrods, authentication
+from app.utility import userrecrods, authentication, get_corp_name
 # from tkinter import messagebox
 # from tkinter import *
 
@@ -52,7 +52,6 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # need to limit login times
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     else:
@@ -180,9 +179,7 @@ def edit_profile():
 @app.route('/corporate')
 @login_required
 def corporate():
-    corp = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2, Corporation.corp8, Corporation.corp9, Corporation.corp10, Corporation.corp25, Corporation.corp18, Corporation.corp19, Corporation.corp20, Corporation.task)
-    # ID, 1-Business No., 2-Corporation name, 8-type, 9,10-anniversary date 'from + to', 25-CRA tax year end, 18,19-CRA contact 'first + last name', 20-phone, 62-task
-    #print(corp[0][2])
+    corp = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2, Corporation.corp8, Corporation.corp9, Corporation.corp10, Corporation.corp25, Corporation.corp18, Corporation.corp19, Corporation.corp20, Corporation.task).order_by(Corporation.corp2)
     return render_template(
         'corp.html',
         corp = corp,
@@ -296,33 +293,27 @@ def corp_add():
         else:
             max_id = max_id + 1
         
-        # contact
         if contact == []:
             contact = ""
         else:
             utility.corp_contact_to_indiv(contact, max_id, 0, "")
             contact = ",".join(contact)
-        # director
         if director == []:
             director = ""
         else:
             utility.corp_director_to_indiv(director, max_id, 0, "")
             director = ",".join(director)
-        # shareholder
         if shareholder == []:
             shareholder = ""
         else:
             utility.corp_shareholder_to_indiv(shareholder, max_id, 0, "")
             shareholder = ",".join(shareholder)
-        # shareholder_corp
+  
         if shareholder_corp == []:
             shareholder_corp = ""
         else:
             utility.corp_shareholder_to_corp(shareholder_corp, max_id, 0, "")
             shareholder_corp = ",".join(shareholder_corp)
-        # corp_as_shareholder
-        # 不能添加 目前的公司 （corp, as shareholder for) 作为其他公司的shareholder，因为你并不知道是作为那个公司
-        # 的第几个shareholder
 
         my_data = Corporation(corp1, corp2, corp3, corp4, corp5, corp6, corp7, corp8, corp9, corp10, corp11, corp12, corp13, corp14, corp15, corp16, corp17, corp18, corp19, corp20, corp21, corp201, corp211, corp22, corp23, corp24, corp25, corp26, corp27, corp28, corp29, corp30, corp31, corp32, corp33, corp34, corp35, corp36, corp37, corp38, corp39, corp40, corp41, corp42, corp43, corp44, corp45, corp46, corp47, corp48, corp49, corp50, corp51, corp52, corp53, corp54, corp55, corp56, corp57, corp58, contact, director, shareholder, task, recent_update, contact_position, shareholder_info, shareholder_corp, shareholder_corp_info, corp_as_shareholder, timemark)
         db.session.add(my_data)
@@ -460,25 +451,25 @@ def corp_edit(id):
         max_id = id
         print("-- new contact id array --", contact, director, shareholder)
 
-        # contact
+
         if contact == []:
             my_data.contact = ""
         else:
             utility.corp_contact_to_indiv(contact, max_id, 1, value0[0])
             my_data.contact = ",".join(contact)
-        # director
+
         if director == []:
             my_data.director = ""
         else:
             utility.corp_director_to_indiv(director, max_id, 1, value0[1])
             my_data.director = ",".join(director)
-        # shareholder
+
         if shareholder == []:
             my_data.shareholder = ""
         else:
             utility.corp_shareholder_to_indiv(shareholder, max_id, 1, value0[2])
             my_data.shareholder = ",".join(shareholder)
-        # shareholder_corp
+
         if shareholder_corp == []:
             my_data.shareholder_corp = ""
         else:
@@ -506,25 +497,25 @@ def corp_del(id):
     my_data = Corporation.query.get(id)
     print(my_data)
     if request.method == 'POST':
-        # contact
+
         if my_data.contact:
             if len(my_data.contact) > 0:
                 utility.corp_contact_to_indiv('', id, 2, my_data.contact)
-        # director
+
         if my_data.director:
             if len(my_data.director) > 0:
                 utility.corp_director_to_indiv('', id, 2, my_data.director)
-        # shareholder
+
         if my_data.shareholder:
             if len(my_data.shareholder) > 0:
                 utility.corp_shareholder_to_indiv('', id, 2, my_data.shareholder)
-        # shareholder_corp
+
         if my_data.shareholder_corp:
             if my_data.shareholder_corp != '(null)':
                 print('shareholder_corp : ', my_data.shareholder_corp, id, len(my_data.shareholder_corp))
                 if len(my_data.shareholder_corp) > 0:
                     utility.corp_shareholder_to_corp('', id, 2, my_data.shareholder_corp)
-        # corp_as_shareholder
+
         if my_data.corp_as_shareholder:
             if my_data.corp_as_shareholder != '(null)':
                 print('corp_as_shareholder : ', my_data.corp_as_shareholder, id)
@@ -564,15 +555,19 @@ def individual_add():
         prefix = request.form['indiv2']
         last_name = request.form['indiv3']
         first_name = request.form['indiv4']
-        other_name = request.form['indiv5']
+        citizenship = request.form['indiv5']
+        citizenship = 'PR' if citizenship.lower() == 'p' else citizenship
+        citizenship = 'Citizen' if citizenship.lower() == 'c' else citizenship
         email = request.form['indiv6']
         phone1 = request.form['indiv7']
         phone2 = request.form['indiv8']
         phone1digit = phone1.replace('-','')
         phone2digit = phone2.replace('-','')
         address1 = request.form['indiv9']
-        address2 = request.form['indiv10']
-        mail_address = request.form['indiv11']
+        taxresident = request.form['indiv10']
+        taxresident = 'Yes' if taxresident.lower() == 'y' else taxresident
+        taxresident = 'No' if taxresident.lower() == 'n' else taxresident
+        identity = request.form['indiv11']
         wechat = request.form['indiv12']
         cra_sole_proprietor = request.form['indiv13']
         cra_hst_report = request.form['indiv14']
@@ -602,46 +597,45 @@ def individual_add():
             max_id = 1
         else:
             max_id = max_id + 1
-        
-        # contact
+
         if contact_corp == []:
             contact_corp = ""
         else:
             utility.indiv_to_corp_contact(contact_corp, max_id, 0, "")
             contact_corp = ",".join(contact_corp)
-        # director
+
         if director_corp == []:
             director_corp = ""
         else:
             utility.indiv_to_corp_director(director_corp, max_id, 0, "")
             director_corp = ",".join(director_corp)
-        # shareholder
+
         if sharehold_corp == []:
             sharehold_corp = ""
         else:
             utility.indiv_to_corp_shareholder(sharehold_corp, max_id, 0, "")
             sharehold_corp = ",".join(sharehold_corp)
         
-        # spouse
+
         if spouse == []:
             spouse = ""
         else:
             utility.indiv_to_spouse(spouse, max_id, 0, "")
             spouse = ",".join(spouse)
-        # parents
+
         if parent == []:
             parent = ""
         else:
             utility.parent_to_child(parent, max_id, 0, "")
             parent = ",".join(parent)
-        # child
+
         if child == []:
             child = ""
         else:
             utility.child_to_parent(child, max_id, 0, "")
             child = ",".join(child)
         
-        my_data = Individual(sin, prefix, last_name, first_name, other_name, email, phone1, phone2, phone1digit, phone2digit, address1, address2, mail_address, wechat, cra_sole_proprietor, cra_hst_report, cra_payroll, cra_withhold_tax, cra_wsib, cra_other, oversea_asset_t1135, 
+        my_data = Individual(sin, prefix, last_name, first_name, citizenship, email, phone1, phone2, phone1digit, phone2digit, address1, taxresident, identity, wechat, cra_sole_proprietor, cra_hst_report, cra_payroll, cra_withhold_tax, cra_wsib, cra_other, oversea_asset_t1135, 
         oversea_corp_t1134, tslip, tax_personal_info, specific_info, engage_account, engage_leading, note, contact_corp, director_corp, sharehold_corp, spouse, parent, child, timemark)
         db.session.add(my_data)
         db.session.commit()
@@ -680,13 +674,17 @@ def individual_edit(id):
         my_data.prefix = request.form['indiv2']
         my_data.last_name = request.form['indiv3']
         my_data.first_name = request.form['indiv4']
-        my_data.other_name = request.form['indiv5']
+        citizenship = request.form['indiv5']
+        my_data.citizenship = 'PR' if citizenship.lower() == 'p' else citizenship
+        my_data.citizenship = 'Citizen' if citizenship.lower() == 'c' else citizenship
         my_data.email = request.form['indiv6']
         my_data.phone1 = request.form['indiv7']
         my_data.phone2 = request.form['indiv8']
         my_data.address1 = request.form['indiv9']
-        my_data.address2 = request.form['indiv10']
-        my_data.mail_address = request.form['indiv11']
+        taxresident = request.form['indiv10']
+        my_data.taxresident = 'Yes' if taxresident.lower() == 'y' else taxresident
+        my_data.taxresident = 'No' if taxresident.lower() == 'n' else taxresident
+        my_data.identity = request.form['indiv11']
         my_data.wechat = request.form['indiv12']
         my_data.cra_sole_proprietor = request.form['indiv13']
         my_data.cra_hst_report = request.form['indiv14']
@@ -716,38 +714,36 @@ def individual_edit(id):
         parent = utility.get_id_from_name(name, 11, 4)
         child = utility.get_id_from_name(name, 15, 4)
 
-        # contact
         if contact_corp == []:
             my_data.contact_corp = ""
         else:
             utility.indiv_to_corp_contact(contact_corp, id, 1, value0_corp[0])
             my_data.contact_corp = ",".join(contact_corp)
-        # director
+
         if director_corp == []:
             my_data.director_corp = ""
         else:
             utility.indiv_to_corp_director(director_corp, id, 1, value0_corp[1] )
             my_data.director_corp = ",".join(director_corp)
-        # shareholder
+
         if sharehold_corp == []:
             my_data.sharehold_corp = ""
         else:
             utility.indiv_to_corp_shareholder(sharehold_corp, id, 1, value0_corp[2])
             my_data.sharehold_corp = ",".join(sharehold_corp)
-        
-        # spouse
+
         if spouse == []:
             my_data.spouse = ""
         else:
             utility.indiv_to_spouse(spouse, id, 1, value0_indiv[0])
             my_data.spouse = ",".join(spouse)
-        # parents
+
         if parent == []:
             my_data.parent = ""
         else:
             utility.parent_to_child(parent, id, 1, value0_indiv[1])
             my_data.parent = ",".join(parent)
-        # child
+
         if child == []:
             my_data.child = ""
         else:
@@ -773,22 +769,22 @@ def individual_edit(id):
 def individual_del(id):
     my_data = Individual.query.get(id)
     if request.method == 'POST':
-        # contact
+
         if len(my_data.contact_corp) > 0:
             utility.indiv_to_corp_contact('', id, 2, my_data.contact_corp)
-        # director
+
         if len(my_data.director_corp) > 0:
             utility.indiv_to_corp_director('', id, 2, my_data.director_corp)
-        # shareholder
+
         if len(my_data.sharehold_corp) > 0:
             utility.indiv_to_corp_shareholder('', id, 2, my_data.sharehold_corp)
-        # spouse
+
         if len(my_data.spouse) > 0:
             utility.indiv_to_spouse('', id, 2, my_data.spouse)
-        # parents
+ 
         if len(my_data.parent) > 0:
             utility.parent_to_child('', id, 2, my_data.parent)
-        # child
+  
         if len(my_data.child) > 0:
             utility.child_to_parent('', id, 2, my_data.child)
 
@@ -822,19 +818,19 @@ def task_add():
     jobtype_dropdown = Job_type.query.with_entities(Job_type.job_id, Job_type.short_code, Job_type.name)
     if request.method == 'POST':
         tmp = request.form['taskedit1']
-        tmp = tmp.split(' | ')
-        client_corp_id = utility.convert_to_int(tmp[0])
-        client_corp_name = tmp[2]
-        client_corp_bussi_no = tmp[1]
+        arr = utility.fix_data_missing(tmp, 3)
+        client_corp_id = utility.convert_to_int(arr[0])
+        client_corp_name = arr[2]
+        client_corp_bussi_no = arr[1]
         tmp = request.form['taskedit2']
-        tmp = tmp.split(' | ')
-        client_indiv_id = utility.convert_to_int(tmp[0])
-        client_indiv_name = tmp[1]
-        client_indiv_sin = tmp[2]
+        arr = utility.fix_data_missing(tmp, 3)
+        client_indiv_id = utility.convert_to_int(arr[0])
+        client_indiv_name = arr[1]
+        client_indiv_sin = arr[2]
         tmp = request.form['taskedit6']
-        tmp = tmp.split(' | ')
-        jobtype_id = utility.convert_to_int(tmp[0])
-        jobtype_code = tmp[1]
+        arr = utility.fix_data_missing(tmp, 3)
+        jobtype_id = utility.convert_to_int(arr[0])
+        jobtype_code = arr[1]
         periodend = request.form['taskedit3']
         responsible = request.form['taskedit7']
         startdate = request.form['taskedit4']
@@ -903,19 +899,19 @@ def task_renew(id):
     
     if request.method == 'POST':
         tmp = request.form['taskedit1']
-        tmp = tmp.split(' | ')
-        client_corp_id = utility.convert_to_int(tmp[0])
-        client_corp_name = tmp[2]
-        client_corp_bussi_no = tmp[1]
+        arr = utility.fix_data_missing(tmp, 3)
+        client_corp_id = utility.convert_to_int(arr[0])
+        client_corp_name = arr[2]
+        client_corp_bussi_no = arr[1]
         tmp = request.form['taskedit2']
-        tmp = tmp.split(' | ')
-        client_indiv_id = utility.convert_to_int(tmp[0])
-        client_indiv_name = tmp[1]
-        client_indiv_sin = tmp[2]
+        arr = utility.fix_data_missing(tmp, 3)
+        client_indiv_id = utility.convert_to_int(arr[0])
+        client_indiv_name = arr[1]
+        client_indiv_sin = arr[2]
         tmp = request.form['taskedit6']
-        tmp = tmp.split(' | ')
-        jobtype_id = utility.convert_to_int(tmp[0])
-        jobtype_code = tmp[1]
+        arr = utility.fix_data_missing(tmp, 3)
+        jobtype_id = utility.convert_to_int(arr[0])
+        jobtype_code = arr[1]
         periodend = request.form['taskedit3']
         responsible = request.form['taskedit7']
         startdate = request.form['taskedit4']
@@ -987,19 +983,19 @@ def task_edit(id):
         type_idx = 0
     if request.method == 'POST':
         tmp = request.form['taskedit1']
-        tmp = tmp.split(' | ')
-        my_data.client_corp_id = utility.convert_to_int(tmp[0])
-        my_data.client_corp_name = tmp[2]
-        my_data.client_corp_bussi_no = tmp[1]
+        arr = utility.fix_data_missing(tmp, 3)
+        my_data.client_corp_id = utility.convert_to_int(arr[0])
+        my_data.client_corp_name = arr[2]
+        my_data.client_corp_bussi_no = arr[1]
         tmp = request.form['taskedit2']
-        tmp = tmp.split(' | ')
-        my_data.client_indiv_id = utility.convert_to_int(tmp[0])
-        my_data.client_indiv_name = tmp[1]
-        my_data.client_indiv_sin = tmp[2]
+        arr = utility.fix_data_missing(tmp, 3)
+        my_data.client_indiv_id = utility.convert_to_int(arr[0])
+        my_data.client_indiv_name = arr[1]
+        my_data.client_indiv_sin = arr[2]
         tmp = request.form['taskedit6']
-        tmp = tmp.split(' | ')
-        my_data.jobtype_id = utility.convert_to_int(tmp[0])
-        my_data.jobtype_code = tmp[1]
+        arr = utility.fix_data_missing(tmp, 3)
+        my_data.jobtype_id = utility.convert_to_int(arr[0])
+        my_data.jobtype_code = arr[1]
         my_data.periodend = request.form['taskedit3']
         my_data.responsible = request.form['taskedit7']
         my_data.startdate = request.form['taskedit4']
@@ -1120,7 +1116,7 @@ def dailyentry_add():
             # data = request.json
             data = data_received['formdata']
             print("----> " + data[0] + " <---- type(da) is list")
-            # 注意 string[start: end: step] 中end是那位是不包含的，所以('0123')[0:2] ==> '01'
+            
             startdate = (data[1])[0:10]
             calhour = data[2]
             adjhour = data[3]
@@ -1442,11 +1438,11 @@ def download():
         if category != '':
             utility.excel_export(category, filterselect, filename)
             message = 'Download "' + filename + '" successfully.' 
-            path = app.config["CLIENT_CSV"]
+            path = "/var/www/html/app/static/download/"
             list = os.listdir(path)
             for f in list:
                 if (not f == filename):
-                    os.remove(app.config["CLIENT_CSV"] + f)
+                    os.remove(path + f)
             try:
                 return send_from_directory(path, filename=filename, as_attachment=True)
             except FileNotFoundError:
@@ -1483,6 +1479,91 @@ def importdata():
     return render_template(
         'index.html',
         title='Home'
+    )
+
+@app.route('/indiv_chart', methods=['GET', 'POST'])
+@login_required
+def indiv_chart():
+    my_idx = 0
+    per_list = [0,0,0,0]
+    # corp = Corporation.query.with_entities(Corporation.corp_id, Corporation.corp1, Corporation.corp2)
+    indiv = Individual.query.with_entities(Individual.indiv_id, Individual.sin, Individual.last_name, Individual.first_name)
+    if request.method == 'POST':
+        my_idx = 0
+        my_indiv = request.form['chart1']
+        if my_indiv == '':
+            my_idx = 0
+            per_list = [0,0,0,0]
+            indiv_list = []
+            corp_list = []
+        else:
+            my_id = int(my_indiv.split('(ID=')[1].strip(') '))
+            my_idx = db.session.query(Individual).with_entities(func.count(Individual.indiv_id)).filter(Individual.indiv_id <= my_id).scalar()
+            max = db.session.query(Individual).with_entities(func.max(Individual.indiv_id)).scalar()
+            if max < my_idx:
+                my_idx = 0
+            my_data = db.session.query(Individual).with_entities(Individual.indiv_id, Individual.last_name, Individual.first_name, Individual.contact_corp, Individual.director_corp, Individual.sharehold_corp, Individual.spouse, Individual.parent, Individual.child).filter(Individual.indiv_id==my_id)
+            indiv_list = [] # indiv_list[第几组][第几人信息]：
+            corp_list = [] # corp_list[第几组][第几人][类型][公司信息]：组(如parents, child)人(parent有2人)类型(contact, director等)
+            indiv_list.append([[int(my_data[0].indiv_id), (my_data[0].last_name + ', ' + my_data[0].first_name)]])
+            tmp = ([my_data[0].contact_corp, my_data[0].director_corp, my_data[0].sharehold_corp])
+            corp_list.append([get_corp_name(tmp)])
+            for person in (my_data[0].spouse, my_data[0].parent, my_data[0].child): # 获取parents(4,8)一个组人的id
+                # example: my_data[0].spouse == '5,6', my_data[0].parent='7,8', my_data[0].child='9,10,11'
+                if person:
+                    if len(person)>0 and person != ',':
+                        arr = person.split(',') # >>> ['5', '6']
+                        arr1 = []
+                        arr2 = []
+                        for iperson in arr: # >>> ['5']
+                            iperson = iperson.replace(' ','')
+                            if len(iperson)>0:
+                                iperson = int(iperson)
+                                per_data = Individual.query.get(iperson)
+                                arr1.append([int(per_data.indiv_id), (per_data.last_name + ', ' + per_data.first_name)])
+                    # per_data = db.session.query(Individual).with_entities(Individual.indiv_id, Individual.last_name, Individual.first_name, Individual.contact_corp, Individual.director_corp, Individual.sharehold_corp).filter(Individual.indiv_id.in_((arr0))).all() 
+                    # 获取parents(4,8)一个组人对应的人名，和公司(contact, director, shareholder)
+                    # 格式是[(第1人ID，名字，contact(' '), direct(' '), shareholder(' ')), (第2人ID，....),  (第3人ID，....) ]
+                    # >>> per_data = [(5, 'CAI', 'Zhiyuan', '12,6', '13,7', '14'), (6, 'CHAOLEI', 'YI', '314,6', '13,7', '14')]
+                    # 注意：(1) filter(Individual.indiv_id.in_((12，6)))，in_后面是2个括号((
+                    # 注意：(2) in_((是数组数字))，如果是字串，比如'12, 6'，那么得出结果是in(1,2,6)
+                    # 注意：(3) 返回的顺序是由小到大自动排列，相当于in(6, 12) 
+                                # 人名和ID存入arr1 >>> [[5, 'CAI, Zhiyuan']]
+                                tmp = ([per_data.contact_corp, per_data.director_corp, per_data.sharehold_corp])
+                                # 公司的ID存入了arr2，下面要把ID换成公司的ID和名字 >>> tmp = ['12,6', '13,7', '14']
+                                arr2.append(get_corp_name(tmp))
+                    indiv_list.append(arr1)
+                    corp_list.append(arr2)
+                else:
+                    indiv_list.append('')
+                    corp_list.append('')
+        
+        for i in range(len(indiv_list)):
+            per_list[i] = len(indiv_list[i])
+        print(f"per_list = {per_list}")
+        return render_template(
+            'indiv_chart.html',
+            indiv_data = indiv,
+            per_list = per_list,
+            indiv_list = indiv_list,
+            corp_list = corp_list,
+            my_idx = my_idx
+        )
+    else:
+        return render_template(
+            'indiv_chart.html',
+            indiv_data = indiv,
+            per_list = per_list,
+            indiv_list = [],
+            corp_list = [],
+            my_idx = my_idx
+        )
+
+@app.route('/corp_chart', methods=['GET', 'POST'])
+@login_required
+def corp_chart():
+    return render_template(
+        'corp_chart.html'
     )
 
 @app.route("/get_report")
@@ -1747,24 +1828,24 @@ def timesheetupdate():
         flash("Employee Updated Successfully")
     return redirect(url_for('timesheet'))
 
-@app.route('/postmethod01', methods=['POST']) #接收前台数据 #发送数据到前台
+@app.route('/postmethod01', methods=['POST']) 
 def get_post01():
-    # receive a single string from javascript post
+    
     jsdata = request.form['js_data']
     # json.loads(jsdata)[0]
     print("*****route*******" + jsdata)
     return jsdata
 
-@app.route('/postmethod02', methods=['POST']) #接收前台数据 #发送数据到前台
+@app.route('/postmethod02', methods=['POST']) 
 def get_post02():
-    # receive a array from javascript post
+    
     if request.method == 'POST':
         asd = request.json
         print(asd)
         if 'key1' in asd:
             return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
     return render_template("createform.html")
-    # request.get_data(as_text=True)：获取前端POST请求传过来的 json 数据
+    # r
 
 @app.route('/temp')
 def temp():
@@ -1805,7 +1886,7 @@ def input_validation():
         'learning_input_validation.html'
     )
 # **** following is to try Data table CRUD functions ******
-# This is the data_table root on all our employee data
+# T
 @app.route('/data_crud')
 def data_crud():
     all_data = Data_table.query.all() # Data_table is defined in models.py
@@ -1814,7 +1895,7 @@ def data_crud():
         employees=all_data,
         title='data_crud'
     )
-#this route is for inserting data to mysql database via html forms
+#this rms
 @app.route('/insertion', methods=['POST'])
 def insertion():
     if request.method == 'POST':
@@ -1827,7 +1908,7 @@ def insertion():
         db.session.commit()
         flash("Employee Inserted Successfully")
         return redirect(url_for('data_crud'))
-#this is our update route where we are going to update our employee
+#this is our uloyee
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     if request.method == 'POST':
@@ -1846,4 +1927,3 @@ def delete():
     db.session.commit()
     flash("Employee Deleted Successfully")
     return redirect(url_for('data_crud'))
- 

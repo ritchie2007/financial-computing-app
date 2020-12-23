@@ -876,11 +876,11 @@ def authentication(user):
     print('au: ', au, '  currenttime: ', currenttime)
     if au:
         print(' ---- registered user ---')
-        if au.authorization is None or au.authorization == '' or au.authorization == 0:
-            print(' ---- authorization: None, empty or 0 --- ', au.authorization)
+        if au.identification is None or au.identification == '' or au.identification == 0:
+            print(' ---- identification: None, empty or 0 --- ', au.identification)
             authentication = True
-        elif currenttime > int(au.authorization):
-            print('--- > authorization false---')
+        elif currenttime > int(au.identification):
+            print('--- > identification false---')
             return authentication
         else:
             authentication = True
@@ -1110,3 +1110,48 @@ def fix_address():
     
     msg = 'successful'
     return msg
+
+# Database migration
+from sqlalchemy import inspect, MetaData, create_engine
+def db_export_excel():
+    #  (Valid SQLite URL forms are:
+    #  sqlite:///:memory: (or, sqlite://)
+    #  sqlite:///relative/path/to/file.db
+    #  sqlite:////absolute/path/to/file.db )
+    # Absolute path of database
+    # engine = create_engine('sqlite:////Users/Ritchie/Documents/financial-computing-app/app/databases/users.db')
+    # relative path of database
+    engine = create_engine('sqlite:///app/databases/users.db')
+
+    # MetaData()方法 ----------------------
+    # metadata = MetaData()
+    # metadata.reflect(engine)
+    # print('metadata: %s' % metadata)
+    # for tbl in metadata.tables.values():
+    #     print("table %s" % tbl.name)
+    # -------------------------------------
+
+    # Inspect()方法 ----------------------
+    # inspector = inspect(engine)
+    # schemas = inspector.get_schema_names()
+
+    # for schema in schemas:
+    #     print("schema: %s" % schema)
+    #     for table_name in inspector.get_table_names(schema=schema):
+    #         print('table_name %s' % table_name)
+    #         for column in inspector.get_columns(table_name, schema=schema):
+    #             print("Column: %s" % column)
+    #             # 输出的是一个dictionary >>> Column: {'name': 'jobid1', 'type': INTEGER(), 'nullable': True, 'default': None, 'autoincrement': 'auto', 'primary_key': 0}
+    #             print("Column: %s" % column['name'])
+    #             # 输出dictionary中的键'name'的值 >>> Column: jobid1
+    #         print('\n\n\')
+    # -------------------------------------
+
+    # python connect database (working fine) ------
+    import sqlite3
+    con = sqlite3.connect('/Users/Ritchie/Documents/financial-computing-app/app/databases/users.db')
+    cursor = con.cursor()
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    print(cursor.fetchall())
+    # >>> [('alembic_version',), ('account',), ('learning_data_table',), ('tbl_activity_code',), ('mulform',), ('timesheettempdata',), ('tbl_corpname_number',), ('tbl_Contacts',), ('tbl_Directors',), ('tbl_Shareholders',), ('tbl_jobType',), ('tbl_Task',), ('num1',), ('num2',), ('tt',), ('tbl_Staff',), ('tbl_Corporation_report',), ('tbl_Individual',), ('tbl_Timesheet',), ('tbl_log',), ('tbl_Corporation',), ('users',)]
+    # ------------------------------------------------

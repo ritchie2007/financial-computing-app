@@ -125,7 +125,7 @@ def register():
         form = RegistrationForm()
 
         if form.validate_on_submit():
-            user = User(username=form.username.data, email=form.email.data, authorization=int(time.time())+31536000)
+            user = User(username=form.username.data, email=form.email.data, identification=int(time.time())+31536000)
             user.set_password(form.password.data)
             print(type(user), user.password_hash)
             db.session.add(user)

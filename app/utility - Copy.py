@@ -844,11 +844,11 @@ def authentication(user):
     print('au: ', au, '  currenttime: ', currenttime)
     if au:
         print(' ---- registered user ---')
-        if au.authorization is None or au.authorization == '' or au.authorization == 0:
-            print(' ---- authorization: None, empty or 0 --- ', au.authorization)
+        if au.identification is None or au.identification == '' or au.identification == 0:
+            print(' ---- identification: None, empty or 0 --- ', au.identification)
             authentication = True
-        elif currenttime > int(au.authorization):
-            print('--- > authorization false---')
+        elif currenttime > int(au.identification):
+            print('--- > identification false---')
             return authentication
         else:
             authentication = True

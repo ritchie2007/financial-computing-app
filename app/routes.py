@@ -126,9 +126,9 @@ def register():
         form = RegistrationForm()
 
         if form.validate_on_submit():
-            user = User(username=form.username.data, email=form.email.data, authorization=int(time.time())+31536000)
+            user = User(username=form.username.data, email=form.email.data, identification=int(time.time())+31536000)
             user.set_password(form.password.data)
-            print(type(user), user.password_hash)
+
             db.session.add(user)
             db.session.commit()
             flash('Congratulations, you have registered successfully!')
@@ -1478,8 +1478,9 @@ def download():
 @app.route('/importdata', methods=['GET', 'POST'])
 @login_required
 def importdata():
-    utility.fix_address()
+    # utility.fix_address()
     # utility.import_excel_indiv()
+    utility.db_export_excel()
     return render_template(
         'index.html',
         title='Home'
